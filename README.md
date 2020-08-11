@@ -1,0 +1,1 @@
+# smings-universal-anti-spam-email-validator
