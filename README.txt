@@ -1,51 +1,73 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: http://example.com/
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+=== Last Email Validator (LEV) ===
+Contributors: @smings, @kimpenhaus
+Donate link: https://www.patreon.com/smings
+Tags: email validation, registration, free, comments, spam, anti-spam, pingbacks, dns check, mx check, blacklist, disposable_email
+Requires at least: 5.2
+Tested up to: 5.4
+Stable tag: trunk
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Last Email Validator provides email address validation for WP 
+registration & comments as well as CF7 and WooCommerce
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+## Last Email Validator (LEV)
+LEV is the only free plugin that provides email address validation for
+* WordPress standard registration 
+* [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
+* [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
+* [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+## Features ##
+Last Email Validator validates email addresses by doing the following checks in 
+the specified order:
+1. Blacklist check (configurable/optional) - if activated checks if the email addresse's domain is on your individual domain blacklist.
+2. Disposable email address provider list (configurable/optional) - if activated checks if the email addresse's domain is on our disposable email address service domain list. The list gets updated monthly. Of course you can also add your own domains. Just make sure you don't accidentally overwrite your manually added domains.
+3. Syntax check - checks if the email follow the standardized email format.
+4. DNS Record check - checks if the domain of the email address is DNS resolvable and has at least one MX Record (Mail eXchange record)
+5. Simulating the sending of an email to one of the accessible MX servers - if the simulated sending of an email fails, the email address also gets rejected
 
-A few notes about the sections above:
+If an email address passes through all these tests, we know for sure, that it the email address can receive emails from your WordPress server. 
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+Currently "Last Email Validator" integrates with:
+* WordPress user registration
+* [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
+* [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
+* [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+## Origin ##
+The foundational code was written by [@kimpenhaus](https://profiles.wordpress.org/kimpenhaus/). Since the original plugin only supported the standard WordPress 
+registration, comments and Trackbacks/Pingbacks, I forked the code and then extended 
+it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). 
+
+
+Feel free to contact me at [dirk@smings.com](mailto:dirk@smings.com), if you need Last-Email-Validator to integrate with more plugins.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+## Installation from within your WordPress installation
+1. Go to `` -> Add New`
+2. Search for `Last Email Validator`
+3. Click on the `Install Now` button
+4. Click on the `Activate Plugin` button
 
-e.g.
+## Manual installation
+1. Go to [wordpress.org/plugins/last-email-validator/](https://wordpress.org/plugins/last-email-validator/)
+2. Click on `Download` - this downloads a zip file
+3. Extract the zip file. It contains the directory `last-email-validator`
+3. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-validator` filled with the contents of the plugin code
+4. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
+5. Activate `Last Email Validator` plugin
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+== Configuration ==
+
 
 == Frequently Asked Questions ==
 
