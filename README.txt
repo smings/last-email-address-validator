@@ -43,12 +43,13 @@ Currently "Last Email Validator" integrates with:
 
 
 ## Origin ##
-The foundational code was written by [@kimpenhaus](https://profiles.wordpress.org/kimpenhaus/). Since the original plugin only supported the standard WordPress 
-registration, comments and Trackbacks/Pingbacks, I forked the code and then extended 
-it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). 
+The foundational code was written by [@kimpenhaus](https://profiles.wordpress.org/kimpenhaus/). 
+Since the original plugin only supported the standard WordPress registration, comments and 
+Trackbacks/Pingbacks, I forked the code and then extended 
+it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) 
+as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). 
 
-
-Feel free to contact me at [dirk@smings.com](mailto:dirk@smings.com), if you need Last-Email-Validator to integrate with more plugins.
+If you need `Last-Email-Validator` to integrate with more plugins, feel free to contact me at [dirk@smings.com](mailto:dirk@smings.com).
 
 == Installation ==
 
@@ -64,9 +65,12 @@ Feel free to contact me at [dirk@smings.com](mailto:dirk@smings.com), if you nee
 3. Extract the zip file. It contains the directory `last-email-validator`
 3. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-validator` filled with the contents of the plugin code
 4. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
-5. Activate `Last Email Validator` plugin
+5. Activate `Last Email Validator` plugin in the plugin list
 
-== Configuration ==
+## Configuration
+You find `Last Email Validator`'s settings in your WordPress installation under
+`Settings -> Last Email Validator`
+
 
 
 == Frequently Asked Questions ==
