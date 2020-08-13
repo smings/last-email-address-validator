@@ -1,0 +1,186 @@
+# Translation of Plugins - WP-Mail-Validator - Stable (latest release) in German
+# This file is distributed under the same license as the Plugins - WP-Mail-Validator - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-04-08 21:08:44+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: de\n"
+"Project-Id-Version: Plugins - WP-Mail-Validator - Stable (latest release)\n"
+
+#: wp-mail-validator.php:486
+msgid "Validate user-registrations"
+msgstr "Benutzer-Registrierungen validieren"
+
+#: wp-mail-validator.php:483
+msgid "Registrants validation"
+msgstr "Registrierungen validieren"
+
+#: wp-mail-validator.php:467
+msgid "Validate trackbacks"
+msgstr "Trackbacks validieren"
+
+#: wp-mail-validator.php:451
+msgid "Validate pingbacks"
+msgstr "Pingbacks validieren"
+
+#: wp-mail-validator.php:448
+msgid "Ping validation"
+msgstr "Ping-Validierung"
+
+#: wp-mail-validator.php:412 wp-mail-validator.php:443
+msgid "Entries"
+msgstr "Einträge"
+
+#: wp-mail-validator.php:357
+msgid "Accept on rejected requests"
+msgstr "Trotz abgelehnter Anfragen akzeptieren"
+
+#: wp-mail-validator.php:341
+msgid "Accept on connection failures"
+msgstr "Trotz Verbindungsfehler akzeptieren"
+
+#: wp-mail-validator.php:325
+msgid "Comment validation"
+msgstr "Kommentar-Validierung"
+
+#: wp-mail-validator.php:169
+msgid "Your mail-address is evaluated as spam."
+msgstr "Ungültige Emailadresse. Bitte gib eine gültige Emailadresse ein."
+
+#: wp-mail-validator.php:261
+msgid "spam attacks fended"
+msgstr "Spam-Angriffe abgewehrt"
+
+#: wp-mail-validator.php:261
+msgid "Protected by"
+msgstr "Geschützt durch"
+
+#: wp-mail-validator.php:516
+msgid "Issue Tracker"
+msgstr "Fehlertracker"
+
+#: wp-mail-validator.php:515
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: wp-mail-validator.php:512
+msgid "Spam attacks fended"
+msgstr "Spam-Angriffe abgewehrt"
+
+#: wp-mail-validator.php:511
+msgid "Version"
+msgstr "Version"
+
+#: wp-mail-validator.php:508
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: wp-mail-validator.php:503
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: wp-mail-validator.php:431
+msgid "Choose to reject mail-addresses from a user-defined blacklist <strong>(single entry per line)</strong>"
+msgstr "Auswählen, um E-Mail-Adressen, deren Host in der Blacklist gepflegt ist, abzulehnen <strong>(ein Eintrag pro Zeile)</strong>"
+
+#: wp-mail-validator.php:420
+msgid "Reject mail-adresses from user-defined blacklist"
+msgstr "E-Mail-Adressen der Blacklist ablehnen"
+
+#: wp-mail-validator.php:415
+msgid "Restore default blacklist"
+msgstr "Standard-Blacklist wiederherstellen"
+
+#: wp-mail-validator.php:400
+msgid "Choose to reject mail-addresses from trashmail services <strong>(single entry per line)</strong>"
+msgstr "Auswählen, um E-Mail-Adressen von Trashmail-Diensten abzulehnen <strong>(ein Eintrag pro Zeile)</strong>"
+
+#: wp-mail-validator.php:389
+msgid "Reject mail-adresses from trashmail services"
+msgstr "E-Mail-Adressen von Trashmail-Diensten ablehnen"
+
+#: wp-mail-validator.php:384
+msgid "Choose if syntactically correct mail-addresses can pass when the mail server did not respond in time"
+msgstr "Auswählen, um syntaktisch korrekte E-Mail-Adressen zu akzeptieren, auch wenn der Mailserver bei der Anfrage nicht rechtzeitig antwortet"
+
+#: wp-mail-validator.php:373
+msgid "Accept syntactically correct mail-addresses"
+msgstr "Syntaktisch korrekte E-Mail-Adressen akzeptieren"
+
+#: wp-mail-validator.php:368
+msgid "Choose to ignore rejected request from mail servers while validating mail-addresses"
+msgstr "Auswählen, um vom Mailserver abgewiesene Anfragen zu ignorieren"
+
+#: wp-mail-validator.php:352
+msgid "Choose to ignore connection failures with mail servers while validating mail-addresses"
+msgstr "Auswählen, um Verbindungsfehler zum Mailserver die während der Validierung einer E-Mail-Adresse auftreten, zu ignorieren"
+
+#: wp-mail-validator.php:478
+msgid "Choose to accept Trackbacks <strong>(Trackbacks might be a security risk, because they're not carrying a mail-address to validate)</strong>"
+msgstr "Auswählen, um Trackbacks zu erlauben <strong>(Trackbacks bieten ein Spam-Potential, da sie keine E-Mail-Adresse liefern, die validiert werden kann)</strong>"
+
+#: wp-mail-validator.php:462
+msgid "Choose to accept Pingbacks <strong>(Pingbacks might be a security risk, because they're not carrying a mail-address to validate)</strong>"
+msgstr "Auswählen, um Pingbacks zu erlauben <strong>(Pingbacks bieten ein Spam-Potential, da sie keine E-Mail-Adresse liefern, die validiert werden kann)</strong>"
+
+#: wp-mail-validator.php:497
+msgid "Choose to validate registrants mail-address"
+msgstr "Auswählen, um die E-Mail-Adresse bei der Registrierung zu validieren"
+
+#: wp-mail-validator.php:349 wp-mail-validator.php:365
+#: wp-mail-validator.php:381 wp-mail-validator.php:397
+#: wp-mail-validator.php:428 wp-mail-validator.php:459
+#: wp-mail-validator.php:475 wp-mail-validator.php:494
+msgid "No"
+msgstr "Nein"
+
+#: wp-mail-validator.php:345 wp-mail-validator.php:361
+#: wp-mail-validator.php:377 wp-mail-validator.php:393
+#: wp-mail-validator.php:424 wp-mail-validator.php:455
+#: wp-mail-validator.php:471 wp-mail-validator.php:490
+msgid "Yes"
+msgstr "Ja"
+
+#: wp-mail-validator.php:334
+msgid "Leave blank to use the default gateway"
+msgstr "Leer lassen, um das Standard-Gateway zu nutzen"
+
+#: wp-mail-validator.php:322
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: wp-mail-validator.php:315
+msgid "Dismiss this notice"
+msgstr "Diesen Hinweis ausblenden"
+
+#: wp-mail-validator.php:304
+msgid "WP-Mail-Validator trashmail service blacklist restored"
+msgstr "Blacklist des WP-Mail-Validator Trashmail-Dienstes wurde wiederhergestellt"
+
+#: wp-mail-validator.php:301
+msgid "WP-Mail-Validator options updated"
+msgstr "WP-Mail-Validator-Optionen wurden aktualisiert"
+
+#. Author URI of the plugin
+msgid "https://github.com/kimpenhaus/"
+msgstr "https://github.com/kimpenhaus/"
+
+#. Author of the plugin
+msgid "Marcus Kimpenhaus"
+msgstr "Marcus Kimpenhaus"
+
+#. Description of the plugin
+msgid "WP-Mail-Validator is an anti-spam plugin. It provides mail-address validation in 5 ways: 1. syntax 2. host 3. mx-record of mailserver 4. refuse from user-defined blacklist 5. refuse trashmail services"
+msgstr "WP-Mail-Validator ist ein Anti-Spam-Plugin. Es bietet eine E-Mail-Adressvalidierung in 5 Stufen: 1. Syntax, 2. Mail-Server, 3. MX-Eintrag eines Mailservers, 4. Ablehnung durch benutzerdefinierte Blacklist, 5. Ablehnung durch Trashmail-Dienste"
+
+#. Plugin URI of the plugin
+msgid "https://github.com/kimpenhaus/wp-mail-validator"
+msgstr "https://github.com/kimpenhaus/wp-mail-validator"
+
+#. Plugin Name of the plugin
+msgid "WP-Mail-Validator"
+msgstr "WP-Mail-Validator"
