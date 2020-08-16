@@ -9,8 +9,12 @@ Author URI: https://smings.de
 Text Domain: lev
 */
 
+// Example of how to get the current translation strings from the 
+// WordPress plugin code. 
+// `xgettext --default-domain=last-email-validator --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=last-email-validator --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i *.php`
 
-// xgettext --default-domain=last-email-validator --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=last-email-validator --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i *.php
+// Example of how to merge a newer version with an existing po file
+// `msgmerge -i OLD.po new_empty.po > new_merged.po
 
 // for debugging only
 // if ( ! function_exists('write_log')) {
@@ -427,7 +431,7 @@ function last_email_validator_options_page()
                                 <?php echo __('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('We simulate the sending of an email from this wordpress server\'s domain to the entered email address. When the receiving mail server rejects the email, this is the strongest indicator, that the email address doesn\'t exist. When ignoring this rejection you will receive a lot more spam. We strongly recommmend to not accept email addresses when the simulated sending failed.<br/> <strong>Default: No</strong>', 'last-email-validator') ?>.
+                                <?php echo __('We simulate the sending of an email from this wordpress instances\'s domain to the entered email address. If the receiving mail server rejects the email address, this is the strongest indicator, that the email address doesn\'t exist (is spam). When ignoring this rejection you will receive a lot more spam. We strongly recommmend to not accept email addresses when the simulated sending failed.<br/> <strong>Default: No</strong>', 'last-email-validator') ?>.
                             </p>
                        </td>
                     </tr>
@@ -444,7 +448,7 @@ function last_email_validator_options_page()
                                 <?php echo __('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('The listet domains are services that provide single use email addresses (disposable email addresses). Users that make use of these services might just want to protect their own privacy. Users might also be spammers. There is no good choice. In doubt we encourage you to value your own time and reject email addresses from these domains. You can click the button below to update the list from our server. This will overwrite all existing values. Therefore we discourage you to add/edit this list. For blocking domains of your choosing, use the blacklist option below.<br/>  <strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php echo __('The listed domains are services that provide single use email addresses (disposable email addresses). Users that make use of these services might just want to protect their own privacy. Users might also be spammers. There is no good choice. In doubt we encourage you to value your own time and reject email addresses from these domains. You can click the button below to update the list from our server. This will overwrite all existing values. Therefore we discourage you to add/edit this list. For blocking domains of your choosing, use the blacklist option below.<br/>  <strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
