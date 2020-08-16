@@ -14,7 +14,10 @@ Text Domain: lev
 // `xgettext --default-domain=last-email-validator --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=last-email-validator --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i *.php`
 
 // Example of how to merge a newer version with an existing po file
-// `msgmerge -i OLD.po new_empty.po > new_merged.po
+// `msgmerge -i -o new_merged.po OLD_reference.po new_empty.po`
+
+// Example of how to create an mo file
+// `msgfmt -o output.mo input.po
 
 // for debugging only
 // if ( ! function_exists('write_log')) {

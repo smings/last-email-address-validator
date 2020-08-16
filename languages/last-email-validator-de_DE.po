@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: last-email-validator 1.0.3\n"
         "Report-Msgid-Bugs-To: translastions@smings.com\n"
-        "POT-Creation-Date: 2020-08-16 23:19+0200\n"
+        "POT-Creation-Date: 2020-08-16 23:47+0200\n"
         "PO-Revision-Date: 2020-08-16 22:45+0200\n"
         "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
         "Language-Team: DE <translastions@smings.com>\n"
@@ -16,72 +16,72 @@ msgstr  "Project-Id-Version: last-email-validator 1.0.3\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: last-email-validator.php:191
+#: last-email-validator.php:198
 msgid   "This email domain is not accepted/valid. Try another one."
 msgstr  "Diese Email-Domain wird nicht akzeptiert/ist ungültig. Versuche eine "
         "andere."
 
-#: last-email-validator.php:211
+#: last-email-validator.php:218
 msgid   "The e-mail address entered is invalid."
 msgstr  "Die Emailadresse ist ungültig."
 
-#: last-email-validator.php:300
+#: last-email-validator.php:307
 msgid   "Anti spam protected by"
 msgstr  "Anti-Spam geschützt durch"
 
-#: last-email-validator.php:300
+#: last-email-validator.php:307
 msgid   "spam email addresses stopped"
 msgstr  "Spam Emailadressen geblockt"
 
-#: last-email-validator.php:342
+#: last-email-validator.php:349
 msgid   "Last Email Validator (LEV) options updated"
 msgstr  "Last Email Validator (LEV) Optionen wurden geupdated"
 
-#: last-email-validator.php:347
+#: last-email-validator.php:354
 msgid   "Last Email Validator (LEV) disposable email services domain "
         "blacklist restored"
 msgstr  "Last Email Validator (LEV) Einmal-Emailadress-Service-Domain "
         "Blacklist wiederhergestellt"
 
-#: last-email-validator.php:361
+#: last-email-validator.php:368
 msgid   "Dismiss this notice"
 msgstr  "Hinweis ausblenden"
 
-#: last-email-validator.php:368
+#: last-email-validator.php:375
 msgid   "Last Email Validator (LEV) Settings"
 msgstr  "Last Email Validator (LEV) Einstellungen"
 
-#: last-email-validator.php:371
+#: last-email-validator.php:378
 msgid   "Control the level of spam protection. Defaults are set to the "
         "highest level."
 msgstr  "Kontrolliere dein Anti-Spam Level. Die Standardwerte stellen das "
         "höchste Maß an Spamschutz dar."
 
-#: last-email-validator.php:380
+#: last-email-validator.php:387
 msgid   "Leave blank to use Windows default gateway"
 msgstr  "Für Standard-Gateway leer lassen."
 
-#: last-email-validator.php:387
+#: last-email-validator.php:394
 msgid   "Accept email addresses despite failure to connnect to ALL of their "
         "MX servers"
 msgstr  "Akzeptiere Emailadressen trotz Verbindungsfehler zu ALLEN Mailservern"
 
-#: last-email-validator.php:391 last-email-validator.php:407
-#: last-email-validator.php:423 last-email-validator.php:440
-#: last-email-validator.php:471 last-email-validator.php:503
-#: last-email-validator.php:510 last-email-validator.php:519
-#: last-email-validator.php:526 last-email-validator.php:538
+#: last-email-validator.php:414
+#: last-email-validator.php:447
+#: last-email-validator.php:510
+#: last-email-validator.php:526
+#: last-email-validator.php:545
 msgid   "Yes"
 msgstr  "Ja"
 
-#: last-email-validator.php:395 last-email-validator.php:411
-#: last-email-validator.php:427 last-email-validator.php:444
-#: last-email-validator.php:475 last-email-validator.php:507
-#: last-email-validator.php:523 last-email-validator.php:542
+#: last-email-validator.php:418
+#: last-email-validator.php:451
+#: last-email-validator.php:514
+#: last-email-validator.php:549
 msgid   "No"
 msgstr  "Nein"
 
-#: last-email-validator.php:398
+#: last-email-validator.php:405
 msgid   "Do you want to ignore connection failures to the email address's "
         "mail exchange servers?  Servers can always be down for maintenance. "
         "But since every serious mail service has fallback servers, and we "
@@ -95,13 +95,13 @@ msgstr  "Willst du Vebindungsfehler zu den Mailservern der Emaildomain "
         "empfehlen deshalb dringend Verbindungsfehler nicht zu ignorieren. "
         "<br/><strong>Standardwert: Nein</strong>"
 
-#: last-email-validator.php:403
+#: last-email-validator.php:410
 msgid   "Accept syntactically correct email address when connecting to ALL "
         "its mail servers failed (due to timeouts)"
 msgstr  "Syntaktisch korrekte Emailadressen akzeptieren, wenn die Verbindung "
         "zu allen Mailservern fehlgeschlagen ist (timeouts etc.)"
 
-#: last-email-validator.php:414
+#: last-email-validator.php:421
 msgid   "If set to 'Yes' syntactically correct mail-addresses will be "
         "accepted despite ALL mail server did not respond (in time). This "
         "will result in more spam. We recommend to set it to 'No' for "
@@ -111,11 +111,11 @@ msgstr  "Wenn diese Einstellung auf 'Ja' gesetzt wird, werden syntaktisch "
         "werden konnten. Dies wird zu mehr Spam führen. Wir empfehlen dies "
         "nicht zu aktivieren.<br/><strong>Standardwert: Nein</strong>"
 
-#: last-email-validator.php:419
+#: last-email-validator.php:426
 msgid   "Accept email address despite failed simulated sending of email"
 msgstr  "Emailadressen akzeptieren obwohl der Testversand gescheitert ist"
 
-#: last-email-validator.php:430
+#: last-email-validator.php:437
 #, fuzzy
 msgid   "We simulate the sending of an email from this wordpress instances's "
         "domain to the entered email address. If the receiving mail server "
@@ -132,13 +132,13 @@ msgstr  "Zum Validieren der Emailadresse simulieren wir den Versand einer "
         "Emailadressen nicht zu aktzeptieren.<br/><strong>Standardwert: Nein</"
         "strong>"
 
-#: last-email-validator.php:436
+#: last-email-validator.php:443
 msgid   "Reject email adresses from our comprehensive and frequently updated "
         "list of disposable email services"
 msgstr  "Emailadressen von Domaims auf unserer umfassenden und regelmäßig "
         "geupdateten Einmal-Emailadress-Service-Domain Blacklist ablehnen"
 
-#: last-email-validator.php:447
+#: last-email-validator.php:454
 msgid   "The listed domains are services that provide single use email "
         "addresses (disposable email addresses). Users that make use of these "
         "services might just want to protect their own privacy. Users might "
@@ -162,20 +162,20 @@ msgstr  "Die aufgelisteten Domains sind Anbieter von Einmal-Emailadress-"
         "nachfolgende, benutzerdefinierte Domain-Blacklist.<br/"
         "><strong>Standardwert: Ja</strong>"
 
-#: last-email-validator.php:459
+#: last-email-validator.php:466
 msgid   "Entries"
 msgstr  "Einträge"
 
-#: last-email-validator.php:462
+#: last-email-validator.php:469
 msgid   "Update / Restore list of dispoable email service domains"
 msgstr  "Update / Wiederherstellen der Liste von Wegwerf-Emailaddress-Service "
         "Domains"
 
-#: last-email-validator.php:467
+#: last-email-validator.php:474
 msgid   "Reject email adresses from user-defined blacklist"
 msgstr  "Emailadressen von Domains der benutzerdefinierten Blacklist ablehnen"
 
-#: last-email-validator.php:478
+#: last-email-validator.php:485
 #, fuzzy
 msgid   "Email addresses from the domains on this list will be rejected. "
         "Place any domain that you started to receive spam mails from on this "
@@ -185,15 +185,15 @@ msgstr  "Emailadressen von Domains der benutzerdefinierten Liste abgelehnen. "
         "<strong>Nur eine Domain je Zeile eintragen</strong>.<br/"
         "><strong>Standardwert: Ja</strong>"
 
-#: last-email-validator.php:490
+#: last-email-validator.php:497
 msgid   "User-defined blacklisted email domains"
 msgstr  "Benutzerdefinierte Domain-Blacklist"
 
-#: last-email-validator.php:495
+#: last-email-validator.php:502
 msgid   "Accepting pingbacks / trackbacks without validation"
 msgstr  "Pingbacks / Trackbacks ohne Validierung akzeptieren"
 
-#: last-email-validator.php:496
+#: last-email-validator.php:503
 #, fuzzy
 msgid   "Pingbacks and trackbacks can't be validated because they don't come "
         "with an email address, that could be run through our validator. "
@@ -206,29 +206,27 @@ msgstr  "Pingbacks und Trackbacks können nicht validiert werden, da sie über "
         "sie auch kostenloses Marketing, weshalb wir empfehlen sie zu "
         "akzeptieren<br/><strong>Standardwert: Ja</strong>"
 
-#: last-email-validator.php:499
+#: last-email-validator.php:506
 msgid   "Accept pingbacks"
 msgstr  "Pingbacks akzeptieren"
 
-#: last-email-validator.php:510 last-email-validator.php:526
+#: last-email-validator.php:517 last-email-validator.php:533
 msgid   "Default:"
 msgstr  "Standardwert"
 
-#: last-email-validator.php:515
+#: last-email-validator.php:522
 msgid   "Accept trackbacks"
 msgstr  "Trackbacks akzeptieren"
 
-#: last-email-validator.php:531
-#, fuzzy
+#: last-email-validator.php:538
 msgid   "Validate WordPress standard user registration"
 msgstr  "WordPress Standard-Benutzerregistrierung validieren"
 
-#: last-email-validator.php:534
+#: last-email-validator.php:541
 msgid   "Validate user-registrations"
 msgstr  "Benutzerregistrierung validieren"
 
-#: last-email-validator.php:545
-#, fuzzy
+#: last-email-validator.php:552
 msgid   "This validates all registrants email address's that register through "
         "WordPress's standard user registration.<br/><strong>Default: Yes</"
         "strong>"
@@ -236,27 +234,26 @@ msgstr  "Diese Einstellung steuert die Validierung der Emailadressen von "
         "Benutzern, die sich über die WordPress Standard-"
         "Benutzerregistrierung anmelden<br/><strong>Standardwert: Ja</strong>"
 
-#: last-email-validator.php:551
+#: last-email-validator.php:558
 msgid   "Save Changes"
 msgstr  "Änderungen speichern"
 
-#: last-email-validator.php:556
+#: last-email-validator.php:563
 msgid   "Statistics"
 msgstr  "Statistik"
 
-#: last-email-validator.php:559
+#: last-email-validator.php:566
 msgid   "Version"
 msgstr  "Version"
 
-#: last-email-validator.php:560
-#, fuzzy
+#: last-email-validator.php:567
 msgid   "Spam attacks fended"
 msgstr  "Spamversuche abgewehrt"
 
-#: last-email-validator.php:563
+#: last-email-validator.php:570
 msgid   "Documentation"
 msgstr  "Dokumentation"
 
-#: last-email-validator.php:564
+#: last-email-validator.php:571
 msgid   "Bugs"
 msgstr  "Fehler (Bugs)"
