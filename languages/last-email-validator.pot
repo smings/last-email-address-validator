@@ -1,69 +1,67 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Dirk Tornow
-# This file is distributed under the same license as the last-email-validator package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation template for the "Last Email Validator (LEV)" WordPress plugin.
+# Copyright (C) 2020 by Dirk Tornow
+# This file is distributed under the same license as the "Last Email Validator (LEV)" WordPress plugin.
+# Dirk Tornow <dirk@smings.com>, 2020.
 #
 #, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: last-email-validator 1.0.3\n"
         "Report-Msgid-Bugs-To: translastions@smings.com\n"
-        "POT-Creation-Date: 2020-08-16 08:27+0200\n"
+        "POT-Creation-Date: 2020-08-16 22:48+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
         "Language: \n"
         "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=CHARSET\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
 #: last-email-validator.php:191
 msgid   "This email domain is not accepted/valid. Try another one."
-msgstr  "Diese Email-Domain wird nicht akzeptiert/ist ungültig. Versuche eine andere."
+msgstr  ""
 
 #: last-email-validator.php:211
 msgid   "The e-mail address entered is invalid."
-msgstr  "Die Emailadresse ist ungültig."
+msgstr  ""
 
 #: last-email-validator.php:300
 msgid   "Anti spam protected by"
-msgstr  "Anti-Spam geschützt durch"
+msgstr  ""
 
 #: last-email-validator.php:300
 msgid   "spam email addresses stopped"
-msgstr  "Spam Emailadressen geblockt"
+msgstr  ""
 
 #: last-email-validator.php:342
 msgid   "Last Email Validator (LEV) options updated"
-msgstr  "Last Email Validator (LEV) Optionen wurden geupdated"
+msgstr  ""
 
 #: last-email-validator.php:347
 msgid   "Last Email Validator (LEV) disposable email services domain "
         "blacklist restored"
-msgstr  "Last Email Validator (LEV) Einmal-Emailadress-Service-Domain Blacklist "
-        "wiederhergestellt"
+msgstr  ""
 
 #: last-email-validator.php:361
 msgid   "Dismiss this notice"
-msgstr  "Hinweis ausblenden"
+msgstr  ""
 
 #: last-email-validator.php:368
 msgid   "Last Email Validator (LEV) Settings"
-msgstr  "Last Email Validator (LEV) Einstellungen"
+msgstr  ""
 
 #: last-email-validator.php:371
 msgid   "Control the level of spam protection. Defaults are set to the "
         "highest level."
-msgstr  "Kontrolliere dein Anti-Spam Level. Die Standardwerte stellen "
-        "das höchste Maß an Spamschutz dar."
+msgstr  ""
 
 #: last-email-validator.php:380
 msgid   "Leave blank to use Windows default gateway"
-msgstr  "Für Standard-Gateway leer lassen."
+msgstr  ""
 
 #: last-email-validator.php:387
 msgid   "Accept email addresses despite failure to connnect to ALL of their "
         "MX servers"
-msgstr  "Akzeptiere Emailadressen trotz Verbindungsfehler zu ALLEN Mailservern"
+msgstr  ""
 
 #: last-email-validator.php:391 last-email-validator.php:407
 #: last-email-validator.php:423 last-email-validator.php:440
@@ -71,14 +69,14 @@ msgstr  "Akzeptiere Emailadressen trotz Verbindungsfehler zu ALLEN Mailservern"
 #: last-email-validator.php:510 last-email-validator.php:519
 #: last-email-validator.php:526 last-email-validator.php:538
 msgid   "Yes"
-msgstr  "Ja"
+msgstr  ""
 
 #: last-email-validator.php:395 last-email-validator.php:411
 #: last-email-validator.php:427 last-email-validator.php:444
 #: last-email-validator.php:475 last-email-validator.php:507
 #: last-email-validator.php:523 last-email-validator.php:542
 msgid   "No"
-msgstr  "Nein"
+msgstr  ""
 
 #: last-email-validator.php:398
 msgid   "Do you want to ignore connection failures to the email address's "
@@ -87,27 +85,21 @@ msgid   "Do you want to ignore connection failures to the email address's "
         "test all servers, we strongly recommend to not ignore this. For "
         "strongest protection, don't ignore connection failures. <br/"
         "><strong>Default: No</strong>"
-msgstr  "Willst du Vebindungsfehler zu den Mailservern der Emaildomain "
-        "ignorieren? Mailserver könnten zur Wartung auch nicht verfügbar "
-        "sein. Aber jeder professionelle Emailservice verfügt über mehrere "
-        "redundanter Server die nicht alle gleichzeitig gewartet werden. "
-        "Wie empfehlen deshalb dringend Verbindungsfehler nicht zu ignorieren. "
-        "<strong>Standardwert: Nein</strong>"
+msgstr  ""
 
 #: last-email-validator.php:403
 msgid   "Accept syntactically correct email address when connecting to ALL "
         "its mail servers failed (due to timeouts)"
-msgstr  "Willst du Vebindungsfehler zu den Mailservern der Emaildomain 
-        "ignorieren? Mailserver können auch"
+msgstr  ""
 
 #: last-email-validator.php:414
 msgid   "If set to 'Yes' syntactically correct mail-addresses will be "
         "accepted despite ALL mail server did not respond (in time). This "
         "will result in more spam. We recommend to set it to 'No' for "
-    Diese Email-Domain wird nicht akzeptiert/ist ungültig. Versuche eine andere.    "strongest spam protection.<br/><strong>Default: No</strong>"
+        "strongest spam protection.<br/><strong>Default: No</strong>"
 msgstr  ""
 
-#: last-email-validator.php:41Die Emailadresse ist ungültig.9
+#: last-email-validator.php:419
 msgid   "Accept email address despite failed simulated sending of email"
 msgstr  ""
 

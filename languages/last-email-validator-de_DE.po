@@ -1,186 +1,255 @@
-# Translation of Plugins - WP-Mail-Validator - Stable (latest release) in German
-# This file is distributed under the same license as the Plugins - WP-Mail-Validator - Stable (latest release) package.
-msgid ""
-msgstr ""
-"PO-Revision-Date: 2020-04-08 21:08:44+0000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
-"Language: de\n"
-"Project-Id-Version: Plugins - WP-Mail-Validator - Stable (latest release)\n"
+# Deutsche Übersetzung des "Last Email Validator (LEV)" WordPress Plugins
+# Copyright (C) 2020 by Dirk Tornow
+# This file is distributed under the same license as the "Last Email Validator (LEV)" WordPress Plugins.
+# Dirk Tornow <dirk@smings.com>, 2020.
+#
+#, fuzzy
+msgid   ""
+msgstr  "Project-Id-Version: last-email-validator 1.0.3\n"
+        "Report-Msgid-Bugs-To: translastions@smings.com\n"
+        "POT-Creation-Date: 2020-08-16 08:27+0200\n"
+        "PO-Revision-Date: 2020-08-16 22:45+0200\n"
+        "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
+        "Language-Team: DE <translastions@smings.com>\n"
+        "Language: de-DE\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-mail-validator.php:486
-msgid "Validate user-registrations"
-msgstr "Benutzer-Registrierungen validieren"
+#: last-email-validator.php:191
+msgid   "This email domain is not accepted/valid. Try another one."
+msgstr  "Diese Email-Domain wird nicht akzeptiert/ist ungültig. Versuche eine andere."
 
-#: wp-mail-validator.php:483
-msgid "Registrants validation"
-msgstr "Registrierungen validieren"
+#: last-email-validator.php:211
+msgid   "The e-mail address entered is invalid."
+msgstr  "Die Emailadresse ist ungültig."
 
-#: wp-mail-validator.php:467
-msgid "Validate trackbacks"
-msgstr "Trackbacks validieren"
+#: last-email-validator.php:300
+msgid   "Anti spam protected by"
+msgstr  "Anti-Spam geschützt durch"
 
-#: wp-mail-validator.php:451
-msgid "Validate pingbacks"
-msgstr "Pingbacks validieren"
+#: last-email-validator.php:300
+msgid   "spam email addresses stopped"
+msgstr  "Spam Emailadressen geblockt"
 
-#: wp-mail-validator.php:448
-msgid "Ping validation"
-msgstr "Ping-Validierung"
+#: last-email-validator.php:342
+msgid   "Last Email Validator (LEV) options updated"
+msgstr  "Last Email Validator (LEV) Optionen wurden geupdated"
 
-#: wp-mail-validator.php:412 wp-mail-validator.php:443
-msgid "Entries"
-msgstr "Einträge"
+#: last-email-validator.php:347
+msgid   "Last Email Validator (LEV) disposable email services domain "
+        "blacklist restored"
+msgstr  "Last Email Validator (LEV) Einmal-Emailadress-Service-Domain Blacklist "
+        "wiederhergestellt"
 
-#: wp-mail-validator.php:357
-msgid "Accept on rejected requests"
-msgstr "Trotz abgelehnter Anfragen akzeptieren"
+#: last-email-validator.php:361
+msgid   "Dismiss this notice"
+msgstr  "Hinweis ausblenden"
 
-#: wp-mail-validator.php:341
-msgid "Accept on connection failures"
-msgstr "Trotz Verbindungsfehler akzeptieren"
+#: last-email-validator.php:368
+msgid   "Last Email Validator (LEV) Settings"
+msgstr  "Last Email Validator (LEV) Einstellungen"
 
-#: wp-mail-validator.php:325
-msgid "Comment validation"
-msgstr "Kommentar-Validierung"
+#: last-email-validator.php:371
+msgid   "Control the level of spam protection. Defaults are set to the "
+        "highest level."
+msgstr  "Kontrolliere dein Anti-Spam Level. Die Standardwerte stellen "
+        "das höchste Maß an Spamschutz dar."
 
-#: wp-mail-validator.php:169
-msgid "Your mail-address is evaluated as spam."
-msgstr "Ungültige Emailadresse. Bitte gib eine gültige Emailadresse ein."
+#: last-email-validator.php:380
+msgid   "Leave blank to use Windows default gateway"
+msgstr  "Für Standard-Gateway leer lassen."
 
-#: wp-mail-validator.php:261
-msgid "spam attacks fended"
-msgstr "Spam-Angriffe abgewehrt"
+#: last-email-validator.php:387
+msgid   "Accept email addresses despite failure to connnect to ALL of their "
+        "MX servers"
+msgstr  "Akzeptiere Emailadressen trotz Verbindungsfehler zu ALLEN Mailservern"
 
-#: wp-mail-validator.php:261
-msgid "Protected by"
-msgstr "Geschützt durch"
+#: last-email-validator.php:391 last-email-validator.php:407
+#: last-email-validator.php:423 last-email-validator.php:440
+#: last-email-validator.php:471 last-email-validator.php:503
+#: last-email-validator.php:510 last-email-validator.php:519
+#: last-email-validator.php:526 last-email-validator.php:538
+msgid   "Yes"
+msgstr  "Ja"
 
-#: wp-mail-validator.php:516
-msgid "Issue Tracker"
-msgstr "Fehlertracker"
+#: last-email-validator.php:395 last-email-validator.php:411
+#: last-email-validator.php:427 last-email-validator.php:444
+#: last-email-validator.php:475 last-email-validator.php:507
+#: last-email-validator.php:523 last-email-validator.php:542
+msgid   "No"
+msgstr  "Nein"
 
-#: wp-mail-validator.php:515
-msgid "Documentation"
-msgstr "Dokumentation"
+#: last-email-validator.php:398
+msgid   "Do you want to ignore connection failures to the email address's "
+        "mail exchange servers?  Servers can always be down for maintenance. "
+        "But since every serious mail service has fallback servers, and we "
+        "test all servers, we strongly recommend to not ignore this. For "
+        "strongest protection, don't ignore connection failures. <br/"
+        "><strong>Default: No</strong>"
+msgstr  "Willst du Vebindungsfehler zu den Mailservern der Emaildomain "
+        "ignorieren? Mailserver könnten zur Wartung auch nicht verfügbar "
+        "sein. Aber jeder professionelle Emailservice verfügt über mehrere "
+        "redundanter Server die nicht alle gleichzeitig gewartet werden. "
+        "Wie empfehlen deshalb dringend Verbindungsfehler nicht zu ignorieren. "
+        "<br/><strong>Standardwert: Nein</strong>"
 
-#: wp-mail-validator.php:512
-msgid "Spam attacks fended"
-msgstr "Spam-Angriffe abgewehrt"
+#: last-email-validator.php:403
+msgid   "Accept syntactically correct email address when connecting to ALL "
+        "its mail servers failed (due to timeouts)"
+msgstr  "Syntaktisch korrekte Emailadressen akzeptieren, wenn die Verbindung "
+        "zu allen Mailservern fehlgeschlagen ist (timeouts etc.)"
 
-#: wp-mail-validator.php:511
-msgid "Version"
-msgstr "Version"
+#: last-email-validator.php:414
+msgid   "If set to 'Yes' syntactically correct mail-addresses will be "
+        "accepted despite ALL mail server did not respond (in time). This "
+        "will result in more spam. We recommend to set it to 'No' for "
+        "strongest spam protection.<br/><strong>Default: No</strong>"
+msgstr  "Wenn diese Einstellung auf 'Ja' gesetzt wird, werden syntaktisch "
+        "korrente Emailadressen akzeptiert, obwohl sie nicht weiter überprüft "
+        "werden konnten. Dies wird zu mehr Spam führen. Wir empfehlen dies "
+        "nicht zu aktivieren."
+        "<br/><strong>Standardwert: Nein</strong>"
 
-#: wp-mail-validator.php:508
-msgid "Statistics"
-msgstr "Statistiken"
+#: last-email-validator.php:41Die Emailadresse ist ungültig.9
+msgid   "Accept email address despite failed simulated sending of email"
+msgstr  "Emailadressen akzeptieren obwohl der Testversand gescheitert ist"
 
-#: wp-mail-validator.php:503
-msgid "Save Changes"
-msgstr "Änderungen speichern"
+#: last-email-validator.php:430
+msgid   "We simulate the sending of an email from this WordPress server's "
+        "domain to the entered email address. When the receiving mail server "
+        "rejects the email, this is the strongest indicator, that the email "
+        "address doesn't exist. When ignoring this rejection you will receive "
+        "a lot more spam. We strongly recommmend to not accept email "
+        "addresses when the simulated sending failed.<br/> <strong>Default: "
+        "No</strong>"
+msgstr  "Zum Validieren der Emailadresse simulieren wir den Versand einer Email "
+        "von der Domain dieser WordPress-Instanz an die zu validierende Emailadresse. "
+        "Wenn der empfangende Mailserver die Email ablehnt, ist dies der stärkste "
+        "Indikator, dass es sich um eine nichtexistente (Spam) Emailadresse handelt. "
+        "Wir empfehlen dringend diese Emailadressen nicht zu aktzeptieren."
+        "<br/><strong>Standardwert: Nein</strong>"
 
-#: wp-mail-validator.php:431
-msgid "Choose to reject mail-addresses from a user-defined blacklist <strong>(single entry per line)</strong>"
-msgstr "Auswählen, um E-Mail-Adressen, deren Host in der Blacklist gepflegt ist, abzulehnen <strong>(ein Eintrag pro Zeile)</strong>"
+#: last-email-validator.php:436
+msgid   "Reject email adresses from our comprehensive and frequently updated "
+        "list of disposable email services"
+msgstr  "Emailadressen von Domaims auf unserer umfassenden und regelmäßig geupdateten "
+        "Einmal-Emailadress-Service-Domain Blacklist ablehnen"
 
-#: wp-mail-validator.php:420
-msgid "Reject mail-adresses from user-defined blacklist"
-msgstr "E-Mail-Adressen der Blacklist ablehnen"
+#: last-email-validator.php:447
+msgid   "The listed domains are services that provide single use email "
+        "addresses (disposable email addresses). Users that make use of these "
+        "services might just want to protect their own privacy. Users might "
+        "also be spammers. There is no good choice. In doubt we encourage you "
+        "to value your own time and reject email addresses from these "
+        "domains. You can click the button below to update the list from our "
+        "server. This will overwrite all existing values. Therefore we "
+        "discourage you to add/edit this list. For blocking domains of your "
+        "choosing, use the blacklist option below.<br/>  <strong>Default: "
+        "Yes</strong>"
+msgstr  "Die aufgelisteten Domains sind Anbieter von Einmal-Emailadress-Services "
+        "(Wegwerf- oder 10-Minuten-Emailadressen). Benutzer, die Emailadressen dieser "
+        "Domains nutzen, könnten einfach nur hohen Wert auf ihre Privatssphäre legen. "
+        "Es könnten jedoch auch Spammer sein. Hierbei gibt es keine gute Wahl. "
+        "Im Zweifelsfall empfehlen wir dir deine Zeit als sehr wertvoll zu betrachten "
+        "und Emailadressen von diesen Domains abzulehnen. Du kannst den Button unterhalb "
+        "jederzeit klicken, um das letzte Update zu erhalten. Ein Update / Refresh "
+        "überschreibt alle Werte, weshalb wir empfehlen hier nichts manuell einzutragen. "
+        "Für manuell zu blockende Domains, haben wir die nachfolgende, benutzerdefinierte "
+        "Domain-Blacklist."
+        "<br/><strong>Standardwert: Ja</strong>"
 
-#: wp-mail-validator.php:415
-msgid "Restore default blacklist"
-msgstr "Standard-Blacklist wiederherstellen"
+#: last-email-validator.php:459
+msgid   "Entries"
+msgstr  "Einträge"
 
-#: wp-mail-validator.php:400
-msgid "Choose to reject mail-addresses from trashmail services <strong>(single entry per line)</strong>"
-msgstr "Auswählen, um E-Mail-Adressen von Trashmail-Diensten abzulehnen <strong>(ein Eintrag pro Zeile)</strong>"
+#: last-email-validator.php:462
+msgid   "Update / Restore list of dispoable email service domains"
+msgstr  "Update / Wiederherstellen der Liste von Wegwerf-Emailaddress-Service Domains"
 
-#: wp-mail-validator.php:389
-msgid "Reject mail-adresses from trashmail services"
-msgstr "E-Mail-Adressen von Trashmail-Diensten ablehnen"
+#: last-email-validator.php:467
+msgid   "Reject email adresses from user-defined blacklist"
+msgstr  "Emailadressen von Domains der benutzerdefinierten Blacklist ablehnen"
 
-#: wp-mail-validator.php:384
-msgid "Choose if syntactically correct mail-addresses can pass when the mail server did not respond in time"
-msgstr "Auswählen, um syntaktisch korrekte E-Mail-Adressen zu akzeptieren, auch wenn der Mailserver bei der Anfrage nicht rechtzeitig antwortet"
+#: last-email-validator.php:478
+msgid   "Email addresses from the domains on this list will be rejected. "
+        "Place any domain that you started to receive spam mails from on this "
+        "list. <strong>Use one domain per line</strong>."
+        "<br/><strong>Default: Yes</strong>"
+msgstr  "Emailadressen von Domains der benutzerdefinierten Liste "
+        "abgelehnen. <strong>Nur eine Domain je Zeile eintragen</strong>."
+        "<br/><strong>Standardwert: Ja</strong>"
 
-#: wp-mail-validator.php:373
-msgid "Accept syntactically correct mail-addresses"
-msgstr "Syntaktisch korrekte E-Mail-Adressen akzeptieren"
+#: last-email-validator.php:490
+msgid   "User-defined blacklisted email domains"
+msgstr  "Benutzerdefinierte Domain-Blacklist"
 
-#: wp-mail-validator.php:368
-msgid "Choose to ignore rejected request from mail servers while validating mail-addresses"
-msgstr "Auswählen, um vom Mailserver abgewiesene Anfragen zu ignorieren"
+#: last-email-validator.php:495
+msgid   "Accepting pingbacks / trackbacks without validation"
+msgstr  "Pingbacks / Trackbacks ohne Validierung akzeptieren"
 
-#: wp-mail-validator.php:352
-msgid "Choose to ignore connection failures with mail servers while validating mail-addresses"
-msgstr "Auswählen, um Verbindungsfehler zum Mailserver die während der Validierung einer E-Mail-Adresse auftreten, zu ignorieren"
+#: last-email-validator.php:496
+msgid   "Pingbacks and trackbacks can't be validated because they don't come "
+        "with an email address, that could be run through our validator. "
+        "Therefore <strong>pingbacks and trackbacks pose a certain spam risk</"
+        "strong>. They are also free marketing. By default we therefore "
+        "accept them. You can always choose to reject them."
+        "<br/><strong>Default: Yes</strong>"
+msgstr  "Pingbacks und Trackbacks können nicht validiert werden, da sie über keine "
+        "Emailadressen verfügen. Deshalb <strong>stellen Pingbacks und Trackbacks "
+        "ein gewisses Spam-Risiko dar</strong>. Allerdings sind sie auch kostenloses "
+        "Marketing, weshalb wir empfehlen sie zu akzeptieren"
+        "<br/><strong>Standardwert: Ja</strong>"
 
-#: wp-mail-validator.php:478
-msgid "Choose to accept Trackbacks <strong>(Trackbacks might be a security risk, because they're not carrying a mail-address to validate)</strong>"
-msgstr "Auswählen, um Trackbacks zu erlauben <strong>(Trackbacks bieten ein Spam-Potential, da sie keine E-Mail-Adresse liefern, die validiert werden kann)</strong>"
+#: last-email-validator.php:499
+msgid   "Accept pingbacks"
+msgstr  "Pingbacks akzeptieren"
 
-#: wp-mail-validator.php:462
-msgid "Choose to accept Pingbacks <strong>(Pingbacks might be a security risk, because they're not carrying a mail-address to validate)</strong>"
-msgstr "Auswählen, um Pingbacks zu erlauben <strong>(Pingbacks bieten ein Spam-Potential, da sie keine E-Mail-Adresse liefern, die validiert werden kann)</strong>"
+#: last-email-validator.php:510 last-email-validator.php:526
+msgid   "Default:"
+msgstr  "Standardwert"
 
-#: wp-mail-validator.php:497
-msgid "Choose to validate registrants mail-address"
-msgstr "Auswählen, um die E-Mail-Adresse bei der Registrierung zu validieren"
+#: last-email-validator.php:515
+msgid   "Accept trackbacks"
+msgstr  "Trackbacks akzeptieren"
 
-#: wp-mail-validator.php:349 wp-mail-validator.php:365
-#: wp-mail-validator.php:381 wp-mail-validator.php:397
-#: wp-mail-validator.php:428 wp-mail-validator.php:459
-#: wp-mail-validator.php:475 wp-mail-validator.php:494
-msgid "No"
-msgstr "Nein"
+#: last-email-validator.php:531
+msgid   "Validate WordPress's standard user registration"
+msgstr  "WordPress Standard-Benutzerregistrierung validieren"
 
-#: wp-mail-validator.php:345 wp-mail-validator.php:361
-#: wp-mail-validator.php:377 wp-mail-validator.php:393
-#: wp-mail-validator.php:424 wp-mail-validator.php:455
-#: wp-mail-validator.php:471 wp-mail-validator.php:490
-msgid "Yes"
-msgstr "Ja"
+#: last-email-validator.php:534
+msgid   "Validate user-registrations"
+msgstr  "Benutzerregistrierung validieren"
 
-#: wp-mail-validator.php:334
-msgid "Leave blank to use the default gateway"
-msgstr "Leer lassen, um das Standard-Gateway zu nutzen"
+#: last-email-validator.php:545
+msgid   "This setting controls the validation of registrants's email "
+        "addresses that register through WordPress's standard user "
+        "registration.<br/><strong>Default: Yes</strong>"
+msgstr  "Diese Einstellung steuert die Validierung der Emailadressen "
+        "von Benutzern, die sich über die WordPress Standard-"
+        "Benutzerregistrierung anmelden"
+        "<br/><strong>Standardwert: Ja</strong>"
 
-#: wp-mail-validator.php:322
-msgid "Settings"
-msgstr "Einstellungen"
+#: last-email-validator.php:551
+msgid   "Save Changes"
+msgstr  "Änderungen speichern"
 
-#: wp-mail-validator.php:315
-msgid "Dismiss this notice"
-msgstr "Diesen Hinweis ausblenden"
+#: last-email-validator.php:556
+msgid   "Statistics"
+msgstr  "Statistik"
 
-#: wp-mail-validator.php:304
-msgid "WP-Mail-Validator trashmail service blacklist restored"
-msgstr "Blacklist des WP-Mail-Validator Trashmail-Dienstes wurde wiederhergestellt"
+#: last-email-validator.php:559
+msgid   "Version"
+msgstr  "Version"
 
-#: wp-mail-validator.php:301
-msgid "WP-Mail-Validator options updated"
-msgstr "WP-Mail-Validator-Optionen wurden aktualisiert"
+#: last-email-validator.php:560
+msgid   "Spam attempts fended"
+msgstr  "Spamversuche abgewehrt"
 
-#. Author URI of the plugin
-msgid "https://github.com/kimpenhaus/"
-msgstr "https://github.com/kimpenhaus/"
+#: last-email-validator.php:563
+msgid   "Documentation"
+msgstr  "Dokumentation"
 
-#. Author of the plugin
-msgid "Marcus Kimpenhaus"
-msgstr "Marcus Kimpenhaus"
-
-#. Description of the plugin
-msgid "WP-Mail-Validator is an anti-spam plugin. It provides mail-address validation in 5 ways: 1. syntax 2. host 3. mx-record of mailserver 4. refuse from user-defined blacklist 5. refuse trashmail services"
-msgstr "WP-Mail-Validator ist ein Anti-Spam-Plugin. Es bietet eine E-Mail-Adressvalidierung in 5 Stufen: 1. Syntax, 2. Mail-Server, 3. MX-Eintrag eines Mailservers, 4. Ablehnung durch benutzerdefinierte Blacklist, 5. Ablehnung durch Trashmail-Dienste"
-
-#. Plugin URI of the plugin
-msgid "https://github.com/kimpenhaus/wp-mail-validator"
-msgstr "https://github.com/kimpenhaus/wp-mail-validator"
-
-#. Plugin Name of the plugin
-msgid "WP-Mail-Validator"
-msgstr "WP-Mail-Validator"
+#: last-email-validator.php:564
+msgid   "Bugs"
+msgstr  "Fehler (Bugs)"
