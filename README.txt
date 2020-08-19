@@ -1,7 +1,7 @@
 === Last Email Validator (LEV) by smings ===
 Contributors: @smings, @kimpenhaus
 Donate link: https://www.patreon.com/smings
-Tags: email validation, registration, free, comments, spam, anti-spam, pingbacks, dns check, mx check, blacklist, disposable_email
+Tags: email validation, registration, free, comments, spam, anti-spam, pingbacks, trackbacks, dns check, mx check, blacklist, domain blacklist, disposable email service blocker
 Requires at least: 5.2
 Tested up to: 5.5
 Stable tag: trunk
@@ -21,7 +21,8 @@ LEV is the only free plugin that provides email address validation for
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
 Additionally you can control whether you want allow pingback & trackbacks
-
+* [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
+* [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 
 ## Features ##
 Last Email Validator (LEV) by smings validates email addresses by checking the following things:
@@ -42,20 +43,23 @@ Currently "Last Email Validator" integrates with:
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
 
-## Origin ##
+## Origins ##
 The foundational code was written by [@kimpenhaus](https://profiles.wordpress.org/kimpenhaus/). 
 Since the original plugin only supported the standard WordPress registration, comments and 
-Trackbacks/Pingbacks, I forked the code and then extended 
+Trackbacks/Pingbacks, we forked the code and then extended 
 it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) 
 as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). 
+The original code was not following best practices either. These shortcomings got
+optimized. 
 
-If you need `Last-Email-Validator` to integrate with more plugins, feel free to contact me at [dirk@smings.com](mailto:dirk@smings.com).
+If you need `Last-Email-Validator` to integrate with more plugins, feel free to contact us at 
+[lev-feature-requests@smings.com](mailto:lev-feature-requests).
 
 == Installation ==
 
 ## Installation from within your WordPress installation
 1. Go to `` -> Add New`
-2. Search for `Last Email Validator`
+2. Search for `Last Email Validator (LEV) by smings`
 3. Click on the `Install Now` button
 4. Click on the `Activate Plugin` button
 
@@ -66,75 +70,48 @@ If you need `Last-Email-Validator` to integrate with more plugins, feel free to 
 3. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-validator` filled with the contents of the plugin code
 4. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
 5. Activate `Last Email Validator` plugin in the plugin list
+6. For using translations, you can optionally copy the language files from ~/wp-content/plugins/last-email-validator/languages/*.mo to ~/wp-content/languages/plugins/
 
 ## Configuration
 You find `Last Email Validator`'s settings in your WordPress installation under
 `Settings -> Last Email Validator`
+By default all features are activated and set to the highest level of spam protection. 
+You should not need to adjust anything unless you want to deactivate things.
 
+## Help us help you
+We are sure that you'll appreciate the extra level of spam protection provided by Last Email Validator (LEV) by smings.
+As of now it is a free plugin. Yet we ask you to show us your appreciation in return by considering a one-time donation 
+(on the settings -> Last Email Validator (LEV) page you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
+This will help us help you and gives you good karma! 
 
-
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. settings-01.png
+2. settings-02.png
+3. settings-03.png
+4. settings-04.png
+5. cf7-01.png
+6. cf7-02.png
+7. woocommerce-01.png
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 1.1.3 =
+* complete German translation
+* Optimized settings
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 1.1.0 =
+* added woocommerce support
+
+= 1.0.0 =
+* added Contact Form 7 support
+* 1st German translations
 
 == Upgrade Notice ==
 
+= 1.1 =
+Added woocommerce support
+
 = 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+Initial Version yet without woocommerce

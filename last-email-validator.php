@@ -636,7 +636,7 @@ function last_email_validator_options_page()
                 </p>
             </form>
 
-            <?php echo __('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> Last Email Validator (LEV) better than it is and help you. Just shoot us an email to <br/><a href="mailto:lev-feature-requests@smings.com">lev-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if Last Email Validator (LEV) delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a one-time donation', 'last-email-validator') ?>
+            <?php echo __('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="https://smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> Last Email Validator (LEV) better than it is and help you. Just shoot us an email to <br/><a href="mailto:lev-feature-requests@smings.com">lev-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if Last Email Validator (LEV) delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a one-time donation', 'last-email-validator') ?>
 
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                 <input type="hidden" name="cmd" value="_s-xclick" />
