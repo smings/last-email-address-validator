@@ -45,8 +45,8 @@ msgid   "Dismiss this notice"
 msgstr  "Hinweis ausblenden"
 
 #: last-email-validator.php:428
-msgid   "Last Email Validator (LEV) Settings"
-msgstr  "Last Email Validator (LEV) Einstellungen"
+msgid   "Settings for '<strong>Last Email Validator (LEV)</strong> <i>by smings</i>'"
+msgstr  "Einstellungen für '<strong>Last Email Validator (LEV)</strong> <i>by smings</i>'"
 
 #: last-email-validator.php:435
 msgid   "Reject email adresses from user-defined blacklist"

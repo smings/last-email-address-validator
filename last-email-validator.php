@@ -2,11 +2,11 @@
 /*
 Plugin Name: Last Email Validator (LEV)
 Plugin URI: https://github.com/smings/last-email-validator/
-Description: LEV provides email address validation for WP's user registration,  WooCommerce's registrations and 'contact form 7' (cf7) forms.
-Version: 1.0.3
+Description: Last Email Validator (LEV) by smings provides email address validation for WP's user registration, comments, WooCommerce, Contact Form 7'
+Version: 1.1.3
 Author: Dirk Tornow
 Author URI: https://smings.de
-Text Domain: lev =
+Text Domain: last-email-validator
 */
 
 // Example of how to get the current translation strings from the 
@@ -425,7 +425,7 @@ function last_email_validator_options_page()
     }
     ?>
         <div class="wrap">
-            <h1><?php echo __('Last Email Validator (LEV) Settings', 'last-email-validator') ?></h1>
+            <h1><?php echo __("Settings for '<strong>Last Email Validator (LEV)</strong> <i>by smings</i>'", 'last-email-validator') ?></h1>
             <?php echo __("Last Email Validator (LEV) validates email addresses of various WordPress functions and plugins in the following ways: <br/><ol><li>Filter against user-defined domain blacklist (if activated)</li><li>Filter against LEV's built-in extensive blacklist of disposable email service domains (if activated)</li><li>Check if the email address is syntactically correct (always)</li><li>Check if the email address's domain has a DNS entry with MX records (always)</li><li>Connect to one of the MX servers and simulate the sending of an email <br/>from <strong>no-reply@$WP_DOMAIN_NAME</strong> to the entered email address (always)</li></ol>Below you can control in which way the selected WordPress functions and plugins will validate entered email adresses" , 'last-email-validator')?>
             <form name="wp_mail_validator_options" method="post">
                 <input type="hidden" name="last_email_validator_options_update_type" value="update" />

@@ -1,37 +1,37 @@
-=== Last Email Validator (LEV) ===
+=== Last Email Validator (LEV) by smings ===
 Contributors: @smings, @kimpenhaus
 Donate link: https://www.patreon.com/smings
 Tags: email validation, registration, free, comments, spam, anti-spam, pingbacks, dns check, mx check, blacklist, disposable_email
 Requires at least: 5.2
-Tested up to: 5.4
+Tested up to: 5.5
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Last Email Validator provides email address validation for WP 
-registration & comments as well as CF7 and WooCommerce
+Last Email Validator (LEV) provides email address validation for WP 
+registration, WP comments, CF7, WooCommerce
 
 == Description ==
 
 ## Last Email Validator (LEV)
 LEV is the only free plugin that provides email address validation for
-* WordPress standard registration 
+* WordPress standard user registration 
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
-* [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
-* [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/)
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
-## Features ##
-Last Email Validator validates email addresses by doing the following checks in 
-the specified order:
-1. Blacklist check (configurable/optional) - if activated checks if the email addresse's domain is on your individual domain blacklist.
-2. Disposable email address provider list (configurable/optional) - if activated checks if the email addresse's domain is on our disposable email address service domain list. The list gets updated monthly. Of course you can also add your own domains. Just make sure you don't accidentally overwrite your manually added domains.
-3. Syntax check - checks if the email follow the standardized email format.
-4. DNS Record check - checks if the domain of the email address is DNS resolvable and has at least one MX Record (Mail eXchange record)
-5. Simulating the sending of an email to one of the accessible MX servers - if the simulated sending of an email fails, the email address also gets rejected
+Additionally you can control whether you want allow pingback & trackbacks
 
-If an email address passes through all these tests, we know for sure, that it the email address can receive emails from your WordPress server. 
+
+## Features ##
+Last Email Validator (LEV) by smings validates email addresses by checking the following things:
+1. User-defined domain blacklist - filters out email addresses from the blacklisted domains (optional)
+2. Disposable email address service provider domain list - if activated checks it filters out email addresses from domain on the blacklist. The list is frequently updated (otional.)
+3. Syntax check - checks if the email address is syntactically correct (always on).
+4. DNS Record check - checks if the domain of the email address is DNS resolvable and has at least one MX Record (Mail eXchange record) (always on)
+5. Simulating the sending of an email to one of the MX servers - if the simulated sending of an email fails, the email address also gets rejected (always on)
+
+If an email address passes through all these tests, we know for sure, that it the a real email address that can be reached by your WordPress instance. 
 
 Currently "Last Email Validator" integrates with:
 * WordPress user registration
