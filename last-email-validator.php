@@ -748,25 +748,13 @@ function last_email_validator_activate_plugin()
 function last_email_validator_uninstall_plugin()
 {
     global $d;
-    // global $wpdb;
-    // global $last_email_validator_options;
-
-    // $table_name = $wpdb->prefix . "last_email_validator";
-
     delete_option('last_email_validator_options');
-
-    // if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name)
-    // {
-    //     $sql = "DROP TABLE IF EXISTS " . $table_name . ";";
-    //     $wpdb->query($sql);
-    // }
-    // $table_name = $wpdb->prefix . "options";
-    // $sql = 'DELETE FROM ' . $table_name . ' WHERE option_name="last_email_validator_options;';
 }
 
-
-// <-- hooks -->
+// adding hooks and action(s)
 register_activation_hook( __FILE__, 'last_email_validator_activate_plugin');
 register_uninstall_hook( __FILE__, 'last_email_validator_uninstall_plugin');
 add_action( 'init', 'last_email_validator_init' );
+
 ?>
+
