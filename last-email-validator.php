@@ -34,66 +34,10 @@ if ( ! function_exists('write_log')) {
 
 $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
 $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
-
+$disposable_email_service_domain_list_url = 'https://raw.githubusercontent.com/smings/last-email-validator/master/data/disposable_email_service_provider_domain_list.txt';
 require_once('includes/last-email-validator.inc.php');
-
-// <-- i18n textdomain -->
 load_plugin_textdomain('last-email-validator');
-if($d)
-    write_log("Loaded text domain");
-// <-- trash mail service blacklist -->
-$disposable_email_service_domain_list_file = plugin_dir_path(__FILE__) . 'data/disposable_email_service_provider_domain_list.txt';
-
-// <-- plugin options -->
 $last_email_validator_options = array();
-
-if (get_option('last_email_validator_options'))
-    $last_email_validator_options = get_option('last_email_validator_options');
-
-if (empty($last_email_validator_options['wp_mail_domain']))
-    $last_email_validator_options['wp_mail_domain'] = $WP_MAIL_DOMAIN;
-
-if (empty($last_email_validator_options['spam_email_addresses_blocked_count']))
-    $last_email_validator_options['spam_email_addresses_blocked_count'] = '0';
-
-if (empty($last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed']))
-    $last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed'] = 'no';
-
-if (empty($last_email_validator_options['default_gateway']))
-    $last_email_validator_options['default_gateway'] = '';
-
-if (empty($last_email_validator_options['accept_pingbacks']))
-    $last_email_validator_options['accept_pingbacks'] = 'yes';
-
-if (empty($last_email_validator_options['accept_trackbacks']))
-    $last_email_validator_options['accept_trackbacks'] = 'yes';
-
-if (empty($last_email_validator_options['use_user_defined_blacklist']))
-    $last_email_validator_options['use_user_defined_blacklist'] = 'yes';
-
-if (empty($last_email_validator_options['user_defined_blacklist']))
-    $last_email_validator_options['user_defined_blacklist'] = "your_blacklisted_domain1.here\nyour_blacklisted_domain2.here";
-
-if (empty($last_email_validator_options['block_disposable_email_service_domains']))
-    $last_email_validator_options['block_disposable_email_service_domains'] = 'yes';
-
-if (empty($last_email_validator_options['disposable_email_service_domain_list'])) 
-{
-    $disposable_email_service_domains = file_exists($disposable_email_service_domain_list_file) ? file_get_contents($disposable_email_service_domain_list_file) : '';
-    $last_email_validator_options['disposable_email_service_domain_list'] = $disposable_email_service_domains;
-}
-
-if (empty($last_email_validator_options['validate_wp_standard_user_registration_email_addresses']))
-    $last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] = 'yes';
-
-if (empty($last_email_validator_options['validate_wp_comment_user_email_addresses']))
-    $last_email_validator_options['validate_wp_comment_user_email_addresses'] = 'yes';
-
-if (empty($last_email_validator_options['validate_woocommerce_registration']))
-    $last_email_validator_options['validate_woocommerce_registration'] = 'yes';
-
-if (empty($last_email_validator_options['validate_cf7_email_fields']))
-    $last_email_validator_options['validate_cf7_email_fields'] = 'yes';
 
 // <-- os detection -->
 $is_windows = strncasecmp(PHP_OS, 'WIN', 3) == 0 ? true : false;
@@ -136,6 +80,10 @@ if (! function_exists('getmxrr'))
 function last_email_validator_init() 
 {
     global $d;
+    global $last_email_validator_options;
+    global $disposable_email_service_domain_list_url;
+    global $WP_MAIL_DOMAIN;
+
     add_filter('pre_comment_approved', 'last_email_validator_validate_comment_email_addresses', 99, 2);
     add_filter('registration_errors', 'last_email_validator_validate_registration_email_addresses', 99, 3);
 
@@ -161,6 +109,59 @@ function last_email_validator_init()
         add_action('admin_menu', 'last_email_validator_add_options_page');
         add_action('admin_enqueue_scripts', 'last_email_validator_enque_scripts');
     }
+
+
+    // Now we set and persist the default values for the plugin
+    if ( get_option('last_email_validator_options') )
+        $last_email_validator_options = get_option('last_email_validator_options');
+    
+    if ( empty($last_email_validator_options['wp_mail_domain']) )
+        $last_email_validator_options['wp_mail_domain'] = $WP_MAIL_DOMAIN;
+    
+    if ( empty($last_email_validator_options['spam_email_addresses_blocked_count']) )
+        $last_email_validator_options['spam_email_addresses_blocked_count'] = '0';
+    
+    if ( empty($last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed']))
+        $last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed'] = 'no';
+    
+    if ( empty($last_email_validator_options['default_gateway']) )
+        $last_email_validator_options['default_gateway'] = '';
+    
+    if ( empty($last_email_validator_options['accept_pingbacks']) )
+        $last_email_validator_options['accept_pingbacks'] = 'yes';
+    
+    if ( empty($last_email_validator_options['accept_trackbacks']) )
+        $last_email_validator_options['accept_trackbacks'] = 'yes';
+    
+    if ( empty($last_email_validator_options['use_user_defined_blacklist']) )
+        $last_email_validator_options['use_user_defined_blacklist'] = 'yes';
+    
+    if ( empty($last_email_validator_options['user_defined_blacklist']) )
+        $last_email_validator_options['user_defined_blacklist'] = "your_blacklisted_domain1.here\nyour_blacklisted_domain2.here";
+    
+    if ( empty($last_email_validator_options['block_disposable_email_service_domains']) )
+        $last_email_validator_options['block_disposable_email_service_domains'] = 'yes';
+    
+    if ( empty($last_email_validator_options['disposable_email_service_domain_list']) ) 
+    {
+        $disposable_email_service_domains = file_get_contents($disposable_email_service_domain_list_url);
+        $last_email_validator_options['disposable_email_service_domain_list'] = $disposable_email_service_domains;
+    }
+    
+    if ( empty($last_email_validator_options['validate_wp_standard_user_registration_email_addresses']) )
+        $last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] = 'yes';
+    
+    if ( empty($last_email_validator_options['validate_wp_comment_user_email_addresses']) )
+        $last_email_validator_options['validate_wp_comment_user_email_addresses'] = 'yes';
+    
+    if ( empty($last_email_validator_options['validate_woocommerce_registration']) )
+        $last_email_validator_options['validate_woocommerce_registration'] = 'yes';
+    
+    if ( empty($last_email_validator_options['validate_cf7_email_fields']) )
+        $last_email_validator_options['validate_cf7_email_fields'] = 'yes';
+    
+    update_option('last_email_validator_options', $last_email_validator_options);
+
 }
 
 function last_email_validator_validate_comment_email_addresses($approved, $comment_data)
@@ -230,7 +231,7 @@ function last_email_validator_validate_registration_email_addresses($errors, $sa
     {
         $approved = last_email_validator_validate_email_address('', $user_email);
         if ($approved === 'spam') 
-            $errors->add('wp_mail-validator-registration-error', __( 'This email domain is not accepted/valid. Try another one.', 'last-email-validator'));
+            $errors->add('wp_mail-validator-registration-error', _e( 'This email domain is not accepted/valid. Try another one.', 'last-email-validator'));
     }
 
     return $errors;
@@ -251,7 +252,7 @@ function last_email_validator_validate_cf7_email_addresses($result, $tags)
             write_log("Validating CF7 email address '$user_email'");
         $approved = last_email_validator_validate_email_address('', $user_email);
         if ( $approved === 'spam')
-            $result->invalidate( $tags, __( 'The e-mail address entered is invalid.', 'contact-form-7' ));
+            $result->invalidate( $tags, _e( 'The e-mail address entered is invalid.', 'contact-form-7' ));
         if($d)
             write_log("Result of validating CF7 email address '$user_email' => approved = '$approved'");
     }
@@ -347,7 +348,7 @@ function increment_count_of_blocked_email_addresses()
 function last_email_validator_powered_by_label($string_before = "", $string_after = "")
 {
     global $d;
-    $label = $string_before . __('Anti spam protected by', 'last-email-validator') . ': <a href="https://github.com/smings/last-email-validator" title="Last Email Validator (LEV)" target="_blank">Last Email Validator (LEV)</a> - <strong>%s</strong> ' . __('Spam email addresses blocked', 'last-email-validator') . '!' . $string_after;
+    $label = $string_before . _e('Anti spam protected by', 'last-email-validator') . ': <a href="https://github.com/smings/last-email-validator" title="Last Email Validator (LEV)" target="_blank">Last Email Validator (LEV)</a> - <strong>%s</strong> ' . _e('Spam email addresses blocked', 'last-email-validator') . '!' . $string_after;
     return sprintf($label, last_email_validator_get_blocked_email_address_count());
 }
 
@@ -377,13 +378,13 @@ function last_email_validator_options_page()
 {
     global $d;
     global $last_email_validator_options;
+    global $disposable_email_service_domain_list_url;
     global $is_windows;
-    global $disposable_email_service_domain_list_file;
+
 
 
     if (isset($_POST['last_email_validator_options_update_type']))
     {
-        $wp_mail_validator_updated_options = $last_email_validator_options;
         $update_notice = '';
 
         if($d)
@@ -398,16 +399,17 @@ function last_email_validator_options_page()
                     write_log("key=value => $key=$value");
                 if ($key !== 'last_email_validator_options_update_type' && $key !== 'submit')
                 {
-                    $wp_mail_validator_updated_options[$key] = $value;
+                    $last_email_validator_options[$key] = $value;
                 }
             }
             $update_notice = __('Last Email Validator (LEV) options updated', 'last-email-validator');
         } 
         elseif ($_POST['last_email_validator_options_update_type'] === 'restore_disposable_email_service_domain_blacklist')
         {
+            $disposable_email_service_domains = file_get_contents($disposable_email_service_domain_list_url);
+            $last_email_validator_options['disposable_email_service_domain_list'] = $disposable_email_service_domains;
             if($d)
-                write_log( "We are in the elsif part in line 349");
-            $wp_mail_validator_updated_options['disposable_email_service_domain_list'] = file_get_contents($disposable_email_service_domain_list_file);
+                write_log($last_email_validator_options);
             $update_notice = __('Last Email Validator (LEV) disposable email services domain blacklist restored', 'last-email-validator');
         }
         else
@@ -416,7 +418,7 @@ function last_email_validator_options_page()
                 write_log("nothing matched");
         }
 
-        update_option('last_email_validator_options', $wp_mail_validator_updated_options);
+        update_option('last_email_validator_options', $last_email_validator_options);
         $last_email_validator_options = get_option('last_email_validator_options');
     ?>
         <div id="setting-error-settings_updated" class="updated settings-error notice is-dismissible"> 
@@ -424,61 +426,66 @@ function last_email_validator_options_page()
                 <strong><?php echo $update_notice ?>.</strong>
             </p>
             <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text"><?php echo __('Dismiss this notice', 'last-email-validator') ?>.</span>
+                <span class="screen-reader-text"><?php _e('Dismiss this notice', 'last-email-validator') ?>.</span>
             </button>
         </div>
     <?php
     }
     ?>
         <div class="wrap">
-            <h1><?php echo __("Settings for '<strong>Last Email Validator (LEV)</strong> <i>by smings</i>'", 'last-email-validator') ?></h1>
-            <?php echo __("Last Email Validator (LEV) validates email addresses of various WordPress functions and plugins in the following ways:" , 'last-email-validator')?>
+            <h1><?php _e('Settings for <strong>Last Email Validator (LEV)</strong> <i>by smings</i>', 'last-email-validator') ?></h1>
+            <?php _e('Last Email Validator (LEV) validates email addresses of various WordPress functions and plugins in the following ways' , 'last-email-validator'); ?>
             <ol>
                 <li>
-                    <?php echo __("Filter against user-defined domain blacklist (if activated)" , 'last-email-validator')?>
+                    <?php _e('Check if the email address is syntactically correct (always)', 'last-email-validator'); ?>
                 </li>
                 <li>
-                    <?php echo __("Filter against LEV's built-in extensive blacklist of disposable email service domains (if activated)" , 'last-email-validator')?>
+                    <?php _e('Filter against user-defined domain blacklist (if activated)' , 'last-email-validator'); ?>
                 </li>
                 <li>
-                    <?php echo __("Check if the email address is syntactically correct (always)" , 'last-email-validator')?>
+                    <?php _e('Filter against LEV\'s built-in extensive blacklist of disposable email service domains (if activated)', 'last-email-validator'); ?>
                 </li>
                 <li>
-                    <?php echo __("Check if the email address's domain has a DNS entry with MX records (always)" , 'last-email-validator')?>
+                    <?php _e('Check if the email address\'s domain has a DNS entry with MX records (always)', 'last-email-validator'); ?>
                 </li>
                 <li>
-                    <?php echo __("Connect to one of the MX servers and simulate the sending of an email from <strong>no-reply@", 'last-email-validator'); echo ($last_email_validator_options['wp_mail_domain']); echo __("</strong> to the entered email address (always)", 'last-email-validator' )?>
+                    <?php 
+                        _e('Connect to one of the MX servers and simulate the sending of an email from <strong>no-reply@', 'last-email-validator'); 
+                        echo ($last_email_validator_options['wp_mail_domain']); 
+                        _e('</strong> to the entered email address (always)', 'last-email-validator' ); ?>
                 </li>
             </ol>
-            <?php echo __("Below you can control in which way the selected WordPress functions and plugins will validate entered email adresses." , 'last-email-validator')?>
+<?php 
+_e('Below you can control in which way the selected WordPress functions and plugins will validate entered email adresses.' , 'last-email-validator');
+?>
             <form name="wp_mail_validator_options" method="post">
                 <input type="hidden" name="last_email_validator_options_update_type" value="update" />
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php echo __('Email domain for simulating sending of emails to entered email addresses', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Email domain for simulating sending of emails to entered email addresses', 'last-email-validator'); ?>:</th>
                         <td>
                             <label>
-                                <input name="wp_mail_domain" type="text" size="40" value="<?php echo ($last_email_validator_options['wp_mail_domain']);?>" required="required" minlength="5" pattern="([A-Za-z0-9]+\.)*[A-Za-z0-9][A-Za-z0-9]+\.[A-Za-z]{2,18}"/>
+                                <input name="wp_mail_domain" type="text" size="40" value="<?php echo ( $last_email_validator_options['wp_mail_domain']); ?>" required="required" minlength="5" pattern="^([A-Za-z0-9]+\.)*[A-Za-z0-9][A-Za-z0-9]+\.[A-Za-z]{2,18}$"/>
                             </label>
                             <p class="description">
-                                <?php echo __('Email domain used for simulating the sending of an email from ', 'last-email-validator'); echo("no-reply@<strong>" . $last_email_validator_options['wp_mail_domain'] ); echo __('</strong> to the entered email address, that gets validated', 'last-email-validator') ?>
+                                <?php _e('Email domain used for simulating the sending of an email from ', 'last-email-validator'); echo("no-reply@<strong>" . $last_email_validator_options['wp_mail_domain'] ); _e('</strong> to the entered email address, that gets validated', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo __('Reject email adresses from user-defined blacklist', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Reject email adresses from user-defined blacklist', 'last-email-validator'); ?>:</th>
                         <td>
                             <label>
-                                <input name="use_user_defined_blacklist" type="radio" value="yes" <?php if ($last_email_validator_options['use_user_defined_blacklist'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <input name="use_user_defined_blacklist" type="radio" value="yes" <?php if ($last_email_validator_options['use_user_defined_blacklist'] == 'yes') { echo ('checked="checked" '); } ?>/>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
-                                <input name="use_user_defined_blacklist" type="radio" value="no" <?php if ($last_email_validator_options['use_user_defined_blacklist'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <input name="use_user_defined_blacklist" type="radio" value="no" <?php if ($last_email_validator_options['use_user_defined_blacklist'] == 'no') { echo ('checked="checked" '); } ?>/>
+                                <?php _e('No', 'last-email-validator'); ?>
                             </label>
                             <p class="description">
-                                <?php echo __('Email addresses from the domains on this blacklist will be rejected (if active). <br/><strong>Use one domain per line</strong>.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('Email addresses from the domains on this blacklist will be rejected (if active). <br/><strong>Use one domain per line</strong>.<br/><strong>Default: Yes</strong>', 'last-email-validator'); ?>
                             </p>
                         </td>
                     </tr>
@@ -490,23 +497,23 @@ function last_email_validator_options_page()
                             </label>
                             <p class="description">
                                 <span id="user_defined_blacklist_line_count">0</span>
-                                <?php echo __('User-defined blacklisted email domains', 'last-email-validator') ?>
+                                <?php _e('User-defined blacklisted email domains', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo __('Reject email adresses from LEV\'s comprehensive and frequently updated list of disposable email services', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Reject email adresses from LEV\'s comprehensive and frequently updated list of disposable email services', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
-                                <input name="filter_against_disposable_email_service_domain_list" type="radio" value="yes" <?php if ($last_email_validator_options['block_disposable_email_service_domains'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <input name="block_disposable_email_service_domains" type="radio" value="yes" <?php if ($last_email_validator_options['block_disposable_email_service_domains'] == 'yes') { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
-                                <input name="filter_against_disposable_email_service_domain_list" type="radio" value="no" <?php if ($last_email_validator_options['block_disposable_email_service_domains'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <input name="block_disposable_email_service_domains" type="radio" value="no" <?php if ($last_email_validator_options['block_disposable_email_service_domains'] == 'no') { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('The listed domains are currently known services that provide single use email<br/>addresses (disposable email addresses). Users that make use of these services<br/>might just want to protect their own privacy. Users might also be spammers. <br/>There is no good choice. In doubt we encourage you to value your lifetime and <br/>reject email addresses from these domains. We frequently update this list. For<br/>retrieving updates, click the update button. For blocking domains of your <br/>choosing, use the user-defined blacklist option above.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('The listed domains are known services that provide disposable email addresses. Users that make use of these services might just want to protect their own privacy. But they might also be spammers. There is no good choice. In doubt we encourage you to value your lifetime and reject email addresses from these domains. We frequently update this list. For retrieving updates, click the update button below. For blocking domains of your own choosing, use the user-defined blacklist option above.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
@@ -518,135 +525,131 @@ function last_email_validator_options_page()
                             </label>
                             <p class="description">
                                 <span id="disposable_email_service_domain_blacklist_line_count">0</span>
-                                <?php echo __('Entries', 'last-email-validator') ?>
+                                <?php _e('Entries', 'last-email-validator') ?>
                             </p>
                             <p class="submit">
-                                <input class="button button-primary" type="submit" id="disposable_email_service_domain_blacklist_restore" name="submit" value="<?php echo __('Update list', 'last-email-validator') ?>" />
+                                <input class="button button-primary" type="submit" id="disposable_email_service_domain_blacklist_restore" name="submit" value="<?php _e('Update list', 'last-email-validator') ?>" />
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo __('Accept syntactically correct email addresses on connection errors', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Accept syntactically correct email addresses on connection errors', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="accept_syntactically_correct_email_addresses_when_connection_to_mx_failed" type="radio" value="yes" <?php if ($last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="accept_syntactically_correct_email_addresses_when_connection_to_mx_failed" type="radio" value="no"<?php if ($last_email_validator_options['accept_syntactically_correct_email_addresses_when_connection_to_mx_failed'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __("In order to thoroughly validate email addresses, LEV tries to connect to at <br/>least one of the MX (Mail eXchange) servers in the email domain's DNS record. <br/>Usually there are ≥2 MX servers. When this option is set to 'Yes', <br/>the failure to connect to any of the MX servers will be ignored and <br/>syntactically correct email addresses will be accepted.<br/>We do not recommend this, since it will result in more spam.  <br/><strong>Default: No</strong>", 'last-email-validator') ?>.
+                                <?php _e("In order to thoroughly validate email addresses, LEV tries to connect to at <br/>least one of the MX (Mail eXchange) servers in the email domain's DNS record. <br/>Usually there are ≥2 MX servers. When this option is set to 'Yes', <br/>the failure to connect to any of the MX servers will be ignored and <br/>syntactically correct email addresses will be accepted.<br/>We do not recommend this, since it will result in more spam.  <br/><strong>Default: No</strong>", 'last-email-validator') ?>.
                             </p>
                         </td>
                     </tr>
 
 
                 </table>
-                <h2><?php echo __('Accepting pingbacks / trackbacks without validation', 'last-email-validator') ?></h2>
-                <?php echo __('Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validator.</br>Therefore <strong>pingbacks and trackbacks pose a certain spam risk</strong>. They are also free marketing.<br/>By default we therefore accept them. But feel free to reject them.', 'last-email-validator') ?>
+                <h2><?php _e('Accepting pingbacks / trackbacks without validation', 'last-email-validator') ?></h2>
+                <?php _e('Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validator.</br>Therefore <strong>pingbacks and trackbacks pose a certain spam risk</strong>. They are also free marketing.<br/>By default we therefore accept them. But feel free to reject them.', 'last-email-validator') ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php echo __('Accept pingbacks', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Accept pingbacks', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="accept_pingbacks" type="radio" value="yes" <?php if ($last_email_validator_options['accept_pingbacks'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="accept_pingbacks" type="radio" value="no" <?php if ($last_email_validator_options['accept_pingbacks'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <strong><?php echo __('Default:', 'last-email-validator') ?> <?php echo __('Yes', 'last-email-validator') ?></strong>
+                                <strong><?php _e('Default:', 'last-email-validator') ?> <?php _e('Yes', 'last-email-validator') ?></strong>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo __('Accept trackbacks', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('Accept trackbacks', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="accept_trackbacks" type="radio" value="yes" <?php if ($last_email_validator_options['accept_trackbacks'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="accept_trackbacks" type="radio" value="no" <?php if ($last_email_validator_options['accept_trackbacks'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <strong><?php echo __('Default:', 'last-email-validator') ?> <?php echo __('Yes', 'last-email-validator') ?></strong>
+                                <strong><?php _e('Default:', 'last-email-validator') ?> <?php _e('Yes', 'last-email-validator') ?></strong>
                             </p>
                         </td>
                     </tr>
                 </table>
-                <h2><?php echo __('Control which of WordPress\'s functions and plugins should be email validated by LEV', 'last-email-validator') ?></h2>
-                <?php echo __('Last Email Validator (LEV) is currently capable of validating the email<br/>addresses for the following WordPress features and plugins (if installed and activated): <br/><ol><li>WordPress user registration (<a href="/wp-admin/options-general.php" target="_blank" target="_blank">Settings -> General</a>)</li><li>WordPress comments (<a href="/wp-admin/options-discussion.php" target="_blank">Settings -> Discussion)</li><li><a href="https://wordpress.org/plugins/woocommerce/" target="_blank"> WooCommerce (plugin)</a></li><li><a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7 (plugin)</a></li></ol></br>', 'last-email-validator') ?>
+                <h2><?php _e('Control which of WordPress\'s functions and plugins should be email validated by LEV', 'last-email-validator') ?></h2>
+                <?php _e('Last Email Validator (LEV) is currently capable of validating the email<br/>addresses for the following WordPress features and plugins (if installed and activated): <br/><ol><li>WordPress user registration (<a href="/wp-admin/options-general.php" target="_blank" target="_blank">Settings -> General</a>)</li><li>WordPress comments (<a href="/wp-admin/options-discussion.php" target="_blank">Settings -> Discussion)</li><li><a href="https://wordpress.org/plugins/woocommerce/" target="_blank"> WooCommerce (plugin)</a></li><li><a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7 (plugin)</a></li></ol></br>', 'last-email-validator') ?>
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php echo __('1. Validate WordPress user registration', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('1. Validate WordPress user registration', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
-                                <input name="check_registrations" type="radio" value="yes" <?php if ($last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
-                            </label>
+                                <input name="validate_wp_standard_user_registration_email_addresses" type="radio" value="yes" <?php if ($last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] == 'yes') { echo 'checked="checked" '; } ?>/><?php _e('Yes', 'last-email-validator') ?></label>
                             <label>
-                                <input name="check_registrations" type="radio" value="no" <?php if ($last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
-                            </label>
+                                <input name="validate_wp_standard_user_registration_email_addresses" type="radio" value="no" <?php if ($last_email_validator_options['validate_wp_standard_user_registration_email_addresses'] == 'no') { echo 'checked="checked" '; } ?>/><?php _e('No', 'last-email-validator') ?></label>
                             <p class="description">
-                                <?php echo __('This validates all registrants email address\'s that register through WordPress\'s standard user registration.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('This validates all registrants email address\'s that register through WordPress\'s standard user registration.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo __('2. Validate WordPress comments', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('2. Validate WordPress comments', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="validate_wp_comment_user_email_addresses" type="radio" value="yes" <?php if ($last_email_validator_options['validate_wp_comment_user_email_addresses'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="validate_wp_comment_user_email_addresses" type="radio" value="no" <?php if ($last_email_validator_options['validate_wp_comment_user_email_addresses'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('This validates all commentor email address\'s that comment through WordPress\'s standard comment functionality.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('This validates all commentor email address\'s that comment through WordPress\'s standard comment functionality.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
 
                     <tr>
-                        <th scope="row"><?php echo __('3. Validate WooCommerce (plugin)', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('3. Validate WooCommerce (plugin)', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="validate_woocommerce_registration" type="radio" value="yes" <?php if ($last_email_validator_options['validate_woocommerce_registration'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="validate_woocommerce_registration" type="radio" value="no" <?php if ($last_email_validator_options['validate_wp_comment_user_email_addresses'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('Validate all WooCommerce email addresses during registration and checkout.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('Validate all WooCommerce email addresses during registration and checkout.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
 
                     <tr>
-                        <th scope="row"><?php echo __('4. Validate Contact Form 7 (plugin)', 'last-email-validator') ?>:</th>
+                        <th scope="row"><?php _e('4. Validate Contact Form 7 (plugin)', 'last-email-validator') ?>:</th>
                         <td>
                             <label>
                                 <input name="validate_cf7_email_fields" type="radio" value="yes" <?php if ($last_email_validator_options['validate_cf7_email_fields'] == 'yes') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('Yes', 'last-email-validator') ?>
+                                <?php _e('Yes', 'last-email-validator') ?>
                             </label>
                             <label>
                                 <input name="validate_cf7_email_fields" type="radio" value="no" <?php if ($last_email_validator_options['validate_cf7_email_fields'] == 'no') { echo 'checked="checked" '; } ?>/>
-                                <?php echo __('No', 'last-email-validator') ?>
+                                <?php _e('No', 'last-email-validator') ?>
                             </label>
                             <p class="description">
-                                <?php echo __('Validate all Contact Form 7 email address fields.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
+                                <?php _e('Validate all Contact Form 7 email address fields.<br/><strong>Default: Yes</strong>', 'last-email-validator') ?>
                             </p>
                         </td>
                     </tr>
@@ -656,10 +659,10 @@ function last_email_validator_options_page()
                 <?php if ($is_windows) { ?>
                     <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                         <tr>
-                            <th scope="row"><?php echo__('Default gateway IP', 'last-email-validator') ?>:</th>
+                            <th scope="row"><?php echo_e('Default gateway IP', 'last-email-validator') ?>:</th>
                             <td>
                                 <input name="default_gateway" type="text" id="default_gateway" value="<?php echo $last_email_validator_options['default_gateway'] ?>" maxlength="15" size="40" />
-                                <br /><?php echo __('Leave blank to use Windows default gateway', 'last-email-validator') ?>.
+                                <br /><?php _e('Leave blank to use Windows default gateway', 'last-email-validator') ?>.
                             </td>
                         </tr>
                     </table>
@@ -667,11 +670,11 @@ function last_email_validator_options_page()
 
 
                 <p class="submit">
-                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php echo __('Save Changes', 'last-email-validator') ?>" />
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e('Save Changes', 'last-email-validator') ?>" />
                 </p>
             </form>
 
-            <?php echo __('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="https://smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> Last Email Validator (LEV) better than it is and help you. Just shoot us an email to <br/><a href="mailto:lev-feature-requests@smings.com">lev-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if Last Email Validator (LEV) delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a one-time donation', 'last-email-validator') ?>
+            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="https://smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> Last Email Validator (LEV) better than it is and help you. Just shoot us an email to <br/><a href="mailto:lev-feature-requests@smings.com">lev-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if Last Email Validator (LEV) delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a one-time donation', 'last-email-validator') ?>
 
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                 <input type="hidden" name="cmd" value="_s-xclick" />
@@ -680,23 +683,23 @@ function last_email_validator_options_page()
                 <img alt="" border="0" src="https://www.paypal.com/en_DE/i/scr/pixel.gif" width="1" height="1" />
             </form>
 
-            <?php echo __('or become a patreon on our patreon page at', 'last-email-validator') ?>
+            <?php _e('or become a patreon on our patreon page at', 'last-email-validator') ?>
                 <strong>
                     <a href="https://www.patreon.com/smings" target="_blank">
-            <?php echo __('patreon.com/smings.', 'last-email-validator') ?>
+            <?php _e('patreon.com/smings.', 'last-email-validator') ?>
                     </a>
                 </strong>
         </div>
         <div class="wrap">
-            <h1><?php echo __('Statistics', 'last-email-validator') ?></h1>
+            <h1><?php _e('Statistics', 'last-email-validator') ?></h1>
             <div class="card">
                 <p>
-                    <?php echo sprintf(__('Version', 'last-email-validator') . ': <strong>%s</strong>', last_email_validator_version()) ?>&nbsp;|
-                    <?php echo sprintf(__('Spam attacks fended', 'last-email-validator') . ': <strong>%s</strong>', last_email_validator_get_blocked_email_address_count()) ?>
+                    <?php echo sprintf(_e('Version', 'last-email-validator') . ': <strong>%s</strong>', last_email_validator_version()) ?>&nbsp;|
+                    <?php echo sprintf(_e('Spam attacks fended', 'last-email-validator') . ': <strong>%s</strong>', last_email_validator_get_blocked_email_address_count()) ?>
                 </p>
                 <p>
-                    <a href="https://github.com/smings/last-email-validator/wiki"><?php echo __('Documentation', 'last-email-validator') ?></a>&nbsp;|
-                    <a href="https://github.com/smings/last-email-validator/issues"><?php echo __('Bugs', 'last-email-validator') ?></a>
+                    <a href="https://github.com/smings/last-email-validator/wiki"><?php _e('Documentation', 'last-email-validator') ?></a>&nbsp;|
+                    <a href="https://github.com/smings/last-email-validator/issues"><?php _e('Bugs', 'last-email-validator') ?></a>
                 </p>
             </div>
         </div>
@@ -734,11 +737,12 @@ function last_email_validator_activate_plugin()
         $count = $wpdb->get_var($sql);
 
         $last_email_validator_options['spam_email_addresses_blocked_count'] = $count;
-        update_option('lasr_email_validator_options', $last_email_validator_options);
+        update_option('last_email_validator_options', $last_email_validator_options);
 
         $sql = "DROP TABLE IF EXISTS " . $table_name . ";";
         $wpdb->query($sql);
     }
+    update_option('last_email_validator_options', $last_email_validator_options);
 }
 
 function last_email_validator_uninstall_plugin()
