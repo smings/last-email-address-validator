@@ -32,6 +32,9 @@ if ( ! function_exists('write_log')) {
    }
 }
 
+$WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
+$WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
+
 require_once('includes/last-email-validator.inc.php');
 
 // <-- i18n textdomain -->
@@ -46,6 +49,9 @@ $last_email_validator_options = array();
 
 if (get_option('last_email_validator_options'))
     $last_email_validator_options = get_option('last_email_validator_options');
+
+if (empty($last_email_validator_options['wp_mail_domain']))
+    $last_email_validator_options['wp_mail_domain'] = $WP_MAIL_DOMAIN;
 
 if (empty($last_email_validator_options['spam_email_addresses_blocked_count']))
     $last_email_validator_options['spam_email_addresses_blocked_count'] = '0';
@@ -373,7 +379,7 @@ function last_email_validator_options_page()
     global $last_email_validator_options;
     global $is_windows;
     global $disposable_email_service_domain_list_file;
-    $WP_DOMAIN_NAME = getenv( "HTTP_HOST" );
+
 
     if (isset($_POST['last_email_validator_options_update_type']))
     {
@@ -426,11 +432,40 @@ function last_email_validator_options_page()
     ?>
         <div class="wrap">
             <h1><?php echo __("Settings for '<strong>Last Email Validator (LEV)</strong> <i>by smings</i>'", 'last-email-validator') ?></h1>
-            <?php echo __("Last Email Validator (LEV) validates email addresses of various WordPress functions and plugins in the following ways: <br/><ol><li>Filter against user-defined domain blacklist (if activated)</li><li>Filter against LEV's built-in extensive blacklist of disposable email service domains (if activated)</li><li>Check if the email address is syntactically correct (always)</li><li>Check if the email address's domain has a DNS entry with MX records (always)</li><li>Connect to one of the MX servers and simulate the sending of an email <br/>from <strong>no-reply@$WP_DOMAIN_NAME</strong> to the entered email address (always)</li></ol>Below you can control in which way the selected WordPress functions and plugins will validate entered email adresses" , 'last-email-validator')?>
+            <?php echo __("Last Email Validator (LEV) validates email addresses of various WordPress functions and plugins in the following ways:" , 'last-email-validator')?>
+            <ol>
+                <li>
+                    <?php echo __("Filter against user-defined domain blacklist (if activated)" , 'last-email-validator')?>
+                </li>
+                <li>
+                    <?php echo __("Filter against LEV's built-in extensive blacklist of disposable email service domains (if activated)" , 'last-email-validator')?>
+                </li>
+                <li>
+                    <?php echo __("Check if the email address is syntactically correct (always)" , 'last-email-validator')?>
+                </li>
+                <li>
+                    <?php echo __("Check if the email address's domain has a DNS entry with MX records (always)" , 'last-email-validator')?>
+                </li>
+                <li>
+                    <?php echo __("Connect to one of the MX servers and simulate the sending of an email from <strong>no-reply@", 'last-email-validator'); echo ($last_email_validator_options['wp_mail_domain']); echo __("</strong> to the entered email address (always)", 'last-email-validator' )?>
+                </li>
+            </ol>
+            <?php echo __("Below you can control in which way the selected WordPress functions and plugins will validate entered email adresses." , 'last-email-validator')?>
             <form name="wp_mail_validator_options" method="post">
                 <input type="hidden" name="last_email_validator_options_update_type" value="update" />
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php echo __('Email domain for simulating sending of emails to entered email addresses', 'last-email-validator') ?>:</th>
+                        <td>
+                            <label>
+                                <input name="wp_mail_domain" type="text" size="40" value="<?php echo ($last_email_validator_options['wp_mail_domain']);?>" required="required" minlength="5" pattern="([A-Za-z0-9]+\.)*[A-Za-z0-9][A-Za-z0-9]+\.[A-Za-z]{2,18}"/>
+                            </label>
+                            <p class="description">
+                                <?php echo __('Email domain used for simulating the sending of an email from ', 'last-email-validator'); echo("no-reply@<strong>" . $last_email_validator_options['wp_mail_domain'] ); echo __('</strong> to the entered email address, that gets validated', 'last-email-validator') ?>
+                            </p>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row"><?php echo __('Reject email adresses from user-defined blacklist', 'last-email-validator') ?>:</th>
                         <td>
