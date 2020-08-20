@@ -124,7 +124,7 @@ class LEVemailValidator
 	// Ask the smtp-server, if email address exists
 	function simulateEmailSending( $fpMailServer, $strMailRecipient )
 	{
-		global $WP_MAIL_DOMAIN;
+		global $last_email_validator_options;
 
 		// check, if server is ready to accept SMTP commands ( Return-Code: 220 )
 		$strAnswer = @fgets( $fpMailServer, SMTP_CONNECTION_TIMEOUT_LONG );
@@ -140,7 +140,7 @@ class LEVemailValidator
 		}
 
 		// say hi ( Return-Code: 250 )
-		@fwrite ( $fpMailServer, "HELO " . $WP_MAIL_DOMAIN . "\n" );
+		@fwrite ( $fpMailServer, "HELO " . $last_email_validator_options['wp_mail_domain'] . "\n" );
 		$strAnswer = @fgets( $fpMailServer, SMTP_CONNECTION_TIMEOUT_LONG );
 		
 		if( !preg_match( "/^250/", $strAnswer ) ) // request rejected ( bad client-host?? )
@@ -150,7 +150,7 @@ class LEVemailValidator
 		}
 
 		// tell the server, who wants to send the mail ( Return-Code: 250 )
-		@fwrite ( $fpMailServer, "MAIL FROM: <no-reply@" . $WP_MAIL_DOMAIN . ">\n" );
+		@fwrite ( $fpMailServer, "MAIL FROM: <no-reply@" . $last_email_validator_options['wp_mail_domain'] . ">\n" );
 
 		$strAnswer = @fgets( $fpMailServer, SMTP_CONNECTION_TIMEOUT_SHORT );
 
