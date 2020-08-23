@@ -469,7 +469,7 @@ _e('Below you can control in which way the selected WordPress functions and plug
                                 <input name="wp_mail_domain" type="text" size="40" value="<?php echo ( $leav_options['wp_mail_domain']); ?>" required="required" minlength="5" pattern="^([A-Za-z0-9]+\.)*[A-Za-z0-9][A-Za-z0-9]+\.[A-Za-z]{2,18}$"/>
                             </label>
                             <p class="description">
-                                <?php _e('Email domain used for simulating the sending of an email from ', 'leav'); echo("no-reply@<strong>" . $leav_options['wp_mail_domain'] ); _e('</strong> to the entered email address, that gets validated', 'leav') ?>
+                                <?php _e('Email domain used for simulating the sending of an email from ', 'leav'); echo("no-reply@<strong>" . $leav_options['wp_mail_domain'] ); _e('</strong> to the entered email address, that gets validated.<br/><strong>Use the email domain, you use for sending emails from your WordPress instance!</strong>', 'leav') ?>
                             </p>
                         </td>
                     </tr>

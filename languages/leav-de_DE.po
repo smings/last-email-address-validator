@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: translastions@smings.com\n"
-"POT-Creation-Date: 2020-08-23 09:05+0200\n"
-"PO-Revision-Date: 2020-08-23 09:07+0200\n"
+"POT-Creation-Date: 2020-08-23 09:11+0200\n"
+"PO-Revision-Date: 2020-08-23 09:26+0200\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -121,8 +121,14 @@ msgstr ""
 "Emailadressen"
 
 #: leav.php:472
-msgid "</strong> to the entered email address, that gets validated"
-msgstr "</strong an die zu überprüfende Emailaddresse"
+msgid ""
+"</strong> to the entered email address, that gets validated.<br/><strong>Use "
+"the email domain, you use for sending emails from your WordPress instance!</"
+"strong>"
+msgstr ""
+"</strong> an die zu validierende Emailaddresse. <br/><strong>Verwende die "
+"Emaildomain mit der du von deiner WordPress-Instanz Emails versendest!</"
+"strong>"
 
 #: leav.php:472
 msgid "Email domain used for simulating the sending of an email from "
@@ -390,6 +396,9 @@ msgstr "Dokumentation"
 #: leav.php:702
 msgid "Bugs"
 msgstr "Fehler (Bugs)"
+
+#~ msgid "</strong> to the entered email address, that gets validated"
+#~ msgstr "</strong an die zu überprüfende Emailaddresse"
 
 #~ msgid ""
 #~ "LEAV - Last Email Address Validator disposable email services domain "
