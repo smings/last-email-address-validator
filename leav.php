@@ -34,7 +34,7 @@ if ( ! function_exists('write_log')) {
 
 $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
 $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
-$disposable_email_service_domain_list_url = 'https://raw.githubusercontent.com/smings/leav-list/master/data/disposable_email_service_provider_domain_list.txt';
+$disposable_email_service_domain_list_url = 'https://raw.githubusercontent.com/smings/leav-list/master/disposable_email_service_provider_domain_list.txt';
 require_once('includes/leav.inc.php');
 load_plugin_textdomain('leav');
 $leav_options = array();
