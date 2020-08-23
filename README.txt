@@ -1,10 +1,10 @@
 === LEAV Last Email Address Validator by smings (light edition) ===
-Contributors: smings, kimpenhaus
+Contributors: smings
 Donate link: https://www.patreon.com/smings
 Tags: email validation, email address, email address validation, email address validator, validator, form, forms, contact form, contact forms, user registration, free, comment, comments, spam, anti-spam, pingback, ping back, pingbacks, trackback, track back, trackbacks, dns check, dns checks, dns checker, mx check, mx checks, mx checker, blacklist, blacklists, domain blacklist, domain blacklists, disposable email, disposable email address, disposable email addresses, disposable email address service blocker, contact form, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, stripe, stripe form, getresponse, getresponse form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, feedback, fake email, disposable email, trashmail
 Requires at least: 4.9
 Tested up to: 5.5
-Stable tag: trunk
+Stable tag: 1.1.3
 Requires PHP: 5.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -117,7 +117,7 @@ This will help us help you and gives you good karma!
 == Changelog ==
 
 = 1.1.3 =
-* complete German translation
+* Completed German translation
 * Optimized settings
 
 = 1.1.0 =
