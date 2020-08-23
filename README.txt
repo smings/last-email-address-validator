@@ -1,31 +1,50 @@
-=== Last Email Validator (LEV) by smings ===
-Contributors: @smings, @kimpenhaus
+=== LEAV Last Email Address Validator by smings (light edition) ===
+Contributors: smings, kimpenhaus
 Donate link: https://www.patreon.com/smings
-Tags: email validation, registration, free, comments, spam, anti-spam, pingbacks, trackbacks, dns check, mx check, blacklist, domain blacklist, disposable email service blocker
-Requires at least: 5.2
+Tags: email validation, email address, email address validation, email address validator, validator, form, forms, contact form, contact forms, user registration, free, comment, comments, spam, anti-spam, pingback, ping back, pingbacks, trackback, track back, trackbacks, dns check, dns checks, dns checker, mx check, mx checks, mx checker, blacklist, blacklists, domain blacklist, domain blacklists, disposable email, disposable email address, disposable email addresses, disposable email address service blocker, contact form, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, stripe, stripe form, getresponse, getresponse form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, feedback, fake email, disposable email, trashmail
+Requires at least: 4.9
 Tested up to: 5.5
 Stable tag: trunk
+Requires PHP: 5.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Last Email Validator (LEV) provides email address validation for WP 
-registration, WP comments, CF7, WooCommerce
+LEAV provides the best free email address validation plugin for WP registration/comments, Contact Form 7, WooCommerce and more plugins to come...
 
 == Description ==
 
-## Last Email Validator (LEV)
-LEV is the only free plugin that provides email address validation for
+= LEAV Last Email Address Validator by smings (light edition) =
+
+We believe that your lifetime is the most precious and protection worthy thing on 
+the planet. Protecting it is a critical task. 
+LEAV helps you to effectively protect your lifetime against spammers that use 
+fake or disposable email adresses for comments, user registrations or any kind of
+contact form. There are plenty of bad apples out there and we want to protect you
+against them.
+We built this plugin, because we were frustrated with the lack of true email
+validation beyond just syntax checks in all the functions and plugins we used
+ourselves. We always want to make LEAV better. If you miss a plugin or another
+way of extra protection, please contact us at <a href="mailto:leav-feature-request@smings.com">leav-feature-request@smings.com</a>.
+
+= Integrations =
+
+LEAV is the only free WordPress plugin that provides email address validation 
+that seamlessly integrates with all of the big WordPress form plugins and WordPress 
+standard functions even in its light edition:
+
 * WordPress standard user registration 
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/)
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
-Additionally you can control whether you want allow pingback & trackbacks
+Additionally you can control whether you want allow pingbacks & trackbacks.
+Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
+validated
 * [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 * [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 
-## Features ##
-Last Email Validator (LEV) by smings validates email addresses by checking the following things:
+= Features =
+LEAV - Last Email Adress Validator by smings validates email addresses through a 5-step process:
 1. User-defined domain blacklist - filters out email addresses from the blacklisted domains (optional)
 2. Disposable email address service provider domain list - if activated checks it filters out email addresses from domain on the blacklist. The list is frequently updated (otional.)
 3. Syntax check - checks if the email address is syntactically correct (always on).
@@ -34,7 +53,7 @@ Last Email Validator (LEV) by smings validates email addresses by checking the f
 
 If an email address passes through all these tests, we know for sure, that it the a real email address that can be reached by your WordPress instance. 
 
-Currently "Last Email Validator" integrates with:
+Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
 * [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
@@ -59,7 +78,7 @@ If you need `Last-Email-Validator` to integrate with more plugins, feel free to 
 
 ## Installation from within your WordPress installation
 1. Go to `` -> Add New`
-2. Search for `Last Email Validator (LEV) by smings`
+2. Search for `LEAV Last Email Address Validator by smings`
 3. Click on the `Install Now` button
 4. Click on the `Activate Plugin` button
 
@@ -69,19 +88,19 @@ If you need `Last-Email-Validator` to integrate with more plugins, feel free to 
 3. Extract the zip file. It contains the directory `last-email-validator`
 3. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-validator` filled with the contents of the plugin code
 4. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
-5. Activate `Last Email Validator` plugin in the plugin list
+5. Activate `Last Email Address Validator` plugin in the plugin list
 6. For using translations, you can optionally copy the language files from ~/wp-content/plugins/last-email-validator/languages/*.mo to ~/wp-content/languages/plugins/
 
 ## Configuration
-You find `Last Email Validator`'s settings in your WordPress installation under
-`Settings -> Last Email Validator`
+You find `Last Email Address Validator`'s settings in your WordPress installation under
+`Settings -> Last Email Address Validator`
 By default all features are activated and set to the highest level of spam protection. 
 You should not need to adjust anything unless you want to deactivate things.
 
 ## Help us help you
-We are sure that you'll appreciate the extra level of spam protection provided by Last Email Validator (LEV) by smings.
+We are sure that you'll appreciate the extra level of spam protection provided by Last Email Address Validator (LEV) by smings.
 As of now it is a free plugin. Yet we ask you to show us your appreciation in return by considering a one-time donation 
-(on the settings -> Last Email Validator (LEV) page you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
+(on the settings -> Last Email Address Validator (LEV) page you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
 This will help us help you and gives you good karma! 
 
 

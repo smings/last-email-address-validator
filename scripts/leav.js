@@ -4,7 +4,7 @@ jQuery(document).ready(() => {
   }
   if (jQuery("#disposable_email_service_domain_blacklist_restore").length) {
       jQuery("#disposable_email_service_domain_blacklist_restore").click((event) => {
-        jQuery('input[name=last_email_validator_options_update_type]').val('restore_disposable_email_service_domain_blacklist');
+        jQuery('input[name=leav_options_update_type]').val('restore_disposable_email_service_domain_blacklist');
       });
   }
   if(jQuery("#disposable_email_service_domain_blacklist").length) {
