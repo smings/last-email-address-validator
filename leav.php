@@ -410,7 +410,7 @@ function leav_options_page()
             $leav_options['disposable_email_service_domain_list'] = $disposable_email_service_domains;
             if($d)
                 write_log($leav_options);
-            $update_notice = __('LEAV - Last Email Address Validator disposable email services domain blacklist restored', 'leav');
+            $update_notice = __('Updated LEAV\'s blacklist of disposable email service domains', 'leav');
         }
         else
         {
@@ -757,4 +757,3 @@ register_uninstall_hook( __FILE__, 'leav_uninstall_plugin');
 add_action( 'init', 'leav_init' );
 
 ?>
-
