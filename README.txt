@@ -103,6 +103,12 @@ As of now it is a free plugin. Yet we ask you to show us your appreciation in re
 (on the settings -> Last Email Address Validator (LEV) page you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
 This will help us help you and gives you good karma! 
 
+= Limitations of the light edition =
+In the future the light edition will be limited to 25 email validations per day.
+This will serve the vast majority of small to medium size WordPress instances.
+For those who need more protection and more validations, we plan to offer 
+limitless email validations as well as RBL-checks and other means of additional 
+protection in future release. And all for not more than a coffee per year.
 
 == Screenshots ==
 
