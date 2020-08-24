@@ -34,6 +34,10 @@ if ( ! function_exists('write_log')) {
 
 $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
 $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
+
+if($d)
+    write_log("Found email domain '$WP_MAIL_DOMAIN'");
+
 $disposable_email_service_domain_list_url = 'https://raw.githubusercontent.com/smings/leav-list/master/disposable_email_service_provider_domain_list.txt';
 require_once('includes/leav.inc.php');
 load_plugin_textdomain('leav');
@@ -237,14 +241,14 @@ function leav_validate_registration_email_addresses($errors, $sanitized_user_log
     return $errors;
 }
 
-function leav_validate_cf7_email_addresses($result, $tags)
+function leav_validate_cf7_email_addresses($result, $tag)
 {
     global $d;
-    $tags = new WPCF7_FormTag( $tags );
-    $type = $tags->type;
-    $name = $tags->name;
+    $tag = new WPCF7_FormTag( $tag );
+    $type = $tag->type;
+    $name = $tag->name;
     if($d)
-        write_log("Trying to validate CF7 Email address\nType = '$type'");
+        write_log("Trying to validate CF7 Email address\nType = '$type'\nName = '$name'");
     if ($type == 'email' || $type == 'email*')
     {
         $user_email = sanitize_email($_POST[$name]);
@@ -252,9 +256,11 @@ function leav_validate_cf7_email_addresses($result, $tags)
             write_log("Validating CF7 email address '$user_email'");
         $approved = leav_validate_email_address('', $user_email);
         if ( $approved === 'spam')
-            $result->invalidate( $tags, _e( 'The e-mail address entered is invalid.', 'contact-form-7' ));
-        if($d)
-            write_log("Result of validating CF7 email address '$user_email' => approved = '$approved'");
+        {
+            $result->invalidate( $tag, _e( 'This email domain is not accepted/valid. Try another one.', 'leav' ));
+            if($d)
+                write_log("Rejecting CF7 email address '$user_email'");
+        }
     }
     return $result;
 }
