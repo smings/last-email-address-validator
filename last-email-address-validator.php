@@ -748,7 +748,16 @@ function leav_uninstall_plugin()
     delete_option('leav_options');
 }
 
-// adding hooks and action(s)
+
+function plugin_add_settings_link( $links ) {
+    $settings_link = '&lt;a href=&quot;options-general.php?page=plugin_name&quot;&gt;' . __( 'Settings' ) . '&lt;/a&gt;';
+    array_push( $links, $settings_link );
+    return $links;
+}
+$leav_plugin_name = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_$leav_plugin_name", 'plugin_add_settings_link' );
+
+
 register_activation_hook( __FILE__, 'leav_activate_plugin');
 register_uninstall_hook( __FILE__, 'leav_uninstall_plugin');
 add_action( 'init', 'leav_init' );

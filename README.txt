@@ -1,15 +1,15 @@
-=== LEAV Last Email Address Validator by smings (light edition) ===
+=== LEAV Last Email Address Validator ===
 Contributors: smings
 Donate link: https://www.patreon.com/smings
 Tags: email validation, email address, email address validation, email address validator, validator, form, forms, contact form, contact forms, user registration, free, comment, comments, spam, anti-spam, pingback, ping back, pingbacks, trackback, track back, trackbacks, dns check, dns checks, dns checker, mx check, mx checks, mx checker, blacklist, blacklists, domain blacklist, domain blacklists, disposable email, disposable email address, disposable email addresses, disposable email address service blocker, contact form, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, stripe, stripe form, getresponse, getresponse form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, feedback, fake email, disposable email, trashmail
 Requires at least: 4.9
 Tested up to: 5.5
-Stable tag: 1.1.3
+Stable tag: 1.1.5
 Requires PHP: 5.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-LEAV provides the best free email address validation plugin for WP registration/comments, Contact Form 7, WooCommerce and more plugins to come...
+LEAV (light edition) provides is the best email address validation for WP registration/comments, Contact Form 7, WooCommerce and more plugins to come...
 
 == Description ==
 
@@ -74,15 +74,15 @@ optimized.
 If you need `Last-Email-Validator` to integrate with more plugins, feel free to contact us at 
 [lev-feature-requests@smings.com](mailto:lev-feature-requests).
 
-== Installation ==
+= Installation =
 
-## Installation from within your WordPress installation
+== Installation from within your WordPress installation ==
 1. Go to `` -> Add New`
-2. Search for `LEAV Last Email Address Validator by smings`
+2. Search for `LEAV Last Email Address Validator`
 3. Click on the `Install Now` button
 4. Click on the `Activate Plugin` button
 
-## Manual installation
+== Manual installation ==
 1. Go to [wordpress.org/plugins/last-email-validator/](https://wordpress.org/plugins/last-email-validator/)
 2. Click on `Download` - this downloads a zip file
 3. Extract the zip file. It contains the directory `last-email-validator`
@@ -91,20 +91,22 @@ If you need `Last-Email-Validator` to integrate with more plugins, feel free to 
 5. Activate `Last Email Address Validator` plugin in the plugin list
 6. For using translations, you can optionally copy the language files from ~/wp-content/plugins/last-email-validator/languages/*.mo to ~/wp-content/languages/plugins/
 
-## Configuration
+== Configuration ==
 You find `Last Email Address Validator`'s settings in your WordPress installation under
 `Settings -> Last Email Address Validator`
 By default all features are activated and set to the highest level of spam protection. 
 You should not need to adjust anything unless you want to deactivate things.
+Things should always be as simple as possible, therefore you can usually skip even 
+looking at the settings.
 
-## Help us help you
+= Help us help you =
 We are sure that you'll appreciate the extra level of spam protection provided by Last Email Address Validator (LEV) by smings.
 As of now it is a free plugin. Yet we ask you to show us your appreciation in return by considering a one-time donation 
 (on the settings -> Last Email Address Validator (LEV) page you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
 This will help us help you and gives you good karma! 
 
 = Limitations of the light edition =
-In the future the light edition will be limited to 25 email validations per day.
+In the near future the light edition will be limited to 25 email validations per day.
 This will serve the vast majority of small to medium size WordPress instances.
 For those who need more protection and more validations, we plan to offer 
 limitless email validations as well as RBL-checks and other means of additional 
@@ -122,6 +124,13 @@ protection in future release. And all for not more than a coffee per year.
 
 == Changelog ==
 
+= 1.1.5 =
+* Fixed minor validation bugs
+
+= 1.1.4 =
+* optimized descriptions and German translations
+* added screenshots
+
 = 1.1.3 =
 * Completed German translation
 * Optimized settings
@@ -131,7 +140,7 @@ protection in future release. And all for not more than a coffee per year.
 
 = 1.0.0 =
 * added Contact Form 7 support
-* 1st German translations
+* Initial German translations
 
 == Upgrade Notice ==
 
@@ -139,4 +148,5 @@ protection in future release. And all for not more than a coffee per year.
 Added woocommerce support
 
 = 1.0 =
-Initial Version yet without woocommerce
+Initial Version with support for contact form 7
+
