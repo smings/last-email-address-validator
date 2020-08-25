@@ -9,15 +9,6 @@ Author URI: https://smings.com
 Text Domain: leav
 */
 
-// Example of how to get the current translation strings from the 
-// WordPress plugin code. 
-// `xgettext --default-domain=leav --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=leav --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i -p languages/ *.php`
-
-// Example of how to merge a newer version with an existing po file
-// `msgmerge -i -o new_merged.po leav-de_DE.po leav.po`
-
-// Example of how to create an mo file
-// `msgfmt -o leav-de_DE.mo leav-de_DE.po`
 
 // for debugging only
 // 

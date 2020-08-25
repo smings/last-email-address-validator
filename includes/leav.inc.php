@@ -1,5 +1,16 @@
 <?php
 
+// Example of how to get the current translation strings from the 
+// WordPress plugin code. 
+// `xgettext --default-domain=leav --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=leav --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i -p languages/ *.php`
+
+// Example of how to merge a newer version with an existing po file
+// `msgmerge -i -o new_merged.po last-email-address-validator-de_DE.po leav.po`
+
+// Example of how to create an mo file
+// `msgfmt -o last-email-address-validator-de_DE.mo last-email-address-validator-de_DE.po`
+
+
 // return status values
 define ( "RECIPIENT_EMAIL_REJECTED_BY_MX_SERVER",              -10 );
 define ( "SERVER_HAS_NO_DNS_ENTRY",                            -20 );
