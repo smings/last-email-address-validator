@@ -753,13 +753,13 @@ function leav_uninstall_plugin()
 }
 
 
-function plugin_add_settings_link( $links ) {
+function leav_add_plugin_overview_links( $links ) {
     $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
     array_unshift( $links, $settings_link );
     return $links;
 }
 $plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'plugin_add_settings_link' );
+add_filter( "plugin_action_links_$plugin", 'leav_add_plugin_overview_links' );
 
 register_activation_hook( __FILE__, 'leav_activate_plugin');
 register_uninstall_hook( __FILE__, 'leav_uninstall_plugin');
