@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Last Email Address Validator - LEAV by smings (light edition)
+Plugin Name: Last Email Address Validator
 Plugin URI: https://smings.com/leav/
 Description: LEAV provides the best free email address validation plugin for WP registration/comments, Contact Form 7, WooCommerce and more plugins to come...
 Version: 1.1.5
@@ -22,6 +22,10 @@ if ( ! function_exists('write_log')) {
       }
    }
 }
+
+$leav_plugin_file_name = plugin_basename( __FILE__ );
+$leav_plugin_name = 'last-email-address-validator';
+
 
 $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
 $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
@@ -466,7 +470,7 @@ _e('Below you can control in which way the selected WordPress functions and plug
                                 <input name="wp_mail_domain" type="text" size="40" value="<?php echo ( $leav_options['wp_mail_domain']); ?>" required="required" minlength="5" pattern="^([A-Za-z0-9]+\.)*[A-Za-z0-9][A-Za-z0-9]+\.[A-Za-z]{2,18}$"/>
                             </label>
                             <p class="description">
-                                <?php _e('Email domain used for simulating the sending of an email from ', 'leav'); echo("no-reply@<strong>" . $leav_options['wp_mail_domain'] ); _e('</strong> to the entered email address, that gets validated.<br/><strong>Use the email domain, you use for sending emails from your WordPress instance!</strong>', 'leav') ?>
+                                <?php _e('This Email domain is used for simulating the sending of an email from ', 'leav'); echo("no-reply@<strong>" . $leav_options['wp_mail_domain'] ); _e('</strong> to the entered email address, that gets validated.<br/><strong>Use the email domain that you use for sending emails from your WordPress instance!</strong><br/>You can test all form validations of your WordPress instance as many times as you need to (it doesn\'t count against your daily quota in the light edition) with emails from this domain', 'leav') ?>
                             </p>
                         </td>
                     </tr>
@@ -750,13 +754,12 @@ function leav_uninstall_plugin()
 
 
 function plugin_add_settings_link( $links ) {
-    $settings_link = '&lt;a href=&quot;options-general.php?page=plugin_name&quot;&gt;' . __( 'Settings' ) . '&lt;/a&gt;';
-    array_push( $links, $settings_link );
+    $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
+    array_unshift( $links, $settings_link );
     return $links;
 }
-$leav_plugin_name = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$leav_plugin_name", 'plugin_add_settings_link' );
-
+$plugin = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_$plugin", 'plugin_add_settings_link' );
 
 register_activation_hook( __FILE__, 'leav_activate_plugin');
 register_uninstall_hook( __FILE__, 'leav_uninstall_plugin');
