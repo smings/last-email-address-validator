@@ -1,0 +1,408 @@
+# Deutsche Übersetzung des Last Email Address Validator LEAV by smings (light edition) WordPress plugins
+# Copyright (C) 2020 by Dirk Tornow
+# This file is distributed under the same license as the Last Email Address Validator LEAV by smings (light edition) WordPress plugin.
+# Dirk Tornow <dirk@smings.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: leav 1.0.3\n"
+"Report-Msgid-Bugs-To: translastions@smings.com\n"
+"POT-Creation-Date: 2020-08-23 09:11+0200\n"
+"PO-Revision-Date: 2020-08-23 09:26+0200\n"
+"Last-Translator: Dirk Tornow <dirk@smings.com>\n"
+"Language-Team: DE <translastions@smings.com>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: leav.php:234
+msgid "This email domain is not accepted/valid. Try another one."
+msgstr ""
+"Diese Email-Domain wird nicht akzeptiert/ist ungültig. Versuche eine andere."
+
+#: leav.php:255
+msgid "The e-mail address entered is invalid."
+msgstr ""
+
+#: leav.php:351
+msgid "Anti spam protected by"
+msgstr "Anti-Spam geschützt durch"
+
+#: leav.php:351
+msgid "Spam email addresses blocked"
+msgstr "Anzahl geblockter Spam Emailadressen"
+
+#: leav.php:405
+msgid "LEAV - Last Email Address Validator options updated"
+msgstr "LEAV - Last Email Address Validator Optionen wurden geupdated"
+
+#: leav.php:413
+msgid "Updated LEAV's blacklist of disposable email service domains"
+msgstr ""
+"Aktualisierung der LEAV Einmal-Emai-Adress-Service Domain Blacklist war "
+"erfolgreich"
+
+#: leav.php:429
+msgid "Dismiss this notice"
+msgstr "Hinweis ausblenden"
+
+#: leav.php:436
+msgid ""
+"Settings for <strong>LEAV - Last Email Address Validator</strong> <i>by "
+"smings</i> (light edition)"
+msgstr ""
+"Einstellungen für <strong>LEAV - Last Email Address Validator</strong> <i>by "
+"smings</i> (light edition)"
+
+#: leav.php:437
+msgid ""
+"LEAV - Last Email Address Validator by smings (light edition) validates "
+"email addresses of the supported WordPress functions and plugins in the "
+"following ways"
+msgstr ""
+"LEAV - Last Email Address Validator by smings (light edition) validiert / "
+"überprüft Emailaddressen von WordPress-Funktionen und -Plugins auf die "
+"folgende Art"
+
+#: leav.php:440
+msgid "Check if the email address is syntactically correct (always)"
+msgstr "Überprüfung der syntaktischen Korrektheit der Emailaddresse (immer)"
+
+#: leav.php:443
+msgid "Filter against user-defined domain blacklist (if activated)"
+msgstr ""
+"Ausfiltern von Emailadressen von Domains auf der Benutzer-definierten "
+"Blacklist (wenn aktiviert)"
+
+#: leav.php:446
+msgid ""
+"Filter against LEAV's built-in extensive blacklist of disposable email "
+"service domains (if activated)"
+msgstr ""
+"Ausfiltern von Emailadressen von Domains auf LEAVs Einmal-Email-Service-"
+"Anbieter-Domains (wenn aktiviert)"
+
+#: leav.php:449
+msgid ""
+"Check if the email address's domain has a DNS entry with MX records (always)"
+msgstr ""
+"Überprüfung ob die Domain der Emailadresse einen DNS-Eintrag mit MX Servern "
+"hat (MX = Mail eXchange) (immer)"
+
+#: leav.php:453
+msgid ""
+"Connect to one of the MX servers and simulate the sending of an email from "
+"<strong>no-reply@"
+msgstr ""
+"Verbindung mit einem MX-Server herstellen und das Versenden einer Email von "
+"<strong>no-reply@"
+
+#: leav.php:455
+msgid "</strong> to the entered email address (always)"
+msgstr ""
+"</strong> an die eingegebene (zu überprüfende) Emailaddresse simulieren "
+"(immer)"
+
+#: leav.php:459
+msgid ""
+"Below you can control in which way the selected WordPress functions and "
+"plugins will validate entered email adresses."
+msgstr ""
+"Kontrolliere welche WordPress-Funktionen und -Plugins durch LEV Emailaddress-"
+"geprüft werden sollen."
+
+#: leav.php:466
+msgid ""
+"Email domain for simulating sending of emails to entered email addresses"
+msgstr ""
+"Email-Domain für das simulierte Versenden von Emails an die zu überprüfenden "
+"Emailadressen"
+
+#: leav.php:472
+msgid ""
+"</strong> to the entered email address, that gets validated.<br/><strong>Use "
+"the email domain, you use for sending emails from your WordPress instance!</"
+"strong>"
+msgstr ""
+"</strong> an die zu validierende Emailaddresse. <br/><strong>Verwende die "
+"Emaildomain mit der du von deiner WordPress-Instanz Emails versendest!</"
+"strong>"
+
+#: leav.php:472
+msgid "Email domain used for simulating the sending of an email from "
+msgstr "Email-Domain für das simulierte Versenden von Emails von "
+
+#: leav.php:477
+msgid "Reject email adresses from user-defined blacklist"
+msgstr "Emailadressen von Domains der benutzerdefinierten Blacklist ablehnen"
+
+#: leav.php:481 leav.php:509 leav.php:540 leav.php:562 leav.php:569
+#: leav.php:578 leav.php:585 leav.php:598 leav.php:611 leav.php:628
+#: leav.php:645
+msgid "Yes"
+msgstr "Ja"
+
+#: leav.php:485 leav.php:513 leav.php:544 leav.php:566 leav.php:582
+#: leav.php:600 leav.php:615 leav.php:632 leav.php:649
+msgid "No"
+msgstr "Nein"
+
+#: leav.php:488
+msgid ""
+"Email addresses from the domains on this blacklist will be rejected (if "
+"active). <br/><strong>Use one domain per line</strong>.<br/><strong>Default: "
+"Yes</strong>"
+msgstr ""
+"Emailadressen von Domains der benutzerdefinierten Blacklist abgelehnen. "
+"<strong>Nur eine Domain je Zeile eintragen</strong>.<br/"
+"><strong>Standardwert: Ja</strong>"
+
+#: leav.php:500
+msgid "User-defined blacklisted email domains"
+msgstr "Benutzerdefinierte Domain-Blacklist"
+
+#: leav.php:505
+msgid ""
+"Reject email adresses from LEAV's comprehensive and frequently updated list "
+"of disposable email services"
+msgstr ""
+"Emailadressen von Domains auf LEAVs umfassender, regelmäßig aktualisierten "
+"Wegwerf- / Einmal-Emailadress-Service-Domain Blacklist ablehnen"
+
+#: leav.php:516
+msgid ""
+"The listed domains are known services that provide disposable email "
+"addresses. Users that make use of these services might just want to protect "
+"their own privacy. But they might also be spammers. There is no good choice. "
+"In doubt we encourage you to value your lifetime and reject email addresses "
+"from these domains. We frequently update this list. For retrieving updates, "
+"click the update button below. For blocking domains of your own choosing, "
+"use the user-defined blacklist option above.<br/><strong>Default: Yes</"
+"strong>"
+msgstr ""
+"Die aufgelisteten Domains sind aktuell bekannte Anbieter von Einmal-"
+"Emailadress-Services (Wegwerf- oder 10-Minuten-Emailadressen). Benutzer, die "
+"Emailadressen dieser Domains nutzen, könnten einfach nur hohen Wert auf ihre "
+"Privatssphäre legen. Es könnten jedoch auch Spammer sein. Hierbei gibt es "
+"keine gute Wahl. Im Zweifelsfall empfehlen wir dir deine Zeit als wertvoller "
+"zu betrachten und Emailadressen von diesen Domains abzulehnen. Du kannst den "
+"Button unterhalb jederzeit klicken, um das letzte Update der Blacklist zu "
+"erhalten.<br/><strong>Standardwert: Ja</strong>"
+
+#: leav.php:528
+msgid "Entries"
+msgstr "Einträge"
+
+#: leav.php:531
+msgid "Update list"
+msgstr "Liste aktualisieren"
+
+#: leav.php:536
+msgid "Accept syntactically correct email addresses on connection errors"
+msgstr ""
+"Syntaktisch korrekte Emailadressen akzeptieren im Falle von "
+"Verbindungsfehlern akzeptieren"
+
+#: leav.php:547
+msgid ""
+"In order to thoroughly validate email addresses, LEAV tries to connect to at "
+"<br/>least one of the MX (Mail eXchange) servers in the email domain's DNS "
+"record. <br/>Usually there are ≥2 MX servers. When this option is set to "
+"'Yes', <br/>the failure to connect to any of the MX servers will be ignored "
+"and <br/>syntactically correct email addresses will be accepted.<br/>We do "
+"not recommend this, since it will result in more spam.  <br/"
+"><strong>Default: No</strong>"
+msgstr ""
+"Zur gründlichen Überprüfung von Emailadressen probiert LEAV eine Verbingung "
+"zu mindestens einem der im DNS Eintrag der Emaildomain hinterlegten MX (Mail "
+"eXchange) Servern herzustellen. Normalerweise sind ≥2 MX Server hinterlegt. "
+"Wenn die Option auf 'Ja' gesetzt wird, wird ein Scheitern des "
+"Verbindungsaufbaus zu mindestens einem MX Server ignoriert und syntaktisch "
+"korrekte Emailadressen werden akzeptiert. Wir raten davon ab diese Option zu "
+"nutzen, da es zu mehr Spam führt.<br/><strong>Standardwert: Nein</strong>"
+
+#: leav.php:554
+msgid "Accepting pingbacks / trackbacks without validation"
+msgstr "Pingbacks / Trackbacks ohne Validierung akzeptieren"
+
+#: leav.php:555
+msgid ""
+"Pingbacks and trackbacks can't be validated because they don't come with an "
+"email address, that could be run through our validator.</br>Therefore "
+"<strong>pingbacks and trackbacks pose a certain spam risk</strong>. They are "
+"also free marketing.<br/>By default we therefore accept them. But feel free "
+"to reject them."
+msgstr ""
+"Pingbacks und Trackbacks können nicht validiert werden, da sie über keine "
+"Emailadressen verfügen. Deshalb <strong>stellen Pingbacks und Trackbacks ein "
+"gewisses Spam-Risiko dar</strong>. Allerdings sind sie auch kostenloses "
+"Marketing, weshalb wir empfehlen sie zu akzeptieren. Deshalb sind die "
+"Standardwerte auf 'Ja' gesetzt. Du kannst dies natürlich jederzeit ändern."
+
+#: leav.php:558
+msgid "Accept pingbacks"
+msgstr "Pingbacks akzeptieren"
+
+#: leav.php:569 leav.php:585
+msgid "Default:"
+msgstr "Standardwert:"
+
+#: leav.php:574
+msgid "Accept trackbacks"
+msgstr "Trackbacks akzeptieren"
+
+#: leav.php:590
+msgid ""
+"Control which of WordPress's functions and plugins should be email validated "
+"by LEAV"
+msgstr ""
+"Kontrolliere welche WordPress-Funktionen und -Plugins durch LEAV "
+"Emailaddress-geprüft werden sollen"
+
+#: leav.php:591
+msgid ""
+"LEAV - Last Email Address Validator is currently capable of validating the "
+"email<br/>addresses for the following WordPress features and plugins (if "
+"installed and activated): <br/><ol><li>WordPress user registration (<a href="
+"\"/wp-admin/options-general.php\" target=\"_blank\" target=\"_blank"
+"\">Settings -> General</a>)</li><li>WordPress comments (<a href=\"/wp-admin/"
+"options-discussion.php\" target=\"_blank\">Settings -> Discussion)</"
+"li><li><a href=\"https://wordpress.org/plugins/woocommerce/\" target=\"_blank"
+"\"> WooCommerce (plugin)</a></li><li><a href=\"https://wordpress.org/plugins/"
+"contact-form-7/\" target=\"_blank\">Contact Form 7 (plugin)</a></li></ol></"
+"br>"
+msgstr ""
+"LEAV - Last Email Address Validator kann aktuell die Emailaddressen der "
+"folgenden <br/>WordPress-Features und -Plugins (wenn installiert und "
+"aktiviert) <br/>überprüfen:<br/><ol><li>WordPress Benuzterregistrierung (<a "
+"href=\"/wp-admin/options-general.php\" target=\"_blank\">Einstellungen -> "
+"Allgemein -> Mitgliedschaft</a>)</a></li><li>WordPress Kommentare (<a href="
+"\"/wp-admin/options-discussion.php\" target=\"_blank\">Einstellungen -> "
+"Diskussion</a>)</li><li><a href=\"https://wordpress.org/plugins/woocommerce/"
+"\" target=\"_blank\">WooCommerce (plugin)</a></li><li><a href=\"https://"
+"wordpress.org/plugins/contact-form-7/\" target=\"_blank\">Contact Form 7 "
+"(plugin)</a></li></ol></br>"
+
+#: leav.php:595
+msgid "1. Validate WordPress user registration"
+msgstr "1. WordPress Benutzerregistrierung validieren"
+
+#: leav.php:602
+msgid ""
+"This validates all registrants email address's that register through "
+"WordPress's standard user registration.<br/><strong>Default: Yes</strong>"
+msgstr ""
+"Diese Einstellung steuert die Validierung der Emailadressen von Benutzern, "
+"die sich über die WordPress Standard-Benutzerregistrierung anmelden<br/"
+"><strong>Standardwert: Ja</strong>"
+
+#: leav.php:607
+msgid "2. Validate WordPress comments"
+msgstr "2. WordPress Kommentare validieren"
+
+#: leav.php:618
+msgid ""
+"This validates all commentor email address's that comment through "
+"WordPress's standard comment functionality.<br/><strong>Default: Yes</strong>"
+msgstr ""
+"Diese Einstellung steuert die Validierung der Emailadressen, die von "
+"Benutzern beim Kommentieren angegeben werden müssen.<br/"
+"><strong>Standardwert: Ja</strong>"
+
+#: leav.php:624
+msgid "3. Validate WooCommerce (plugin)"
+msgstr "3. WooCommerce validieren (Plugin)"
+
+#: leav.php:635
+msgid ""
+"Validate all WooCommerce email addresses during registration and checkout."
+"<br/><strong>Default: Yes</strong>"
+msgstr ""
+"Diese Einstellung steuert die Validierung der Emailadressen von Benutzern, "
+"die ein Benutzeraccount über WooCommerce anlegen oderim Checkout eine "
+"Emailadresse eingeben<br/><strong>Standardwert: Ja</strong>"
+
+#: leav.php:641
+msgid "4. Validate Contact Form 7 (plugin)"
+msgstr "4. Contact Form 7 validieren (Plugin)"
+
+#: leav.php:652
+msgid ""
+"Validate all Contact Form 7 email address fields.<br/><strong>Default: Yes</"
+"strong>"
+msgstr ""
+"Diese Einstellung steuert die Validierung der Emailadressen von Benutzern, "
+"die sich über die WordPress Standard-Benutzerregistrierung anmelden<br/"
+"><strong>Standardwert: Ja</strong>"
+
+#: leav.php:665
+msgid "Leave blank to use Windows default gateway"
+msgstr "Für Windows-Standard-Gateway leer lassen"
+
+#: leav.php:673
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: leav.php:677
+msgid ""
+"<h1>Feature Requests</h1>If you look for more plugins, we at <a href="
+"\"https://smings.com\" target=\"_blank\">smings.com</a> (website will soon "
+"be online) are always happy to make<br/> LEAV - Last Email Address Validator "
+"better than it is and help you. Just shoot us an email to <br/><a href="
+"\"mailto:leav-feature-requests@smings.com\">leav-feature-requests@smings."
+"com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if LEAV - Last Email "
+"Address Validator delivers substancial value to you, i.e. saving<br/> lots "
+"of your precious non-renewable lifetime, because it filters out tons of <br/"
+">spam attempts, please show us your appreciation and consider a one-time "
+"donation"
+msgstr ""
+"<h1>Feature Requests</h1>Falls du hier dein Plugin vermisst, dann schreib "
+"uns eine Email an<br/><a href=\"mailto:leav-feature-requests@smings.com"
+"\">leav-feature-requests@smings.com</a>. Wir bei <a href=\"https://smings.com"
+"\" target=\"_blank\">smings.com</a> <br/>(die Website geht bald online) "
+"wollen LEAV - Last Email Address Validator immer besser<br/> machen, um "
+"deine wertvolle, nicht erneuerbare Lebenszeit zu schützen. Spam ist das "
+"letzte, auf dass du  <br/>sie verwenden sollen musst.<h1>Hilf uns dir zu "
+"helfen</h1>Wenn LEAV dein Leben bereichert, indem es massenhaft<br/>Spam für "
+"dich ausfiltert, dann zeige uns deine Wertschätzung mit einer<br/>Einmal-"
+"Spende"
+
+#: leav.php:686
+msgid "or become a patreon on our patreon page at"
+msgstr "oder werde ein Patreon auf unserer Patreon-Seite"
+
+#: leav.php:689
+msgid "patreon.com/smings."
+msgstr "patreon.com/smings."
+
+#: leav.php:694
+msgid "Statistics"
+msgstr "Statistik"
+
+#: leav.php:697
+msgid "Version"
+msgstr "Version"
+
+#: leav.php:698
+msgid "Spam attacks fended"
+msgstr "Spamversuche abgewehrt"
+
+#: leav.php:701
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: leav.php:702
+msgid "Bugs"
+msgstr "Fehler (Bugs)"
+
+#~ msgid "</strong> to the entered email address, that gets validated"
+#~ msgstr "</strong an die zu überprüfende Emailaddresse"
+
+#~ msgid ""
+#~ "LEAV - Last Email Address Validator disposable email services domain "
+#~ "blacklist restored"
+#~ msgstr ""
+#~ "Last Email Validator (LEV) Einmal-Emailadress-Service-Domain Blacklist "
+#~ "wiederhergestellt"
