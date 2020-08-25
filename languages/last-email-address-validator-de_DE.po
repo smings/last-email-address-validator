@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: translastions@smings.com\n"
-"POT-Creation-Date: 2020-08-25 16:00+0200\n"
-"PO-Revision-Date: 2020-08-25 16:04+0200\n"
+"POT-Creation-Date: 2020-08-25 16:31+0200\n"
+"PO-Revision-Date: 2020-08-25 16:33+0200\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -361,8 +361,11 @@ msgid ""
 "com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if LEAV - Last Email "
 "Address Validator delivers substancial value to you, i.e. saving<br/> lots "
 "of your precious non-renewable lifetime, because it filters out tons of <br/"
-">spam attempts, please show us your appreciation and consider a one-time "
-"donation"
+">spam attempts, please show us your appreciation and consider a <strong><a "
+"href=\"https://paypal.me/DirkTornow\" target=\"_blank\">one-time donation</"
+"a></strong> or become a patreon on our patreon page at <strong><a href="
+"\"https://www.patreon.com/smings\" target=\"_blank\">patreon.com/smings</a></"
+"strong>."
 msgstr ""
 "<h1>Feature Requests</h1>Falls du hier dein Plugin vermisst, dann schreib "
 "uns eine Email an<br/><a href=\"mailto:leav-feature-requests@smings.com"
@@ -372,40 +375,41 @@ msgstr ""
 "deine wertvolle, nicht erneuerbare Lebenszeit zu schützen. Spam ist das "
 "letzte, auf dass du  <br/>sie verwenden sollen musst.<h1>Hilf uns dir zu "
 "helfen</h1>Wenn LEAV dein Leben bereichert, indem es massenhaft<br/>Spam für "
-"dich ausfiltert, dann zeige uns deine Wertschätzung mit einer<br/>Einmal-"
-"Spende"
+"dich ausfiltert, dann zeige uns deine Wertschätzung mit einer<br/><strong><a "
+"href=\"https://paypal.me/DirkTornow\" target=\"_blank\">Einmal-Spende</a></"
+"strong> oder werde ein Patreon auf unserer Patreon-Seite <strong><a href="
+"\"https://www.patreon.com/smings\" target=\"_blank\">patreon.com/smings</a></"
+"strong>."
 
-#: last-email-address-validator.php:687
-msgid "or become a patreon on our patreon page at"
-msgstr "oder werde ein Patreon auf unserer Patreon-Seite"
-
-#: last-email-address-validator.php:690
-msgid "patreon.com/smings."
-msgstr "patreon.com/smings."
-
-#: last-email-address-validator.php:695
+#: last-email-address-validator.php:681
 msgid "Statistics"
 msgstr "Statistik"
 
-#: last-email-address-validator.php:698
+#: last-email-address-validator.php:684
 msgid "Version"
 msgstr "Version"
 
-#: last-email-address-validator.php:699
+#: last-email-address-validator.php:685
 msgid "Spam attacks fended"
 msgstr "Spamversuche abgewehrt"
 
-#: last-email-address-validator.php:702
+#: last-email-address-validator.php:688
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: last-email-address-validator.php:703
+#: last-email-address-validator.php:689
 msgid "Bugs"
 msgstr "Fehler (Bugs)"
 
-#: last-email-address-validator.php:757
+#: last-email-address-validator.php:743
 msgid "Settings"
 msgstr ""
+
+#~ msgid "or become a patreon on our patreon page at"
+#~ msgstr "oder werde ein Patreon auf unserer Patreon-Seite"
+
+#~ msgid "patreon.com/smings."
+#~ msgstr "patreon.com/smings."
 
 #~ msgid "</strong> to the entered email address, that gets validated"
 #~ msgstr "</strong an die zu überprüfende Emailaddresse"

@@ -675,21 +675,7 @@ _e('Below you can control in which way the selected WordPress functions and plug
                 </p>
             </form>
 
-            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="https://smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> LEAV - Last Email Address Validator better than it is and help you. Just shoot us an email to <br/><a href="mailto:leav-feature-requests@smings.com">leav-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a one-time donation', 'leav') ?>
-
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                <input type="hidden" name="cmd" value="_s-xclick" />
-                <input type="hidden" name="hosted_button_id" value="4Y6G6JJ7DH4FQ" />
-                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to donate online!" alt="Donate with PayPal button" />
-                <img alt="" border="0" src="https://www.paypal.com/en_DE/i/scr/pixel.gif" width="1" height="1" />
-            </form>
-
-            <?php _e('or become a patreon on our patreon page at', 'leav') ?>
-                <strong>
-                    <a href="https://www.patreon.com/smings" target="_blank">
-            <?php _e('patreon.com/smings.', 'leav') ?>
-                    </a>
-                </strong>
+            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="https://smings.com" target="_blank">smings.com</a> (website will soon be online) are always happy to make<br/> LEAV - Last Email Address Validator better than it is and help you. Just shoot us an email to <br/><a href="mailto:leav-feature-requests@smings.com">leav-feature-requests@smings.com</a>.<br/><br/><h1>Help us help you!</h1>Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime, because it filters out tons of <br/>spam attempts, please show us your appreciation and consider a <strong><a href="https://paypal.me/DirkTornow" target="_blank">one-time donation</a></strong> or become a patreon on our patreon page at <strong><a href="https://www.patreon.com/smings" target="_blank">patreon.com/smings</a></strong>.', 'leav') ?>
         </div>
         <div class="wrap">
             <h1><?php _e('Statistics', 'leav') ?></h1>
