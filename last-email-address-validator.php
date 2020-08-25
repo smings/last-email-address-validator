@@ -3,9 +3,9 @@
 Plugin Name: Last Email Address Validator
 Plugin URI: https://smings.com/leav/
 Description: LEAV provides the best free email address validation plugin for WP registration/comments, Contact Form 7, WooCommerce and more plugins to come...
-Version: 1.1.5
+Version: 1.1.6
 Author: smings
-Author URI: https://smings.com
+Author URI: https://smings.com/leav/
 Text Domain: leav
 */
 
