@@ -14,91 +14,292 @@
 // for domain in `cat disposable_email_service_provider_domain_list.txt`; do dig @8.8.8.8 MX $domain +short > /dev/null && echo $domain >> results.txt; done
 
 
-// return status values
-define ( "RECIPIENT_EMAIL_REJECTED_BY_MX_SERVER",              -10 );
-define ( "SERVER_HAS_NO_DNS_ENTRY",                            -20 );
-define ( "SERVER_HAS_NO_DNS_MX_RECORDS",                       -15 );
-define ( "EMAIL_ADDRESS_SYNTAX_INCORRECT",		                 -30 );
-define ( "SMTP_CONNECTION_ATTEMPTS_TIMED_OUT",		             -40 );
-define ( "SMTP_CONNECTION_REJECTED",	                         -50 );
-define ( "VALID_EMAIL_ADDRESS",				                          10 );
-define ( "EMAIL_ADDRESS_SYNTAX_CORRECT_BUT_CONNECTION_FAILED",  20 );
-
-
-// timeouts in ms
-define ( "SMTP_CONNECTION_TIMEOUT_SHORT",	                    1500 );
-define ( "SMTP_CONNECTION_TIMEOUT_LONG",	                    3000 );	
-
 class LastEmailAddressValidator
 {
+	public  $wp_email_domain;
+	public  $email_address;
+	public  $normalized_email_address;
+	public  $is_email_address_syntax_valid;
+	public  $is_checked;
+	public  $email_domain;
+	public  $email_domain_ip_address;
+	public  $email_domain_has_DNS_record;
+	public  $email_domain_has_MX_records;
+	public  $mx_server_domains;
+	public  $mx_server_priorities;
+	public  $mx_server_ips;
+	public  $simulated_sending_succeeded;
+	private $smtp_connection;
+	private $smtp_connection_is_open;
 
-	function leav_normalize_email_address( $strEmailAddress )
+	// timeouts in ms
+	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
+	private static $SMTP_CONNECTION_TIMEOUT_LONG  = 3000;
+
+	private static $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
+	private static $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
+
+
+	// const DOMAIN_NAME_REGEX = '[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\\.[a-z]{2,18}';
+	// const EMAIL_ADDRESS_NAME_PART_REGEX = 
+	// 	'/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@$/i';
+
+	// Courtesy of https://emailregex.com/	
+	const EMAIL_ADDRESS_NAME_PART_REGEX_PATTERN = 
+		"(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*";
+
+	const DOMAIN_NAME_REGEX_PATTERN = 
+		"(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))";
+
+	const EMAIL_ADDRESS_REGEX = '/^' . self::EMAIL_ADDRESS_NAME_PART_REGEX_PATTERN . '@' . self::DOMAIN_NAME_REGEX_PATTERN . '$/iD'
+	
+	const IP_ADDRESS_REGEX = "/^([0-9]{1,3}\\.){3}[0-9]{1,3}$/";
+
+
+
+
+	public function __construct()
 	{
-		$strEmailAddress = ststrtolower($strEmailAddress)
-		$strEmailAddress = sanitize_email($strEmailAddress);
+		$this->reset_class_attributes();
 	}
 
-	function leav_get_email_domain( $strEmailAddress )
+
+	public function __construct($email_address)
 	{
-		list( $local, $domain ) = explode( '@', $strEmailAddress, 2 );
-		return $domain;
+		$this->__construct();
+		$this->email_address = $email_address;
+		$this->normalize_email_address();
+		$this->validate_email_adress_syntax();
+		# Only if we have a valid email address syntax, we extract the email domain
+		$this->is_email_address_syntax_valid && $this->extract_domain_from_email_address();
 	}
 
-	function leav_validate_email_address( $strEmailAddress )
+
+	private function reset_class_attributes()
 	{
-		$strEmailAddress = this->leav_normalize_email_address( $strEmailAddress );
-		if( !$this -> leav_check_email_adress_syntax( $strEmailAddress ) )
+		$this->wp_email_domain               = '';
+		$this->email_address                 = '';
+		$this->normalized_email_address      = '';
+		$this->is_email_address_syntax_valid = false;
+		$this->is_checked                    = false;
+		$this->email_domain                  = '';
+		$this->email_domain_ip_address       = '';
+		$this->email_domain_has_DNS_record   = false;
+		$this->email_domain_has_MX_records   = false;
+		$this->mx_server_domains             = array();
+		$this->mx_server_ips                 = array();
+		$this->simulated_sending_succeeded   = false;
+		$this->smtp_connection               = '';
+		$this->smtp_connection_is_open       = false;
+	}
+
+
+	public function set_wordpress_email_domain( $wp_email_domain )
+	{
+		$this->wp_email_domain = $wp_email_domain;
+	}
+
+
+	public function is_email_address_syntax_ok( string $email_address )
+	{
+		$this->__construct( $email_address );
+		return $this->is_email_address_syntax_valid;
+	}
+
+
+	public function validate_email_address( string $email_address )
+	{
+		$this->__construct( $email_address );
+		return $this->validate_email_address();
+	}
+
+
+	public function validate_email_address()
+	{
+		if( $this->is_checked or empty($this->email_address) )
+			return $this->is_valid;
+
+		$this->gather_server_data();
+		if( $this->is_checked )
+			return $this->is_valid;
+
+		$this->simulate_sending_an_email();
+		return $this->simulated_sending_succeeded;
+	}
+
+
+	private function gather_server_data()
+	{
+		$this->get_email_domain_ip_address();
+		if( $this->is_checked )
+			return;
+
+		$this->get_mx_servers();
+		if( $this->is_checked )
+			return;		
+	}
+
+
+	private function normalize_email_address()
+	{
+	  $this->normalized_email_address = strtolower( sanitize_email( $this->email_address ) );
+	}
+
+
+	public function validate_email_adress_syntax()
+	{
+		if( preg_match( self::EMAIL_ADDRESS_REGEX, $this->normalized_email_address ) == 1 )
 		{
-			return EMAIL_ADDRESS_SYNTAX_INCORRECT;
+			$this->is_email_address_syntax_valid = true;
 		}
-		$strEmailDomain = $this -> leav_extract_hostname( $strEmailAddress );
-		if( !$this -> leav_resolve_host_ip_address( $strEmailDomain ) )
+		else
+			$this->is_checked = true;
+	}
+
+
+	private function extract_domain_from_email_address()
+	{
+		$this->email_domain = end( explode( "@", $this->normalized_email_address ) );
+	}
+
+
+	private function get_email_domain_ip_address()
+	{
+		$this->email_domain_ip_address = $this->get_host_ip_address( $this->email_domain );
+		if( $this->email_domain_ip_address == '' )
+			$this->is_checked = true;
+		else
+			$this->email_domain_has_DNS_record = true;
+	}
+
+
+	public function get_host_ip_address( $hostname )
+	{
+		if ( preg_match( self::IP_ADDRESS_REGEX, $hostname ) )
+			$hostname = @gethostbyaddr ( $strEmailDomain );
+		$host_ip = @gethostbyname ( $hostname );
+
+		if ( preg_match( self::IP_ADDRESS_REGEX, $host_ip ) )
+			return $host_ip;
+		else
+			return '';
+	}
+
+
+	private function get_mx_servers()
+	{
+		if( @getmxrr($this->email_domain, $this->mx_server_domains) )
 		{
-			return SERVER_HAS_NO_DNS_ENTRY;
+			for( $i = 0; $i < sizeof( $this->mx_server_domains ); $i++ )
+			{
+				$ip = $this->get_host_ip_address( $this->mx_server_domains[$i] );
+				if( $ip != '' )
+					array_unshift( $this->mx_server_ips, $ip );
+			}
+			// If no MX server name can be resolved into an IP address
+			// we have to stop validate too
+			if( empty( $this->mx_server_ips ) )
+				$this->is_checked = true;
+			else
+				$this->email_domain_has_MX_records = true;
 		}
-		return $this -> leav_check_mx_servers_and_simulate_sending_to_email_address( $strEmailDomain, $strEmailAddress );
-	}
 
-
-	function leav_check_email_adress_syntax( &$strEmailAddress )
-	{
-		return preg_match( "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\._]*[0-9a-z])*\\.[a-z]{2,18}$/i", $strEmailAddress  ) == 1;
-	}
-
-
-	function leav_check_field_name_for_email( &$strFieldName )
-	{
-	    return preg_match( "/^.*e[ -_~<>\.,\|=\+()\*!#\$%\^]{0,2}mail.*$/i", $strFieldName  ) == 1;
-	}
-
-
-	function leav_extract_hostname( &$strEmailAddress )
-	{
-		$arrElements = explode( "@", $strEmailAddress );
-		return $arrElements[ 1 ];
-	}
-
-
-	function leav_resolve_host_ip_address( &$strEmailDomain )
-	{
-		# If we only have an IP-address, we check if it resolves into a DNS name
-		if ( preg_match( "/^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$/", $strEmailDomain ) )
+		// If we couldn't resolve any MX servers for the domain
+		else
 		{
-			$strEmailDomain = @gethostbyaddr ( $strEmailDomain );
+			$this->is_checked = true;
 		}
+	}
 
-		# now we get the host IP address to the passed (or resolved) hostname
-		$strHostIP = @gethostbyname ( $strEmailDomain );
 
-		# only if it truly resolved into an IP address, we can return true
-		if ( preg_match( "/^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$/", $strHostIP ) )
+	private function simulate_sending_an_email()
+	{
+		global $WP_MAIL_DOMAIN;
+
+		if( ! $this->get_smtp_connection() )
 		{
-			return true;
+			$is_checked = true;
+			return;
 		}
 
-		# in this case we couldn't resolve an IP address
+		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_LONG );
+
+		if( substr( $answer, 0, 3 ) != "220" ) // no answer or rejected
+		{
+			$this->cleanup_simulation_failure();
+			return;
+		}
+
+		$wp_email_domain = $this->wp_email_domain;
+		if( empty($wp_email_domain) )
+			$wp_email_domain = $WP_MAIL_DOMAIN;
+
+
+		@fwrite ( $this->smtp_connection, "HELO " . $wp_email_domain . "\n" );
+		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_LONG );
+		if( substr( $answer, 0, 3 ) != "250" ) // no answer or rejected
+		{
+			$this->cleanup_simulation_failure();
+			return;
+		}
+
+		@fwrite ( $this->smtp_connection, "MAIL FROM: <no-reply@" . $wp_email_domain . ">\n" );
+		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_SHORT );
+		if( substr( $answer, 0, 3 ) != "250" ) // no answer or rejected
+		{
+			$this->cleanup_simulation_failure();
+			return;
+		}
+
+		@fwrite ( $this->smtp_connection, "RCPT TO: <" . $this->normalized_email_address . ">\n" );
+		if( substr( $answer, 0, 3 ) != "250" ) // no answer or rejected
+		{
+			$this->cleanup_simulation_failure();
+			return;
+		}
+		$this->close_smtp_connection();
+		$this->simulated_sending_succeeded = true;
+		$this->is_checked = true;
+	}
+
+
+	private function cleanup_simulation_failure()
+	{
+		$this->smtp_connection_is_open = false;
+		$this->close_smtp_connection();
+		$this->is_checked = true;
+	}
+
+	private function get_smtp_connection()
+	{
+		// if we don't have any resolvable mx servers, we return right away
+		if( empty( $this->mx_server_ips ) )
+			return false;
+		for( $i = 0; $i < sizeof( $this->mx_server_ips ); $i++ )
+		{
+			$this->smtp_connection = @fsockopen ( $this->mx_server_ips[ $i ], 25, $errno, $errstr, $this->SMTP_CONNECTION_TIMEOUT_SHORT );
+			if( ! empty($this->smtp_connection) )
+			{
+				if( @stream_set_timeout(  $this->smtp_connection, 1  )
+				{
+					$this->smtp_connection_is_open = true;
+					return true;
+				}
+				else
+					$this->close_smtp_connection();
+			}
+		}
 		return false;
 	}
+
+
+	private function close_smtp_connection()
+	{
+		$this->smtp_connection_is_open && @fwrite ( $this->smtp_connection, "QUIT\n" );
+		@fclose ( $this->smtp_connection );
+		$this->smtp_connection_is_open = false;
+	}
+
 
 
 	function leav_check_mx_servers_and_simulate_sending_to_email_address( $strEmailDomain, $strEmailAddress )
@@ -107,7 +308,7 @@ class LastEmailAddressValidator
 
 		if( sizeof( $arrMXHosts ) == 0 )
 		{
-			return SERVER_HAS_NO_DNS_MX_RECORDS;
+			return EMAIL_DOMAIN_HAS_NO_MX_RECORDS;
 		}
 
 		// iterate through the mail-server ( MX ) -names and send an request
