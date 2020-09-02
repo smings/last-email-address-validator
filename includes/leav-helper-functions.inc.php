@@ -53,7 +53,7 @@ function leav_get_email_domain( $strEmailAddress )
 
 function leav_check_field_name_for_email( &$strFieldName )
 {
-    return preg_match( "/^.*e[ -_~<>\.,\|=\+()\*!#\$%\^]{0,2}mail.*$/i", $strFieldName  ) == 1;
+    return preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $strFieldName  ) == 1;
 }
 
 

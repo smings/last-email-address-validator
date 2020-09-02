@@ -12,9 +12,6 @@ Text Domain: leav
 // for debugging only
 $d = false;
 
-$leav_plugin_file_name = plugin_basename( __FILE__ );
-$leav_plugin_name = 'last-email-address-validator';
-
 $WP_DOMAIN_PARTS = explode( '.', getenv( "HTTP_HOST" ) );
 $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . '.' .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
 
@@ -26,6 +23,7 @@ $disposable_email_service_domain_list_file = plugin_dir_path(__FILE__) . 'data/d
 $disposable_email_service_mx_servers_file =  plugin_dir_path(__FILE__) . 'data/disposable_email_service_provider_mx_server_list.txt';
 
 require_once('includes/leav.inc.php');
+require_once('includes/leav-settings-page.inc.php');
 require_once('includes/leav-helper-functions.inc.php');
 
 $LEAV = new LastEmailAddressValidator();
@@ -39,6 +37,7 @@ function leav_init()
 {
     global $d;
     global $leav_options;
+    global $LEAV;
     global $disposable_email_service_domain_list_url;
     global $disposable_email_service_domain_list_file;
     global $WP_MAIL_DOMAIN;
@@ -50,6 +49,7 @@ function leav_init()
     
     if ( empty($leav_options['wp_mail_domain']) )
         $leav_options['wp_mail_domain'] = $WP_MAIL_DOMAIN;
+    $LEAV->set_wordpress_email_domain( $leav_options['wp_mail_domain'] );
     
     if ( empty($leav_options['spam_email_addresses_blocked_count']) )
         $leav_options['spam_email_addresses_blocked_count'] = '0';
@@ -163,10 +163,99 @@ function leav_init()
         add_action('admin_menu', 'leav_add_options_page');
         // add_action('admin_enqueue_scripts', 'leav_enque_scripts');
     }
+}
 
+// --------------------------------------------------------------------------------------------
+//  Main validation function
+// 
+// 
+function leav_validate_email_address( $email_address )
+{
+    global $d;
+    global $LEAV;
+    global $leav_options;
+
+    // First we check the email address syntax
+    // 
+    if( ! $LEAV->validate_email_address_syntax($email_address) )
+    {
+        leav_increment_count_of_blocked_email_addresses();
+        return false;
+    }
+
+
+    // check mail-address against user defined blacklist (if enabled)
+    // 
+    // if ($leav_options['use_user_defined_domain_blacklist'] == 'yes')
+    // {
+    //     if($d)
+    //         write_log("Trying to block user-defined blacklist entries");
+    //     $regexps = preg_split('/[\r\n]+/', $leav_options['user_defined_blacklist'], -1, PREG_SPLIT_NO_EMPTY);
+
+    //     foreach ($regexps as $regexp)
+    //     {
+    //         if (preg_match('/' . $regexp . '/', $email_address))
+    //         {
+    //             if($d)
+    //                 write_log("---> Email address stems from $regexp -> returning 'spam'");
+    //             leav_increment_count_of_blocked_email_addresses();
+    //             return 'spam';
+    //         }
+    //     }
+    // }
+
+    // check mail-address against disposable email address services domain blacklist (if enabled)
+    // if ($leav_options['block_disposable_email_service_domains'] == 'yes')
+    // {
+    //     if($d)
+    //         write_log("Trying to block disposable email service blacklist entries");
+    //     $regexps = preg_split('/[\r\n]+/', $leav_options['disposable_email_service_domain_list'], -1, PREG_SPLIT_NO_EMPTY);
+        
+    //     foreach ($regexps as $regexp)
+    //     {
+    //         if($d)
+    //             write_log("Matching '$regexp' against '$email_address'");
+    //         if (preg_match('/' . $regexp . '/', $email_address))
+    //         {
+    //             if($d)
+    //                 write_log("---> Email address stems from $regexp -> returning 'spam'");
+    //             leav_increment_count_of_blocked_email_addresses();
+    //             return 'spam';
+    //         }
+    //     }
+    // }
+
+    if(! $LEAV->simulate_sending_an_email($email_address) )
+    {
+        leav_increment_count_of_blocked_email_addresses();
+        return false;
+    }
+}
+
+
+function leav_get_email_validation_error_text()
+{
+       if ( ! $LEAV->is_email_address_syntax_valid ) 
+         return __( 'entered email address is invalid.', 'leav');
+
+    elseif( ! $LEAV->email_domain_has_DNS_record ) 
+        return __( 'The entered email address\'s domain can\'t be resolved.', 'leav');
+
+    elseif( ! $LEAV->email_domain_has_MX_records ) 
+        return __( 'The entered email address\'s domain doesn\'t have any registered mail servers.', 'leav');
+
+    elseif( ! $LEAV->simulated_sending_succeeded ) 
+        return __( 'The entered email address\'s got rejected while trying to send an email to it.', 'leav');
+
+    else
+        return __( 'The entered email address is invalid.', 'leav');        
 
 }
 
+// --------------------------------------------------------------------------------------------
+//  Supported WPfunction / plugin validation functions
+// 
+// 
 function leav_validate_comment_email_addresses($approval_status, $comment_data)
 {
     global $d;
@@ -183,47 +272,55 @@ function leav_validate_comment_email_addresses($approval_status, $comment_data)
         return $approval_status;
    
     // check if trackbacks are allowed
-    if ( (isset($comment_data['comment_type'])) && ($comment_data['comment_type'] == 'trackback') )
+    if (    isset( $comment_data['comment_type'] )
+         && $comment_data['comment_type'] == 'trackback'
+         && $leav_options['accept_trackbacks'] == 'yes'
+    )
     {
-        if ($leav_options['accept_trackbacks'] == 'yes') 
-            return $approval_status;
-        else
-            return 'trash';
+        return $approval_status;
+    }
+    else
+    {
+        return 'trash';
     }
     
     // check if pingbacks are allowed
-    if ((isset($comment_data['comment_type'])) && ($comment_data['comment_type'] == 'pingback'))
+    if (    isset( $comment_data['comment_type'] ) 
+         && $comment_data['comment_type'] == 'pingback'
+         && $leav_options['accept_pingbacks'] == 'yes'
+    )
     {
-        if ($leav_options['accept_pingbacks'] == 'yes')
-            return $approval_status;
-        else 
+        return $approval_status;
+    }
+    else 
+    {
             return 'trash';
     }
     
     // if it's a comment and not a logged in user - check mail
-    if ( get_option('require_name_email') && !$user_ID )
+    if (    get_option('require_name_email') 
+         && !$user_ID 
+         && ! leav_validate_email_address( $comment_data['comment_author_email'] )
+    )
     {
-        $email_address = $comment_data['comment_author_email'];
-        return leav_validate_email_address($approval_status, $email_address);
+        $approval_status = 'spam';
     }
     return $approval_status;
 }
 
+
 function leav_validate_registration_email_addresses($errors, $sanitized_user_login, $entered_email_address)
 {
     global $d;
-    global $LEAV;
     global $leav_options;
 
     if( $leav_options['validate_wp_standard_user_registration_email_addresses'] == 'no' )
         return $errors;
 
-    $result = leav_validate_email_address('', $entered_email_address);
-    if ( $result === 'spam') 
-        $errors->add('wp_mail-validator-registration-error', __( 'The entered email address\'s domain is invalid or not accepted.', 'leav'));
-    elseif( $result == 'invalid_syntax' )
-         $errors->add('wp_mail-validator-registration-error', __( 'entered email address is invalid.', 'leav'));
-
+    if( ! leav_validate_email_address( $entered_email_address ) )
+    {
+        $errors->add( 'wp_mail-validator-registration-error', leav_get_email_validation_error_text() );
+    }
     return $errors;
 }
 
@@ -233,131 +330,63 @@ function leav_validate_cf7_email_addresses($result, $tag)
     global $LEAV;
     global $leav_options;
 
+    if( $leav_options['validate_cf7_email_fields'] == 'no' )
+        return $result;
+
     $tag = new WPCF7_FormTag( $tag );
     $type = $tag->type;
     $name = $tag->name;
-    if ($type == 'email' || $type == 'email*')
-    {
-        $entered_email_address = sanitize_email($_POST[$name]);
-        $result = leav_validate_email_address('', $entered_email_address);
-        if ( $result === 'spam')
-            $result->invalidate( $tag, __( 'The entered email address\'s domain is invalid or not accepted.', 'leav' ));
-        elseif( $result == 'invalid_syntax' )
-            $result->invalidate( $tag, __( 'The entered email address is invalid.', 'leav' ));
-    }
+    if ( ( $type == 'email' || $type == 'email*' ) && ! leav_validate_email_address( $_POST[$name] ) )
+        $result->invalidate( $tag, leav_get_email_validation_error_text() );
     return $result;
 }
 
 function leav_validate_wpforms_email_addresses( $fields, $entry, $form_data ) {
     global $d;
+
+    if( $leav_options['validate_wpforms_email_fields'] == 'no' )
+        return $fields;
+
     $size = count( $fields );
     for( $i = 0; $i < $size; $i++ )
     {
-        if( $fields[$i]['type'] == 'email' )
+        if(      $fields[$i]['type'] == 'email' 
+            && ! leav_validate_email_address( $fields[$i]['value'] )
+        )
         {
-            $result = leav_validate_email_address( '', $fields[$i]['value'] );
-            if( $result == 'spam')
-                wpforms()->process->errors[ $form_data['id'] ] [ $i ] = esc_html__( 'The entered email address\'s domain is invalid or not accepted.', 'leav' );
-            elseif( $result == 'invalid_syntax' )
-                wpforms()->process->errors[ $form_data['id'] ] [ $i ] = esc_html__( 'The entered email address is invalid.', 'leav' );
+            wpforms()->process->errors[ $form_data['id'] ] [ $i ] = leav_get_email_validation_error_text();
         }
     }
-
     return $fields;
 }
 
 function leav_validate_ninja_forms_email_addresses($form_data) {
     global $d;
-    global $LEAV;
+
+    if( $leav_options['validate_ninja_forms_email_fields'] == 'no' )
+        return $form_data;
+
     $size = count( $form_data['fields'] );
     for( $i = 1; $i <= $size; $i++ )
     {
-        if( $LEAV->leav_check_field_name_for_email( $form_data['fields'][$i]['key'] ) )
+        if(    $LEAV->leav_check_field_name_for_email( $form_data['fields'][$i]['key'] ) 
+            && ! leav_validate_email_address( $form_data['fields'][$i]['value'] )
+        )
         {
-            $result = leav_validate_email_address( '', $form_data['fields'][$i]['value'] );
-            if( $result == 'spam' )
-                $form_data['errors']['fields'][$i] = __( 'The entered email address\'s domain is invalid or not accepted.', 'leav' );
-            elseif ( $result == 'invalid_syntax' )
-                $form_data['errors']['fields'][$i] = __( 'The entered email address is invalid.', 'leav' );
+            $form_data['errors']['fields'][$i] = leav_get_email_validation_error_text();
         }
 
     }
     return $form_data;
 }
 
-function leav_validate_email_address($approval_status, $email_address)
-{
-    global $d;
-    global $LEAV;
-    global $leav_options;
 
-    // First we check the email address syntax
-    // 
-    if( ! $LEAV->leav_check_email_adress_syntax($email_address) )
-        return 'invalid_syntax';
-
-    // check mail-address against user defined blacklist (if enabled)
-    // 
-    if ($leav_options['use_user_defined_domain_blacklist'] == 'yes')
-    {
-        if($d)
-            write_log("Trying to block user-defined blacklist entries");
-        $regexps = preg_split('/[\r\n]+/', $leav_options['user_defined_blacklist'], -1, PREG_SPLIT_NO_EMPTY);
-
-        foreach ($regexps as $regexp)
-        {
-            if (preg_match('/' . $regexp . '/', $email_address))
-            {
-                if($d)
-                    write_log("---> Email address stems from $regexp -> returning 'spam'");
-                leav_increment_count_of_blocked_email_addresses();
-                return 'spam';
-            }
-        }
-    }
-
-    // check mail-address against disposable email address services domain blacklist (if enabled)
-    if ($leav_options['block_disposable_email_service_domains'] == 'yes')
-    {
-        if($d)
-            write_log("Trying to block disposable email service blacklist entries");
-        $regexps = preg_split('/[\r\n]+/', $leav_options['disposable_email_service_domain_list'], -1, PREG_SPLIT_NO_EMPTY);
-        
-        foreach ($regexps as $regexp)
-        {
-            if($d)
-                write_log("Matching '$regexp' against '$email_address'");
-            if (preg_match('/' . $regexp . '/', $email_address))
-            {
-                if($d)
-                    write_log("---> Email address stems from $regexp -> returning 'spam'");
-                leav_increment_count_of_blocked_email_addresses();
-                return 'spam';
-            }
-        }
-    }
-
-    $return_code = $LEAV->leav_validate_email_address($email_address);
-
-    if($d)
-        write_log("Result of validating email address is: $return_code");
-
-    if($return_code == VALID_EMAIL_ADDRESS)
-        return $approval_status;
-    else
-    {
-        leav_increment_count_of_blocked_email_addresses();
-        return 'spam';
-    }
-}
 
 
 // database update function
 function leav_increment_count_of_blocked_email_addresses()
 {
-    global $d;
     global $leav_options;
-
     $leav_options['spam_email_addresses_blocked_count'] = ($leav_options['spam_email_addresses_blocked_count'] + 1);
     update_option('leav_options', $leav_options);
 }
@@ -365,21 +394,18 @@ function leav_increment_count_of_blocked_email_addresses()
 // theme functions / statistics
 function leav_powered_by_label($string_before = "", $string_after = "")
 {
-    global $d;
     $label = $string_before . __('Anti spam protected by', 'leav') . ': <a href="https://smings.com/leav" title="LEAV - Last Email Address Validator" target="_blank">LEAV - Last Email Address Validator</a> - <strong>%s</strong> ' . __('Spam email addresses blocked', 'leav') . '!' . $string_after;
     return sprintf($label, leav_get_blocked_email_address_count());
 }
 
 function leav_get_blocked_email_address_count()
 {
-    global $d;
     global $leav_options;
     return $leav_options['spam_email_addresses_blocked_count'];
 }
 
 function leav_version()
 {
-    global $d;
     $plugin = get_plugin_data( __FILE__ );
     return $plugin['Version'];
 }
@@ -388,31 +414,14 @@ function leav_version()
 
 function leav_add_options_page()
 {
-    global $d;
     add_options_page('LEAV - Last Email Address Validator', 'LEAV - Last Email Address Validator', 'edit_pages', basename(__FILE__, ".php"), 'leav_options_page');
 }
 
-
-
-function leav_enque_scripts($hook)
-{
-    global $d;
-    if($d)
-        write_log("Hook = '" . $hook . "'");
-    if ('settings_page_leav' != $hook)
-    {
-        return;
-    }
-
-    wp_enqueue_script('jquery.mask', plugin_dir_url(__FILE__) . 'scripts/jquery.mask.min.js', array(), '1.14.15');
-    wp_enqueue_script('leav', plugin_dir_url(__FILE__) . 'scripts/leav.min.js', array(), '1.0.0');
-}
 
 // <-- plugin installation on activation -->
 
 function leav_activate_plugin()
 {
-    global $d;
     global $wpdb;
     global $leav_options;
 
@@ -440,14 +449,14 @@ function leav_uninstall_plugin()
 }
 
 
-function leav_add_plugin_overview_links( $links ) {
+function leav_add_plugin_overview_setttings_links( $links ) {
     $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
     array_unshift( $links, $settings_link );
     return $links;
 }
 
 $plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'leav_add_plugin_overview_links' );
+add_filter( "plugin_action_links_$plugin", 'leav_add_plugin_overview_setttings_links' );
 register_activation_hook( __FILE__, 'leav_activate_plugin');
 register_uninstall_hook( __FILE__, 'leav_uninstall_plugin');
 add_action( 'init', 'leav_init' );
