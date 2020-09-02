@@ -165,18 +165,13 @@ function leav_init()
     }
 }
 
-// --------------------------------------------------------------------------------------------
-//  Main validation function
-// 
-// 
+// ------------- Main validation function ----------------------------------------------------------
+
 function leav_validate_email_address( $email_address )
 {
-    global $d;
     global $LEAV;
     global $leav_options;
 
-    // First we check the email address syntax
-    // 
     if( ! $LEAV->validate_email_address_syntax($email_address) )
     {
         leav_increment_count_of_blocked_email_addresses();
@@ -225,37 +220,38 @@ function leav_validate_email_address( $email_address )
     //     }
     // }
 
-    if(! $LEAV->simulate_sending_an_email($email_address) )
+    if(! $LEAV->simulate_sending_an_email() )
     {
         leav_increment_count_of_blocked_email_addresses();
         return false;
     }
+
+    // when we are done with all validations, we return true
+    return true;
 }
 
 
 function leav_get_email_validation_error_text()
 {
-       if ( ! $LEAV->is_email_address_syntax_valid ) 
-         return __( 'entered email address is invalid.', 'leav');
+    global $LEAV;
 
-    elseif( ! $LEAV->email_domain_has_DNS_record ) 
-        return __( 'The entered email address\'s domain can\'t be resolved.', 'leav');
+       if ( $LEAV->is_email_address_syntax_valid === false ) 
+         return __( 'The entered email address is invalid.', 'leav');
 
-    elseif( ! $LEAV->email_domain_has_MX_records ) 
+    elseif( $LEAV->email_domain_has_MX_records === false ) 
         return __( 'The entered email address\'s domain doesn\'t have any registered mail servers.', 'leav');
 
-    elseif( ! $LEAV->simulated_sending_succeeded ) 
-        return __( 'The entered email address\'s got rejected while trying to send an email to it.', 'leav');
+    elseif( $LEAV->simulated_sending_succeeded === false) 
+        return __( 'The entered email address got rejected while trying to send an email to it.', 'leav');
 
     else
         return __( 'The entered email address is invalid.', 'leav');        
 
 }
 
-// --------------------------------------------------------------------------------------------
-//  Supported WPfunction / plugin validation functions
-// 
-// 
+
+// ------------- Supported WPfunction / plugin validation functions --------------------------------
+
 function leav_validate_comment_email_addresses($approval_status, $comment_data)
 {
     global $d;
@@ -311,25 +307,20 @@ function leav_validate_comment_email_addresses($approval_status, $comment_data)
 
 function leav_validate_registration_email_addresses($errors, $sanitized_user_login, $entered_email_address)
 {
-    global $d;
     global $leav_options;
-
     if( $leav_options['validate_wp_standard_user_registration_email_addresses'] == 'no' )
         return $errors;
 
     if( ! leav_validate_email_address( $entered_email_address ) )
-    {
         $errors->add( 'wp_mail-validator-registration-error', leav_get_email_validation_error_text() );
-    }
+
     return $errors;
 }
 
+
 function leav_validate_cf7_email_addresses($result, $tag)
 {
-    global $d;
-    global $LEAV;
     global $leav_options;
-
     if( $leav_options['validate_cf7_email_fields'] == 'no' )
         return $result;
 
@@ -341,9 +332,10 @@ function leav_validate_cf7_email_addresses($result, $tag)
     return $result;
 }
 
+
 function leav_validate_wpforms_email_addresses( $fields, $entry, $form_data ) {
     global $d;
-
+    global $leav_options;
     if( $leav_options['validate_wpforms_email_fields'] == 'no' )
         return $fields;
 
@@ -360,9 +352,10 @@ function leav_validate_wpforms_email_addresses( $fields, $entry, $form_data ) {
     return $fields;
 }
 
+
 function leav_validate_ninja_forms_email_addresses($form_data) {
     global $d;
-
+    global $leav_options;
     if( $leav_options['validate_ninja_forms_email_fields'] == 'no' )
         return $form_data;
 
@@ -381,9 +374,8 @@ function leav_validate_ninja_forms_email_addresses($form_data) {
 }
 
 
+// ------------- database statistic update function ------------------------------------------------
 
-
-// database update function
 function leav_increment_count_of_blocked_email_addresses()
 {
     global $leav_options;
@@ -391,7 +383,9 @@ function leav_increment_count_of_blocked_email_addresses()
     update_option('leav_options', $leav_options);
 }
 
-// theme functions / statistics
+
+// ------------- theme functions / statistics ------------------------------------------------------
+
 function leav_powered_by_label($string_before = "", $string_after = "")
 {
     $label = $string_before . __('Anti spam protected by', 'leav') . ': <a href="https://smings.com/leav" title="LEAV - Last Email Address Validator" target="_blank">LEAV - Last Email Address Validator</a> - <strong>%s</strong> ' . __('Spam email addresses blocked', 'leav') . '!' . $string_after;
@@ -410,7 +404,8 @@ function leav_version()
     return $plugin['Version'];
 }
 
-// <-- admin menu option page -->
+
+// ------------- Plugin activation/uninstall/options/option link functions -------------------------
 
 function leav_add_options_page()
 {
@@ -418,7 +413,14 @@ function leav_add_options_page()
 }
 
 
-// <-- plugin installation on activation -->
+function leav_add_plugin_overview_setttings_links( $links ) {
+    $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
+    array_unshift( $links, $settings_link );
+    return $links;
+}
+
+
+// ------------- Plugin activation / uninstallation ------------------------------------------------
 
 function leav_activate_plugin()
 {
@@ -442,18 +444,14 @@ function leav_activate_plugin()
     update_option('leav_options', $leav_options);
 }
 
+
 function leav_uninstall_plugin()
 {
-    global $d;
     delete_option('leav_options');
 }
 
 
-function leav_add_plugin_overview_setttings_links( $links ) {
-    $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
-    array_unshift( $links, $settings_link );
-    return $links;
-}
+// ------------- Plugin registration ---------------------------------------------------------------
 
 $plugin = plugin_basename( __FILE__ );
 add_filter( "plugin_action_links_$plugin", 'leav_add_plugin_overview_setttings_links' );
