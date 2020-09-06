@@ -50,10 +50,30 @@ function leav_get_email_domain( $strEmailAddress )
   return $domain;
 }
 
-
-function leav_check_field_name_for_email( &$strFieldName )
+function leav_get_wp_email_domain()
 {
-    return preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $strFieldName  ) == 1;
+  $WP_MAIL_DOMAIN = getenv( "HTTP_HOST" );
+  echo( getenv( "HTTP_HOST" ) . "<br/>" );
+  $CUT_OFF_PORT_REGEX = "/^(.*)(:\d{2,5})?$/";
+  $MAIL_DOMAIN_REGEX = "/^.*([^\.]+)$/";
+
+  preg_match( $CUT_OFF_PORT_REGEX, getenv( "HTTP_HOST" ), $match );
+  $WP_MAIL_DOMAIN = $match[1];
+
+  echo( $WP_MAIL_DOMAIN );
+  // $WP_DOMAIN_PARTS = explode( ".", getenv( "HTTP_HOST" ) );
+  // $WP_MAIL_DOMAIN = $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 2 ] . "." .  $WP_DOMAIN_PARTS[ count($WP_DOMAIN_PARTS) - 1 ];
+  return $WP_MAIL_DOMAIN;
+}
+
+if ( ! function_exists("write_log")) {
+   function write_log ( $log )  {
+      if ( is_array( $log ) || is_object( $log ) ) {
+         error_log( print_r( $log, true ) );
+      } else {
+         error_log( $log );
+      }
+   }
 }
 
 

@@ -14,15 +14,6 @@
 // for domain in `cat disposable_email_service_provider_domain_list.txt`; do dig @8.8.8.8 MX $domain +short > /dev/null && echo $domain >> results.txt; done
 
 
-if ( ! function_exists('write_log')) {
-   function write_log ( $log )  {
-      if ( is_array( $log ) || is_object( $log ) ) {
-         error_log( print_r( $log, true ) );
-      } else {
-         error_log( $log );
-      }
-   }
-}
 
 
 class LastEmailAddressValidator
@@ -32,7 +23,7 @@ class LastEmailAddressValidator
 	private $email_domain;
 	private $email_domain_ip_address;
 	public  $email_domain_has_MX_records;
-	private $detected_wp_mail_domain;
+	private $detected_wp_email_domain;
 	public  $is_email_address_syntax_valid;
 	private $mx_server_domains;
 	private $mx_server_ips;
@@ -46,29 +37,21 @@ class LastEmailAddressValidator
 	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
 	private static $SMTP_CONNECTION_TIMEOUT_LONG  = 3000;
 
+	// timeout in s
+	private static $FSOCKOPEN_TIMEOUT = 2;
 
-
-
-	// const DOMAIN_NAME_REGEX = '[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\\.[a-z]{2,18}';
-	// const EMAIL_ADDRESS_NAME_PART_REGEX = 
-	// 	'/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@$/i';
-
-	private $EMAIL_ADDRESS_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\\.[a-z]{2,18}$/i";
-
-	// Courtesy of https://emailregex.com/	
-	// private $EMAIL_ADDRESS_REGEX = "/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD";
+	private static $EMAIL_ADDRESS_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\\.[a-z]{2,18}$/i";
 	
-	private $IP_ADDRESS_REGEX = "/^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$/";
+	private static $IP_ADDRESS_REGEX = "/^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$/";
 
 
 // --------------- Public functions --------------------------------------------
 
 
-	public function __construct( string $email_address = '', string $wp_email_domain = '' )
+	public function __construct( string $email_address = "", string $wp_email_domain = "" )
 	{
 		$this->reset_class_attributes();
-		$detected_wp_domain_parts = explode( '.', getenv( "HTTP_HOST" ) );
-	  $this->detected_wp_mail_domain = $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 2 ] . '.' .  $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 1 ];
+		$this->detect_wp_email_domain();
 
 		if( ! empty($email_address) )
 		{
@@ -82,7 +65,7 @@ class LastEmailAddressValidator
 		if( ! empty($wp_email_domain) )
 			$this->wp_email_domain = $wp_email_domain;
 		elseif( empty( $this->wp_email_domain ) )
-			$this->wp_email_domain = $this->detected_wp_mail_domain;
+			$this->wp_email_domain = $this->detected_wp_email_domain;
 	}
 
 
@@ -99,9 +82,8 @@ class LastEmailAddressValidator
 	}
 
 
-	public function simulate_sending_an_email( string $email_address = '', string $wp_email_domain = '' )
+	public function simulate_sending_an_email( string $email_address = "", string $wp_email_domain = "" )
 	{
-	
 
 		if( ! empty($wp_email_domain) )
 			$sender_email_domain = $wp_email_domain;
@@ -116,14 +98,13 @@ class LastEmailAddressValidator
 		if( ! $this->is_email_address_syntax_valid && ! $this->validate_current_email_address_syntax() )
 			return false;
 
-		if( empty($mx_server_ips) && ! $this->gather_server_data() )
+		if( empty($mx_server_ips) && ! $this->get_email_domain_mx_servers() )
 			 return false;
 
 		if( ! $this->get_smtp_connection() )
 			return false;
 
-		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_LONG );
-
+		$answer = @fgets( $this->smtp_connection, self::$SMTP_CONNECTION_TIMEOUT_LONG );
 		if( substr( $answer, 0, 3 ) != "220" ) // no answer or rejected
 		{
 			$this->cleanup_simulation_failure();
@@ -131,7 +112,7 @@ class LastEmailAddressValidator
 		}
 
 		@fwrite ( $this->smtp_connection, "HELO " . $sender_email_domain . "\n" );
-		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_LONG );
+		$answer = @fgets( $this->smtp_connection, self::$SMTP_CONNECTION_TIMEOUT_LONG );
 		if( substr( $answer, 0, 3 ) != "250" ) // no answer or rejected
 		{
 			$this->cleanup_simulation_failure();
@@ -139,7 +120,7 @@ class LastEmailAddressValidator
 		}
 
 		@fwrite ( $this->smtp_connection, "MAIL FROM: <no-reply@" . $sender_email_domain . ">\n" );
-		$answer = @fgets( $this->smtp_connection, $this->SMTP_CONNECTION_TIMEOUT_SHORT );
+		$answer = @fgets( $this->smtp_connection, self::$SMTP_CONNECTION_TIMEOUT_SHORT );
 		if( substr( $answer, 0, 3 ) != "250" ) // no answer or rejected
 		{
 			$this->cleanup_simulation_failure();
@@ -158,6 +139,12 @@ class LastEmailAddressValidator
 	}
 
 
+	public function get_detected_wp_email_domain()
+	{
+		return $this->detected_wp_email_domain;
+	}
+
+
 	public function set_debug( boolean $debug )
 	{
 		$this->debug = $debug;
@@ -168,16 +155,16 @@ class LastEmailAddressValidator
 
 	private function reset_class_attributes()
 	{
-		$this->email_address                 = '';
-		$this->email_domain                  = '';
+		$this->email_address                 = "";
+		$this->email_domain                  = "";
 		$this->email_domain_has_MX_records   = false;
-		$this->email_domain_ip_address       = '';
+		$this->email_domain_ip_address       = "";
 		$this->is_email_address_syntax_valid = false;
 		$this->mx_server_domains             = array();
 		$this->mx_server_ips                 = array();
-		$this->normalized_email_address      = '';
+		$this->normalized_email_address      = "";
 		$this->simulated_sending_succeeded   = false;
-		$this->smtp_connection               = '';
+		$this->smtp_connection               = "";
 		$this->smtp_connection_is_open       = false;
 	}
 
@@ -186,19 +173,12 @@ class LastEmailAddressValidator
 	{
 		if( empty($this->normalized_email_address) )
 			return false;
-		elseif( preg_match( $this->EMAIL_ADDRESS_REGEX, $this->normalized_email_address ) == 1 )
+		elseif( preg_match( self::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address ) == 1 )
 		{
 			$this->is_email_address_syntax_valid = true;
 			$this->extract_domain_from_email_address();
 		}
 		return $this->is_email_address_syntax_valid;
-	}
-
-
-	private function gather_server_data()
-	{
-		if( ! $this->get_email_domain_mx_servers() )
-			return false;
 	}
 
 
@@ -235,15 +215,15 @@ class LastEmailAddressValidator
 	private function get_host_ip_address( string $hostname )
 	{
 		$original_hostname = $hostname;
-		if ( preg_match( $this->IP_ADDRESS_REGEX, $hostname ) )
+		if ( preg_match( self::$IP_ADDRESS_REGEX, $hostname ) )
 			$hostname = @gethostbyaddr ( $strEmailDomain );
 		$host_ip = @gethostbyname ( $hostname );
 
-		if (   preg_match( $this->IP_ADDRESS_REGEX, $host_ip ) 
+		if (   preg_match( self::$IP_ADDRESS_REGEX, $host_ip ) 
 			  && $host_ip != $original_hostname )
 			return $host_ip;
 		else
-			return '';
+			return "";
 	}
 
 
@@ -270,7 +250,8 @@ class LastEmailAddressValidator
 
 	private function get_smtp_connection_to_host( string $hostname_or_ip )
 	{
-		$this->smtp_connection = @fsockopen ( $hostname_or_ip, 25, $errno, $errstr, $this->SMTP_CONNECTION_TIMEOUT_SHORT );
+		$this->smtp_connection = @fsockopen ( $hostname_or_ip, 25, $errno, $errstr, self::$FSOCKOPEN_TIMEOUT);
+
 		if( ! empty($this->smtp_connection) )
 		{
 			if( @stream_set_timeout( $this->smtp_connection, 1 ) )
@@ -289,6 +270,14 @@ class LastEmailAddressValidator
 		$this->smtp_connection_is_open = false;
 	}
 
+
+	private function detect_wp_email_domain()
+	{
+		$this->detected_wp_email_domain = preg_replace( "/:\d{2,5}$/", '', getenv( "HTTP_HOST" ) );
+		$detected_wp_domain_parts = explode( ".", $this->detected_wp_email_domain );
+		if( sizeof($detected_wp_domain_parts) > 1)
+	  	$this->detected_wp_email_domain = $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 2 ] . "." .  $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 1 ];
+	}
 
 }
 ?>

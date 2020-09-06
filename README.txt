@@ -22,15 +22,14 @@ fake or disposable email adresses for comments, user registrations or any kind o
 contact form. There are plenty of bad apples out there and we want to protect you
 against them.
 We built this plugin, because we were frustrated with the lack of true email
-validation beyond just syntax checks in all the functions and plugins we used
+validation beyond just syntax checks in all the WordPress functions and plugins we use
 ourselves. We always want to make LEAV better. If you miss a plugin or another
 way of extra protection, please contact us at <a href="mailto:leav-feature-request@smings.com">leav-feature-request@smings.com</a>.
 
 = Integrations =
 
-LEAV is the only free WordPress plugin that provides email address validation 
-that seamlessly integrates with all of the big WordPress form plugins and WordPress 
-standard functions even in its light edition:
+LEAV is the only free WordPress plugin that provides unlimited email address validation 
+and reliable disposable email address protection that seamlessly integrates with all of the big WordPress form plugins and WordPress standard functions. LEAV makes sure that email addresses are deliverable and (if activated) are not disposable email addresses.
 
 Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
@@ -40,6 +39,7 @@ Currently "Last Email Address Validator" integrates with:
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/)
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 * [WPForms (light and pro)](https://wordpress.org/plugins/wpforms-lite/)
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/)
 
 Additionally you can control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
@@ -48,33 +48,53 @@ validated
 * [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 
 = Features =
-LEAV - Last Email Adress Validator by smings validates email addresses through a 5-step process:
-1. Syntax check - checks if the email address is syntactically correct. This syntax check usually is more thorough than the normally frontend-based (javascript) validation of your forms plugin. It is a solid server-side email syntax based on regular expressions (always on).
-2. User-defined domain blacklist - filters out email addresses from your personal list of blacklisted domains (optional)
-3. Disposable email address service provider domain list - if activated checks and filters out email addresses from domains on the blacklist. The list gets frequently updated (otional.)
-4. DNS Record check - checks if the domain of the email address is DNS resolvable and has at least one MX server (MX = Mail eXchange record) (always on)
-5. Simulated sending of an email to one of the MX servers. If this siumulation fails, we know that your WordPress instance could not send an email to the email address. Therefore we reject such email addresses (always on)
+LEAV - Last Email Adress Validator by smings validates email addresses through an elaborate multi-step validation process:
+* Email address syntax check - checks if the email address is syntactically correct. This syntax check usually is more thorough than the normally frontend-based (javascript) validation of your forms plugin. It is a solid server-side email syntax check based on regular expressions (always on). By the way - there are top-level domains like ".CANCERRESEARCH" and even longer ones out there. The currently longest top-level domain is 18 characters long and most email syntax checks don't allow this. For a current list of allowed top level domains look at [iana.org](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
+
+* User-defined domain whitelist - allows all email addresses from your personal list of whitelisted email domains (optional)
+
+* User-defined email address whitelist - allows all email addresses from your personal list of whitelisted email addresses (optional)
+
+* User-defined domain blacklist - rejects email addresses from your personal list of blacklisted email domains (optional)
+
+* User-defined email address blacklist - rejects any email address from your personal list of blacklisted email addresses (optional)
+
+* Disposable email address service provider domain list - if activated checks and filters out email addresses from domains on the blacklist. The list gets frequently updated (otional)
+
+* DNS MX record check - checks if the domain of the email address is DNS resolvable and has at least one MX server (MX = Mail eXchange record) (always on)
+
+* User-defined MX server domain blacklist - rejects all email addresses who's mail server domains are on this list
+
+* LEAV's MX server domain blacklist - rejects all email addresses who's mail server domains are on this list. This list contains the main domains of known disposable email address services.
+
+* User-defined MX server IP address blacklist - rejects all email addresses who's mail servers' IP addresses are on this list
+
+* LEAV's MX server IP address blacklist - rejects all email addresses who's mail servers' IP addresses are on this list of mail servers of known disposable email address services. This filters out all the aliases of the disposable email address service domains too, since they are all using the same set of mail servers. This keeps our list of disposable email address services lean and maintainable.
+
+* Simulated sending of an email to one of the MX servers. If this siumulation fails, we know that your WordPress instance could not send an email to the email address. Therefore we reject such email addresses (always on)
 
 If an email address passes through all of these tests, we know for sure, that it is a real email address that can be reached by your WordPress instance. This will reduce spam significantly. Still we 
 encourage you to use additional spam protection by using reCATCHAs (i.e. googles [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) that
 is invisible except for a little banner that has to be added on the form pages at least) and other means to protect your valuable lifetime.
 
-## Origins ##
-The foundational code was written by [@kimpenhaus](https://profiles.wordpress.org/kimpenhaus/). 
-Since the original plugin only supported the standard WordPress registration, comments and 
-Trackbacks/Pingbacks, we forked the code and then extended 
-it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) 
-as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). 
-The original code was not following best practices either. These shortcomings got
-optimized. 
+After all - all the above tests just verify the email address's correctness and deliverability, but it doesn't prove that the person in front of the computer entering the email address has access to it. 
 
-If you need `Last-Email-Address-Validator` to integrate with more plugins, feel free to contact us at 
-[leav-feature-requests@smings.com](mailto:leav-feature-requests).
+This check is part of the LEAV pro version. LEAV's pro version verifies that the person in front of the computer (or on his mobile device) has actual access to the email address. By connecting the email address with the person interacting with your WordPress, we can reduce the amount of SPAM even further.
+
+But even after all this, you'll probably be bothered every now and then. But you'll save a ton of your precious lifetime with the above checks.
+
+
+## Origins ##
+The inspiration for this plugin stem.s from the plugin [wp-mail-validator](https://wordpress.org/plugins/wp-mail-validator/)
+Since this plugin only supported the standard WordPress registration, comments and 
+Trackbacks/Pingbacks, we took the code and then extended it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). The original code was not following best practices at all and threw deprecation warnings. So with version 1.3.0 we decided to completely rewrite everything and did a major code refactoring. This allowed us to have a solid foundation for a lot of more supported plugins to come.
+
+If you need `Last-Email-Address-Validator` to integrate with a plugin you use, feel free to contact us at [leav-feature-requests@smings.com](mailto:leav-feature-requests).
 
 = Installation =
 
 == Installation from within your WordPress installation ==
-1. Go to `` -> Add New`
+1. Go to `Plugins` -> Add New`
 2. Search for `Last Email Address Validator`
 3. Click on the `Install Now` button
 4. Click on the `Activate Plugin` button
@@ -96,21 +116,17 @@ You should not need to adjust anything unless you want to deactivate things.
 Things should always be as simple as possible, therefore you can usually skip even 
 looking at the settings.
 
-= Help me help you =
+= Help us help you =
 We are sure that you'll appreciate the extra level of spam protection provided by Last Email Address Validator (LEAV) by smings.
-As of now it is a free plugin without limitation. We just call it the 'light edition' already, because we have to make a living too. I, [Dirk Tornow](mailto:dirk@smings.com), have a baby girl and a rascal toddler that need daycare and much more. Therefore I ask you to show me your appreciation in return by considering a one-time donation 
-(on the settings page of `Last Email Address Validator (LEAV)` you find a donation link) or by becoming a [patreon](https://patreon.com/smings). 
-This will help me help you and gives you good karma! 
+We take great pride in the fact that it is the only plugin to support all major WordPress form plugins out of the box for free. We believe that everyone deserves to get his lifetime SPAM protected. So LEAV isn't limited in the number of validations it does for you. The author, [Dirk Tornow](mailto:dirk@smings.com), has a baby girl and a rascal toddler that need daycare and much more. Therefore we ask you to show him your appreciation by considering a [one-time donation via PayPal](https://paypal.me/DirkTornow) or by becoming a [patreon](https://patreon.com/smings). 
+This will help us help you and gives you good karma points! 
 
-= Limitations of the light edition =
-In the near future the light edition will be limited to 25 email validations per day.
-This will serve the vast majority (>90%) of all small to medium size WordPress powered websites.
-For those who need more protection and more validations, we plan to offer 
-limitless email validations as well as RBL-checks and other means of additional 
-protection in future releases. And all this for not more than a coffee per year.
+= Limitations of the free plugin =
+None - there aren't any. LEAV validates as many email addresses as your WordPress instance can handle. It makes sure that all entered email addresses are deliverable and (if activated) not from disposable email address domains.
+For those who need more protection and more validations, we currently develop the pro version of LEAV. The pro version of LEAV validates, that the person entering the email address has actual access and control over the email account. It does this by sending a verification code to the entered email address and provides the user who entered the email address with a verification step before the form data gets send to the underlying plugin. No matter the plugin. LEAV pro supplies the functionality.
+Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure the email address entered is not from known spammer domains. And this will cost just as much as a starbucks coffee per year.
 
 == Screenshots ==
-
 1. settings-01.png
 2. settings-02.png
 3. settings-03.png
@@ -119,9 +135,11 @@ protection in future releases. And all this for not more than a coffee per year.
 6. cf7-02.png
 7. woocommerce-01.png
 
+
 == Changelog ==
 = 1.3.0 =
 * Added support for Ninja Forms
+* Complete refactoring of the code for better readability and easier extending
 
 = 1.2.0 =
 * Added support for WPForms
@@ -150,8 +168,8 @@ protection in future releases. And all this for not more than a coffee per year.
 * Added support for WPForms
 
 = 1.1 =
-Added woocommerce support
+* Added woocommerce support
 
 = 1.0 =
-Initial Version with support for contact form 7
+* Initial Version with support for contact form 7
 
