@@ -4,8 +4,8 @@ Donate link: https://www.patreon.com/smings
 Tags: email address validation, email address validator, form, forms, contact form, contact forms, user registration, comments, spam, MX, DNS
 Requires at least: 4.9
 Tested up to: 5.5
-Stable tag: 1.1.6
-Requires PHP: 5.5
+Stable tag: 1.4.1
+Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,10 +13,10 @@ LEAV (light edition) provides is the best email address validation for WP regist
 
 == Description ==
 
-= LEAV Last Email Address Validator by smings (light edition) =
+= LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-address-validator) =
 
-We believe that your lifetime is the most precious and protection worthy thing on 
-the planet. Protecting it is a critical task. 
+We believe that your lifetime is the most precious and protection worthy thing in 
+the universe. Protecting it is a critical task. 
 LEAV helps you to effectively protect your lifetime against spammers that use 
 fake or disposable email adresses for comments, user registrations or any kind of
 contact form. There are plenty of bad apples out there and we want to protect you
@@ -24,7 +24,7 @@ against them.
 We built this plugin, because we were frustrated with the lack of true email
 validation beyond just syntax checks in all the WordPress functions and plugins we use
 ourselves. We always want to make LEAV better. If you miss a plugin or another
-way of extra protection, please contact us at <a href="mailto:leav-feature-request@smings.com">leav-feature-request@smings.com</a>.
+way of extra protection, please contact us at [leav@smings.com](mailto:leav@smings.com).
 
 = Integrations =
 
@@ -79,17 +79,17 @@ is invisible except for a little banner that has to be added on the form pages a
 
 After all - all the above tests just verify the email address's correctness and deliverability, but it doesn't prove that the person in front of the computer entering the email address has access to it. 
 
-This check is part of the LEAV pro version. LEAV's pro version verifies that the person in front of the computer (or on his mobile device) has actual access to the email address. By connecting the email address with the person interacting with your WordPress, we can reduce the amount of SPAM even further.
+This check is part of the LEAV pro version. LEAV's pro version verifies that the person in front of the computer (or on his mobile device) has actual access to the email address. By connecting the email address with the person interacting with your WordPress, you can reduce the amount of SPAM even further.
 
-But even after all this, you'll probably be bothered every now and then. But you'll save a ton of your precious lifetime with the above checks.
+But even after all this, you'll probably be bothered every now and then. But you'll save a ton of your precious lifetime with the above checks provided by LEAV.
 
 
 ## Origins ##
-The inspiration for this plugin stem.s from the plugin [wp-mail-validator](https://wordpress.org/plugins/wp-mail-validator/)
+The inspiration for this plugin stem.s from the plugin [wp-mail-validator](https://wordpress.org/plugins/wp-mail-validator/).
 Since this plugin only supported the standard WordPress registration, comments and 
-Trackbacks/Pingbacks, we took the code and then extended it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). The original code was not following best practices at all and threw deprecation warnings. So with version 1.3.0 we decided to completely rewrite everything and did a major code refactoring. This allowed us to have a solid foundation for a lot of more supported plugins to come.
+Trackbacks/Pingbacks, we took the code and then extended it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). The original code was not following best practices and had some other shortcomings. So with version 1.3.0 we decided to completely rewrite everything and did a major code refactoring. This allowed us to have a solid foundation for a lot of more supported WordPress plugins to come.
 
-If you need `Last-Email-Address-Validator` to integrate with a plugin you use, feel free to contact us at [leav-feature-requests@smings.com](mailto:leav-feature-requests).
+If you need "LEAV - Last-Email-Address-Validator" to integrate with a plugin you use, feel free to contact us at [leav@smings.com](mailto:leav@smings.com) for feature requests.
 
 = Installation =
 

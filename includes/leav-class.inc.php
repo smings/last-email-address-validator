@@ -13,25 +13,30 @@
 // Example for bash one-liner for finding domains with MX records 
 // for domain in `cat disposable_email_service_provider_domain_list.txt`; do dig @8.8.8.8 MX $domain +short > /dev/null && echo $domain >> results.txt; done
 
-
+defined('ABSPATH') or die('Not today!');
 
 
 class LastEmailAddressValidator
 {
-	public  $debug;
-	private $email_address;
-	private $email_domain;
-	private $email_domain_ip_address;
-	public  $email_domain_has_MX_records;
-	private $detected_wp_email_domain;
-	public  $is_email_address_syntax_valid;
-	private $mx_server_domains;
-	private $mx_server_ips;
-	private $normalized_email_address;
-	public  $simulated_sending_succeeded;
+	public  $debug = false;
+	private $email_address = '';
+	private $email_domain = '';
+	private $email_domain_ip_address = '';
+	public  $email_domain_has_MX_records = false;
+	private $detected_wp_email_domain = '';
+	public  $is_email_address_syntax_valid = false;
+	public  $is_email_domain_on_user_defined_blacklist = false;
+	public  $is_email_address_on_user_defined_blacklist = false;
+	public  $is_email_domain_on_user_defined_whitelist = false;
+	public  $is_email_address_on_user_defined_whitelist = false;
+	private $mx_server_domains = array();
+	private $mx_server_preferences = array();
+	private $mx_server_ips = array();
+	private $normalized_email_address = '';
+	public  $simulated_sending_succeeded = false;
 	private $smtp_connection;
-	private $smtp_connection_is_open;
-	private $wp_email_domain;
+	private $smtp_connection_is_open = false;
+	private $wp_email_domain = '';
 
 	// timeouts in ms
 	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
@@ -79,6 +84,50 @@ class LastEmailAddressValidator
 	{
 		$this->__construct( $email_address, $this->wp_email_domain );
 		return $this->is_email_address_syntax_valid;
+	}
+
+
+	public function check_if_email_is_on_user_defined_blacklist( array &$list ) : bool
+	{
+		if( $this->check_if_string_is_on_list( $this->email_domain, $list ) )
+		{
+			$this->is_email_domain_on_user_defined_blacklist = true;
+			return true;
+		}
+		return false;
+	}
+
+
+	public function check_if_email_address_is_on_user_defined_blacklist( array &$list ) : bool
+	{
+		if( $this->check_if_string_is_on_list( $this->normalized_email_address, $list ) )
+		{
+			$this->is_email_address_on_user_defined_blacklist = true;
+			return true;
+		}
+		return false;
+	}
+
+
+	public function check_if_email_is_on_user_defined_whitelist( array &$list ) : bool
+	{
+		if( $this->check_if_string_is_on_list( $this->email_domain, $list ) )
+		{
+			$this->is_email_domain_on_user_defined_whitelist = true;
+			return true;
+		}
+		return false;
+	}
+
+
+	public function check_if_email_address_is_on_user_defined_whitelist( array &$list ) : bool
+	{
+		if( $this->check_if_string_is_on_list( $this->normalized_email_address, $list ) )
+		{
+			$this->is_email_address_on_user_defined_whitelist = true;
+			return true;
+		}
+		return false;
 	}
 
 
@@ -173,7 +222,7 @@ class LastEmailAddressValidator
 	{
 		if( empty($this->normalized_email_address) )
 			return false;
-		elseif( preg_match( self::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address ) == 1 )
+		elseif( preg_match( self::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
 		{
 			$this->is_email_address_syntax_valid = true;
 			$this->extract_domain_from_email_address();
@@ -197,7 +246,7 @@ class LastEmailAddressValidator
 
 	private function get_email_domain_mx_servers()
 	{
-		if( @getmxrr($this->email_domain, $this->mx_server_domains) )
+		if( @getmxrr($this->email_domain, $this->mx_server_domains, $this->mx_server_preferences ) )
 		{
 			for( $i = 0; $i < sizeof( $this->mx_server_domains ); $i++ )
 			{
@@ -212,7 +261,7 @@ class LastEmailAddressValidator
 	}
 
 
-	private function get_host_ip_address( string $hostname )
+	private function get_host_ip_address( string $hostname ) : string
 	{
 		$original_hostname = $hostname;
 		if ( preg_match( self::$IP_ADDRESS_REGEX, $hostname ) )
@@ -222,8 +271,7 @@ class LastEmailAddressValidator
 		if (   preg_match( self::$IP_ADDRESS_REGEX, $host_ip ) 
 			  && $host_ip != $original_hostname )
 			return $host_ip;
-		else
-			return "";
+		return '';
 	}
 
 
@@ -234,7 +282,7 @@ class LastEmailAddressValidator
 	}
 
 
-	private function get_smtp_connection()
+	private function get_smtp_connection() : bool
 	{
 		// if we don't have any resolvable mx servers, we return right away
 		if( empty( $this->mx_server_ips ) )
@@ -274,9 +322,27 @@ class LastEmailAddressValidator
 	private function detect_wp_email_domain()
 	{
 		$this->detected_wp_email_domain = preg_replace( "/:\d{2,5}$/", '', getenv( "HTTP_HOST" ) );
+		if( $this->detected_wp_email_domain = 'localhost' || $this->detected_wp_email_domain = '127.0.0.1' )
+		{
+			$this->detected_wp_email_domain = '';
+			return;
+		}
 		$detected_wp_domain_parts = explode( ".", $this->detected_wp_email_domain );
 		if( sizeof($detected_wp_domain_parts) > 1)
 	  	$this->detected_wp_email_domain = $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 2 ] . "." .  $detected_wp_domain_parts[ count($detected_wp_domain_parts) - 1 ];
+	  else
+	  	$this->detected_wp_email_domain = '';
+	}
+
+
+	private function check_if_string_is_on_list( string &$string, array &$list ) : bool
+	{
+		foreach( $list as $line )
+		{
+			if( $line == $string )
+				return true;
+		}
+		return false;
 	}
 
 }
