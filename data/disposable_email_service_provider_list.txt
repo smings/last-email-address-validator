@@ -1,3 +1,5 @@
+1.4.1
+
 domain:10minutemail.com
 mx:beta-mail.10minutemail.com
 ip:52.40.138.240
@@ -43,6 +45,7 @@ mx:mail.mailinator.com
 ip:23.239.11.30
 mx:mail2.mailinator.com
 ip:45.33.83.75
+
 domain:dispostable.com
 mx:mail.dispostable.com
 ip:188.166.49.116
@@ -65,7 +68,8 @@ domain:spamgourmet.com
 mx:gourmet7.spamgourmet.com
 ip:216.75.62.102
 
-# So far I couldn't figure out how squizzy works, but blocking the domain works too
+# So far we couldn't fully figure out how squizzy works
+# but blocking the email domain always works
 domain:squizzy.net
 
 domain:tempr.email

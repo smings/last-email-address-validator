@@ -3,7 +3,7 @@
 Plugin Name: Last Email Address Validator
 Plugin URI: https://smings.com/leav/
 Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms and more plugins to come...
-Version: 1.4.0
+Version: 1.4.1
 Author: smings
 Author URI: https://smings.com/leav/
 Text Domain: leav
@@ -11,57 +11,59 @@ Text Domain: leav
 
 defined('ABSPATH') or die('Not today!');
 
+require_once("includes/leav-central.inc.php");
 require_once("includes/leav-class.inc.php");
 require_once("includes/leav-settings-page.inc.php");
 require_once("includes/leav-helper-functions.inc.php");
 
 class LeavPlugin
 {
-
-    private $debug = false;
-    private $disposable_email_service_list_file;
+    private $disposable_email_service_provider_list_file = '';
+    private $dea_domains    = array();
+    private $dea_mx_domains = array();
+    private $dea_mx_ips     = array();
     private $leav;
-    private $options;
-    private static $options_name = "leav_options";
+    private $central;
+
 
     public function __construct()
     {
+        $this->central = new LeavCentral();
+        $this->leav = new LastEmailAddressValidator( $this->central );
+        $this->disposable_email_service_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$dea_service_file_relative_path;
         add_action( 'init', array( $this, 'init') );
     }
 
 
-    public function init()
+    public function init() : void
     {
-        $this->leav = new LastEmailAddressValidator();
         $this->init_options();
-        // $this->disposable_email_service_list_file = plugin_dir_path(__FILE__) . "data/disposable_email_service_provider_list.txt";
         
         if ( is_admin() )
-            add_action('admin_menu', array( new LeavSettingsPage( self::$options_name, $this->options), 'add_settings_page_to_menu' ) );
-
+            add_action('admin_menu', array( new LeavSettingsPage( $this->central, $this->leav ), 'add_settings_page_to_menu' ) );
         $this->init_validation_filters();
     }
 
 
     public function set_debug(bool $state) : void
     {
-        $this->debug = $state;
+        $this->central::$debug = $state;
     }
 
 
-    private function activate()
+    private function activate() : void
     {
         $this->init();
     }
 
-    private function deactivate()
+    private function deactivate() : void
     {
 
     }
 
-    public function validate_registration_email_addresses($errors, $sanitized_user_login, $entered_email_address)
+    public function validate_registration_email_addresses( $errors, $sanitized_user_login, $entered_email_address )
     {
-        if( $this->options['validate_wp_standard_user_registration_email_addresses'] == 'no' )
+        if( $this->central::$options['validate_wp_standard_user_registration_email_addresses'] == 'no' )
             return $errors;
     
         if( ! $this->validate_email_address( $entered_email_address ) )
@@ -78,16 +80,16 @@ class LeavPlugin
         // if a comment is already marked as spam or trash
         // we can return right away
         if ( 
-            $this->options['validate_wp_comment_user_email_addresses'] == 'no' ||
+            $this->central::$options['validate_wp_comment_user_email_addresses'] == 'no' ||
             $approval_status === "spam" || 
             $approval_status === "trash" 
         ) 
             return $approval_status;
        
         // check if trackbacks are allowed
-        if (    isset( $comment_data["comment_type"] )
-             && $comment_data["comment_type"] == "trackback"
-             && $this->options['accept_trackbacks'] == "yes"
+        if (    isset( $comment_data['comment_type'] )
+             && $comment_data['comment_type'] == "trackback"
+             && $this->central::$options['accept_trackbacks'] == "yes"
         )
         {
             return $approval_status;
@@ -98,9 +100,9 @@ class LeavPlugin
         }
         
         // check if pingbacks are allowed
-        if (    isset( $comment_data["comment_type"] ) 
-             && $comment_data["comment_type"] == "pingback"
-             && $this->options['accept_pingbacks'] == "yes"
+        if (    isset( $comment_data['comment_type'] ) 
+             && $comment_data['comment_type'] == "pingback"
+             && $this->central::$options['accept_pingbacks'] == "yes"
         )
         {
             return $approval_status;
@@ -113,7 +115,7 @@ class LeavPlugin
         // if it is a comment and not a logged in user - check mail
         if (    get_option("require_name_email") 
              && !$user_ID 
-             && ! $this->validate_email_address( $comment_data["comment_author_email"] )
+             && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
         {
             $approval_status = "spam";
@@ -124,7 +126,7 @@ class LeavPlugin
 
     public function validate_cf7_email_addresses($result, $tag)
     {
-        if( $this->options['validate_cf7_email_fields'] == 'no' )
+        if( $this->central::$options['validate_cf7_email_fields'] == 'no' )
             return $result;
     
         $tag = new WPCF7_FormTag( $tag );
@@ -138,17 +140,17 @@ class LeavPlugin
 
     public function validate_wpforms_email_addresses( $fields, $entry, $form_data ) 
     {    
-        if( $this->options['validate_wpforms_email_fields'] == 'no' )
+        if( $this->central::$options['validate_wpforms_email_fields'] == 'no' )
             return $fields;
     
         $size = count( $fields );
         for( $i = 0; $i < $size; $i++ )
         {
-            if(      $fields[$i]["type"] == "email" 
-                && ! $this->validate_email_address( $fields[$i]["value"] )
+            if(      $fields[$i]['type'] == "email" 
+                && ! $this->validate_email_address( $fields[$i]['value'] )
             )
             {
-                wpforms()->process->errors[ $form_data["id"] ] [ $i ] = $this->get_email_validation_error_text(   );
+                wpforms()->process->errors[ $form_data['id'] ] [ $i ] = $this->get_email_validation_error_text(   );
             }
         }
         return $fields;
@@ -157,15 +159,15 @@ class LeavPlugin
 
     public function validate_ninja_forms_email_addresses( $form_data ) 
     {    
-        if( $this->options['validate_ninja_forms_email_fields'] == 'no' )
+        if( $this->central::$options['validate_ninja_forms_email_fields'] == 'no' )
             return $form_data;
     
-        foreach( $form_data["fields"] as $field )
+        foreach( $form_data['fields'] as $field )
         {
-            if( preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $field["key"] ) == 1   
-                && ! $this->validate_email_address( $field["value"] )
+            if( preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $field['key'] ) == 1   
+                && ! $this->validate_email_address( $field['value'] )
             )
-                $form_data["errors"]["fields"][$field['id']] = $this->get_email_validation_error_text();
+                $form_data['errors']['fields'][$field['id']] = $this->get_email_validation_error_text();
         }
         return $form_data;
     }
@@ -175,110 +177,129 @@ class LeavPlugin
 
     private function init_options()
     {
-        if ( get_option( self::$options_name ) )
-            $this->options = get_option( self::$options_name );
+        if ( get_option( $this->central::$options_name ) )
+            $this->central::$options = get_option( $this->central::$options_name );
         
-        if ( empty( $this->options['wp_email_domain'] ) )
-            $this->options['wp_email_domain'] = $this->leav->get_detected_wp_email_domain();
+        if ( empty( $this->central::$options['wp_email_domain'] ) )
+            $this->central::$options['wp_email_domain'] = $this->leav->get_detected_wp_email_domain();
         else
-            $this->leav->set_wordpress_email_domain( $this->options['wp_email_domain'] );
-        
-        if ( empty( $this->options['spam_email_addresses_blocked_count'] ) )
-            $this->options['spam_email_addresses_blocked_count'] = "0";
-                
-        if ( empty( $this->options['accept_pingbacks'] ) )
-            $this->options['accept_pingbacks'] = "yes";
-        
-        if ( empty( $this->options['accept_trackbacks'] ) )
-            $this->options['accept_trackbacks'] = "yes";
-    
+            $this->leav->set_wordpress_email_domain( $this->central::$options['wp_email_domain'] );
+            
 
         // ------- USER DEFINED WHITELISTS & BLACKLISTS AS WELL AS THE INTERNAL LISTS --------------
-
-        if ( empty( $this->options['use_user_defined_domain_whitelist'] ) )
-            $this->options['use_user_defined_domain_whitelist'] = 'no';
+        // ------- radio button switches
+        if ( empty( $this->central::$options['use_user_defined_domain_whitelist'] ) )
+            $this->central::$options['use_user_defined_domain_whitelist'] = 'no';
     
-        if ( empty( $this->options['use_user_defined_email_whitelist'] ) )
-            $this->options['use_user_defined_email_whitelist'] = 'no';
+        if ( empty( $this->central::$options['use_user_defined_email_whitelist'] ) )
+            $this->central::$options['use_user_defined_email_whitelist'] = 'no';
 
-        if ( empty( $this->options['use_user_defined_domain_blacklist'] ) )
-            $this->options['use_user_defined_domain_blacklist'] = 'no';
+        if ( empty( $this->central::$options['use_user_defined_domain_blacklist'] ) )
+            $this->central::$options['use_user_defined_domain_blacklist'] = 'no';
 
-        if ( empty( $this->options['use_user_defined_email_blacklist'] ) )
-            $this->options['use_user_defined_email_blacklist'] = 'no';
+        if ( empty( $this->central::$options['use_user_defined_email_blacklist'] ) )
+            $this->central::$options['use_user_defined_email_blacklist'] = 'no';
 
-        if ( empty( $this->options['user_defined_domain_whitelist'] ) )
-            $this->options['user_defined_domain_whitelist'] = '';
+        // ------- user-defined lists
+        if ( empty( $this->central::$options['user_defined_domain_whitelist'] ) )
+            $this->central::$options['user_defined_domain_whitelist'] = '';
 
-        if ( empty( $this->options['user_defined_email_whitelist'] ) )
-            $this->options['user_defined_email_whitelist'] = '';
+        if ( empty( $this->central::$options['user_defined_email_whitelist'] ) )
+            $this->central::$options['user_defined_email_whitelist'] = '';
         
-        if ( empty( $this->options['user_defined_domain_blacklist'] ) )
-            $this->options['user_defined_domain_blacklist'] = '';
+        if ( empty( $this->central::$options['user_defined_domain_blacklist'] ) )
+            $this->central::$options['user_defined_domain_blacklist'] = '';
 
-        if ( empty( $this->options['user_defined_email_blacklist'] ) )
-            $this->options['user_defined_email_blacklist'] = '';
+        if ( empty( $this->central::$options['user_defined_email_blacklist'] ) )
+            $this->central::$options['user_defined_email_blacklist'] = '';
 
-        if ( empty( $this->options['internal_user_defined_domain_whitelist'] ) )
-            $this->options['internal_user_defined_domain_whitelist'] = array();
+        // ------- internally used lists
+        if ( empty( $this->central::$options['internal_user_defined_domain_whitelist'] ) )
+            $this->central::$options['internal_user_defined_domain_whitelist'] = array();
 
-        if ( empty( $this->options['internal_user_defined_email_whitelist'] ) )
-            $this->options['user_defined_email_whitelist'] = array();
+        if ( empty( $this->central::$options['internal_user_defined_email_whitelist'] ) )
+            $this->central::$options['internal_user_defined_email_whitelist'] = array();
         
-        if ( empty( $this->options['internal_user_defined_domain_blacklist'] ) )
-            $this->options['user_defined_domain_blacklist'] = array();
+        if ( empty( $this->central::$options['internal_user_defined_domain_blacklist'] ) )
+            $this->central::$options['internal_user_defined_domain_blacklist'] = array();
 
-        if ( empty( $this->options['internal_user_defined_email_blacklist'] ) )
-            $this->options['user_defined_email_blacklist'] = array();
+        if ( empty( $this->central::$options['internal_user_defined_email_blacklist'] ) )
+            $this->central::$options['internal_user_defined_email_blacklist'] = array();
+
+
+
+
+
+        if ( empty( $this->central::$options['spam_email_addresses_blocked_count'] ) )
+            $this->central::$options['spam_email_addresses_blocked_count'] = "0";
+                
+        if ( empty( $this->central::$options['accept_pingbacks'] ) )
+            $this->central::$options['accept_pingbacks'] = "yes";
+        
+        if ( empty( $this->central::$options['accept_trackbacks'] ) )
+            $this->central::$options['accept_trackbacks'] = "yes";
 
     
+        // ----- DEA list option values -----------------------
+        
+        if ( empty( $this->central::$options['block_disposable_email_address_services'] ) )
+            $this->central::$options['block_disposable_email_address_services'] = "yes";
 
+        if(    empty( $this->central::$options['dea_list_version'] ) 
+            || $this->central::$options['dea_list_version'] != $this->central::$plugin_version 
+        )
+            $this->read_dea_list_file();
         
-        if ( empty( $this->options['block_disposable_email_address_services'] ) )
-            $this->options['block_disposable_email_address_services'] = "yes";
-        
-        if( empty( $this->options['dea_domains'] ) )
-            $this->read_dea_data();
+        if( empty( $this->central::$options['dea_domains'] ) )
+            $this->central::$options['dea_domains'] = array();
 
-        if ( empty( $this->options['validate_wp_standard_user_registration_email_addresses'] ) )
-            $this->options['validate_wp_standard_user_registration_email_addresses'] = "yes";
+        if( empty( $this->central::$options['dea_mx_domains'] ) )
+            $this->central::$options['dea_mx_domains'] = array();
+
+        if( empty( $this->central::$options['dea_mx_ips'] ) )
+            $this->central::$options['dea_mx_ips'] = array();
+
+        // ------ Validation of functions / plugins switches ---
+
+        if ( empty( $this->central::$options['validate_wp_standard_user_registration_email_addresses'] ) )
+            $this->central::$options['validate_wp_standard_user_registration_email_addresses'] = "yes";
         
-        if ( empty( $this->options['validate_wp_comment_user_email_addresses'] ) )
-            $this->options['validate_wp_comment_user_email_addresses'] = "yes";
+        if ( empty( $this->central::$options['validate_wp_comment_user_email_addresses'] ) )
+            $this->central::$options['validate_wp_comment_user_email_addresses'] = "yes";
         
-        if ( empty( $this->options['validate_woocommerce_email_fields'] ) )
-            $this->options['validate_woocommerce_email_fields'] = "yes";
+        if ( empty( $this->central::$options['validate_woocommerce_email_fields'] ) )
+            $this->central::$options['validate_woocommerce_email_fields'] = "yes";
         
-        if ( empty( $this->options['validate_cf7_email_fields'] ) )
-            $this->options['validate_cf7_email_fields'] = "yes";
+        if ( empty( $this->central::$options['validate_cf7_email_fields'] ) )
+            $this->central::$options['validate_cf7_email_fields'] = "yes";
     
-        if ( empty( $this->options['validate_wpforms_email_fields'] ) )
-            $this->options['validate_wpforms_email_fields'] = "yes";
+        if ( empty( $this->central::$options['validate_wpforms_email_fields'] ) )
+            $this->central::$options['validate_wpforms_email_fields'] = "yes";
     
-        if ( empty( $this->options['validate_ninja_forms_email_fields'] ) )
-            $this->options['validate_ninja_forms_email_fields'] = "yes";
+        if ( empty( $this->central::$options['validate_ninja_forms_email_fields'] ) )
+            $this->central::$options['validate_ninja_forms_email_fields'] = "yes";
         
-        update_option(self::$options_name, $this->options);
+        update_option($this->central::$options_name, $this->central::$options);
     }
 
 
     private function init_validation_filters()
     {
 
-        if(    $this->options['validate_wp_standard_user_registration_email_addresses'] == "yes" 
+        if(    $this->central::$options['validate_wp_standard_user_registration_email_addresses'] == "yes" 
             && get_option("users_can_register") == 1 )
             add_filter("registration_errors", array( $this, 'validate_registration_email_addresses' ), 99, 3);
     
-        if(  $this->options['validate_wp_comment_user_email_addresses'] == "yes" )
+        if(  $this->central::$options['validate_wp_comment_user_email_addresses'] == "yes" )
             add_filter("pre_comment_approved", array( $this, 'validate_comment_email_addresses' ), 99, 2);
     
         if (    is_plugin_active( "woocommerce/woocommerce.php" )
-             && $this->options['validate_woocommerce_email_fields'] == "yes"
+             && $this->central::$options['validate_woocommerce_email_fields'] == "yes"
         )
             add_filter("woocommerce_registration_errors", array( $this, 'validate_registration_email_addresses'), 99, 3   );
     
         if (    is_plugin_active( "contact-form-7/wp-contact-form-7.php" ) 
-             && $this->options['validate_cf7_email_fields'] == "yes"
+             && $this->central::$options['validate_cf7_email_fields'] == "yes"
         )
         {
             add_filter("wpcf7_validate_email", array( $this, 'validate_cf7_email_addresses'), 20, 2);
@@ -290,12 +311,12 @@ class LeavPlugin
                 || is_plugin_active( "wpforms/wpforms.php"      ) 
              )
              &&
-             $this->options['validate_wpforms_email_fields'] == "yes"
+             $this->central::$options['validate_wpforms_email_fields'] == "yes"
            )
             add_action( "wpforms_process", array( $this, 'validate_wpforms_email_addresses'), 10, 3 );
     
         if (    is_plugin_active( "ninja-forms/ninja-forms.php" )
-             && $this->options['validate_ninja_forms_email_fields'] == "yes"
+             && $this->central::$options['validate_ninja_forms_email_fields'] == "yes"
         )
             add_filter("ninja_forms_submit_data", array( $this, 'validate_ninja_forms_email_addresses'), 99, 3);
     }
@@ -305,35 +326,64 @@ class LeavPlugin
     {
         if( ! $this->leav->validate_email_address_syntax( $email_address ) )
         {
-            if( $this->debug )
+            if( $this->central::$debug )
                 write_log("Email address syntax validation failed");
             $this->increment_count_of_blocked_email_addresses();
             return false;
         }
-        if( $this->debug )
+        if( $this->central::$debug )
             write_log("Email address syntax validation succeeded");
 
-
-        if(    $this->options['use_user_defined_domain_blacklist'] == 'yes' 
-            && ! empty( $this->options['user_defined_domain_blacklist'] )
-            && $this->leav->check_if_email_is_on_user_defined_blacklist( $this->options['user_defined_domain_blacklist'] )
+        if(    $this->central::$options['use_user_defined_domain_whitelist'] == 'yes' 
+            && ! empty( $this->central::$options['internal_user_defined_domain_whitelist'] )
+            && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$options['internal_user_defined_domain_whitelist'] )
           )
         {
-            if( $this->debug )
+            if( $this->central::$debug )
+                write_log("Email address is on user-defined domain whitelist");
+            return true;
+        }
+
+        if(    $this->central::$options['use_user_defined_email_whitelist'] == 'yes' 
+            && ! empty( $this->central::$options['internal_user_defined_email_whitelist'] )
+            && $this->leav->check_if_email_address_is_on_user_defined_whitelist( $this->central::$options['internal_user_defined_email_whitelist'] )
+          )
+        {
+            if( $this->central::$debug )
+                write_log("Email address is on user-defined email address whitelist");
+            return true;
+        }
+
+
+        if(    $this->central::$options['use_user_defined_domain_blacklist'] == 'yes' 
+            && ! empty( $this->central::$options['internal_user_defined_domain_blacklist'] )
+            && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$options['internal_user_defined_domain_blacklist'] )
+          )
+        {
+            if( $this->central::$debug )
                 write_log("Email address is on user-defined domain blacklist");
             return false;
         }
 
+        if(    $this->central::$options['use_user_defined_email_blacklist'] == 'yes' 
+            && ! empty( $this->central::$options['internal_user_defined_email_blacklist'] )
+            && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$options['internal_user_defined_email_blacklist'] )
+          )
+        {
+            if( $this->central::$debug )
+                write_log("Email address is on user-defined email blacklist");
+            return false;
+        }
 
         if(! $this->leav->simulate_sending_an_email() )
         {
-            if( $this->debug )
+            if( $this->central::$debug )
                 write_log("Simulated sending failed");
     
             $this->increment_count_of_blocked_email_addresses();
             return false;
         }
-        if( $this->debug )
+        if( $this->central::$debug )
             write_log("Simulated email sending succeeded");
     
         // when we are done with all validations, we return true
@@ -351,28 +401,72 @@ class LeavPlugin
              return __( "The entered email address's domain is blacklisted.", "leav");
 
         elseif( $this->leav->is_email_address_on_user_defined_blacklist === true ) 
-             return __( "The entered email address's is blacklisted.", "leav");
+             return __( "The entered email address is blacklisted.", "leav");
     
-        elseif( $this->leav->email_domain_has_MX_records   === false ) 
+        elseif( $this->leav->email_domain_has_MX_records === false ) 
             return __( "The entered email address's domain doesn't have any mail servers.", "leav");
-    
-        elseif( $this->leav->simulated_sending_succeeded   === false ) 
-            return __( "The entered email address got rejected while trying to send an email to it.", "leav")   ;
+
+        elseif( $this->leav->is_email_address_from_dea_service === true ) 
+            return __( "We don't accept email addresses from disposable email address services (DEA). Please use a regular email address.", "leav");
+
+        elseif( $this->leav->simulated_sending_succeeded === false ) 
+            return __( "The entered email address got rejected while trying to send an email to it.", "leav");
+
         else
             return __( "The entered email address is invalid.", "leav");
     }
 
 
-    private function read_dea_data()
+    private function read_dea_list_file() : bool
     {
+        if(    ! file_exists( $this->disposable_email_service_provider_list_file ) 
+            || ! is_readable( $this->disposable_email_service_provider_list_file ) 
+        )
+            return false;
 
+        $lines = file( $this->disposable_email_service_provider_list_file, FILE_IGNORE_NEW_LINES );
+        $this->central::$options['dea_list_version'] = array_shift($lines);
+
+        $this->central::$options['dea_domains'] = array();
+        $this->central::$options['dea_mx_domains'] = array();
+        $this->central::$options['dea_mx_ips'] = array();
+
+        foreach( $lines as $id => $line )
+        {
+write_log("Line = '$line'");
+            if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
+                || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
+            )
+                continue;
+
+            if( substr( $line, 0, 7 ) == 'domain:')
+            {
+                $domain = substr( $line, 7 );
+                if( $this->leav->sanitize_and_validate_domain( $domain ) )
+                    array_push( $this->central::$options['dea_domains'], $domain );
+            }
+            elseif( substr( $line, 0, 3 ) == 'mx:' )
+            {
+                $domain = substr( $line, 3 );
+                if( $this->leav->sanitize_and_validate_domain( $domain ) )
+                    array_push( $this->central::$options['dea_mx_domains'], $domain );
+            }
+            elseif( substr( $line, 0, 3 ) == 'ip:' )
+            {
+                $ip = substr( $line, 3 );
+                if( $this->leav->sanitize_and_validate_ip( $ip ) )
+                    array_push( $this->central::$options['dea_mx_ips'], $ip );
+            }
+
+        }
+        return true;
     }
 
 
     private function increment_count_of_blocked_email_addresses()
     {
-        $this->options['spam_email_addresses_blocked_count'] = ($this->options['spam_email_addresses_blocked_count'] + 1);
-        update_option( self::$options_name, $this->options );
+        $this->central::$options['spam_email_addresses_blocked_count'] = ($this->central::$options['spam_email_addresses_blocked_count'] + 1);
+        update_option( $this->central::$options_name, $this->central::$options );
     }
 
 }
