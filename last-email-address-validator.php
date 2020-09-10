@@ -19,9 +19,6 @@ require_once("includes/leav-helper-functions.inc.php");
 class LeavPlugin
 {
     private $disposable_email_service_provider_list_file = '';
-    private $dea_domains    = array();
-    private $dea_mx_domains = array();
-    private $dea_mx_ips     = array();
     private $leav;
     private $central;
 
@@ -51,15 +48,12 @@ class LeavPlugin
     }
 
 
-    private function activate() : void
-    {
+    public function activate() : void 
+    { 
         $this->init();
     }
 
-    private function deactivate() : void
-    {
-
-    }
+    public function deactivate() : void {}
 
     public function validate_registration_email_addresses( $errors, $sanitized_user_login, $entered_email_address )
     {
@@ -91,35 +85,25 @@ class LeavPlugin
              && $comment_data['comment_type'] == "trackback"
              && $this->central::$options['accept_trackbacks'] == "yes"
         )
-        {
             return $approval_status;
-        }
         else
-        {
             return "trash";
-        }
         
         // check if pingbacks are allowed
         if (    isset( $comment_data['comment_type'] ) 
              && $comment_data['comment_type'] == "pingback"
              && $this->central::$options['accept_pingbacks'] == "yes"
         )
-        {
             return $approval_status;
-        }
-        else 
-        {
-                return "trash";
-        }
+        else
+            return "trash";
         
         // if it is a comment and not a logged in user - check mail
         if (    get_option("require_name_email") 
              && !$user_ID 
              && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
-        {
             $approval_status = "spam";
-        }
         return $approval_status;
     }
 
@@ -150,7 +134,7 @@ class LeavPlugin
                 && ! $this->validate_email_address( $fields[$i]['value'] )
             )
             {
-                wpforms()->process->errors[ $form_data['id'] ] [ $i ] = $this->get_email_validation_error_text(   );
+                wpforms()->process->errors[ $form_data['id'] ] [ $i ] = $this->get_email_validation_error_text();
             }
         }
         return $fields;
@@ -228,7 +212,7 @@ class LeavPlugin
 
 
 
-
+        // ----- ing  -----------------------
 
         if ( empty( $this->central::$options['spam_email_addresses_blocked_count'] ) )
             $this->central::$options['spam_email_addresses_blocked_count'] = "0";
@@ -248,7 +232,16 @@ class LeavPlugin
         if(    empty( $this->central::$options['dea_list_version'] ) 
             || $this->central::$options['dea_list_version'] != $this->central::$plugin_version 
         )
+        {
+            if( $this->central::$debug )
+                write_log("Re-reading the dea list");
             $this->read_dea_list_file();
+        }
+        else
+        {
+            if( $this->central::$debug )
+                write_log("Didn't have to re-read the dea list");
+        }
         
         if( empty( $this->central::$options['dea_domains'] ) )
             $this->central::$options['dea_domains'] = array();
@@ -375,6 +368,25 @@ class LeavPlugin
             return false;
         }
 
+
+        // if( $this->central::$debug )
+        // {
+        //     write_log("DEA Check on: " . $this->central::$options['block_disposable_email_address_services'] );
+        //     write_log("Sizeof dea_domains   : " . sizeof( $this->central::$options['dea_domains'] ) );
+        //     write_log("Sizeof dea_mx_domains: " . sizeof( $this->central::$options['dea_mx_domains'] ) );
+        //     write_log("Sizeof dea_mx_ips    : " . sizeof( $this->central::$options['dea_mx_ips'] ) );            
+        // }
+
+        if(    $this->central::$options['block_disposable_email_address_services'] == 'yes' 
+            && $this->leav->check_if_email_address_is_from_dea_service( $this->central::$options['dea_domains'], $this->central::$options['dea_mx_domains'], $this->central::$options['dea_mx_ips'] )
+        )
+        {
+
+            if( $this->central::$debug )
+                write_log("Email address is on DEA blacklist.");
+            return false;
+        }
+
         if(! $this->leav->simulate_sending_an_email() )
         {
             if( $this->central::$debug )
@@ -394,6 +406,16 @@ class LeavPlugin
 
     private function get_email_validation_error_text()
     {
+        // if ( $this->central::$debug )
+        // {
+        //     write_log("\$this->leav->is_email_address_syntax_valid = " . $this->leav->is_email_address_syntax_valid );
+        //     write_log("\$this->leav->is_email_domain_on_user_defined_blacklist = " . $this->leav->is_email_domain_on_user_defined_blacklist );
+        //     write_log("\$this->leav->is_email_address_on_user_defined_blacklist = " . $this->leav->is_email_address_on_user_defined_blacklist );
+        //     write_log("\$this->leav->email_domain_has_MX_records = " . $this->leav->email_domain_has_MX_records );
+        //     write_log("\$this->leav->is_email_address_from_dea_service = " . $this->leav->is_email_address_from_dea_service );
+        //     write_log("\$this->leav->simulated_sending_succeeded = " . $this->leav->simulated_sending_succeeded );
+        // }
+
         if    ( $this->leav->is_email_address_syntax_valid === false ) 
              return __( "The entered email address syntax is invalid.", "leav");
 
@@ -402,13 +424,13 @@ class LeavPlugin
 
         elseif( $this->leav->is_email_address_on_user_defined_blacklist === true ) 
              return __( "The entered email address is blacklisted.", "leav");
-    
+
         elseif( $this->leav->email_domain_has_MX_records === false ) 
             return __( "The entered email address's domain doesn't have any mail servers.", "leav");
 
         elseif( $this->leav->is_email_address_from_dea_service === true ) 
             return __( "We don't accept email addresses from disposable email address services (DEA). Please use a regular email address.", "leav");
-
+    
         elseif( $this->leav->simulated_sending_succeeded === false ) 
             return __( "The entered email address got rejected while trying to send an email to it.", "leav");
 
@@ -433,7 +455,6 @@ class LeavPlugin
 
         foreach( $lines as $id => $line )
         {
-write_log("Line = '$line'");
             if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
                 || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
             )
@@ -457,9 +478,13 @@ write_log("Line = '$line'");
                 if( $this->leav->sanitize_and_validate_ip( $ip ) )
                     array_push( $this->central::$options['dea_mx_ips'], $ip );
             }
-
         }
-        return true;
+        if(    ! empty( $this->central::$options['dea_domains'] ) 
+            && ! empty( $this->central::$options['dea_mx_domains'] ) 
+            && ! empty( $this->central::$options['dea_mx_ips'] ) 
+        )
+            return true;
+        return false;
     }
 
 

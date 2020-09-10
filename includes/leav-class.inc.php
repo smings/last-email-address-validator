@@ -20,32 +20,33 @@ require_once("leav-central.inc.php");
 class LastEmailAddressValidator
 {
 	private $central;
+	private $detected_wp_email_domain = '';
 	private $email_address = '';
 	private $email_domain = '';
 	private $email_domain_ip_address = '';
-	public  $email_domain_has_MX_records = false;
-	private $detected_wp_email_domain = '';
-	public  $is_email_address_syntax_valid = false;
-	public  $is_email_domain_on_user_defined_blacklist = false;
-	public  $is_email_address_on_user_defined_blacklist = false;
-	public  $is_email_domain_on_user_defined_whitelist = false;
-	public  $is_email_address_on_user_defined_whitelist = false;
-	public  $is_email_address_from_dea_service = false;
-	private $mx_server_domains = array();
-	private $mx_server_preferences = array();
-	private $mx_server_ips = array();
 	private $normalized_email_address = '';
-	public  $simulated_sending_succeeded = false;
 	private $smtp_connection;
 	private $smtp_connection_is_open = false;
 	private $wp_email_domain = '';
-
-	// timeouts in ms
-	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
-	private static $SMTP_CONNECTION_TIMEOUT_LONG  = 3000;
+	public  $email_domain_has_MX_records = false;
+	public  $is_email_address_from_dea_service = false;
+	public  $is_email_address_on_user_defined_blacklist = false;
+	public  $is_email_address_on_user_defined_whitelist = false;
+	public  $is_email_address_syntax_valid = false;
+	public  $is_email_domain_on_user_defined_blacklist = false;
+	public  $is_email_domain_on_user_defined_whitelist = false;
+	public  $mx_server_domains = array();
+	public  $mx_server_ips = array();
+	public  $mx_server_preferences = array();
+	public  $simulated_sending_succeeded = false;
 
 	// timeout in s
 	private static $FSOCKOPEN_TIMEOUT = 2;
+
+	// timeouts in ms
+	private static $SMTP_CONNECTION_TIMEOUT_LONG  = 3000;
+	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
+
 
 
 // --------------- Public functions --------------------------------------------
@@ -73,6 +74,20 @@ class LastEmailAddressValidator
 	}
 
 
+	// this is resetting and reusing everything without instanciating a new class
+	public function reuse( string $email_address ) : bool
+	{
+		$this->reset_class_attributes();
+		$this->email_address = $email_address;
+		$this->normalize_email_address();
+		$this->validate_current_email_address_syntax();
+		if( ! $this->is_email_address_syntax_valid )
+			return false;			
+		$this->extract_domain_from_email_address();
+		return true;
+	}
+
+
 	public function set_wordpress_email_domain( string $wp_email_domain )
 	{
 		$this->wp_email_domain = $wp_email_domain;
@@ -81,7 +96,7 @@ class LastEmailAddressValidator
 
 	public function validate_email_address_syntax( string &$email_address ) : bool
 	{
-		$this->__construct( $this->central, $email_address, $this->wp_email_domain );
+		$this->reuse( $email_address );
 		return $this->is_email_address_syntax_valid;
 	}
 
@@ -120,11 +135,17 @@ class LastEmailAddressValidator
 
 	public function check_if_email_address_is_from_dea_service( array &$domain_list, array &$mx_domain_list, array &$mx_ip_list ) : bool
 	{
+		if( ! $this->do_basic_email_checks() )
+			return false;
+
 		if(    in_array( $this->email_domain, $domain_list ) 
 			  || ! empty( array_intersect( $this->mx_server_domains, $mx_domain_list ) )
 			  || ! empty( array_intersect( $this->mx_server_ips, $mx_ip_list ) )
 		)
 			$this->is_email_address_from_dea_service = true;
+
+		// $this->debug_status_flags();
+
 		return $this->is_email_address_from_dea_service;
 	}
 
@@ -139,14 +160,8 @@ class LastEmailAddressValidator
 		else
 			$sender_email_domain = $this->detected_wp_mail_domain;
 
-		if( empty($this->normalized_email_address) )
+		if( ! $this->do_basic_email_checks() )
 			return false;
-
-		if( ! $this->is_email_address_syntax_valid && ! $this->validate_current_email_address_syntax() )
-			return false;
-
-		if( empty($mx_server_ips) && ! $this->get_email_domain_mx_servers() )
-			 return false;
 
 		if( ! $this->get_smtp_connection() )
 			return false;
@@ -219,17 +234,30 @@ class LastEmailAddressValidator
 
 	private function reset_class_attributes()
 	{
-		$this->email_address                 = '';
-		$this->email_domain                  = '';
-		$this->email_domain_has_MX_records   = false;
-		$this->email_domain_ip_address       = '';
-		$this->is_email_address_syntax_valid = false;
-		$this->mx_server_domains             = array();
-		$this->mx_server_ips                 = array();
-		$this->normalized_email_address      = '';
-		$this->simulated_sending_succeeded   = false;
-		$this->smtp_connection               = '';
-		$this->smtp_connection_is_open       = false;
+		$this->email_address                 							= '';
+		$this->email_domain                  							= '';
+		$this->email_domain_has_MX_records   							= false;
+		$this->email_domain_ip_address       							= '';
+		$this->is_email_address_from_dea_service 					= false;
+		$this->is_email_address_on_user_defined_blacklist = false;
+		$this->is_email_address_on_user_defined_whitelist = false;
+		$this->is_email_address_syntax_valid 							= false;
+		$this->is_email_address_syntax_valid 							= false;
+		$this->is_email_domain_on_user_defined_blacklist 	= false;
+		$this->is_email_domain_on_user_defined_whitelist 	= false;
+		$this->mx_server_domains             							= array();
+		$this->mx_server_domains 													= array();
+		$this->mx_server_ips                 							= array();
+		$this->mx_server_ips 															= array();
+		$this->mx_server_preferences 											= array();
+		$this->normalized_email_address      							= '';
+		$this->normalized_email_address 									= '';
+		$this->simulated_sending_succeeded   							= false;
+		$this->simulated_sending_succeeded 								= false;
+		$this->smtp_connection               							= '';
+		$this->smtp_connection 														= '';
+		$this->smtp_connection_is_open       							= false;
+		$this->smtp_connection_is_open 										= false;
 	}
 
 
@@ -252,15 +280,22 @@ class LastEmailAddressValidator
 	}
 
 
-	private function extract_domain_from_email_address()
+	private function extract_domain_from_email_address() : bool
 	{
+		if( empty( $this->normalized_email_address ) )
+			return false;
 		$arr = explode( '@', $this->normalized_email_address );
+		if( sizeof($arr) < 2 )
+			return false;
 		$this->email_domain = end($arr);
+		return true;
 	}
 
 
-	private function get_email_domain_mx_servers()
+	private function get_email_domain_mx_servers() : bool
 	{
+		if( empty( $this->email_domain ) && ! $this->extract_domain_from_email_address() )
+			return false;
 		if( @getmxrr($this->email_domain, $this->mx_server_domains, $this->mx_server_preferences ) )
 		{
 			for( $i = 0; $i < sizeof( $this->mx_server_domains ); $i++ )
@@ -349,6 +384,42 @@ class LastEmailAddressValidator
 	  	$this->detected_wp_email_domain = '';
 	}
 
+
+	private function do_basic_email_checks() : bool
+	{
+
+		if( empty($this->normalized_email_address) )
+			return false;
+
+		if( ! $this->is_email_address_syntax_valid && ! $this->validate_current_email_address_syntax() )
+			return false;
+
+		if( empty($mx_server_ips) && ! $this->get_email_domain_mx_servers() )
+			 return false;
+
+		return true;
+	}
+
+	private function debug_status_flags()
+	{
+		if( ! $this->central::$debug )
+			return;
+		write_log("");
+		write_log("");
+		write_log("============================");
+		write_log("Current Status Flags in LEAV");
+		write_log("============================");
+    write_log("is_email_address_syntax_valid              = '" . $this->is_email_address_syntax_valid . "'" );
+    write_log("is_email_domain_on_user_defined_blacklist  = '" . $this->is_email_domain_on_user_defined_blacklist . "'" );
+    write_log("is_email_address_on_user_defined_blacklist = '" . $this->is_email_address_on_user_defined_blacklist . "'" );
+    write_log("email_domain_has_MX_records                = '" . $this->email_domain_has_MX_records . "'" );
+    write_log("is_email_address_from_dea_service          = '" . $this->is_email_address_from_dea_service . "'" );
+    write_log("simulated_sending_succeeded                = '" . $this->simulated_sending_succeeded . "'" );
+
+
+
+		write_log("============================");
+	}
 
 }
 ?>
