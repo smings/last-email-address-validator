@@ -3,7 +3,7 @@
 class LeavCentral
 {
 	public static $debug = false;
-	public static $plugin_version = '1.4.1';
+	public static $plugin_version = '1.4.2';
 	public static $dea_service_file_relative_path = 'data/disposable_email_service_provider_list.txt';
 	public static $options;
 	public static $options_name = 'leav_options';
