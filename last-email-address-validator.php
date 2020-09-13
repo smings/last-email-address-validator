@@ -103,7 +103,15 @@ class LeavPlugin
              && !$user_ID 
              && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
-            $approval_status = "spam";
+        {
+            // now we try to return a new WP_error
+            wp_die( $this->get_email_validation_error_text() );
+            return new WP_error('email_validation_error', $this->get_email_validation_error_text() );
+
+
+            // this is the old version
+            // $approval_status = "spam";
+        }
         return $approval_status;
     }
 
@@ -146,13 +154,79 @@ class LeavPlugin
         if( $this->central::$options['validate_ninja_forms_email_fields'] == 'no' )
             return $form_data;
     
-        foreach( $form_data['fields'] as $field )
+        if( $this->central::$debug )
         {
-            if( preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $field['key'] ) == 1   
-                && ! $this->validate_email_address( $field['value'] )
-            )
-                $form_data['errors']['fields'][$field['id']] = $this->get_email_validation_error_text();
+            write_log("");
+            write_log("=======================================");
+            write_log("Ninja Forms Form Data BEFORE validation");
+            write_log("=======================================");
+            write_log($form_data);
+            write_log("=======================================");
         }
+
+        foreach( $form_data['fields'] as $id => $data )
+        {
+
+            if( $this->central::$debug )
+            {
+                write_log( "==================================" );
+                write_log( "Looking at field id  " . $id );
+                write_log( "Looking at field id2 " . $data['id'] );
+                write_log( "Looking at field key " . $data['key'] );
+                write_log( "Looking at field key " . $data['value'] );
+            }
+
+
+            if(      preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $data['key'] )
+                && ! $this->validate_email_address( $data['value'] )
+            )
+            {
+                if( $this->central::$debug )
+                {
+                    write_log( "==================================" );
+                    write_log( "   Validation for field failed" );
+                    write_log( "==================================" );
+                }
+                $form_data['errors']['fields'][$id] = $this->get_email_validation_error_text();
+            }
+            elseif(    $this->central::$debug 
+                    && preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $data['key'] )
+                    && $this->validate_email_address( $data['value'] )
+            )
+            {
+                write_log( "==================================" );
+                write_log( "Validation for field succeded" );
+                write_log( "==================================" );
+            }
+            elseif(      $this->central::$debug 
+                    && ! preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $data['key'] )
+            )
+            {
+                write_log( "==================================" );
+                write_log( "     NO Validation necessary" );
+                write_log( "==================================" );
+            }
+
+        }
+
+        if( $this->central::$debug )
+        {
+            write_log("");
+            write_log("=======================================");
+            write_log("Ninja Forms Form Data AFTER validation");
+            write_log("=======================================");
+            write_log($form_data);
+            write_log("=======================================");
+
+
+            // $orig = '"äÄöÖüÜß_ _=-Email Field 2-=+=_&^%$#@!~"';
+            // $filtered = normalize_field_name_string( $orig );
+            
+            // write_log("Original string: '$orig'");
+            // write_log("Filtered string: '$filtered'");
+
+        }
+
         return $form_data;
     }
 
@@ -232,16 +306,7 @@ class LeavPlugin
         if(    empty( $this->central::$options['dea_list_version'] ) 
             || $this->central::$options['dea_list_version'] != $this->central::$plugin_version 
         )
-        {
-            if( $this->central::$debug )
-                write_log("Re-reading the dea list");
             $this->read_dea_list_file();
-        }
-        else
-        {
-            if( $this->central::$debug )
-                write_log("Didn't have to re-read the dea list");
-        }
         
         if( empty( $this->central::$options['dea_domains'] ) )
             $this->central::$options['dea_domains'] = array();
@@ -368,15 +433,6 @@ class LeavPlugin
             return false;
         }
 
-
-        // if( $this->central::$debug )
-        // {
-        //     write_log("DEA Check on: " . $this->central::$options['block_disposable_email_address_services'] );
-        //     write_log("Sizeof dea_domains   : " . sizeof( $this->central::$options['dea_domains'] ) );
-        //     write_log("Sizeof dea_mx_domains: " . sizeof( $this->central::$options['dea_mx_domains'] ) );
-        //     write_log("Sizeof dea_mx_ips    : " . sizeof( $this->central::$options['dea_mx_ips'] ) );            
-        // }
-
         if(    $this->central::$options['block_disposable_email_address_services'] == 'yes' 
             && $this->leav->check_if_email_address_is_from_dea_service( $this->central::$options['dea_domains'], $this->central::$options['dea_mx_domains'], $this->central::$options['dea_mx_ips'] )
         )
@@ -387,6 +443,13 @@ class LeavPlugin
             return false;
         }
 
+        // if we already tried to collect the MX data and there is none, we can 
+        // just return false right away
+        if(    $this->central::$options['block_disposable_email_address_services'] == 'yes'
+            && empty( $this->leav->mx_server_ips )
+        )
+            return false;
+
         if(! $this->leav->simulate_sending_an_email() )
         {
             if( $this->central::$debug )
@@ -395,8 +458,6 @@ class LeavPlugin
             $this->increment_count_of_blocked_email_addresses();
             return false;
         }
-        if( $this->central::$debug )
-            write_log("Simulated email sending succeeded");
     
         // when we are done with all validations, we return true
         return true;

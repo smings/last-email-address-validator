@@ -20,7 +20,31 @@ class LeavSettingsPage
     public function add_settings_page_to_menu()
     {
         add_options_page( $this->central::$plugin_menu_name, $this->central::$plugin_menu_name, "edit_pages", basename(__FILE__, ".php"), array( $this, 'display_settings_page') );
+
+        if( empty( $this->central::$options['wp_email_domain'] ) )
+            add_action('admin_notices', array( $this, 'add_global_warning_wp_email_domain_not_detected' ) );
+
     }
+
+    public function add_global_warning_wp_email_domain_not_detected() : void
+    {
+?>
+        <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible"> 
+            <p>
+                 <?php 
+                    _e('LEAV - Last Email Address Validator could not automatically detect your email domain .<br/>This usually happens in your local development environment. Please go to the settings and enter an email domain under which your WordPress instance is reachable.<br/>', 'leav');
+                    echo '<a href="' . $this->central::$plugin_settings_page . '">';
+                    _e('Settings -> LEAV - Last Email Address Validator', 'leav');
+                    echo '</a>' ?>
+            </p>
+            <button type="button" class="notice-dismiss">
+                <span class="screen-reader-text"><?php _e("Dismiss this notice", "leav") ?>.</span>
+            </button>
+        </div>
+<?php
+    }
+
+
 
 
     public function display_settings_page()
@@ -101,7 +125,7 @@ class LeavSettingsPage
                     <?php _e("Filter against user-defined email blacklist (if activated)" , "leav"); ?>
                 </li>
                 <li>
-                    <?php _e("Filter against LEAV's built-in extensive blacklist of disposable email service domains and known spammers (always)", "leav"); ?>
+                    <?php _e("Filter against LEAV's built-in extensive blacklist of disposable email service domains and known spammers (if activated)", "leav"); ?>
                 </li>
                 <li>
                     <?php _e("Check if the email address's domain has a DNS entry with MX records (always)", "leav"); ?>

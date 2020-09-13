@@ -158,7 +158,7 @@ class LastEmailAddressValidator
 		elseif( ! empty($this->wp_email_domain) )
 			$sender_email_domain = $this->wp_email_domain;
 		else
-			$sender_email_domain = $this->detected_wp_mail_domain;
+			$sender_email_domain = $this->detected_wp_email_domain;
 
 		if( ! $this->do_basic_email_checks() )
 			return false;

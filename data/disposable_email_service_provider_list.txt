@@ -1,4 +1,25 @@
 1.4.2
+#---------------------------------------------------------------#
+# DON'T ADD YOUR OWN DEA SERVICES MANUALLY • THEY WILL BE       #
+# OVERWRITTEN WITH THE NEXT PLUGIN UPDATE • USE THE DOMAIN      #
+# BLACKLIST AND LET US KNOW ABOUT A NEW DEA SERVICE THAT ISN'T  #
+# ON THIS LIST AT                                               #
+#                      LEAV@SMINGS.COM                          #
+#---------------------------------------------------------------#
+# The below listed Disposable Email Address (DEA) provider list #
+# might not seem like much. Keep in mind though, that we block  #
+# their MX servers (MX = Mail eXchange). All aliases of the     #
+# below listed domains will be automatically blocked too.       #
+# Together with automatically blocking ALL aliases, the list    #
+# blocks thousands of domains that just link as alias to the    #
+# actual DEA services. We don't have to list all those domains  #
+# because we do the blocking the smart way. That is what        #
+# smings (short for smart things) is all about.                 #
+# If you miss a service on this list, please let us know at     #
+#                      leav@smings.com                          #
+# We will add any new DEA service immediately and roll out an   #
+# updated version of this DEA list in a new plugin version.     #
+#---------------------------------------------------------------#
 
 domain:10minutemail.com
 mx:beta-mail.10minutemail.com
@@ -18,7 +39,6 @@ ip:213.246.38.70
 mx:s18.altospam.com
 ip:5.135.128.139
 
-
 domain:anonbox.net
 ip:195.54.164.44
 
@@ -28,8 +48,6 @@ ip:62.75.156.220
 
 domain:anonymousspeech.com
 ip:190.97.163.86
-
-domain:antispam.de
 
 domain:boun.cr
 mx:mail.boun.cr

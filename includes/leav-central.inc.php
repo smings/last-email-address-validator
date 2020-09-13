@@ -5,6 +5,7 @@ class LeavCentral
 	public static $debug = false;
 	public static $plugin_version = '1.4.2';
 	public static $dea_service_file_relative_path = 'data/disposable_email_service_provider_list.txt';
+  public static $plugin_settings_page = '/wp-admin/options-general.php?page=leav-settings-page.inc';
 	public static $options;
 	public static $options_name = 'leav_options';
 
