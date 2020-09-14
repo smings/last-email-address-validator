@@ -23,6 +23,8 @@ class LeavPlugin
     private $central;
 
 
+    // ----- 
+
     public function __construct()
     {
         $this->central = new LeavCentral();
@@ -53,7 +55,17 @@ class LeavPlugin
         $this->init();
     }
 
+
     public function deactivate() : void {}
+
+
+    public function add_plugin_overview_page_links( $links ) : array
+    {
+        $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
+        array_unshift( $links, $settings_link );
+        return $links;
+    }
+
 
     public function validate_registration_email_addresses( $errors, $sanitized_user_login, $entered_email_address )
     {
@@ -67,50 +79,53 @@ class LeavPlugin
     }
     
 
-    public function validate_comment_email_addresses($approval_status, $comment_data) : string
+
+    public function validate_comment_email_addresses($approval_status, $comment_data)
     {
         global $user_ID;
     
+
+        if( $this->central::$debug )
+        {
+            write_log("Starting email address validation for wp comments. Approval status is: '$approval_status'");
+            write_log($comment_data);
+        }
+
         // if a comment is already marked as spam or trash
         // we can return right away
         if ( 
-            $this->central::$options['validate_wp_comment_user_email_addresses'] == 'no' ||
-            $approval_status === "spam" || 
-            $approval_status === "trash" 
+                $this->central::$options['validate_wp_comment_user_email_addresses'] == 'no' 
+             || $approval_status === "spam"
+             || $approval_status === "trash" 
+             || ! $approval_status
         ) 
             return $approval_status;
        
-        // check if trackbacks are allowed
+        // check if trackbacks/pingbacks are allowed
         if (    isset( $comment_data['comment_type'] )
-             && $comment_data['comment_type'] == "trackback"
-             && $this->central::$options['accept_trackbacks'] == "yes"
+             && in_array( $comment_data['comment_type'], array( 'trackback', 'pingback' ) )
         )
-            return $approval_status;
-        else
-            return "trash";
-        
-        // check if pingbacks are allowed
-        if (    isset( $comment_data['comment_type'] ) 
-             && $comment_data['comment_type'] == "pingback"
-             && $this->central::$options['accept_pingbacks'] == "yes"
-        )
-            return $approval_status;
-        else
-            return "trash";
-        
+        {
+            if( (    $comment_data['comment_type'] == 'trackback'
+                  && $this->central::$options['accept_trackbacks'] == 'yes' 
+                )
+               ||
+                (    $comment_data['comment_type'] == 'pingback'
+                  && $this->central::$options['accept_pingback'] == 'yes' 
+                )
+
+            )
+                return $approval_status;
+            return 'spam';
+        }
+              
         // if it is a comment and not a logged in user - check mail
         if (    get_option("require_name_email") 
              && !$user_ID 
              && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
         {
-            // now we try to return a new WP_error
-            wp_die( $this->get_email_validation_error_text() );
-            return new WP_error('email_validation_error', $this->get_email_validation_error_text() );
-
-
-            // this is the old version
-            // $approval_status = "spam";
+            return new WP_error('leav_email_address_validation_failed', __('<strong>Error: </strong>', 'leav') . $this->get_email_validation_error_text(), 200 );
         }
         return $approval_status;
     }
@@ -230,6 +245,30 @@ class LeavPlugin
         return $form_data;
     }
 
+    public function validate_mc4wp_email_addresses( $errors ) 
+    {    
+        if( $this->central::$options['validate_mc4wp_email_fields'] != 'yes' )
+            return $errors;
+        write_log( $_POST );
+        foreach( $_POST as $key => $value )
+        {
+            if(      preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $key )
+                && ! $this->validate_email_address( $value )
+            )
+                $errors[] = 'leav_email_addess_validation_error';
+        }
+        write_log("Returning error for mc4wp");
+        return $errors;
+    }
+
+    public function add_mc4wp_error_message( $messages )
+    {
+        // $messages['leav_email_addess_validation_error'] = $this->get_email_validation_error_text();
+        $messages['leav_email_addess_validation_error'] = 'Generic LEAV ERROR';
+        write_log("We are in adding error message for mc4wp: " . $messages['leav_email_addess_validation_error'] );
+        return $messages;
+    }
+
 
     // ---------------- private functions of the class -------------------------
 
@@ -336,6 +375,9 @@ class LeavPlugin
     
         if ( empty( $this->central::$options['validate_ninja_forms_email_fields'] ) )
             $this->central::$options['validate_ninja_forms_email_fields'] = "yes";
+
+        if ( empty( $this->central::$options['validate_mc4wp_email_fields'] ) )
+            $this->central::$options['validate_mc4wp_email_fields'] = "yes";
         
         update_option($this->central::$options_name, $this->central::$options);
     }
@@ -377,6 +419,15 @@ class LeavPlugin
              && $this->central::$options['validate_ninja_forms_email_fields'] == "yes"
         )
             add_filter("ninja_forms_submit_data", array( $this, 'validate_ninja_forms_email_addresses'), 99, 3);
+
+        if (    is_plugin_active( 'mailchimp-for-wp/mailchimp-for-wp.php' )
+             && $this->central::$options['validate_mc4wp_email_fields'] == "yes"
+        )
+        {
+            add_filter('mc4wp_form_message', array( $this, 'add_mc4wp_error_message') );
+            add_filter('mc4wp_form_errors', array( $this, 'validate_mc4wp_email_addresses') );
+        }
+
     }
 
 
@@ -384,21 +435,19 @@ class LeavPlugin
     {
         if( ! $this->leav->validate_email_address_syntax( $email_address ) )
         {
-            if( $this->central::$debug )
-                write_log("Email address syntax validation failed");
+            // if( $this->central::$debug )
+            //     write_log("Email address syntax validation failed");
             $this->increment_count_of_blocked_email_addresses();
             return false;
         }
-        if( $this->central::$debug )
-            write_log("Email address syntax validation succeeded");
 
         if(    $this->central::$options['use_user_defined_domain_whitelist'] == 'yes' 
             && ! empty( $this->central::$options['internal_user_defined_domain_whitelist'] )
             && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$options['internal_user_defined_domain_whitelist'] )
           )
         {
-            if( $this->central::$debug )
-                write_log("Email address is on user-defined domain whitelist");
+            // if( $this->central::$debug )
+            //     write_log("Email address is on user-defined domain whitelist");
             return true;
         }
 
@@ -407,8 +456,8 @@ class LeavPlugin
             && $this->leav->check_if_email_address_is_on_user_defined_whitelist( $this->central::$options['internal_user_defined_email_whitelist'] )
           )
         {
-            if( $this->central::$debug )
-                write_log("Email address is on user-defined email address whitelist");
+            // if( $this->central::$debug )
+            //     write_log("Email address is on user-defined email address whitelist");
             return true;
         }
 
@@ -418,8 +467,8 @@ class LeavPlugin
             && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$options['internal_user_defined_domain_blacklist'] )
           )
         {
-            if( $this->central::$debug )
-                write_log("Email address is on user-defined domain blacklist");
+            // if( $this->central::$debug )
+            //     write_log("Email address is on user-defined domain blacklist");
             return false;
         }
 
@@ -428,8 +477,8 @@ class LeavPlugin
             && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$options['internal_user_defined_email_blacklist'] )
           )
         {
-            if( $this->central::$debug )
-                write_log("Email address is on user-defined email blacklist");
+            // if( $this->central::$debug )
+            //     write_log("Email address is on user-defined email blacklist");
             return false;
         }
 
@@ -437,9 +486,8 @@ class LeavPlugin
             && $this->leav->check_if_email_address_is_from_dea_service( $this->central::$options['dea_domains'], $this->central::$options['dea_mx_domains'], $this->central::$options['dea_mx_ips'] )
         )
         {
-
-            if( $this->central::$debug )
-                write_log("Email address is on DEA blacklist.");
+            // if( $this->central::$debug )
+            //     write_log("Email address is on DEA blacklist.");
             return false;
         }
 
@@ -452,9 +500,8 @@ class LeavPlugin
 
         if(! $this->leav->simulate_sending_an_email() )
         {
-            if( $this->central::$debug )
-                write_log("Simulated sending failed");
-    
+            // if( $this->central::$debug )
+            //     write_log("Simulated sending failed");    
             $this->increment_count_of_blocked_email_addresses();
             return false;
         }
@@ -465,7 +512,7 @@ class LeavPlugin
     }
 
 
-    private function get_email_validation_error_text()
+    private function get_email_validation_error_text() : string
     {
         // if ( $this->central::$debug )
         // {
@@ -563,6 +610,7 @@ if( class_exists( 'LeavPlugin' ) )
     $leav_plugin->set_debug( true );
 }
 
+add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), array( $leav_plugin, 'add_plugin_overview_page_links' ) );
 register_activation_hook(   __FILE__, array( $leav_plugin, 'activate' ) );
 register_deactivation_hook( __FILE__, array( $leav_plugin, 'deactivate' ) );
 // we use uninstall.php as a safe method for uninstalling the plugin.

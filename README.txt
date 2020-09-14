@@ -1,15 +1,15 @@
 === LEAV Last Email Address Validator ===
 Contributors: smings
 Donate link: https://www.patreon.com/smings
-Tags: email address validation, email address validator, form, forms, contact form, contact forms, user registration, comments, spam, MX, DNS
-Requires at least: 4.9
+Tags: email address validation, email form, contact form, registration form, form builder, newsletter,  contact forms, user registration, comments, spam, MX, DNS
+Requires at least: 5.3
 Tested up to: 5.5
 Stable tag: 1.4.1
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-LEAV provides a comprehensive email address validation and disposable email address blocker for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms and more plugins to come...
+LEAV provides a comprehensive email address validation and disposable email address blocker for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, Mailchimp for WordPress (MC4WP), Mailchimp for WooCommerce and many more to come...
 
 == Description ==
 
@@ -37,6 +37,8 @@ Currently "Last Email Address Validator" integrates with:
 * [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 * [WPForms (lite and pro)](https://wordpress.org/plugins/wpforms-lite/)
 * [Ninja Forms](https://wordpress.org/plugins/ninja-forms/)
+* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/)
+* [Mailchimp for WooCommerce](https://wordpress.org/plugins/mailchimp-for-woocommerce/)
 
 Additionally you can control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
