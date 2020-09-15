@@ -6,7 +6,7 @@ class LeavCentral
   public static $COMMENT_LINE_REGEX = "/^\s*(#|\/\/)/";
   public static $DEA_SERVICE_FILE_RELATIVE_PATH = 'data/disposable_email_service_provider_list.txt';
   public static $DEBUG = false;
-  public static $DOMAIN_FIELDS = array( 'wp_email_domain' );
+  // public static $DOMAIN_FIELDS = array();
   public static $DOMAIN_LIST_FIELDS = array( 'user_defined_domain_whitelist', 'user_defined_domain_blacklist' );
   public static $DOMAIN_REGEX = "/^[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\.[a-z]{2,18}$/i";
   public static $EMAIL_ADDRESS_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\.[a-z]{2,18}$/i";
@@ -28,17 +28,20 @@ class LeavCentral
   public static $RADIO_BUTTON_FIELDS = array(
     'accept_pingbacks', 
     'accept_trackbacks', 
-    'use_user_defined_domain_whitelist', 
-    'use_user_defined_email_whitelist', 
-    'use_user_defined_domain_blacklist', 
-    'use_user_defined_email_blacklist', 
     'block_disposable_email_address_services', 
-    'validate_wp_standard_user_registration_email_addresses', 
-    'validate_wp_comment_user_email_addresses', 
-    'validate_woocommerce_email_fields', 
+    'simulate_email_sending',
+    'use_main_menu',
+    'use_user_defined_domain_blacklist', 
+    'use_user_defined_domain_whitelist', 
+    'use_user_defined_email_blacklist', 
+    'use_user_defined_email_whitelist', 
     'validate_cf7_email_fields', 
-    'validate_wpforms_email_fields', 
-    'validate_ninja_forms_email_fields' 
+    'validate_mc4wp_email_fields',
+    'validate_ninja_forms_email_fields', 
+    'validate_woocommerce_email_fields', 
+    'validate_wp_comment_user_email_addresses', 
+    'validate_wp_standard_user_registration_email_addresses', 
+    'validate_wpforms_email_fields'
   );
   public static $RADIO_BUTTON_VALUES = array( 'yes', 'no' );
   public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
