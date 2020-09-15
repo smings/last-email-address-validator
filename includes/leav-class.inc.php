@@ -215,6 +215,14 @@ class LastEmailAddressValidator
 	}
 
 
+	public function sanitize_and_validate_text( string &$text ) : bool
+	{
+		$text = _sanitize_text_fields( $text );
+		$text = preg_replace( '/^\s*/', '',  $text );
+		$text = preg_replace( '/\s*$/', '',  $text );
+		return true;
+	}
+
 	public function sanitize_and_validate_email_address( string &$email_address ) : bool
 	{
 	    $email_address = strtolower( sanitize_email( $email_address ) );
@@ -402,7 +410,7 @@ class LastEmailAddressValidator
 
 	private function debug_status_flags()
 	{
-		if( ! $this->central::$debug )
+		if( ! $this->central::$DEBUG )
 			return;
 		write_log("");
 		write_log("");
