@@ -173,7 +173,7 @@ class LeavPlugin
     
         foreach( $form_data['fields'] as $id => $data )
         {
-            if(      preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $data['key'] )
+            if(      preg_match( $this->central::$EMAIL_FIELD_NAME_REGEX, $data['key'] )
                 && ! $this->validate_email_address( $data['value'] )
             )         
                 $form_data['errors']['fields'][$id] = $this->get_email_validation_error_message();
@@ -191,7 +191,7 @@ class LeavPlugin
         
         foreach( $_POST as $key => $value )
         {
-            if(      preg_match( "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i", $key )
+            if(      preg_match( $this->central::$EMAIL_FIELD_NAME_REGEX, $key )
                 && ! $this->validate_email_address( $value )
             )
                 $errors[] = $this->get_email_validation_error_type();
@@ -209,6 +209,21 @@ class LeavPlugin
             $messages[ $error_type ] = array( 'type' => 'error', 'text' => $error_message );
 
         return $messages;
+    }
+
+
+    // ----- Validating Formidable Forms Plugin lite ---------------------------
+
+    public function validate_formidable_forms_email_addresses( $errors,  $field, $value, $args ) : array
+    {    
+        if( $this->central::$OPTIONS['validate_formidable_forms_email_fields'] != 'yes' )
+            return $errors;
+
+        if(    $field->type == 'email'
+            && ! $this->validate_email_address( $value )
+        )
+            $errors[ 'field' . $field->id ] = $this->get_email_validation_error_message();
+        return $errors;
     }
 
 
@@ -324,6 +339,8 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['validate_mc4wp_email_fields'] ) )
             $this->central::$OPTIONS['validate_mc4wp_email_fields'] = 'yes';
 
+        if( empty( $this->central::$OPTIONS['validate_formidable_forms_email_fields'] ) )
+            $this->central::$OPTIONS['validate_formidable_forms_email_fields'] = 'yes';
 
         // ------ Custom error message override fields -------------------------
 
@@ -354,11 +371,11 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['use_main_menu'] ) )
             $this->central::$OPTIONS['use_main_menu'] = 'no';
 
-        if ( empty( $this->central::$OPTIONS['main_menu_position'] ) )
+        if ( $this->central::$OPTIONS['main_menu_position'] === '' )
             $this->central::$OPTIONS['main_menu_position'] = 24;
 
-        if ( empty( $this->central::$OPTIONS['settings_menu_position'] ) )
-            $this->central::$OPTIONS['main_menu_position'] = 24;
+        if ( $this->central::$OPTIONS['settings_menu_position'] === '' )
+            $this->central::$OPTIONS['settings_menu_position'] = 3;
 
         update_option($this->central::$OPTIONS_NAME, $this->central::$OPTIONS);
     }
@@ -408,6 +425,10 @@ class LeavPlugin
             add_filter('mc4wp_form_messages', array( $this, 'add_mc4wp_error_message'), 10, 2 );
             add_filter('mc4wp_form_errors', array( $this, 'validate_mc4wp_email_addresses'), 10, 2 );
         }
+        if (    is_plugin_active( "formidable/formidable.php" )
+             && $this->central::$OPTIONS['validate_formidable_forms_email_fields'] == 'yes'
+         )
+            add_filter('frm_validate_field_entry', array( $this, 'validate_formidable_forms_email_addresses'), 20, 4 );
     }
 
 

@@ -19,26 +19,19 @@ class LeavSettingsPage
 
     public function add_settings_page_to_menu()
     {
-        // if(    empty( $this->leav->detected_wp_email_domain )
-        //     && empty( $this->central::$OPTIONS['wp_email_domain'] )
-        // )
-
-        // if( empty( $this->central::$OPTIONS['wp_email_domain'] ) )
-        //     add_action('admin_notices', array( $this, 'add_global_warning_wp_email_domain_not_detected' ) );
-
-
         // ----- for a full list of capabilities, see https://wordpress.org/support/article/roles-and-capabilities/
-
         // add_options_page( $this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page') );
 
         // ----- for a working menu icon all <path> elements must have the attribute <path fill="black">
         // we can convert them online here https://base64.guru/converter/encode/image/svg
         // additionally one should add width and height attributes <svg width="20" height="20" >
-
-        // if( $this->central::$OPTIONS['use_main_menu'] = 'yes' )
+        if( $this->central::$OPTIONS['use_main_menu'] == 'yes' )
+        {
             add_menu_page( $this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME_SHORT, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page'), $this->central::$MENU_INLINE_ICON, $this->central::$OPTIONS['main_menu_position'] );
-        // else
-            // add_options_page($this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME_SHORT, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page'), $this->central::$OPTIONS['settings_menu_position'] );
+
+        }
+        else
+            add_options_page($this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page'), intval( $this->central::$OPTIONS['settings_menu_position'] ) );
 
     }
 
@@ -182,6 +175,12 @@ class LeavSettingsPage
                     <span>
                         <a href="#custom_messages">
                             <?php _e('Custom Messages', 'leav'); ?>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span>
+                        <a href="#menu_location">
+                            <?php _e('LEAV Menu Item Location', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -583,7 +582,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php _e("Validate all Ninja Forms email address fields.<br/><strong>Default: Yes</strong>", 'leav') ?>
+                                <?php _e( 'Validate all Ninja Forms email address fields.<br/>The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav') ?>
                             </p>
                             <?php endif; 
                                   if( ! is_plugin_active( "ninja-forms/ninja-forms.php" ) )
@@ -596,7 +595,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     </tr>
 
                     <tr>
-                        <th scope="row"><?php _e("Mail'chimp for WordPress (MC4WP)", 'leav') ?>:</th>
+                        <th scope="row"><?php _e("Mailchimp for WordPress (MC4WP)", 'leav') ?>:</th>
                         <td>
                             <?php if( is_plugin_active( "mailchimp-for-wp/mailchimp-for-wp.php" )  ) : ?>
                             <label>
@@ -608,17 +607,43 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php _e("Validate all MC4WP email address fields.<br/><strong>Default: Yes</strong>", 'leav') ?>
+                                <?php _e('Validate all MC4WP email address fields.<br/>The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav') ?>
                             </p>
                             <?php endif; 
                                   if( ! is_plugin_active( "mailchimp-for-wp/mailchimp-for-wp.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/mailchimp-for-wp/"" target="_blank">Mailchimp for WordPress (MC4WP) </a>'; 
+                                      echo '<a href="https://wordpress.org/plugins/mailchimp-for-wp/" target="_blank">Mailchimp for WordPress (MC4WP) </a>'; 
                                       _e("not found in list of active plugins", 'leav');
                                   }
                             ?>
                         </td>
                     </tr>
+
+                    <tr>
+                        <th scope="row"><?php _e("Formidable Forms", 'leav') ?>:</th>
+                        <td>
+                            <?php if( is_plugin_active( "formidable/formidable.php" )  ) : ?>
+                            <label>
+                                <input name="validate_formidable_forms_email_fields" type="radio" value="yes" <?php if ($this->central::$OPTIONS['validate_formidable_forms_email_fields'] == "yes") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="validate_formidable_forms_email_fields" type="radio" value="no" <?php if ($this->central::$OPTIONS['validate_formidable_forms_email_fields'] == "no") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'leav') ?>
+                            </label>
+                            <p class="description">
+                                <?php _e('Validate all Formidable Forms email address fields.<br/><strong>Default: Yes</strong>', 'leav') ?>
+                            </p>
+                            <?php endif; 
+                                  if( ! is_plugin_active( "formidable/formidable.php" ) )
+                                  {
+                                      echo '<a href="https://wordpress.org/plugins/formidable/" target="_blank">Formidable Forms</a>'; 
+                                      _e("not found in list of active plugins", 'leav');
+                                  }
+                            ?>
+                        </td>
+                    </tr>
+
                 </table>
 
                 <a name="custom_messages"></a>
@@ -687,6 +712,53 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         </td>
                     </tr>
                  </table>
+
+                <a name="menu_location"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e("Save Changes", 'leav') ?>" />
+                </p>
+
+                <h1><?php _e('LEAV Menu Item Location', 'leav') ?></h1>
+                <?php _e('We believe that LEAV will provide great value for you for as long as you use it. But after setting it up, you don\'t have to worry about it anymore. We understand that after having set up LEAV you might want to move the LEAV menu item to a different location in the main menu or move it into the Settings menu. Here you can control where to place it.<br/>The lower the number for a location, the higher up in the menu the LEAV menu item will be displayed. We allow locations in between 0-999.<br/>After changing the values, you\'ll have to reload the page.', 'leav') ?>
+
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e('Show LEAV menu item in main menu / settings menu', 'leav') ?>:</th>
+                        <td>
+                            <label>
+                                <?php _e('Show in ', 'leav'); ?> &nbsp;&nbsp;
+                                <input name="use_main_menu" type="radio" value="yes" <?php if ($this->central::$OPTIONS['use_main_menu'] == 'yes') { echo 'checked="checked" '; } ?> />
+                                <?php _e('main menu &nbsp;&nbsp;or', 'leav') ?> &nbsp;&nbsp;
+                            </label>
+                            <label>
+                                <input name="use_main_menu" type="radio" value="no" <?php if ($this->central::$OPTIONS['use_main_menu'] == 'no') { echo 'checked="checked" '; } ?>/>
+                                <?php _e('settings menu', 'leav') ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('LEAV menu item location (main menu)', 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="main_menu_position" type="number" size="3" value="<?php echo ( $this->central::$OPTIONS['main_menu_position']); ?>" min="0" max="999" required />
+                            </label>
+                            <p class="description">
+                                <?php _e('Values in between 0-999 are allowed.<br/>0 = top menu position<br/><br/><strong>Default: 24</strong>', 'leav') ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('LEAV menu item location (settings menu)', 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="settings_menu_position" type="number" size="3" value="<?php echo ( $this->central::$OPTIONS['settings_menu_position']); ?>" min="0" max="999" required />
+                            </label>
+                            <p class="description">
+                                <?php _e('Values in between 0-999 are allowed.<br/>0 = top menu position<br/><strong>Default: 3</strong>', 'leav') ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
 
                 <a name="faq"></a>
                 <p class="submit">
@@ -846,6 +918,17 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
             }
 
+            elseif( in_array( $key, $this->central::$INTEGER_GEZ_FIELDS ) )
+            {
+                if( preg_match( $this->central::$INTEGER_GEZ_REGEX, $value ) )
+                {
+                    $this->central::$OPTIONS[$key] = $value;
+                    $this->add_update_notification_for_form_field($key);   
+                }
+                else
+                    $this->add_error_notification_for_form_field($key);
+            }
+
             // Now we check the single domain entry fields
             // elseif( in_array( $key, $this->central::$DOMAIN_FIELDS ) )
             // {
@@ -941,34 +1024,6 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         return false;
     }
 
-
-    // private function sanitize_and_validate_domain( string &$domain ) : bool
-    // {
-    //     $domain = strtolower( $domain );
-    //     $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_REGEX, '', $domain );
-    //     return $this->validate_domain_syntax( $domain );
-    // }
-
-
-    // private function sanitize_and_validate_email_address( string &$email_address ) : bool
-    // {
-    //     $email_address = strtolower( sanitize_email( $email_address ) );
-    //     return $this->validate_email_address_syntax( $email_address );
-    // }
-
-
-    // private function validate_domain_syntax( string &$domain ) : bool
-    // {
-    //     return preg_match( $this->central::$DOMAIN_REGEX, $domain );
-    // }
-
-
-    // private function validate_email_address_syntax( string &$email_address ) : bool
-    // {
-    //     return preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $email_address );
-    // }
-
-
     private function add_update_notification_for_form_field( string &$field_name ) : bool
     {
            if( $field_name == 'wp_email_domain')
@@ -1024,7 +1079,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for errors during simulating sending an email.<br/>', 'leav');
         elseif( $field_name == 'cem_general_email_validation_error')
             $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for general email validation errors.<br/>', 'leav');
-
+        elseif( in_array( $field_name, array( 'use_main_menu', 'main_menu_position', 'settings_menu_position' ) ) )
+            $this->update_notice = $this->update_notice . __( 'Changed the display location of the LEAV menu item. You have to hard-reload  this page before the change takes effect.<br/>', 'leav');
         else
             $this->update_notice = $this->update_notice . __( 'Updated the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
 
@@ -1073,6 +1129,12 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->error_notice = $this->error_notice . __( 'Error! One or more entered domains in the user-defined domain blacklist is invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_blacklist' )
             $this->error_notice = $this->error_notice . __( 'Error! One or more entered email addresses in the user-defined email address blacklist is invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+
+        elseif( $field_name == 'use_main_menu' )
+            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for the display location of the LEAV menu item (main menu or settings menu.<br/>', 'leav');
+
+        elseif( in_array( $field_name, array( 'main_menu_position', 'settings_menu_position' ) ) )
+            $this->error_notice = $this->error_notice . __( 'Error! The values for the LEAV menu position within the main menu or the settings menu have to be numbers in between 0-999.<br/>', 'leav');
 
         else
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
