@@ -26,7 +26,7 @@ class LeavCentral
   public static $PLUGIN_MENU_NAME = "LEAV - Last Email Address Validator";
   public static $PLUGIN_MENU_NAME_SHORT = "LEAV";
   public static $PLUGIN_SETTING_PAGE = '/wp-admin/options-general.php?page=leav-settings-page.inc';
-  public static $PLUGIN_VERSION = '1.4.3';
+  public static $PLUGIN_VERSION = '1.4.4';
   public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'accept_pingbacks', 

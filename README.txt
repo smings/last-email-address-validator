@@ -1,10 +1,10 @@
 === LEAV Last Email Address Validator ===
 Contributors: smings
 Donate link: https://www.patreon.com/smings
-Tags: email address validation, email form, contact form, registration form, form builder, newsletter,  contact forms, user registration, comments, spam, MX, DNS
-Requires at least: 5.3
+Tags: email address validation, email form, contact form, registration form, form builder, newsletter,  contact forms, user registration, comments, spam, MX, DNS, spam blocker, spam prevention
+Requires at least: 4.9
 Tested up to: 5.5
-Stable tag: 1.4.1
+Stable tag: 1.4.4
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,12 +33,13 @@ and reliable disposable email address protection that seamlessly integrates with
 Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
-* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
-* [WPForms (lite and pro)](https://wordpress.org/plugins/wpforms-lite/)
-* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/)
-* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/)
-* [Mailchimp for WooCommerce](https://wordpress.org/plugins/mailchimp-for-woocommerce/)
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.5.2
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.2.2
+* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.2.3
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 4.5.2
+* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 3.4.27
+* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.07.01
+* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.1.2
 
 Additionally you can control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
@@ -62,8 +63,6 @@ LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-ad
 * DNS MX record check - checks if the domain of the email address is DNS resolvable and has at least one MX server (MX = Mail eXchange) record (always on)
 
 * Blocking of disposable email address (DEA) services - if activated checks and filters out DEAs . The list gets frequently updated and blocks the main domains, their underlying mail exchange (MX) server domains as well as the MX server IP addresses. This ensures that you don't get duped by a simple domain alias that routes its MX entries to the same DEA MX servers. (optional)
-
-* User-defined MX server IP address blacklist - rejects all email addresses who's mail servers' IP addresses are on this list
 
 * Simulated sending of an email to one of the MX servers. If this siumulation fails, we know that your WordPress instance could not send an email to the email address. Therefore we reject such email addresses (always on)
 
@@ -131,6 +130,9 @@ Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure 
 
 
 == Changelog ==
+
+= 1.4.4 =
+* Added Support for Kali Forms
 
 = 1.4.3 =
 * Added Support for Formidable Forms
