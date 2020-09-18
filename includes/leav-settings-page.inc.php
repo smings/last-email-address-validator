@@ -578,7 +578,10 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php _e( 'Validate all Ninja Forms email address fields.<br/>', 'leav' ) . __( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav') ?>
+                                <?php 
+                                    _e( 'Validate all Ninja Forms email address fields.<br/>', 'leav' ); 
+                                    _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav'); 
+                                ?>
                             </p>
                             <?php endif; 
                                   if( ! is_plugin_active( "ninja-forms/ninja-forms.php" ) )
@@ -603,7 +606,10 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php _e('Validate all MC4WP email address fields.<br/>', 'leav' ) . __( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav') ?>
+                                <?php 
+                                    _e('Validate all MC4WP email address fields.<br/>', 'leav' );
+                                    _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav');
+                                ?>
                             </p>
                             <?php endif; 
                                   if( ! is_plugin_active( "mailchimp-for-wp/mailchimp-for-wp.php" ) )
@@ -634,6 +640,34 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                   if( ! is_plugin_active( "formidable/formidable.php" ) )
                                   {
                                       echo '<a href="https://wordpress.org/plugins/formidable/" target="_blank">Formidable Forms</a> '; 
+                                      _e("not found in list of active plugins", 'leav');
+                                  }
+                            ?>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><?php _e("Kali Forms", 'leav') ?>:</th>
+                        <td>
+                            <?php if( is_plugin_active( "kali-forms/kali-forms.php" )  ) : ?>
+                            <label>
+                                <input name="validate_kali_forms_email_fields" type="radio" value="yes" <?php if ( $this->central::$OPTIONS['validate_kali_forms_email_fields'] == "yes") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="validate_kali_forms_email_fields" type="radio" value="no" <?php if ( $this->central::$OPTIONS['validate_kali_forms_email_fields'] == "no") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'leav') ?>
+                            </label>
+                            <p class="description">
+                                <?php 
+                                    _e('Validate all Kali Forms email address fields.<br/>', 'leav' ); 
+                                    _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)<br/><strong>Default: Yes</strong>', 'leav'); 
+                                ?>
+                            </p>
+                            <?php endif; 
+                                  if( ! is_plugin_active( "kali-forms/kali-forms.php" ) )
+                                  {
+                                      echo '<a href="https://wordpress.org/plugins/kali-forms/" target="_blank">Kali Forms</a> '; 
                                       _e("not found in list of active plugins", 'leav');
                                   }
                             ?>

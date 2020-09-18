@@ -227,6 +227,25 @@ class LeavPlugin
     }
 
 
+    // ----- Validating Kali Forms Plugin --------------------------------------
+
+    public function validate_kali_forms_email_fields( $data )
+    {
+
+        foreach( $data as $key => $value )
+        {
+            if(      preg_match( $this->central::$EMAIL_FIELD_NAME_REGEX, $key )
+                && ! $this->validate_email_address( $value )
+            )
+            {
+                $data['admin_external_change'] = true;
+                $data['admin_stop_execution']  = true;
+                $data['admin_stop_reason'] = $this->get_email_validation_error_message();
+            }
+        }
+        return $data;
+    }
+
     // ---------------- private functions of the class -------------------------
 
     private function init_options()
@@ -342,6 +361,10 @@ class LeavPlugin
         if( empty( $this->central::$OPTIONS['validate_formidable_forms_email_fields'] ) )
             $this->central::$OPTIONS['validate_formidable_forms_email_fields'] = 'yes';
 
+        if( empty( $this->central::$OPTIONS['validate_kali_forms_email_fields'] ) )
+            $this->central::$OPTIONS['validate_kali_forms_email_fields'] = 'yes';
+
+
         // ------ Custom error message override fields -------------------------
 
         if ( empty( $this->central::$OPTIONS['cem_email_addess_syntax_error'] ) )
@@ -429,6 +452,12 @@ class LeavPlugin
              && $this->central::$OPTIONS['validate_formidable_forms_email_fields'] == 'yes'
          )
             add_filter('frm_validate_field_entry', array( $this, 'validate_formidable_forms_email_addresses'), 20, 4 );
+
+        if (    is_plugin_active( "kali-forms/kali-forms.php" )
+             && $this->central::$OPTIONS['validate_kali_forms_email_fields'] == 'yes'
+        )
+            add_filter( "kaliforms_before_form_process", array( $this, 'validate_kali_forms_email_fields' ) );
+
     }
 
 
