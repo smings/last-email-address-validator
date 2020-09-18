@@ -1,18 +1,5 @@
 <?php
 
-// Example of how to get the current translation strings from the 
-// WordPress plugin code. 
-// `xgettext --default-domain=leav --language=PHP --keyword=__ --keyword=_e --sort-by-file --copyright-holder="Dirk Tornow" --package-name=leav --package-version=1.0.3 --from-code=UTF-8 --msgid-bugs-address="translastions@smings.com" -i -p languages/ *.php`
-
-// Example of how to merge a newer version with an existing po file
-// `msgmerge -i -o new_merged.po last-email-address-validator-de_DE.po leav.po`
-
-// Example of how to create an mo file
-// `msgfmt -o last-email-address-validator-de_DE.mo last-email-address-validator-de_DE.po`
-
-// Example for bash one-liner for finding domains with MX records 
-// for domain in `cat disposable_email_service_provider_domain_list.txt`; do dig @8.8.8.8 MX $domain +short > /dev/null && echo $domain >> results.txt; done
-
 defined('ABSPATH') or die('Not today!');
 
 require_once("leav-central.inc.php");
@@ -143,9 +130,6 @@ class LastEmailAddressValidator
 			  || ! empty( array_intersect( $this->mx_server_ips, $mx_ip_list ) )
 		)
 			$this->is_email_address_from_dea_service = true;
-
-		// $this->debug_status_flags();
-
 		return $this->is_email_address_from_dea_service;
 	}
 
@@ -406,27 +390,6 @@ class LastEmailAddressValidator
 			 return false;
 
 		return true;
-	}
-
-	private function debug_status_flags()
-	{
-		if( ! $this->central::$DEBUG )
-			return;
-		write_log("");
-		write_log("");
-		write_log("============================");
-		write_log("Current Status Flags in LEAV");
-		write_log("============================");
-    write_log("is_email_address_syntax_valid              = '" . $this->is_email_address_syntax_valid . "'" );
-    write_log("is_email_domain_on_user_defined_blacklist  = '" . $this->is_email_domain_on_user_defined_blacklist . "'" );
-    write_log("is_email_address_on_user_defined_blacklist = '" . $this->is_email_address_on_user_defined_blacklist . "'" );
-    write_log("email_domain_has_MX_records                = '" . $this->email_domain_has_MX_records . "'" );
-    write_log("is_email_address_from_dea_service          = '" . $this->is_email_address_from_dea_service . "'" );
-    write_log("simulated_sending_succeeded                = '" . $this->simulated_sending_succeeded . "'" );
-
-
-
-		write_log("============================");
 	}
 
 }

@@ -66,7 +66,7 @@ class LeavPlugin
 
     public function add_plugin_overview_page_links( $links ) : array
     {
-        $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings' ) . '</a>';
+        $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings', 'leav' ) . '</a>';
         array_unshift( $links, $settings_link );
         return $links;
     }
@@ -601,8 +601,5 @@ if( class_exists( 'LeavPlugin' ) )
 add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), array( $leav_plugin, 'add_plugin_overview_page_links' ) );
 register_activation_hook(   __FILE__, array( $leav_plugin, 'activate' ) );
 register_deactivation_hook( __FILE__, array( $leav_plugin, 'deactivate' ) );
-// we use uninstall.php as a safe method for uninstalling the plugin.
-// the register_uninstall_hook method doesn't allow a class function for this
-// so that we are forced to do it within the uninstall.php file
 
 ?>

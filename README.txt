@@ -132,8 +132,17 @@ Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure 
 
 == Changelog ==
 
+= 1.4.3 =
+* Added Support for Formidable Forms
+* Added control over menu locations
+* Refactoring of translation strings
+
+= 1.4.2 =
+* Added support for Mailchimp for WordPress (MC4WP)
+* Added custom validation error messages for easy customization / translation
+
 = 1.4.1 =
-* Finalized refactoring
+* Finalized class refactoring
 * Versioned / auto-updated dea provider lists
 * Added settings for configurable validation messages
 * Added settings for configurable email field names for Ninja Forms
