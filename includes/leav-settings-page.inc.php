@@ -4,14 +4,16 @@ require_once("leav-central.inc.php");
 
 class LeavSettingsPage
 {
+    private $leav_plugin;
     private $central;
     private $leav;
     private $error_notice = '';
     private $update_notice = '';
     private $warning_notice = '';
 
-    public function __construct( LeavCentral $central, LastEmailAddressValidator $leav )
+    public function __construct( LeavPlugin &$leav_plugin, LeavCentral &$central, LastEmailAddressValidator $leav  )
     {
+        $this->leav_plugin = $leav_plugin;
         $this->central = $central;
         $this->leav = $leav;
     }
@@ -134,6 +136,18 @@ class LeavSettingsPage
                 </div>
                 <div>
                     <span>
+                        <a href="#test_email_address">
+                            <?php _e('Test Email Address', 'leav'); ?>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span>
+                        <a href="#allow_recipient_name_catch_all">
+                            <?php _e('Recipient Name Catch All', 'leav'); ?>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span>
                         <a href="#email_domain">
                             <?php _e('Email Domain', 'leav'); ?>
                         </a>
@@ -205,11 +219,85 @@ class LeavSettingsPage
                         &nbsp;&nbsp;&nbsp;
                     </span>
                 </div>
-                <a name="email_domain"></a>
+                <a name="test_email_address"></a>
                 <br/><br/>
-            <form name="wp_mail_validator_options" method="post">
+            <form name="leav_options" method="post">
                 <input type="hidden" name="leav_options_update_type" value="update" />
 
+                <h2><?php _e('Test Email Address', 'leav') ?></h2>
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e('Enter an email address for testing validation results', 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php echo( $_POST[ 'test_email_address' ] ) ?>" size="40" />
+                            </label>
+                            <?php 
+                                if( ! empty( $_POST[ 'test_email_address' ] ) )
+                                {
+                                    if( ! $this->leav_plugin->validate_email_address( $_POST[ 'test_email_address' ] ) )
+                                    {
+                                        echo('<p><span style="color:#a00"><strong>');
+                                        _e( 'Validation result for email address ', 'leav' );
+                                        echo( '</strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span style="color:#a00"><strong>');
+                                        _e( 'is negative!', 'leav' ); 
+                                        echo('</strong></span></p><p><span style="color:#a00"><strong>');
+                                        _e( 'ERROR TYPE:', 'leav' );
+                                        echo('</strong></span><span> "' . $this->leav_plugin->get_email_validation_error_type() );
+                                        echo('" </span></p><p><span style="color:#a00"><strong>');
+                                        _e( 'ERROR MESSAGE:', 'leav' );
+                                        echo('</strong></span><span> "' . $this->leav_plugin->get_email_validation_error_message() );
+                                        echo('"</span></p><br/>');
+                                    }
+                                    else
+                                    {
+                                        echo('<p><span style="color:#89A441"><strong>');
+                                        _e( 'Validation result for email address', 'leav' );
+                                        echo( ' </strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span  style="color:#89A441"><strong>');
+                                        _e( 'is positive!', 'leav' ); 
+                                        echo('</strong></span></p><p><span style="color:#89A441">');
+                                        _e( 'The email address got successfully validated. It is good to go!', 'leav');
+                                        echo('</span></p><br/>');
+                                    }
+                                }
+                                ?>
+                            <p class="description">
+                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm. No emails will be sent out or saved anywhere. Feel free to tweak your settings.', 'leav'); ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <a name="allow_recipient_name_catch_all"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e("Test Email Address", 'leav') ?>" />
+                </p>
+
+
+                <h2><?php _e('Allow Recipient Name Catch-All Syntax', 'leav') ?></h2>
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e( 'Allow recipient name catch-all syntax', 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="allow_recipient_name_catch_all_email_addresses" type="radio" value="yes" <?php if ($this->central::$OPTIONS["allow_recipient_name_catch_all_email_addresses"] == "yes") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="allow_recipient_name_catch_all_email_addresses" type="radio" value="no" <?php if ($this->central::$OPTIONS["allow_recipient_name_catch_all_email_addresses"] == "no") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('No', 'leav'); ?>
+                            </label>
+                            <p class="description">
+                                <?php _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. I.e. google allows to extend an email address with a "+" sign after the recipient name followed by anything. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"<strong>. <br/><strong>Default: Yes</strong>', 'leav'); ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <a name="email_domain"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e("Save Changes", 'leav') ?>" />
+                </p>
+
+                
                 <h2><?php _e('Email Domain', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -689,7 +777,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <th scope="row"><?php _e('Email address syntax error message', 'leav'); ?>:</th>
                         <td>
                             <label>
-                                <input name="cem_email_addess_syntax_error" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["cem_email_addess_syntax_error"]); ?>" value="<?php echo( $this->central::$OPTIONS['cem_email_addess_syntax_error'] );?>" placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_addess_syntax_error'] ); ?>"/>
+                                <input name="cem_email_address_syntax_error" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["cem_email_address_syntax_error"]); ?>" value="<?php echo( $this->central::$OPTIONS['cem_email_address_syntax_error'] );?>" placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_address_syntax_error'] ); ?>"/>
                             </label>
                         </td>
                     </tr>
@@ -900,6 +988,13 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
         foreach ($_POST as $key => $value)
         {
+
+            if( $key == 'test_email_address' )
+            {
+                $this->leav->reuse( $value );
+                continue;
+            }
+
             // we only look at defined keys who's values have changed
             if(   ! array_key_exists( $key, $this->central::$OPTIONS )
                 || $this->central::$OPTIONS[$key] == $value 
@@ -1095,7 +1190,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         elseif( $field_name == 'user_defined_email_blacklist')
             $this->update_notice = $this->update_notice . __( 'Updated the user-defined email address blacklist.<br/>', 'leav');
 
-        elseif( $field_name == 'cem_email_addess_syntax_error')
+        elseif( $field_name == 'cem_email_address_syntax_error')
             $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'email address syntax errors.<br/>', 'leav');
         elseif( $field_name == 'cem_email_domain_is_blacklisted')
             $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'blacklisted email domains.<br/>', 'leav');

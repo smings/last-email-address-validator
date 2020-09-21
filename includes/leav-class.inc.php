@@ -16,7 +16,9 @@ class LastEmailAddressValidator
 	private $smtp_connection_is_open = false;
 	private $wp_email_domain = '';
 	public  $email_domain_has_MX_records = false;
+	public  $error_type = '';
 	public  $is_email_address_from_dea_service = false;
+	public  $is_email_address_inline_catch_all = false;
 	public  $is_email_address_on_user_defined_blacklist = false;
 	public  $is_email_address_on_user_defined_whitelist = false;
 	public  $is_email_address_syntax_valid = false;
@@ -107,7 +109,10 @@ class LastEmailAddressValidator
 	public function check_if_email_domain_is_on_user_defined_blacklist( array &$list ) : bool
 	{
 		if( in_array( $this->email_domain, $list ) )
+		{
 			$this->is_email_domain_on_user_defined_blacklist = true;
+			$this->error_type = 'email_domain_is_blacklisted';
+		}
 		return $this->is_email_domain_on_user_defined_blacklist;
 	}
 
@@ -115,7 +120,10 @@ class LastEmailAddressValidator
 	public function check_if_email_address_is_on_user_defined_blacklist( array &$list ) : bool
 	{
 		if( in_array( $this->normalized_email_address, $list ) )
+		{
 			$this->is_email_address_on_user_defined_blacklist = true;
+			$this->error_type = 'email_address_is_blacklisted';
+		}
 		return $this->is_email_address_on_user_defined_blacklist;
 	}
 
@@ -129,13 +137,18 @@ class LastEmailAddressValidator
 			  || ! empty( array_intersect( $this->mx_server_domains, $mx_domain_list ) )
 			  || ! empty( array_intersect( $this->mx_server_ips, $mx_ip_list ) )
 		)
+		{
 			$this->is_email_address_from_dea_service = true;
+			$this->error_type = 'email_domain_on_dea_blacklist';
+		}
+
 		return $this->is_email_address_from_dea_service;
 	}
 
 
 	public function simulate_sending_an_email( string $email_address = '', string $wp_email_domain = '' )
 	{
+		$this->error_type = 'simulated_sending_of_email_failed';
 
 		if( ! empty($wp_email_domain) )
 			$sender_email_domain = $wp_email_domain;
@@ -181,6 +194,7 @@ class LastEmailAddressValidator
 		}
 		$this->close_smtp_connection();
 		$this->simulated_sending_succeeded = true;
+		$this->error_type = '';
 		return true;
 	}
 
@@ -221,6 +235,18 @@ class LastEmailAddressValidator
 	}
 
 
+	public function is_email_recipient_name_catch_all() : bool
+	{
+		if( preg_match( $this->central::$RECIPIENT_NAME_CATCH_ALL_REGEX, $this->normalized_email_address ) )
+		{
+			$this->error_type = 'inline_catch_all_email_address_error';
+			$this->is_email_address_inline_catch_all = true;
+			return true;
+		}
+		return false;
+	}
+
+
 // --------------- Private functions --------------------------------------------
 
 
@@ -230,7 +256,9 @@ class LastEmailAddressValidator
 		$this->email_domain                  							= '';
 		$this->email_domain_has_MX_records   							= false;
 		$this->email_domain_ip_address       							= '';
+		$this->error_type                                 = '';
 		$this->is_email_address_from_dea_service 					= false;
+		$this->is_email_address_inline_catch_all          = false;
 		$this->is_email_address_on_user_defined_blacklist = false;
 		$this->is_email_address_on_user_defined_whitelist = false;
 		$this->is_email_address_syntax_valid 							= false;
@@ -256,13 +284,18 @@ class LastEmailAddressValidator
 	private function validate_current_email_address_syntax()
 	{
 		if( empty($this->normalized_email_address) )
+		{
+			$this->error_type = 'email_address_syntax_error';
 			return false;
+		}
 		elseif( preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
 		{
 			$this->is_email_address_syntax_valid = true;
 			$this->extract_domain_from_email_address();
+			return true;
 		}
-		return $this->is_email_address_syntax_valid;
+		$this->error_type = 'email_address_syntax_error';
+		return false;
 	}
 
 
@@ -298,6 +331,8 @@ class LastEmailAddressValidator
 			}
 			if( ! empty( $this->mx_server_ips ) )
 				$this->email_domain_has_MX_records = true;
+			else
+				$this->error_type = 'email_domain_has_no_mx_record';
 		}
 		return $this->email_domain_has_MX_records;
 	}
@@ -387,7 +422,10 @@ class LastEmailAddressValidator
 			return false;
 
 		if( empty($mx_server_ips) && ! $this->get_email_domain_mx_servers() )
-			 return false;
+		{
+			$this->error_type = 'email_domain_has_no_mx_record';
+			return false;
+		}
 
 		return true;
 	}

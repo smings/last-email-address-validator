@@ -1,4 +1,4 @@
-1.4.4
+1.4.5
 #---------------------------------------------------------------#
 # DON'T ADD YOUR OWN DEA SERVICES MANUALLY • THEY WILL BE       #
 # OVERWRITTEN WITH THE NEXT PLUGIN UPDATE • USE THE DOMAIN      #
@@ -23,7 +23,7 @@
 
 domain:10minutemail.com
 mx:beta-mail.10minutemail.com
-ip:52.40.138.240
+ip:52.40.138.240	
 
 domain:20minutemail.com
 mx:mx.20minutemail.com
@@ -85,6 +85,10 @@ domain:dyndns.org
 domain:easytrashmail.com
 mx:mx.mail-temporaire.fr
 ip:163.172.151.142
+
+domain:emailfake.com
+mx:emailfake.com
+ip:51.38.115.65
 
 domain:fakemailgenerator.com
 mx:fmg-mail-2.fakemailgenerator.com
@@ -218,6 +222,16 @@ ip:37.120.169.172
 domain:temp-mail.org
 mx:mx.yandex.net
 ip:93.158.134.89
+
+# this is more tricky than usual, they seem to have more
+# mx servers at their disposal
+doman:throwawaymail.com
+mx:mail.h-email.net
+ip:54.202.112.1
+mx:mail.mybx.site
+ip:163.172.34.235
+mx:mail.mywrld.top
+ip:163.172.34.235
 
 domain:trashmail.com
 mx:smtp.trashmail.com

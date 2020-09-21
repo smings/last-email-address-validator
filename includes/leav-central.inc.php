@@ -30,7 +30,8 @@ class LeavCentral
   public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'accept_pingbacks', 
-    'accept_trackbacks', 
+    'accept_trackbacks',
+    'allow_recipient_name_catch_all_email_addresses', 
     'block_disposable_email_address_services', 
     'simulate_email_sending',
     'use_main_menu',
@@ -48,11 +49,12 @@ class LeavCentral
     'validate_wpforms_email_fields'
   );
   public static $RADIO_BUTTON_VALUES = array( 'yes', 'no' );
+  public static $RECIPIENT_NAME_CATCH_ALL_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+[^@]+@/";
   public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
   public static $SANITIZE_DOMAIN_REGEX = "/[^0-9a-zA-Z-\.]/";
   public static $SANITIZE_IP_REGEX = "/[^0-9\.]/";
   public static $TEXT_FIELDS = array(
-    'cem_email_addess_syntax_error',
+    'cem_email_address_syntax_error',
     'cem_email_domain_is_blacklisted',
     'cem_email_address_is_blacklisted',
     'cem_email_domain_has_no_mx_record',
@@ -74,7 +76,8 @@ class LeavCentral
     $this::$VALIDATION_ERROR_LIST_DEFAULTS = 
     array
     (
-          'email_addess_syntax_error'         => __( 'The entered email address syntax is invalid.', 'leav'),
+          'email_address_syntax_error'         => __( 'The entered email address syntax is invalid.', 'leav'),
+          'inline_catch_all_email_address_error' => __( 'We don\'t allow inline catch-all email addresses with a "+" sign in them.', 'leav' ),
           'email_domain_is_blacklisted'       => __( 'The entered email address\'s domain is blacklisted.', 'leav'),
           'email_address_is_blacklisted'      => __( 'The entered email address is blacklisted.', 'leav'),
           'email_domain_has_no_mx_record'     => __( 'The entered email address\'s domain doesn\'t have any mail servers.', 'leav'),

@@ -1,15 +1,15 @@
 === LEAV Last Email Address Validator ===
 Contributors: smings
 Donate link: https://www.patreon.com/smings
-Tags: email address validation, email form, contact form, registration form, form builder, newsletter,  contact forms, user registration, comments, spam, MX, DNS, spam blocker, spam prevention
-Requires at least: 4.9
+Tags: email address validation, email form, contact form, registration form, form builder, newsletter, user registration, comments, anti spam, spam blocker, MX, DNS
+Requires at least: 4.7
 Tested up to: 5.5
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-LEAV provides a comprehensive email address validation and disposable email address blocker for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, Mailchimp for WordPress (MC4WP), Mailchimp for WooCommerce and many more to come...
+LEAV provides a comprehensive email address validation, disposable email address blocker, blacklists for role-based recipient names as well as user-defined white and blacklists for recipient names, email addresses and email domains for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, Mailchimp for WordPress (MC4WP), Formidable Forms, Kali Forms and many more to come...
 
 == Description ==
 
@@ -18,28 +18,33 @@ LEAV provides a comprehensive email address validation and disposable email addr
 We believe that your lifetime is the most precious and protection worthy thing in 
 the universe. Protecting it is a critical task. 
 LEAV helps you to effectively protect your lifetime against spammers that use 
-fake or disposable email adresses for the standard WordPress user registration, WordPress's comments, WooCommerce, Contact Form 7, WPForms (lite and pro), Ninja Forms and more plugins to come. 
+fake or disposable email adresses for the standard WordPress user registration, WordPress's comments, WooCommerce, Contact Form 7, WPForms (lite and pro), Ninja Forms, Formidable Forms, Kali Forms and more plugins to come. 
+
 There are plenty of bad apples out there and we want to protect you against them.
 We built this plugin, because we were frustrated with the lack of true email
-validation beyond just syntax checks in all the WordPress functions and plugins we used
-ourselves. We always want to make LEAV better. If you miss a plugin or another
+validation beyond just superficial syntax checks in all the WordPress functions and plugins we used
+ourselves. We always want to make LEAV better. 
+We created LEAV with the same feature set as paid services like [quickemailverification.com](https://quickemailverification.com/features) and others. But for free.
+If you still miss a plugin or another
 way of extra protection, please contact us at [leav@smings.com](mailto:leav@smings.com).
 
 = Integrations =
 
 LEAV is the only free WordPress plugin that provides unlimited email address validations 
-and reliable disposable email address protection that seamlessly integrates with all of the big WordPress form plugins and WordPress standard functions. LEAV makes sure that email addresses are deliverable and (if activated) are not disposable email addresses.
+and reliable disposable email address protection that seamlessly integrates with almost all of the big WordPress form plugins and WordPress standard functions. LEAV makes sure that email addresses are deliverable and (if activated), are not disposable email addresses (if activated), are not role-based email addresses i.e. info@, sales@, ... (if activated), are not recipient name catch-all email addresses (i.e. my.gmailaddress+something@gmail.com) (if activated), are not from free  . This keeps your user / list data clean and saves you tons of precious time.
 
 Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.5.2
-* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.2.2
-* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.2.3
-* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 4.5.2
-* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 3.4.27
-* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.07.01
-* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.1.2
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.5.2 (5,000,000+ installations)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.2.2 (5,000,000+ installations)
+* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.2.3 (3,000,000+ installations)
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 4.5.2 (1,000,000+ installations)
+* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 3.4.27 (1,000,000+ installations)
+* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.07.01 (300,000+ Installations)
+* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.1.2 (30,000+ installations)
+
+which gives LEAV a current plugin reach of 15,330,000 potential use-cases for plugins. And this is not even counting every single WordPress installation. 
 
 Additionally you can control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
@@ -47,10 +52,62 @@ validated
 * [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 * [WordPress Pingbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
 
+= Roadmap =
+
+We are currently working on integrating the following plugins:
+
+* [OptinMonster API](https://wordpress.org/plugins/optinmonster/) (1,000,000+ installations)
+* [Popup Maker](https://wordpress.org/plugins/popup-maker/) (500,000+ installations)
+* [Newsletter](https://wordpress.org/plugins/newsletter/) (300,000 installations)
+* [Caldera Forms](https://wordpress.org/plugins/caldera-forms/) (200,000+ installations)
+* [Popup Builder](https://wordpress.org/plugins/popup-builder/) (200,000+ installations)
+* [Gravity Forms](https://www.gravityforms.com/) (number of installations not available)
+* [BuddyPress](https://wordpress.org/plugins/buddypress/) (200,000+ installations)
+* [Everest Forms](https://wordpress.org/plugins/everest-forms/) (100,000+ installations)
+* [MailPoet 2](https://wordpress.org/plugins/wysija-newsletters/) (100,000+ installations)
+* [MailPoet 3](https://wordpress.org/plugins/mailpoet/) (100,000+ installations)
+* [Form Maker](https://wordpress.org/plugins/form-maker/) (100,000+ installations)
+* [MailChimp](https://wordpress.org/plugins/mailchimp/) (100,000+ installations)
+* [Ultimate Member](https://wordpress.org/plugins/ultimate-member/) (100,000+ installations)
+* [Easy Forms for Mailchimp](https://wordpress.org/plugins/yikes-inc-easy-mailchimp-extender/) (100,000+ installations)
+* [Email Subscribers & Newsletters](https://wordpress.org/plugins/email-subscribers/) (100,000+ installations)
+* [Free & Simple Contact Form](https://wordpress.org/plugins/pirate-forms/) (100,000+ installations)
+* [Hustle](https://wordpress.org/plugins/wordpress-popup/) (90,000 installations)
+* [Forminator](https://wordpress.org/plugins/forminator/) (80,000+ installations)
+* [Visual Form Builder](https://wordpress.org/plugins/visual-form-builder/) (70,000+ installations)
+* [Popups - WordPress Popup](https://wordpress.org/plugins/popups/) (60,000+ installations)
+* [Newsletter, SMTP, Email marketing and Subscribe forms](https://wordpress.org/plugins/mailin/) (50,000+ installations)
+* [User Registration](https://wordpress.org/plugins/user-registration/) (50,000+ installations)
+* [Subscribe2](https://wordpress.org/plugins/subscribe2/) (40,000+ installations)
+* [Icegram - Popups, Optins, CTAs & lot more...](https://wordpress.org/plugins/icegram/) (40,000+ installations)
+* [Gwolle Guestbook](https://wordpress.org/plugins/gwolle-gb/) (40,000+ installations)
+* [Happy Forms](https://wordpress.org/plugins/happyforms/) (30,000+ installations)
+* [Contact Form Maker](https://web-dorado.com/products/form-maker-wordpress.html) (30,000+ installations)
+* [ConvertKit](https://wordpress.org/plugins/convertkit/) (30,000+ installations)
+* [Fluent Forms](https://wordpress.org/plugins/fluentform/) (30,000+ installations)
+* [Popup by Supsystic](https://wordpress.org/plugins/popup-by-supsystic/) (30,000+ installations)
+* [WP Subscribe](https://wordpress.org/plugins/wp-subscribe/) (30,000+ installations)
+* [weForms](https://wordpress.org/plugins/weforms/) (20,000+ installations)
+* [WP User Frontend](https://wordpress.org/plugins/wp-user-frontend/) (20,000+ installations)
+* [CaptainForm](https://wordpress.org/plugins/captainform/) (20,000+ installations)
+* [Clean and Simple Contact Form](https://wordpress.org/plugins/clean-and-simple-contact-form-by-meg-nicholas/) (20,000+ installations)
+* [Contact Form by Supsystic](https://wordpress.org/plugins/contact-form-by-supsystic/) (20,000+ installations)
+* [Contact Form Email](https://wordpress.org/plugins/contact-form-to-email/) (20,000+ installations)
+* [Lead Form Builder](https://wordpress.org/plugins/lead-form-builder/) (20,000+ installations)
+* [MailMunch](https://wordpress.org/plugins/mailmunch/) (20,000+ installations)
+* [Ultimate Form Builder Lite](https://wordpress.org/plugins/ultimate-form-builder-lite/) (20,000+ installations)
+* [WP WooCommerce Mailchimp](https://wordpress.org/plugins/woocommerce-mailchimp/) (20,000+ installations)
+* [MC4WP: Mailchimp Top Bar](https://wordpress.org/plugins/mailchimp-top-bar/) (10,000+ installations)
+* [Email Before Download](https://wordpress.org/plugins/email-before-download/) (10,000+ installations)
+
+
 = Features =
 
 LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-address-validator) validates email addresses through a sophisticated multi-step validation process:
-* Email address syntax check - checks if the email address is syntactically correct. This syntax check usually is more thorough than the typical frontend-based (javascript) validation of your forms plugin. It is a solid server-side email syntax check based on regular expressions (always on). By the way - there are top-level domains like ".CANCERRESEARCH" and even longer ones out there. The currently longest top-level domain is 18 characters long and most email syntax checks don't allow this. For a current list of allowed top level domains look at [iana.org](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
+
+* Email address syntax check - checks if the email address is syntactically correct. This syntax check is more thorough than the typical frontend-based (javascript) validation of your forms plugin. It is a solid server-side email syntax check based on regular expressions (always on). By the way - there are top-level domains like ".CANCERRESEARCH" and even longer ones out there. The currently longest top-level domain is 18 characters long and most email syntax checks don't allow this. For a current list of allowed top level domains look at [iana.org](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
+
+* Block recipient name catch-all email addresses like (i.e. first.last+any-text@gmail.com) (optinal)
 
 * User-defined domain whitelist - allows all email addresses from your personal list of whitelisted email domains (optional)
 
@@ -115,21 +172,32 @@ We take great pride in the fact that it is the only plugin to support all major 
 This will help us help you and gives you good karma points! 
 
 = Limitations of the free plugin =
-None - there aren't any. LEAV validates as many email addresses as your WordPress instance can handle. It makes sure that all entered email addresses are deliverable and (if activated) not from disposable email address domains.
-For those who need more protection and more validations, we currently develop the pro version of LEAV. The pro version of LEAV validates, that the person entering the email address has actual access and control over the email account. It does this by sending a verification code to the entered email address and provides the user who entered the email address with a verification step before the form data gets send to the underlying plugin. No matter the plugin. LEAV pro supplies the functionality.
-Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure the email address entered is not from known spammer domains. And this will cost just as much as a starbucks coffee per year.
+None - there aren't any. LEAV validates as many email addresses as your WordPress instance can handle. It makes sure that all entered email addresses are deliverable and confirm to the rule you set.
+
+For those who need more protection and more validations, we currently develop the pro version of LEAV. The pro version of LEAV validates, that the person entering the email address has actual access and control over the email account. It does this by sending a verification code to the entered email address and provides the user who entered the email address with a verification step before the form data gets send to the underlying plugin. No matter the plugin. LEAV pro supplies the functionality for all supported plugins.
+Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure the email address entered is not from known spammer domains. And this will be as affordable as 2 starbucks coffees per year.
 
 == Screenshots ==
-1. settings-01.png
-2. settings-02.png
-3. settings-03.png
-4. settings-04.png
-5. cf7-01.png
-6. cf7-02.png
-7. woocommerce-01.png
-
+1. settings-1.png
+2. settings-2.png
+3. settings-3.png
+4. settings-4.png
+5. settings-5.png
+6. settings-6.png
+7. settings-7.png
+8. settings-8.png
+9. settings-9.png
+10. settings-10.png
 
 == Changelog ==
+
+= 1.4.6 =
+* Added email test field in the settings
+* Added role-based recipient name blacklist
+
+= 1.4.5 =
+* Added user-defined recipient name blacklist
+* Added option for blocking recipient name catch-all syntax
 
 = 1.4.4 =
 * Added Support for Kali Forms
