@@ -347,6 +347,9 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['use_user_defined_email_whitelist'] ) )
             $this->central::$OPTIONS['use_user_defined_email_whitelist'] = 'no';
 
+        if ( empty( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] ) )
+            $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] = 'no';
+
         if ( empty( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] ) )
             $this->central::$OPTIONS['use_user_defined_domain_blacklist'] = 'no';
 
@@ -375,6 +378,9 @@ class LeavPlugin
 
         if ( empty( $this->central::$OPTIONS['internal_user_defined_email_whitelist'] ) )
             $this->central::$OPTIONS['internal_user_defined_email_whitelist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
+            $this->central::$OPTIONS['role_based_recipient_name_blacklist'] = array();
 
         if ( empty( $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] ) )
             $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] = array();
@@ -565,6 +571,12 @@ class LeavPlugin
             $this->central::$VALIDATION_ERROR_LIST['general_email_validation_error'] = $this->central::$OPTIONS['cem_general_email_validation_error'];
     }
 
+
+    private function read_role_based_recipient_names_file() : bool
+    {
+
+        return true;
+    }
 
     private function read_dea_list_file() : bool
     {

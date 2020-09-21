@@ -380,6 +380,28 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                         </td>
                     </tr>
 
+
+                    <tr>
+                        <th scope="row"><?php _e("Reject email adresses from role-based recipient name blacklist", 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="use_role_based_recipient_name_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_role_based_recipient_name_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="use_role_based_recipient_name_blacklist" type="radio" value="no" <?php if ($this->central::$OPTIONS["use_role_based_recipient_name_blacklist"] == "no") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('No', 'leav'); ?>
+                            </label>
+                            <p class="description">
+                                <?php _e('If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected.<br/><strong>Default: No</strong>', 'leav'); ?>
+                            </p>
+                            <label>
+                                <textarea id="role_based_recipient_name_blacklist" name="role_based_recipient_name_blacklist" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ?></textarea>
+                            </label>
+                        </td>
+                    </tr>
+
+
                     <tr>
                         <th scope="row"><?php _e("Reject email adresses from user-defined domain blacklist", 'leav'); ?>:</th>
                         <td>
@@ -396,6 +418,8 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                             </p>
                         </td>
                     </tr>
+
+
                     <tr>
                         <th scope="row">&nbsp;</th>
                         <td>

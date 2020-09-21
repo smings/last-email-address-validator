@@ -39,6 +39,7 @@ class LeavCentral
     'use_user_defined_domain_whitelist', 
     'use_user_defined_email_blacklist', 
     'use_user_defined_email_whitelist', 
+    'use_role_based_recipient_name_blacklist',
     'validate_cf7_email_fields', 
     'validate_formidable_forms_email_fields',
     'validate_mc4wp_email_fields',
