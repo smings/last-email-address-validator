@@ -42,6 +42,8 @@ alarms
 alert
 alerts
 all
+alle
+alleangestellten
 allemployees
 allhands
 allpms
@@ -54,6 +56,8 @@ alumni
 amministrazione
 analysis
 analytics
+angestellte
+angestellter
 answers
 antispam
 api
@@ -73,6 +77,8 @@ auction
 auctions
 backend
 backenddev
+benutzer
+bewerbung
 billing
 birmingham
 biz
@@ -200,6 +206,7 @@ generalenquiries
 genoffice
 graphics
 group
+hallo
 head
 headmaster
 headoffice
@@ -208,6 +215,7 @@ hello
 help
 helpdesk
 helpline
+hilfe
 hire
 hiredesk
 holidays
@@ -244,12 +252,16 @@ investors
 invoice
 invoices
 ipadmin
+ir
 ispfeedback
 ispsupport
 it
 ithelp
 jira
 jobs
+kunde
+kunden
+kundenservice
 law
 lawyer
 lawyers
@@ -463,6 +475,7 @@ webmail
 webmaster
 webteam
 welcome
+willkommen
 whois
 www
 zxcv

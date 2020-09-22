@@ -23,6 +23,7 @@ if (!function_exists('is_plugin_active')) {
 class LeavPlugin
 {
     private $disposable_email_service_provider_list_file = '';
+    private $role_based_recipient_name_file = '';
     private $leav;
     private $central;
 
@@ -34,6 +35,7 @@ class LeavPlugin
         $this->central = new LeavCentral();
         $this->leav = new LastEmailAddressValidator( $this->central );
         $this->disposable_email_service_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$DEA_SERVICE_FILE_RELATIVE_PATH;
+        $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init') );
     }
 
@@ -89,33 +91,43 @@ class LeavPlugin
         if( ! $this->leav->validate_email_address_syntax( $email_address ) )
             return $this->increment_count_of_blocked_email_addresses();
 
+
+        // ----- allow catch-all recipient name email addresses ----------------
+
         elseif(    $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] == 'no'
                 && $this->leav->is_email_recipient_name_catch_all()
         )
             return false;
 
+        // ----- allow catch-all recipient name email addresses ----------------
+
         elseif(    $this->central::$OPTIONS['use_user_defined_domain_whitelist'] == 'yes'
-            && ! empty( $this->central::$OPTIONS['internal_user_defined_domain_whitelist'] )
-            && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$OPTIONS['internal_user_defined_domain_whitelist'] )
+            && ! empty( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
+            && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
           )
             return true;
 
         elseif(    $this->central::$OPTIONS['use_user_defined_email_whitelist'] == 'yes'
-            && ! empty( $this->central::$OPTIONS['internal_user_defined_email_whitelist'] )
-            && $this->leav->check_if_email_address_is_on_user_defined_whitelist( $this->central::$OPTIONS['internal_user_defined_email_whitelist'] )
+            && ! empty( $this->central::$OPTIONS['user_defined_email_whitelist'] )
+            && $this->leav->check_if_email_address_is_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_email_whitelist'] )
           )
             return true;
 
         elseif(    $this->central::$OPTIONS['use_user_defined_domain_blacklist'] == 'yes'
-            && ! empty( $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] )
-            && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] )
+            && ! empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
+            && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
           )
             return $this->increment_count_of_blocked_email_addresses();
 
         elseif(    $this->central::$OPTIONS['use_user_defined_email_blacklist'] == 'yes'
-            && ! empty( $this->central::$OPTIONS['internal_user_defined_email_blacklist'] )
-            && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$OPTIONS['internal_user_defined_email_blacklist'] )
+            && ! empty( $this->central::$OPTIONS['user_defined_email_blacklist'] )
+            && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_email_blacklist'] )
           )
+            return $this->increment_count_of_blocked_email_addresses();
+
+        elseif(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
+                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] )
+        )
             return $this->increment_count_of_blocked_email_addresses();
 
         elseif(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
@@ -320,9 +332,6 @@ class LeavPlugin
 
 
 
-
-
-
     // ---------------- private functions of the class -------------------------
 
     private function init_options()
@@ -330,99 +339,149 @@ class LeavPlugin
         if ( get_option( $this->central::$OPTIONS_NAME ) )
             $this->central::$OPTIONS = get_option( $this->central::$OPTIONS_NAME );
 
+
+        // ----- Test Email Address --------------------------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['test_email_address'] ) )
+            $this->central::$OPTIONS['test_email_address'] = '';
+
+        // ----- Allow recipient name catch-all syntax --------------------------------------------
+        //
         if ( empty( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] ) )
             $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] = 'yes';
 
+        // ----- Email Domain --------------------------------------------------
+        //
         if ( empty( $this->central::$OPTIONS['wp_email_domain'] ) )
             $this->central::$OPTIONS['wp_email_domain'] = $this->leav->get_detected_wp_email_domain();
 
         $this->leav->set_wordpress_email_domain( $this->central::$OPTIONS['wp_email_domain'] );
 
-
-        // ------- USER DEFINED WHITELISTS & BLACKLISTS AS WELL AS THE INTERNAL LISTS --------------
-        // ------- radio button switches
+        // ----- Whitelists ----------------------------------------------------
+        //
+        // ----- Allow email adresses from user-defined domain whitelist -------
+        //
         if ( empty( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] ) )
             $this->central::$OPTIONS['use_user_defined_domain_whitelist'] = 'no';
 
+        if ( empty( $this->central::$OPTIONS['user_defined_domain_whitelist'] ) )
+            $this->central::$OPTIONS['user_defined_domain_whitelist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['user_defined_domain_whitelist_string'] ) )
+            $this->central::$OPTIONS['user_defined_domain_whitelist_string'] = '';
+
+        // ----- Allow email adresses from user-defined email address whitelist
+        //
         if ( empty( $this->central::$OPTIONS['use_user_defined_email_whitelist'] ) )
             $this->central::$OPTIONS['use_user_defined_email_whitelist'] = 'no';
 
-        if ( empty( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] ) )
-            $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] = 'no';
+        if ( empty( $this->central::$OPTIONS['user_defined_email_whitelist'] ) )
+            $this->central::$OPTIONS['user_defined_email_whitelist'] = array();
 
+        if ( empty( $this->central::$OPTIONS['user_defined_email_whitelist_string'] ) )
+            $this->central::$OPTIONS['user_defined_email_whitelist_string'] = '';
+
+        // ----- Allow recipient names from user-defined recipient name whitelist
+        //
+        if ( empty( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] ) )
+            $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] = 'no';
+
+        if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] ) )
+            $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist_string'] ) )
+            $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] = '';
+
+
+        // ----- Blacklists ----------------------------------------------------
+        //
+        // ----- Block email adresses from user-defined domain blacklist -------
+        //
         if ( empty( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] ) )
             $this->central::$OPTIONS['use_user_defined_domain_blacklist'] = 'no';
 
+        if ( empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] ) )
+            $this->central::$OPTIONS['user_defined_domain_blacklist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['user_defined_domain_blacklist_string'] ) )
+            $this->central::$OPTIONS['user_defined_domain_blacklist_string'] = '';
+
+        // ----- Block email adresses from user-defined email blacklist -------
+        //
         if ( empty( $this->central::$OPTIONS['use_user_defined_email_blacklist'] ) )
             $this->central::$OPTIONS['use_user_defined_email_blacklist'] = 'no';
 
+        if ( empty( $this->central::$OPTIONS['user_defined_email_blacklist'] ) )
+            $this->central::$OPTIONS['user_defined_email_blacklist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['user_defined_email_blacklist_string'] ) )
+            $this->central::$OPTIONS['user_defined_email_blacklist_string'] = '';
+
+        // ----- User-defined recipient name blacklist -------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] ) )
+            $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] = 'no';
+
+        if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] ) )
+            $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] = array();
+
+        if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ) )
+            $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] = '';
+
+        // ----- Role-based recipient name blacklist -------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] ) )
+            $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] = 'no';
+
+        if(    empty( $this->central::$OPTIONS['role_based_recipient_name_list_version'] )
+            || $this->central::$OPTIONS['role_based_recipient_name_list_version'] != $this->central::$PLUGIN_VERSION
+            || empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] )
+        )
+            $this->read_role_based_recipient_name_file();
+
+        // ----- If the blacklist is still empty, the file isn't present or
+        // ----- something else went wrong. then we have to terminate the plugin
+        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
+            die('Something went wrong with the role-based recipient names file and the internally used array. We are careful and abort the execution here!');
+
+        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ) )
+            die('Something went wrong with the role-based recipient names file and the display string. We are careful and abort the execution here!');
+
+        // ----- Disposable Email Address Blocking -----------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['block_disposable_email_address_services'] ) )
+            $this->central::$OPTIONS['block_disposable_email_address_services'] = 'yes';
+
+        if(    empty( $this->central::$OPTIONS['dea_list_version'] )
+            || $this->central::$OPTIONS['dea_list_version'] != $this->central::$PLUGIN_VERSION
+            || empty($this->central::$OPTIONS['dea_domains'] )
+        )
+            $this->read_dea_list_file();
+
+        if( empty( $this->central::$OPTIONS['dea_domains'] ) )
+            die('Something went wrong with the dea file. We are careful and abort the execution here!');
+
+        if( empty( $this->central::$OPTIONS['dea_mx_domains'] ) )
+            die('Something went wrong with the dea file. We are careful and abort the execution here!');
+
+        if( empty( $this->central::$OPTIONS['dea_mx_ips'] ) )
+            die('Something went wrong with the dea file. We are careful and abort the execution here!');
+
+        // ----- Simulate Email Sending ----------------------------------------
+        //
         if ( empty( $this->central::$OPTIONS['simulate_email_sending'] ) )
             $this->central::$OPTIONS['simulate_email_sending'] = 'yes';
 
-        // ------- user-defined lists
-        if ( empty( $this->central::$OPTIONS['user_defined_domain_whitelist'] ) )
-            $this->central::$OPTIONS['user_defined_domain_whitelist'] = '';
-
-        if ( empty( $this->central::$OPTIONS['user_defined_email_whitelist'] ) )
-            $this->central::$OPTIONS['user_defined_email_whitelist'] = '';
-
-        if ( empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] ) )
-            $this->central::$OPTIONS['user_defined_domain_blacklist'] = '';
-
-        if ( empty( $this->central::$OPTIONS['user_defined_email_blacklist'] ) )
-            $this->central::$OPTIONS['user_defined_email_blacklist'] = '';
-
-        // ------- internally used lists
-        if ( empty( $this->central::$OPTIONS['internal_user_defined_domain_whitelist'] ) )
-            $this->central::$OPTIONS['internal_user_defined_domain_whitelist'] = array();
-
-        if ( empty( $this->central::$OPTIONS['internal_user_defined_email_whitelist'] ) )
-            $this->central::$OPTIONS['internal_user_defined_email_whitelist'] = array();
-
-        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
-            $this->central::$OPTIONS['role_based_recipient_name_blacklist'] = array();
-
-        if ( empty( $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] ) )
-            $this->central::$OPTIONS['internal_user_defined_domain_blacklist'] = array();
-
-        if ( empty( $this->central::$OPTIONS['internal_user_defined_email_blacklist'] ) )
-            $this->central::$OPTIONS['internal_user_defined_email_blacklist'] = array();
-
-
-
-        // ----- ing  -----------------------
-
-        if ( empty( $this->central::$OPTIONS['spam_email_addresses_blocked_count'] ) )
-            $this->central::$OPTIONS['spam_email_addresses_blocked_count'] = "0";
-
+        // ----- Pingbacks / Trackbacks ----------------------------------------
+        //
         if ( empty( $this->central::$OPTIONS['accept_pingbacks'] ) )
             $this->central::$OPTIONS['accept_pingbacks'] = 'yes';
 
         if ( empty( $this->central::$OPTIONS['accept_trackbacks'] ) )
             $this->central::$OPTIONS['accept_trackbacks'] = 'yes';
 
-
-        // ----- DEA list option values -----------------------
-
-        if ( empty( $this->central::$OPTIONS['block_disposable_email_address_services'] ) )
-            $this->central::$OPTIONS['block_disposable_email_address_services'] = 'yes';
-
-        if(    empty( $this->central::$OPTIONS['dea_list_version'] )
-            || $this->central::$OPTIONS['dea_list_version'] != $this->central::$PLUGIN_VERSION
-        )
-            $this->read_dea_list_file();
-
-        if( empty( $this->central::$OPTIONS['dea_domains'] ) )
-            $this->central::$OPTIONS['dea_domains'] = array();
-
-        if( empty( $this->central::$OPTIONS['dea_mx_domains'] ) )
-            $this->central::$OPTIONS['dea_mx_domains'] = array();
-
-        if( empty( $this->central::$OPTIONS['dea_mx_ips'] ) )
-            $this->central::$OPTIONS['dea_mx_ips'] = array();
-
         // ------ Validation of functions / plugins switches ---
-
+        //
         if ( empty( $this->central::$OPTIONS['validate_wp_standard_user_registration_email_addresses'] ) )
             $this->central::$OPTIONS['validate_wp_standard_user_registration_email_addresses'] = 'yes';
 
@@ -452,7 +511,7 @@ class LeavPlugin
 
 
         // ------ Custom error message override fields -------------------------
-
+        //
         if ( empty( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$OPTIONS['cem_email_address_syntax_error'] = '';
 
@@ -476,7 +535,7 @@ class LeavPlugin
 
 
         // ------ Main Menu Use & Positions -------------------
-
+        //
         if ( empty( $this->central::$OPTIONS['use_main_menu'] ) )
             $this->central::$OPTIONS['use_main_menu'] = 'no';
 
@@ -485,6 +544,12 @@ class LeavPlugin
 
         if ( $this->central::$OPTIONS['settings_menu_position'] === '' )
             $this->central::$OPTIONS['settings_menu_position'] = 3;
+
+        // ----- Non-visible options
+        //
+        if ( empty( $this->central::$OPTIONS['spam_email_addresses_blocked_count'] ) )
+            $this->central::$OPTIONS['spam_email_addresses_blocked_count'] = "0";
+
 
         update_option($this->central::$OPTIONS_NAME, $this->central::$OPTIONS);
     }
@@ -572,11 +637,36 @@ class LeavPlugin
     }
 
 
-    private function read_role_based_recipient_names_file() : bool
+    private function read_role_based_recipient_name_file() : bool
     {
+        if(    ! file_exists( $this->role_based_recipient_name_file )
+            || ! is_readable( $this->role_based_recipient_name_file )
+        )
+            return false;
 
+        $lines = file( $this->role_based_recipient_name_file, FILE_IGNORE_NEW_LINES );
+        $this->central::$OPTIONS['role_based_recipient_name_list_version'] = array_shift($lines);
+
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist'] = array();
+
+        foreach( $lines as $id => $line )
+        {
+            if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
+                || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
+            )
+                continue;
+            elseif( preg_match( $this->central::$RECIPIENT_NAME_REGEX, $line ) )
+            {
+                array_push( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], $line );
+            }
+        }
+        if( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
+            return false;
+
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] = implode( "\n", $this->central::$OPTIONS['role_based_recipient_name_blacklist'] );
         return true;
     }
+
 
     private function read_dea_list_file() : bool
     {

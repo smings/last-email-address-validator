@@ -12,6 +12,7 @@ class LastEmailAddressValidator
 	private $email_domain = '';
 	private $email_domain_ip_address = '';
 	private $normalized_email_address = '';
+	private $collapsed_recipient_name = '';
 	private $smtp_connection;
 	private $smtp_connection_is_open = false;
 	private $wp_email_domain = '';
@@ -53,7 +54,7 @@ class LastEmailAddressValidator
 			$this->normalize_email_address();
 			$this->validate_current_email_address_syntax();
 			if( $this->is_email_address_syntax_valid )
-				$this->extract_domain_from_email_address();
+				$this->extract_recipient_name_and_domain_from_email_address();
 		}
 
 		if( ! empty($wp_email_domain) )
@@ -72,7 +73,7 @@ class LastEmailAddressValidator
 		$this->validate_current_email_address_syntax();
 		if( ! $this->is_email_address_syntax_valid )
 			return false;			
-		$this->extract_domain_from_email_address();
+		$this->extract_recipient_name_and_domain_from_email_address();
 		return true;
 	}
 
@@ -247,11 +248,23 @@ class LastEmailAddressValidator
 	}
 
 
+	public function is_recipient_name_role_based( array &$role_name_list ) : bool
+	{
+		if( in_array( $this->collapsed_recipient_name, $role_name_list ) )
+		{
+			$this->error_type = 'recipient_name_is_role_based';
+			return true;
+		}
+		return false;
+	}
+
+
 // --------------- Private functions --------------------------------------------
 
 
 	private function reset_class_attributes()
 	{
+		$this->collapsed_recipient_name                   = '';
 		$this->email_address                 							= '';
 		$this->email_domain                  							= '';
 		$this->email_domain_has_MX_records   							= false;
@@ -265,19 +278,19 @@ class LastEmailAddressValidator
 		$this->is_email_address_syntax_valid 							= false;
 		$this->is_email_domain_on_user_defined_blacklist 	= false;
 		$this->is_email_domain_on_user_defined_whitelist 	= false;
-		$this->mx_server_domains             							= array();
 		$this->mx_server_domains 													= array();
-		$this->mx_server_ips                 							= array();
+		$this->mx_server_domains             							= array();
 		$this->mx_server_ips 															= array();
+		$this->mx_server_ips                 							= array();
 		$this->mx_server_preferences 											= array();
-		$this->normalized_email_address      							= '';
 		$this->normalized_email_address 									= '';
-		$this->simulated_sending_succeeded   							= false;
+		$this->normalized_email_address      							= '';
 		$this->simulated_sending_succeeded 								= false;
-		$this->smtp_connection               							= '';
+		$this->simulated_sending_succeeded   							= false;
 		$this->smtp_connection 														= '';
-		$this->smtp_connection_is_open       							= false;
+		$this->smtp_connection               							= '';
 		$this->smtp_connection_is_open 										= false;
+		$this->smtp_connection_is_open       							= false;
 	}
 
 
@@ -291,7 +304,7 @@ class LastEmailAddressValidator
 		elseif( preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
 		{
 			$this->is_email_address_syntax_valid = true;
-			$this->extract_domain_from_email_address();
+			$this->extract_recipient_name_and_domain_from_email_address();
 			return true;
 		}
 		$this->error_type = 'email_address_syntax_error';
@@ -305,21 +318,22 @@ class LastEmailAddressValidator
 	}
 
 
-	private function extract_domain_from_email_address() : bool
+	private function extract_recipient_name_and_domain_from_email_address() : bool
 	{
 		if( empty( $this->normalized_email_address ) )
 			return false;
 		$arr = explode( '@', $this->normalized_email_address );
 		if( sizeof($arr) < 2 )
 			return false;
-		$this->email_domain = end($arr);
+	  $this->collapsed_recipient_name = preg_replace( "/[^a-z]/", '', $arr[0] );
+		$this->email_domain = $arr[1];
 		return true;
 	}
 
 
 	private function get_email_domain_mx_servers() : bool
 	{
-		if( empty( $this->email_domain ) && ! $this->extract_domain_from_email_address() )
+		if( empty( $this->email_domain ) && ! $this->extract_recipient_name_and_domain_from_email_address() )
 			return false;
 		if( @getmxrr($this->email_domain, $this->mx_server_domains, $this->mx_server_preferences ) )
 		{

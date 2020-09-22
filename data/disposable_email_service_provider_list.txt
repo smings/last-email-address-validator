@@ -1,4 +1,4 @@
-1.4.5
+1.4.6
 #---------------------------------------------------------------#
 # DON'T ADD YOUR OWN DEA SERVICES MANUALLY • THEY WILL BE       #
 # OVERWRITTEN WITH THE NEXT PLUGIN UPDATE • USE THE DOMAIN      #
