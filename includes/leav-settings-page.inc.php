@@ -301,7 +301,7 @@ class LeavSettingsPage
                             </label>
                             <p class="description">
                                 <?php 
-                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allows to extend the recipient name of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up to.', 'leav'); 
+                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allows to extend the recipient name of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.<br/>You can choose to allow this or block such email addresses.', 'leav'); 
                                 _e('<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
@@ -380,7 +380,10 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_define
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php _e("Email addresses on this list will be accepted without further email address blacklist checks (if active). <br/><strong>Use one email address per line</strong>.<br/><strong>Default: No</strong>", 'leav'); ?>
+                                <?php 
+                                    _e('Email addresses on this list will be accepted without further email address blacklist checks (if active). <br/><strong>Use one email address per line</strong>.', 'leav'); 
+                                    _e('<br/><strong>Default: No</strong>', 'leav'); 
+                                ?>
                             </p>
                         </td>
                     </tr>
@@ -394,6 +397,37 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                             </label>
                         </td>
                     </tr>
+
+                    <tr>
+                        <th scope="row"><?php _e("Allow recipient names from user-defined whitelist", 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="use_user_defined_recipient_name_whitelist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_recipient_name_whitelist"] == "yes") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="use_user_defined_recipient_name_whitelist" type="radio" value="no" <?php if ($this->central::$OPTIONS["use_user_defined_recipient_name_whitelist"] == "no") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('No', 'leav'); ?>
+                            </label>
+                            <p class="description">
+                                <?php 
+                                    _e('Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active). <br/><strong>Use one recipient name per line</strong>.', 'leav');
+                                    _e('<br/><strong>Default: No</strong>', 'leav'); 
+                                ?>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">&nbsp;</th>
+                        <td>
+                            <label>
+                                <textarea id="user_defined_recipient_name_whitelist_string" name="user_defined_recipient_name_whitelist_string" rows="7" cols="40" placeholder="yourrecipientname1
+yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea>
+                            </label>
+                        </td>
+                    </tr>
+
 
                 </table>
 
@@ -460,7 +494,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
 
                     <tr>
-                        <th scope="row"><?php _e("Reject email adresses from user-defined recipient name blacklist", 'leav'); ?>:</th>
+                        <th scope="row"><?php _e("Reject email adresses with recipient names from user-defined recipient name blacklist", 'leav'); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_recipient_name_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_recipient_name_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -501,7 +535,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 ?>
                             </p>
                             <label>
-                                <textarea id="role_based_recipient_name_blacklist_string" name="role_based_recipient_name_blacklist_string" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ?></textarea>
+                                <textarea id="display_only" name="display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ?></textarea>
                             </label>
                         </td>
                     </tr>
@@ -1060,9 +1094,11 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
     {
         $this->update_notice = '';
         $this->error_notice = '';
-
+        
         foreach ($_POST as $key => $value)
         {
+
+            $value = stripslashes( $value );
             if( $key == 'test_email_address' )
             {
                 $this->leav->reuse( $value );
@@ -1076,6 +1112,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             )
                 continue;
 
+
             // First we validate all radio button fields
             if(    in_array( $key, $this->central::$RADIO_BUTTON_FIELDS ) 
                 && $this->validate_radio_button_form_fields($key, $value) 
@@ -1086,7 +1123,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             {
                 if( $this->leav->sanitize_and_validate_text( $value ) )
                 {
-                    $this->central::$OPTIONS[$key] = stripslashes( $value );
+                    $this->central::$OPTIONS[$key] = $value;
                     $this->add_update_notification_for_form_field($key);
                 }
                 else
@@ -1131,6 +1168,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
             elseif(    in_array( $key, $this->central::$DOMAIN_LIST_FIELDS ) 
                     || in_array( $key, $this->central::$EMAIL_LIST_FIELDS  )
+                    || in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS )
             )
             {
                 $lines = preg_split("/[\r\n]+/", $value, -1, PREG_SPLIT_NO_EMPTY);
@@ -1165,6 +1203,14 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         array_push( $sanitized_internal_values, $line );
                     }
 
+                    elseif(    in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS )
+                            && preg_match( "/^[a-z]+$/", $line ) 
+                    )
+                    {
+                        $value = $value . $line . "\r\n";
+                        array_push( $sanitized_internal_values, $line );
+                    }
+
                     else
                     {
                         if( ! $has_errors )
@@ -1172,72 +1218,36 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             $this->add_error_notification_for_form_field($key);
                             $has_errors = true;
                         }
-                        $line = __('# Next line\'s value is invalid', 'leav') . "\r\n". "# " . $original_line;
-                        $value = $value . $line . "\r\n";
+
+                        // ----- when we end up here, we have to autocorrect the line
+                        if( in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS ) )
+                        {
+                            $corrected_line = $original_line;
+                            if( preg_match( "/\+/", $corrected_line ) )
+                                $corrected_line = array_shift( explode( '+', $corrected_line ) );
+                            $corrected_line = preg_replace( "/[^a-z]/", '',  $corrected_line );
+                            $line = __('# Next line\'s value was automatically corrected/normalized', 'leav') . "\r\n" . "# " . $original_line . "\r\n" . $corrected_line;
+                            $value = $value . $line . "\r\n";
+                            array_push( $sanitized_internal_values, $corrected_line );
+                        }
+                        // ----- here we just comment out the errors for domains and email addresses
+                        else
+                        {
+                            $line = __('# Next line\'s value is invalid', 'leav') . "\r\n". "# " . $original_line;
+                            $value = $value . $line . "\r\n";
+                        }
                     }
                     
                 }
 
                 // cutting of a trainling \r\n
                 $value = substr($value, 0, -2);
-                $this->central::$OPTIONS[$key] = stripslashes( $value );
+                $this->central::$OPTIONS[$key] = $value;
                 $this->add_update_notification_for_form_field($key);
 
                 # now we cut of the trailing "_string"
-                $internal_key = substr( $key, 0, -7);
-                $this->central::$OPTIONS[$internal_key] = $sanitized_internal_values;
-            }
-
-            // ---- Validating recipient name fields ----------
-            // 
-            elseif( in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS ) )
-            {
-                write_log("Validating recipient name Field '$key'");
-                write_log("'$value'");
-                write_log("'" . $this->central::$OPTIONS[$key] . "'");
-                $lines = preg_split( "/[\r\n]+/", $value, -1, PREG_SPLIT_NO_EMPTY );
-                $value = '';
-                $sanitized_internal_values = array();
-                $has_errors = false;
-
-                foreach( $lines as $id => $line )
-                {
-
-                    if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
-                        || preg_match( $this->central::$EMPTY_LINE_REGEX, $line )
-                    )
-                        $value = $value . $line . "\r\n";
-                    elseif( preg_match( "/^[a-z]+$/", $line ) )
-                    {
-                        $value = $value . $line . "\r\n";
-                        array_push( $sanitized_internal_values, $line );
-                    }
-                    else
-                    {
-                        if( ! $has_errors )
-                        {    
-                            $this->add_error_notification_for_form_field($key);
-                            $has_errors = true;
-                        }
-
-                        $original_line = $line;
-                        $corrected_line = array_shift( explode( '+', $original_line ) );
-                        $corrected_line = preg_replace( "/[^a-z]/", '',  $corrected_line );
-                        $line = __('# Next line\'s value was automatically corrected', 'leav') . "\r\n" . "# " . $original_line . "\r\n" . $corrected_line;
-                        $value = $value . $line . "\r\n";
-                        array_push( $sanitized_internal_values, $corrected_line );
-                    }
-                }
-                $value = substr($value, 0, -2);
-
-                $this->central::$OPTIONS[$key] = stripslashes( $value );
-                $this->add_update_notification_for_form_field($key);
-                # now we cut of the trailing "_string"
-                $internal_key = substr( $key, 0, -7);
-                $this->central::$OPTIONS[$internal_key] = $sanitized_internal_values;
-
-                if( ! $has_errors )
-                    $this->add_update_notification_for_form_field($key);
+                $list_key = substr( $key, 0, -7);
+                $this->central::$OPTIONS[$list_key] = $sanitized_internal_values;
             }
         }
 
@@ -1282,11 +1292,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined domain whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_whitelist_string')
             $this->update_notice = $this->update_notice . __( 'Updated the user-defined domain whitelist.<br/>', 'leav');
+
         elseif( $field_name == 'use_user_defined_email_whitelist')
             $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined email address whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_whitelist_string')
             $this->update_notice = $this->update_notice . __( 'Updated the user-defined email address whitelist.<br/>', 'leav');
 
+        elseif( $field_name == 'use_user_defined_recipient_name_whitelist')
+            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
+        elseif( $field_name == 'user_defined_recipient_name_whitelist_string')
+            $this->update_notice = $this->update_notice . __( 'Updated the user-defined recipient name whitelist.<br/>', 'leav');
         // ----- Blacklists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_blacklist')
@@ -1303,6 +1318,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
             $this->update_notice = $this->update_notice . __( 'Updated the entries of the user-defined recipient name blacklist.<br/>', 'leav');
+
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
             $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
 
@@ -1392,10 +1408,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_whitelist_string' )
             $this->error_notice = $this->error_notice . __( 'Error! One or more entered domains in the user-defined domain whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+
         elseif( $field_name == 'use_user_defined_email_whitelist' )
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_whitelist_string' )
             $this->error_notice = $this->error_notice . __( 'Error! One or more entered email addresses in the user-defined email address whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+
+        elseif( $field_name == 'use_user_defined_recipient_name_whitelist' )
+            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
+        elseif( $field_name == 'user_defined_recipient_name_whitelist_string' )
+            $this->error_notice = $this->error_notice . __( 'Error! One or more entered recipient names in the user-defined recipient name whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         // ----- Blacklists ----------------------------------------------------
         //
@@ -1403,6 +1425,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_blacklist_string' )
             $this->error_notice = $this->error_notice . __( 'Error! One or more entered domains in the user-defined domain blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+
         elseif( $field_name == 'use_user_defined_email_blacklist' )
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_blacklist_string' )
@@ -1412,6 +1435,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the entries of the user-defined recipient name blacklist.<br/>', 'leav');
+
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
             $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
 

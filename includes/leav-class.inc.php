@@ -248,11 +248,12 @@ class LastEmailAddressValidator
 	}
 
 
-	public function is_recipient_name_role_based( array &$role_name_list ) : bool
+	public function is_recipient_name_role_based( array &$role_name_list, string $error_type = '' ) : bool
 	{
 		if( in_array( $this->collapsed_recipient_name, $role_name_list ) )
 		{
-			$this->error_type = 'recipient_name_is_role_based';
+			// $this->error_type = 'recipient_name_is_role_based';
+			$this->error_type = $error_type;
 			return true;
 		}
 		return false;

@@ -86,8 +86,14 @@ class LeavPlugin
     }
 
 
+    // ----- Main functionality for validating email addresses -----------------
+    //
     public function validate_email_address( string $email_address ) : bool
     {
+        $is_domain_whitelisted = false;
+        $is_email_whitelisted = false;
+        $recipient_name_whitelisted = false;
+
         if( ! $this->leav->validate_email_address_syntax( $email_address ) )
             return $this->increment_count_of_blocked_email_addresses();
 
@@ -99,50 +105,68 @@ class LeavPlugin
         )
             return false;
 
-        // ----- allow catch-all recipient name email addresses ----------------
+        // ----- Whitelists -----------------------------------------------------
 
-        elseif(    $this->central::$OPTIONS['use_user_defined_domain_whitelist'] == 'yes'
+        if(    $this->central::$OPTIONS['use_user_defined_domain_whitelist'] == 'yes'
             && ! empty( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
             && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
           )
-            return true;
+            $is_domain_whitelisted = true;
 
-        elseif(    $this->central::$OPTIONS['use_user_defined_email_whitelist'] == 'yes'
+        if(    $this->central::$OPTIONS['use_user_defined_email_whitelist'] == 'yes'
             && ! empty( $this->central::$OPTIONS['user_defined_email_whitelist'] )
             && $this->leav->check_if_email_address_is_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_email_whitelist'] )
           )
-            return true;
+            $is_email_whitelisted = true;
 
-        elseif(    $this->central::$OPTIONS['use_user_defined_domain_blacklist'] == 'yes'
+        if(    $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] == 'yes'
+            && ! empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] )
+            && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] )
+          )
+            $recipient_name_whitelisted = true;
+
+        if(    $this->central::$OPTIONS['use_user_defined_domain_blacklist'] == 'yes'
+            && ! $is_domain_whitelisted
+            && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
             && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
           )
             return $this->increment_count_of_blocked_email_addresses();
 
-        elseif(    $this->central::$OPTIONS['use_user_defined_email_blacklist'] == 'yes'
+        if(    $this->central::$OPTIONS['use_user_defined_email_blacklist'] == 'yes'
+            && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['user_defined_email_blacklist'] )
             && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_email_blacklist'] )
           )
             return $this->increment_count_of_blocked_email_addresses();
 
-        elseif(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
-                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] )
+        if(    $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] == 'yes'
+                && ! $recipient_name_whitelisted
+                && ! $is_email_whitelisted
+                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'], 'recipient_name_is_blacklisted' )
         )
             return $this->increment_count_of_blocked_email_addresses();
 
-        elseif(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
+        if(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
+                && ! $recipient_name_whitelisted
+                && ! $is_email_whitelisted
+                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
+        )
+            return $this->increment_count_of_blocked_email_addresses();
+
+        if(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
                 && $this->leav->check_if_email_address_is_from_dea_service( $this->central::$OPTIONS['dea_domains'], $this->central::$OPTIONS['dea_mx_domains'], $this->central::$OPTIONS['dea_mx_ips'] )
         )
             return $this->increment_count_of_blocked_email_addresses();
 
         // if we already tried to collect the MX data and there is none, we can
         // just return false right away
-        elseif(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
+        if(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
             && empty( $this->leav->mx_server_ips )
         )
             return $this->increment_count_of_blocked_email_addresses();
 
-        elseif(    $this->central::$OPTIONS['simulate_email_sending'] = 'yes'
+        if(    $this->central::$OPTIONS['simulate_email_sending'] = 'yes'
                 && ! $this->leav->simulate_sending_an_email() )
             return $this->increment_count_of_blocked_email_addresses();
 
@@ -357,6 +381,7 @@ class LeavPlugin
 
         $this->leav->set_wordpress_email_domain( $this->central::$OPTIONS['wp_email_domain'] );
 
+
         // ----- Whitelists ----------------------------------------------------
         //
         // ----- Allow email adresses from user-defined domain whitelist -------
@@ -384,13 +409,13 @@ class LeavPlugin
         // ----- Allow recipient names from user-defined recipient name whitelist
         //
         if ( empty( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] ) )
-            $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] = 'no';
+            $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] = 'no';
 
         if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] ) )
-            $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] = array();
+            $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] = array();
 
         if ( empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist_string'] ) )
-            $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] = '';
+            $this->central::$OPTIONS['user_defined_recipient_name_whitelist_string'] = '';
 
 
         // ----- Blacklists ----------------------------------------------------

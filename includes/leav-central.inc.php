@@ -40,6 +40,8 @@ class LeavCentral
     'use_user_defined_email_blacklist', 
     'use_user_defined_email_whitelist', 
     'use_role_based_recipient_name_blacklist',
+    'use_user_defined_recipient_name_blacklist',
+    'use_user_defined_recipient_name_whitelist',
     'validate_cf7_email_fields', 
     'validate_formidable_forms_email_fields',
     'validate_mc4wp_email_fields',
@@ -86,15 +88,16 @@ class LeavCentral
     $this::$VALIDATION_ERROR_LIST_DEFAULTS = 
     array
     (
-          'email_address_syntax_error'         => __( 'The entered email address syntax is invalid.', 'leav'),
-          'inline_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a "+" sign. Please remove the plus sign and everything after it.', 'leav' ),
-          'email_domain_is_blacklisted'       => __( 'The entered email address\'s domain is blacklisted.', 'leav'),
           'email_address_is_blacklisted'      => __( 'The entered email address is blacklisted.', 'leav'),
-          'recipient_name_is_role_based'      => __( 'We don\'t allow role-based / generic recipient names in email addresses. Please use a personalized email address.'),
+          'email_address_syntax_error'         => __( 'The entered email address syntax is invalid.', 'leav'),
           'email_domain_has_no_mx_record'     => __( 'The entered email address\'s domain doesn\'t have any mail servers.', 'leav'),
+          'email_domain_is_blacklisted'       => __( 'The entered email address\'s domain is blacklisted.', 'leav'),
           'email_domain_on_dea_blacklist'     => __( 'We don\'t accept email addresses from disposable email address services (DEA). Please use a regular email address.', 'leav'),
-          'simulated_sending_of_email_failed' => __( 'The entered email address got rejected while trying to send an email to it.', 'leav'),
-          'general_email_validation_error'    => __( 'The entered email address is invalid.', 'leav')
+          'general_email_validation_error'    => __( 'The entered email address is invalid.', 'leav'),
+          'inline_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a "+" sign. Please remove the "+" sign and everything after it.', 'leav' ),
+          'recipient_name_is_blacklisted'      => __( 'The recipient name (the part before the "@" sign) is blacklisted. Please use another recipient name.', 'leav'),
+          'recipient_name_is_role_based'      => __( 'We don\'t allow role-based / generic recipient names in email addresses. Please use a personalized email address.'),
+          'simulated_sending_of_email_failed' => __( 'The entered email address got rejected while trying to send an email to it.', 'leav')
     );    
     $this::$VALIDATION_ERROR_LIST = $this::$VALIDATION_ERROR_LIST_DEFAULTS;
   }
