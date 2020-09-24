@@ -86,4 +86,17 @@ if ( ! function_exists('normalize_field_name_string')) {
 	}
 }
 
+if ( ! function_exists( 'read_file_into_array_ignore_newlines' ) ) 
+{
+	function read_file_into_array_ignore_newlines( string &$file, array &$lines ) : bool
+    {
+        if(    ! file_exists( $file )
+            || ! is_readable( $file )
+        )
+            return false;
+        $lines = file( $file, FILE_IGNORE_NEW_LINES );
+        return true;
+		}
+}
+
 ?>

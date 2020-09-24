@@ -244,8 +244,6 @@ class LeavSettingsPage
                             </label>
                             <?php 
 
-// ----- Test email addresses --------------------------------------------------
-
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
                                     if( ! $this->leav_plugin->validate_email_address( $_POST[ 'test_email_address' ] ) )
@@ -439,6 +437,7 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                 </p>
                 <h2></a><?php _e('Blacklists', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+
                     <tr>
                         <th scope="row"><?php _e("Reject email adresses from user-defined domain blacklist", 'leav'); ?>:</th>
                         <td>
@@ -461,6 +460,34 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                             <label>
                                 <textarea id="user_defined_domain_blacklist_string" name="user_defined_domain_blacklist_string" rows="7" cols="40" placeholder="your-blacklisted-domain-1.com
 your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined_domain_blacklist_string"] ?></textarea>
+                            </label>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th scope="row"><?php _e("Reject email adresses from free email address provider domain blacklist", 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="use_free_email_address_provider_domain_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_free_email_address_provider_domain_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="use_free_email_address_provider_domain_blacklist" type="radio" value="no" <?php if ($this->central::$OPTIONS["use_free_email_address_provider_domain_blacklist"] == "no") { echo ('checked="checked" '); } ?>/>
+                                <?php _e('No', 'leav'); ?>
+                            </label>
+                            <p class="description">
+                                <?php 
+                                    _e('The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.<br/>If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also inform us about it. This list is not editable.', 'leav');
+                                    _e('<br/><strong>Default: No</strong>', 'leav'); ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">&nbsp;</th>
+                        <td>
+                            <label>
+                                <textarea id="free_email_address_provider_domain_blacklist_string_display_only" name="free_email_address_provider_domain_blacklist_string_display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS["free_email_address_provider_domain_blacklist_string"] ?></textarea>
                             </label>
                         </td>
                     </tr>
@@ -1188,7 +1215,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                     $original_line = $line;
                     if(    in_array( $key, $this->central::$DOMAIN_LIST_FIELDS )
-                        && $this->leav->sanitize_and_validate_domain( $line ) 
+                        && $this->leav->sanitize_and_validate_domain_from_list( $line ) 
                     )
                     {
                         $value = $value . $line . "\r\n";

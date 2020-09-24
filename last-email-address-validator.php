@@ -23,6 +23,7 @@ if (!function_exists('is_plugin_active')) {
 class LeavPlugin
 {
     private $disposable_email_service_provider_list_file = '';
+    private $free_email_address_provider_list_file = '';
     private $role_based_recipient_name_file = '';
     private $leav;
     private $central;
@@ -35,6 +36,7 @@ class LeavPlugin
         $this->central = new LeavCentral();
         $this->leav = new LastEmailAddressValidator( $this->central );
         $this->disposable_email_service_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$DEA_SERVICE_FILE_RELATIVE_PATH;
+        $this->free_email_address_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE;
         $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init') );
     }
@@ -431,6 +433,30 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['user_defined_domain_blacklist_string'] ) )
             $this->central::$OPTIONS['user_defined_domain_blacklist_string'] = '';
 
+        // ----- Block email adresses from free email address provider domains -
+        //
+        //
+        if ( empty( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] ) )
+            $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] = 'no';
+
+
+        if(    empty( $this->central::$OPTIONS['free_email_address_provider_domain_list_version'] )
+            || $this->central::$OPTIONS['free_email_address_provider_domain_list_version'] != $this->central::$PLUGIN_VERSION
+            || empty($this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
+            || empty($this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] )
+        )
+            $this->read_free_email_address_provider_domain_list_file();
+
+        // ----- If the blacklist is still empty, the file isn't present or
+        // ----- something else went wrong. then we have to terminate the plugin
+
+        if(    empty( $this->central::$OPTIONS['free_email_address_provider_domain_list_version'] )
+            || empty($this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
+            || empty($this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] )
+        )
+            die('Something went wrong with the free email address provider domain list file. We are cautious and abort the execution here!');
+
+
         // ----- Block email adresses from user-defined email blacklist -------
         //
         if ( empty( $this->central::$OPTIONS['use_user_defined_email_blacklist'] ) )
@@ -466,11 +492,12 @@ class LeavPlugin
 
         // ----- If the blacklist is still empty, the file isn't present or
         // ----- something else went wrong. then we have to terminate the plugin
-        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
-            die('Something went wrong with the role-based recipient names file and the internally used array. We are careful and abort the execution here!');
+        if (    empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] )
+             || empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] )
+             || empty( $this->central::$OPTIONS['role_based_recipient_name_list_version'] )
+        )
+            die('Something went wrong with the role-based recipient names file. We are cautious and abort the execution here!');
 
-        if ( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ) )
-            die('Something went wrong with the role-based recipient names file and the display string. We are careful and abort the execution here!');
 
         // ----- Disposable Email Address Blocking -----------------------------
         //
@@ -664,15 +691,13 @@ class LeavPlugin
 
     private function read_role_based_recipient_name_file() : bool
     {
-        if(    ! file_exists( $this->role_based_recipient_name_file )
-            || ! is_readable( $this->role_based_recipient_name_file )
-        )
+        $lines = array();
+        if( ! read_file_into_array_ignore_newlines( $this->role_based_recipient_name_file, $lines) )
             return false;
 
-        $lines = file( $this->role_based_recipient_name_file, FILE_IGNORE_NEW_LINES );
         $this->central::$OPTIONS['role_based_recipient_name_list_version'] = array_shift($lines);
-
         $this->central::$OPTIONS['role_based_recipient_name_blacklist'] = array();
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] = '';
 
         foreach( $lines as $id => $line )
         {
@@ -693,16 +718,42 @@ class LeavPlugin
     }
 
 
-    private function read_dea_list_file() : bool
+    private function read_free_email_address_provider_domain_list_file() : bool
     {
-        if(    ! file_exists( $this->disposable_email_service_provider_list_file )
-            || ! is_readable( $this->disposable_email_service_provider_list_file )
-        )
+        $lines = array();
+        if( ! read_file_into_array_ignore_newlines( $this->free_email_address_provider_list_file, $lines) )
+            return false;
+        $this->central::$OPTIONS['free_email_address_provider_domain_list_version'] = array_shift($lines);
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] = array();
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = '';
+
+        foreach( $lines as $id => $line )
+        {
+            if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
+                || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
+            )
+                continue;
+            elseif( preg_match( $this->central::$DOMAIN_LIST_REGEX, $line ) )
+            {
+                array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'], $line );
+            }
+        }
+        if( empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] ) )
             return false;
 
-        $lines = file( $this->disposable_email_service_provider_list_file, FILE_IGNORE_NEW_LINES );
-        $this->central::$OPTIONS['dea_list_version'] = array_shift($lines);
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = implode( "\n", $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] );
 
+        return true;
+    }
+
+
+    private function read_dea_list_file() : bool
+    {
+        $lines = array();
+        if( ! read_file_into_array_ignore_newlines( $this->disposable_email_service_provider_list_file, $lines) )
+            return false;
+
+        $this->central::$OPTIONS['dea_list_version'] = array_shift($lines);
         $this->central::$OPTIONS['dea_domains'] = array();
         $this->central::$OPTIONS['dea_mx_domains'] = array();
         $this->central::$OPTIONS['dea_mx_ips'] = array();

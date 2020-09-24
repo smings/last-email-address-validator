@@ -251,6 +251,10 @@ ip:62.138.6.202
 domain:vistomail.com
 ip:190.97.163.93
 
+domain:xplanningzx.com
+mx:inx.xplanningzx.com
+ip:192.241.200.118
+
 domain:yopmail.com
 mx:smtp.yopmail.com
 ip:87.98.164.155
