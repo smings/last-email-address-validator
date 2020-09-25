@@ -111,7 +111,7 @@ class LeavPlugin
 
         if(    $this->central::$OPTIONS['use_user_defined_domain_whitelist'] == 'yes'
             && ! empty( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
-            && $this->leav->check_if_email_domain_is_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
+            && $this->leav->is_email_domain_on_user_defined_whitelist( $this->central::$OPTIONS['user_defined_domain_whitelist'] )
           )
             $is_domain_whitelisted = true;
 
@@ -127,11 +127,21 @@ class LeavPlugin
           )
             $recipient_name_whitelisted = true;
 
+        // ----- Blacklists -----------------------------------------------------
+
         if(    $this->central::$OPTIONS['use_user_defined_domain_blacklist'] == 'yes'
             && ! $is_domain_whitelisted
             && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
-            && $this->leav->check_if_email_domain_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
+            && $this->leav->is_email_domain_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
+          )
+            return $this->increment_count_of_blocked_email_addresses();
+
+        if(    $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] == 'yes'
+            && ! $is_domain_whitelisted
+            && ! $is_email_whitelisted
+            && ! empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
+            && $this->leav->is_email_domain_on_free_email_address_provider_domain_list( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
           )
             return $this->increment_count_of_blocked_email_addresses();
 
@@ -567,11 +577,24 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$OPTIONS['cem_email_address_syntax_error'] = '';
 
+        if ( empty( $this->central::$OPTIONS['cem_recipient_name_catch_all_email_address_error'] ) )
+            $this->central::$OPTIONS['cem_recipient_name_catch_all_email_address_error'] = '';
+
         if ( empty( $this->central::$OPTIONS['cem_email_domain_is_blacklisted'] ) )
             $this->central::$OPTIONS['cem_email_domain_is_blacklisted'] = '';
 
+        if ( empty( $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'] ) )
+            $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'] = '';
+
         if ( empty( $this->central::$OPTIONS['cem_email_address_is_blacklisted'] ) )
             $this->central::$OPTIONS['cem_email_address_is_blacklisted'] = '';
+
+        if ( empty( $this->central::$OPTIONS['cem_recipient_name_is_blacklisted'] ) )
+            $this->central::$OPTIONS['cem_recipient_name_is_blacklisted'] = '';
+
+        if ( empty( $this->central::$OPTIONS['cem_recipient_name_is_role_based'] ) )
+            $this->central::$OPTIONS['cem_recipient_name_is_role_based'] = '';
+
 
         if ( empty( $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] ) )
             $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] = '';
@@ -591,10 +614,13 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['use_main_menu'] ) )
             $this->central::$OPTIONS['use_main_menu'] = 'no';
 
-        if ( $this->central::$OPTIONS['main_menu_position'] === '' )
+        if (    empty( $this->central::$OPTIONS['main_menu_position'] )
+             || $this->central::$OPTIONS['main_menu_position'] ==''
+         )
             $this->central::$OPTIONS['main_menu_position'] = 24;
 
-        if ( $this->central::$OPTIONS['settings_menu_position'] === '' )
+        if (    empty( $this->central::$OPTIONS['settings_menu_position'] )
+             || $this->central::$OPTIONS['settings_menu_position'] == '' )
             $this->central::$OPTIONS['settings_menu_position'] = 3;
 
         // ----- Non-visible options
@@ -669,14 +695,29 @@ class LeavPlugin
         if( ! empty ( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_address_syntax_error'] = $this->central::$OPTIONS['cem_email_address_syntax_error'];
 
+        if( ! empty ( $this->central::$OPTIONS['cem_recipient_name_catch_all_email_address_error'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['recipient_name_catch_all_email_address_error'] = $this->central::$OPTIONS['cem_recipient_name_catch_all_email_address_error'];
+
         if( ! empty ( $this->central::$OPTIONS['cem_email_domain_is_blacklisted'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_domain_is_blacklisted'] = $this->central::$OPTIONS['cem_email_domain_is_blacklisted'];
+
+        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_domain_is_on_free_email_address_provider_list'] = $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'];
 
         if( ! empty ( $this->central::$OPTIONS['cem_email_address_is_blacklisted'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_address_is_blacklisted'] = $this->central::$OPTIONS['cem_email_address_is_blacklisted'];
 
+        if( ! empty ( $this->central::$OPTIONS['cem_recipient_name_is_blacklisted'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['recipient_name_is_blacklisted'] = $this->central::$OPTIONS['cem_recipient_name_is_blacklisted'];
+
+        if( ! empty ( $this->central::$OPTIONS['cem_recipient_name_is_role_based'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['recipient_name_is_role_based'] = $this->central::$OPTIONS['cem_recipient_name_is_role_based'];
+
         if( ! empty ( $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_domain_has_no_mx_record'] = $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'];
+
+        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_domain_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'];
 
         if( ! empty ( $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_domain_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'];
@@ -725,6 +766,8 @@ class LeavPlugin
             return false;
         $this->central::$OPTIONS['free_email_address_provider_domain_list_version'] = array_shift($lines);
         $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] = array();
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['domains'] = array();
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['regexps'] = array();
         $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = '';
 
         foreach( $lines as $id => $line )
@@ -732,17 +775,26 @@ class LeavPlugin
             if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
                 || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
             )
+                // we continue, since we don't want to display comments from out internal files
                 continue;
-            elseif( preg_match( $this->central::$DOMAIN_LIST_REGEX, $line ) )
+            elseif( preg_match( $this->central::$DOMAIN_REGEX, $line ) )
             {
-                array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'], $line );
+                array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['domains'], $line );
+                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] . $line . "\n";
+            }
+            elseif( preg_match( $this->central::$DOMAIN_WILDCARD_REGEX, $line ) )
+            {
+                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] . $line . "\n";
+                $pattern = '/' . preg_replace( "/\*/", '[a-z0-9-]*', $line ) . '/';
+                array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['regexps'], $pattern );
             }
         }
-        if( empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] ) )
+
+        if(     empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['domain'] ) && empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['regexps'] )
+        )
             return false;
 
-        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = implode( "\n", $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] );
-
+        $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = rtrim( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] );
         return true;
     }
 

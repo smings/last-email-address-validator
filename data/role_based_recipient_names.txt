@@ -108,7 +108,10 @@ citymanagers
 clerk
 clerks
 club
+cmo
+coffee
 comercial
+comment
 comments
 commercial
 commerciale
@@ -128,6 +131,7 @@ contracts
 coo
 coop
 corporate
+cso
 cto
 customer
 customercare
@@ -261,6 +265,8 @@ ispfeedback
 ispsupport
 it
 ithelp
+itsm
+itst
 jira
 jobs
 kunde
@@ -436,9 +442,14 @@ staff
 stay
 studio
 subscribe
+subscriber
+subscribers
+subscription
+subscriptions
 suggestions
 supervisor
 support
+survey
 surveying
 surveys
 swindon
@@ -484,6 +495,7 @@ vcxz
 vendors
 vets
 watercooler
+wir
 we
 web
 webadmin

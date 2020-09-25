@@ -20,6 +20,7 @@ class LastEmailAddressValidator
 	public  $error_type = '';
 	public  $is_email_address_from_dea_service = false;
 	public  $is_email_address_inline_catch_all = false;
+	public  $is_email_address_on_free_email_address_provider_list = false;
 	public  $is_email_address_on_user_defined_blacklist = false;
 	public  $is_email_address_on_user_defined_whitelist = false;
 	public  $is_email_address_syntax_valid = false;
@@ -91,11 +92,12 @@ class LastEmailAddressValidator
 	}
 
 
-	public function check_if_email_domain_is_on_user_defined_whitelist( array &$list ) : bool
+	public function is_email_domain_on_user_defined_whitelist( array &$list ) : bool
 	{
-		if( in_array( $this->email_domain, $list ) )
-			$this->is_email_domain_on_user_defined_whitelist = true;
-		return $this->is_email_domain_on_user_defined_whitelist;
+		if( ! $this->is_email_domain_in_list( $list ) )
+			return false;
+		$this->is_email_domain_on_user_defined_whitelist = true;
+		return true;
 	}
 
 
@@ -107,25 +109,23 @@ class LastEmailAddressValidator
 	}
 
 
-	public function check_if_email_domain_is_on_user_defined_blacklist( array &$list ) : bool
+	public function is_email_domain_on_user_defined_blacklist( array &$list ) : bool
 	{
-		// the cheap solution first, we try to find a direct match
-		if( in_array( $this->email_domain, $list ) )
-		{
-			$this->is_email_domain_on_user_defined_blacklist = true;
-			$this->error_type = 'email_domain_is_blacklisted';
-		}
-		elseif( $this->is_in_wildcard_domains( $list ) )
-		{
-			$this->is_email_domain_on_user_defined_blacklist = true;
-			$this->error_type = 'email_domain_is_blacklisted';
-		}
-
-		return $this->is_email_domain_on_user_defined_blacklist;
+		if( ! $this->is_email_domain_in_list( $list ) )
+			return false;
+		$this->is_email_domain_on_user_defined_blacklist = true;
+		$this->error_type = 'email_domain_is_blacklisted';
+		return true;
 	}
 
-
-
+	public function is_email_domain_on_free_email_address_provider_domain_list( array &$list ) : bool
+	{
+		if( ! $this->is_email_domain_in_list( $list ) )
+			return false;
+		$this->is_email_address_on_free_email_address_provider_list = true;
+		$this->error_type = 'email_domain_is_on_free_email_address_provider_list';
+		return true;
+	}
 
 	public function check_if_email_address_is_on_user_defined_blacklist( array &$list ) : bool
 	{
@@ -227,7 +227,7 @@ class LastEmailAddressValidator
 	{
 	    $domain = strtolower( $domain );
 	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_LIST_REGEX, '', $domain );
-	    return preg_match( $this->central::$DOMAIN_LIST_REGEX, $domain );
+	    return preg_match( $this->central::$DOMAIN_WILDCARD_REGEX, $domain );
 	}
 
 
@@ -269,7 +269,6 @@ class LastEmailAddressValidator
 	{
 		if( in_array( $this->collapsed_recipient_name, $role_name_list ) )
 		{
-			// $this->error_type = 'recipient_name_is_role_based';
 			$this->error_type = $error_type;
 			return true;
 		}
@@ -463,13 +462,32 @@ class LastEmailAddressValidator
 	}
 
 
+	private function is_email_domain_in_list( array &$list ) : bool
+	{
+		// the cheap solution first, we try to find a direct match
+		if( in_array( $this->email_domain, $list['domains'] ) )
+			return true;
+		else
+		{
+			foreach( $list['regexps'] as $id => $pattern )
+			{
+				if( preg_match( $pattern, $this->email_domain ) )
+					return true;
+			}	
+		}
+		return false;
+	}
+
+
 	private function is_in_wildcard_domains( array &$list ) : bool
 	{
 		foreach( $list as $id => $pattern )
 		{
-			if( strpos( $pattern, '*' ) )
+			if( ! strpos( $pattern, '*' ) )
+				return false;
+			else
 			{
-				$pattern = preg_replace( "/\*/", '[^\.]*', $pattern );
+				$pattern = '/' . preg_replace( "/\*/", '[a-z0-9-]*', $pattern ) . '/';
 				if( preg_match( $pattern, $this->email_domain ) )
 					return true;
 			}
