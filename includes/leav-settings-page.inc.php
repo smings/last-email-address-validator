@@ -41,9 +41,9 @@ class LeavSettingsPage
     {
 
 ?>
-        <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible"> 
+        <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
-                 <?php 
+                 <?php
                     _e('LEAV - Last Email Address Validator could not automatically detect your email domain .<br/>This usually happens in your local development environment. Please go to the settings and enter an email domain under which your WordPress instance is reachable.<br/>', 'leav');
                     echo '<a href="' . $this->central::$PLUGIN_SETTING_PAGE . '">';
                     _e('Settings', 'leav');
@@ -62,7 +62,9 @@ class LeavSettingsPage
     public function display_settings_page()
     {
 
-        if (   isset($_POST["leav_options_update_type"]) 
+        // even if we just load the settings page without any changes by the user, we look at
+        // the wp_email_domain and the simulation settings
+        if (   isset($_POST["leav_options_update_type"])
             || (    empty( $this->central::$OPTIONS['wp_email_domain'] )
                  && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
                )
@@ -71,8 +73,8 @@ class LeavSettingsPage
             if( isset( $_POST["leav_options_update_type"] ) )
                 $this->sanitize_submitted_settings_form_data();
 
-            if( 
-                   empty( $this->central::$OPTIONS['wp_email_domain'] ) 
+            if(
+                   empty( $this->central::$OPTIONS['wp_email_domain'] )
                 && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
             )
                 $this->warning_notice = __('Could not automatically determine the email domain for simulated sending of emails. Please enter your <a href="#email_domain">email domain below</a> or <a href="#ses">deactivate the simulated email sending</a> to permanently dismiss this warning message.', 'leav');
@@ -80,7 +82,7 @@ class LeavSettingsPage
             if( ! empty( $this->warning_notice ) )
             {
 ?>
-        <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible"> 
+        <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
                 <?php echo $this->warning_notice ?>
             </p>
@@ -94,7 +96,7 @@ class LeavSettingsPage
             if( ! empty( $this->update_notice ) && empty( $this->error_notice) )
             {
 ?>
-        <div id="setting-error-settings_updated" class="notice notice-success is-dismissible"> 
+        <div id="setting-error-settings_updated" class="notice notice-success is-dismissible">
             <p>
                 <?php echo $this->update_notice ?>
             </p>
@@ -106,9 +108,9 @@ class LeavSettingsPage
             }
             elseif( ! empty( $this->error_notice ) )
             {
-                $this->error_notice = $this->error_notice . __('Your changes have not been saved! Correct your input and click on "Save Changes" again.', 'leav');
+                $this->error_notice .= __('Your changes have not been saved! Correct your input and click on "Save Changes" again.', 'leav');
 ?>
-        <div id="setting-error-settings_updated" class="notice notice-error is-dismissible"> 
+        <div id="setting-error-settings_updated" class="notice notice-error is-dismissible">
             <p>
                 <?php echo $this->error_notice ?>
             </p>
@@ -118,12 +120,12 @@ class LeavSettingsPage
         </div>
 
 <?php
-            }                
+            }
 
         }
 ?>
         <div class="wrap">
-            <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;"><?php 
+            <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;"><?php
                 _e('<img width="75px" src="' . plugin_dir_url(__FILE__) . '../' . $this->central::$SETTINGS_PAGE_LOGO_URL . '" /> &nbsp;&nbsp;&nbsp;<strong>');
                 _e( $this->central::$PLUGIN_DISPLAY_NAME_LONG ); ?></strong></h1>
                  <h1><?php _e( 'Settings', 'leav'); ?></h1>
@@ -143,14 +145,14 @@ class LeavSettingsPage
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
-                        <a href="#allow_recipient_name_catch_all">
-                            <?php _e('Recipient Name Catch All', 'leav'); ?>
+                        <a href="#email_domain">
+                            <?php _e('Email Domain', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
-                        <a href="#email_domain">
-                            <?php _e('Email Domain', 'leav'); ?>
+                        <a href="#allow_recipient_name_catch_all">
+                            <?php _e('Recipient Name Catch All', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -168,16 +170,23 @@ class LeavSettingsPage
                     </span>
                     <span>
                         <a href="#dea">
-                            <?php _e( 'Disposable Email Address Blocking', 'leav'); ?>  
+                            <?php _e( 'Disposable Email Address Blocking', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#ses">
-                            <?php _e('Simulate Email Sending', 'leav') ?>  
+                            <?php _e('Simulate Email Sending', 'leav') ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                    </span>                    <span>
+                    </span>
+                    <span>
+                        <a href="#cad">
+                            <?php _e('Catch-all domains', 'leav') ?>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span>
                         <a href="#ping_track_backs">
                             <?php _e('Pingbacks / Trackbacks', 'leav'); ?>
                         </a>
@@ -191,7 +200,7 @@ class LeavSettingsPage
                     </span>
                     <span>
                         <a href="#custom_messages">
-                            <?php _e('Custom Messages', 'leav'); ?>
+                            <?php _e('Custom Error Messages', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -206,7 +215,7 @@ class LeavSettingsPage
                             <?php _e( 'FAQ', 'leav' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                    </span>                
+                    </span>
                     <span>
                         <a href="#feature_requests">
                             <?php _e( 'Feature Requests', 'leav' ); ?>
@@ -234,15 +243,15 @@ class LeavSettingsPage
                 <h2><?php _e('Test Email Address', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e('Enter an email address for testing validation results', 'leav'); ?>:</th>
+                        <th scope="row"><?php _e('Enter a email address for testing validation results', 'leav'); ?>:</th>
                         <td>
                             <label>
-                                <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php 
+                                <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php
                                     if( isset( $_POST[ 'test_email_address' ] ) )
-                                            echo( $_POST[ 'test_email_address' ] ) 
+                                            echo( $_POST[ 'test_email_address' ] )
                                 ?>" size="40" />
                             </label>
-                            <?php 
+                            <?php
 
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
@@ -251,7 +260,7 @@ class LeavSettingsPage
                                         echo('<p><span style="color:#a00"><strong>');
                                         _e( 'Validation result for email address ', 'leav' );
                                         echo( '</strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span style="color:#a00"><strong>');
-                                        _e( 'is negative!', 'leav' ); 
+                                        _e( 'is negative!', 'leav' );
                                         echo('</strong></span></p><p><span style="color:#a00"><strong>');
                                         _e( 'ERROR TYPE:', 'leav' );
                                         echo('</strong></span><span> "' . $this->leav_plugin->get_email_validation_error_type() );
@@ -265,7 +274,7 @@ class LeavSettingsPage
                                         echo('<p><span style="color:#89A441"><strong>');
                                         _e( 'Validation result for email address', 'leav' );
                                         echo( ' </strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span  style="color:#89A441"><strong>');
-                                        _e( 'is positive!', 'leav' ); 
+                                        _e( 'is positive!', 'leav' );
                                         echo('</strong></span></p><p><span style="color:#89A441">');
                                         _e( 'The email address got successfully validated. It is good to go!', 'leav');
                                         echo('</span></p><br/>');
@@ -278,11 +287,46 @@ class LeavSettingsPage
                         </td>
                     </tr>
                 </table>
-                <a name="allow_recipient_name_catch_all"></a>
+
+
+                <a name="email_domain"></a>
                 <p class="submit">
                     <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Test Email Address', 'leav') ?>" />
                 </p>
 
+                <h2><?php _e('Email Domain', 'leav') ?></h2>
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e("Email domain for simulating sending of emails to entered email addresses", 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="wp_email_domain" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["wp_email_domain"]); ?>" placeholder="<?php echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ); ?>" />
+                            </label>
+                            <p class="description">
+                                <?php _e('This Email domain is used for simulating the sending of an email from no-reply@<strong>', 'leav');
+                                if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
+                                    echo( $this->central::$OPTIONS["wp_email_domain"] );
+                                else
+                                    echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ) ;
+                                _e('</strong> to the entered email address, that gets validated.<br/><strong>Please make sure you enter the email domain that you use for sending emails from your WordPress instance. If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail. This is usually only the case in development or test environments. In these cases you might have to disable the <a href="#ses">simulation of sending an email</a>.<br/>Default: Automatically detected WordPress Domain.</strong>', 'leav') ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <h1>
+                    <?php
+                        _e( 'Filter Function Settings', 'leav' );
+                    ?>
+                </h1>
+                <?php
+                    _e( 'From here onwards you can configure the filter steps. You can find an overview and description of the filter steps in <a href="#faq">our FAQ</a>.', 'leav' );
+                ?>
+
+                <a name="allow_recipient_name_catch_all"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
+                </p>
 
                 <h2><?php _e('Allow Recipient Name Catch-All Syntax', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
@@ -298,35 +342,10 @@ class LeavSettingsPage
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allows to extend the recipient name of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.<br/>You can choose to allow this or block such email addresses.', 'leav'); 
+                                <?php
+                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allows to extend the recipient name of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.<br/>You can choose to allow this or block such email addresses.', 'leav');
                                 _e('<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-                <a name="email_domain"></a>
-                <p class="submit">
-                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
-                </p>
-
-                
-                <h2><?php _e('Email Domain', 'leav') ?></h2>
-                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
-                    <tr>
-                        <th scope="row"><?php _e("Email domain for simulating sending of emails to entered email addresses", 'leav'); ?>:</th>
-                        <td>
-                            <label>
-                                <input name="wp_email_domain" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["wp_email_domain"]); ?>" placeholder="<?php echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ); ?>" />
-                            </label>
-                            <p class="description">
-                                <?php _e('This Email domain is used for simulating the sending of an email from no-reply@<strong>', 'leav'); 
-                                if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
-                                    echo( $this->central::$OPTIONS["wp_email_domain"] );
-                                else
-                                    echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ) ; 
-                                _e('</strong> to the entered email address, that gets validated.<br/><strong>Please make sure you enter the email domain that you use for sending emails from your WordPress instance. If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail. This is usually only the case in development or test environments. In these cases you might have to disable the <a href="#ses">simulation of sending an email</a>.<br/>Default: Automatically detected WordPress Domain.</strong>', 'leav') ?>
                             </p>
                         </td>
                     </tr>
@@ -340,6 +359,7 @@ class LeavSettingsPage
                 <h2></a><?php _e('Whitelists', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
+                        <a name="dwl"/>
                         <th scope="row"><?php _e( 'Allow email adresses from user-defined domain whitelist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -351,11 +371,11 @@ class LeavSettingsPage
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e( 'Email addresses from the listed domains will be accepted without further domain blacklist  checks (if active).', 'leav' );
-                                    _e( '<br/>You can use "*" as a wildcard. I.e. "mail4*.com" would allow all emails from domains start with "mail4" followed by ".com". In this case "mail4.com", "mail4i.com", "mail4me.com", "mail4myparents.com" would be matched', 'leav' ); 
-                                    _e( '<br/><strong>Use one domain per line</strong>.', 'leav' ); 
-                                    _e( '<br/><strong>Default: No</strong>', 'leav'); 
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one domain per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Default: No</strong>', 'leav');
                                  ?>
                             </p>
                         </td>
@@ -372,6 +392,7 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_define
                     </tr>
 
                     <tr>
+                        <a name="ewl"/>
                         <th scope="row"><?php _e( 'Allow email adresses from user-defined email whitelist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -383,9 +404,11 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_define
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e('Email addresses on this list will be accepted without further email address blacklist checks (if active). <br/><strong>Use one email address per line</strong>.', 'leav'); 
-                                    _e('<br/><strong>Default: No</strong>', 'leav'); 
+                                <?php
+                                    _e('Email addresses on this list will be accepted without further email address blacklist checks (if active).', 'leav' );
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one email address per line</strong>.', 'leav');
+                                    _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
                         </td>
@@ -402,6 +425,7 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                     </tr>
 
                     <tr>
+                        <a name="rnwl"/>
                         <th scope="row"><?php _e( 'Allow recipient names from user-defined whitelist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -413,9 +437,11 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e('Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active). <br/><strong>Use one recipient name per line</strong>.', 'leav');
-                                    _e('<br/><strong>Default: No</strong>', 'leav'); 
+                                <?php
+                                    _e('Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).', 'leav' );
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one recipient name per line</strong>.', 'leav');
+                                    _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
                         </td>
@@ -444,6 +470,7 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
                     <tr>
+                        <a name="dbl"/>
                         <th scope="row"><?php _e( 'Reject email adresses from user-defined domain blacklist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -455,8 +482,10 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e( 'Email addresses from these domains will be rejected (if active). <br/><strong>Use one domain per line</strong>.', 'leav' ); 
+                                <?php
+                                    _e( 'Email addresses from these domains will be rejected (if active).', 'leav' );
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one domain per line</strong>.', 'leav' );
                                     _e( '<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -474,6 +503,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
 
                     <tr>
+                        <a name="feapdbl"/>
                         <th scope="row"><?php _e( 'Reject email adresses from free email address provider domain blacklist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -485,10 +515,12 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e('The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.<br/>If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also ', 'leav' ); 
+                                <?php
+                                    _e('The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.<br/>If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also ', 'leav' );
                                     echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                                     _e( 'inform us</a> about it. This list is not editable.', 'leav');
+                                    _e( '<br/>If you should wonder why we block the top-level-domains .cf, .ga, .gq, .mk and .tk, these are freely available top-level-domains. Because of this we treat them like other free email address providers. These top-level-domains are almost exclusively used by individuals and not companies.', 'leav' );
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
                                     _e('<br/><strong>Default: No</strong>', 'leav'); ?>
                             </p>
                         </td>
@@ -504,6 +536,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
 
                     <tr>
+                        <a name="ebl"/>
                         <th scope="row"><?php _e( 'Reject email adresses from user-defined email blacklist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -515,9 +548,11 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e( 'Email addresses from this list will be rejected (if active). <br/><strong>Use one email address per line</strong>.', 'leav' );
-                                    _e( '<br/><strong>Default: No</strong>', 'leav'); 
+                                <?php
+                                    _e( 'Email addresses from this list will be rejected (if active).', 'leav' );
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one email address per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
                         </td>
@@ -534,6 +569,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
 
                     <tr>
+                        <a name="rnbl"/>
                         <th scope="row"><?php _e( 'Reject email adresses with recipient names from user-defined recipient name blacklist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -545,11 +581,13 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                _e('If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "<strong>d.e.m.o.123@domain.com</strong>" gets collapsed into "<strong>demo@domain.com</strong>".<br/>This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.<br/>This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.', 'leav'); 
-                                _e('<br/><strong>Default: No</strong>', 'leav');
+                                <?php
+                                    _e('If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "<strong>d.e.m.o.123@domain.com</strong>" gets collapsed into "<strong>demo@domain.com</strong>".<br/>This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.<br/>This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.', 'leav');
+                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/><strong>Use one recipient name per line</strong>.', 'leav' );
+                                    _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
-                                
+
                             </p>
                             <label>
                                 <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea>
@@ -558,6 +596,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     </tr>
 
                     <tr>
+                        <a name="rbrnbl"/>
                         <th scope="row"><?php _e( 'Reject email adresses from role-based recipient name blacklist', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -569,8 +608,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav'); ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                _e('If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names are listed in "collapsed" form. This means that all punctuation is stripped from the original recipient name. "<strong>i.n.f.o@domain.com</strong>" gets collapsed into "<strong>info@domain.com</strong>" (which is on the list). "<strong>123-all-456-employees@domain.com</strong>" gets collapsed into "<strong>allemployees@domain.com</strong>" and so on. Essentially, we strip away all non-letter characters. This way, we automatically block role-based recipient names, that are altered with punctuation.<br/>This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.<br/>If we block too much for you, you can add recipient names to the whitelist above.<br/>If you think we missed important common role-based recipient names, <a href="mailto:leav@sming.com">please let us know</a>.', 'leav'); 
+                                <?php
+                                _e('If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names are listed in "collapsed" form. This means that all punctuation is stripped from the original recipient name. "<strong>i.n.f.o@domain.com</strong>" gets collapsed into "<strong>info@domain.com</strong>" (which is on the list). "<strong>123-all-456-employees@domain.com</strong>" gets collapsed into "<strong>allemployees@domain.com</strong>" and so on. Essentially, we strip away all non-letter characters. This way, we automatically block role-based recipient names, that are altered with punctuation.<br/>This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.<br/>If we block too much for you, you can add recipient names to the whitelist above.<br/>If you think we missed important common role-based recipient names, <a href="mailto:leav@sming.com">please let us know</a>.', 'leav');
                                 _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -603,7 +642,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e( 'If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. If you found a DEA service that doesn\'t get blocked yet, please ', 'leav' );
                                     echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                                     _e( 'contact us</a>.', 'leav' );
@@ -636,13 +675,45 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e('If activated in the last step of the validation process, LEAV tries to send out an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. Test this with a working email address. If it gets rejected, you might want to deactivate this option.<br/><strong>This option should always be active in production environments<br/>Default: Yes</strong>', 'leav'); ?>
                             </p>
                         </td>
                     </tr>
 
                 </table>
+
+
+                <a name="cad"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
+                </p>
+
+                <h2><?php _e( 'Allow catch-all domains', 'leav') ?></h2>
+
+
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e('Accept email addresses from catch-all domains', 'leav') ?>:</th>
+                        <td>
+                            <label>
+                                <input name="allow_catch_all_domains" type="radio" value="yes" <?php if ($this->central::$OPTIONS['allow_catch_all_domains'] == 'yes') { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="allow_catch_all_domains" type="radio" value="no" <?php if ($this->central::$OPTIONS['allow_catch_all_domains'] == "no") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'leav') ?>
+                            </label>
+                            <p class="description">
+                                <?php
+                                    _e('Here you can control whether to accept email addresses from domains, that allow any recipient name. These are domains that allow random recipient names like <strong>dtras657td8giuy23gtf7e3628@catch-all-domain.com</strong>.<br/>For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. I use catch-all domains myself and there is generally nothing wrong about it. You\'ll have to decide for yourself, whether this is important for you or not. Just so you know: even gmail.com allows any recipient name. If you set this option to "No", you should also reject email addresses from free email address providers above.', 'leav' );
+                                    _e( '<br/><strong>Default: Yes</strong>', 'leav'); ?>
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
 
                 <a name="ping_track_backs"></a>
                 <p class="submit">
@@ -703,12 +774,12 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             <label>
                                 <input name="validate_wp_standard_user_registration_email_addresses" type="radio" value="no" <?php if ($this->central::$OPTIONS["validate_wp_standard_user_registration_email_addresses"] == "no") { echo 'checked="checked" '; } ?>/><?php _e('No', 'leav') ?></label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e('This validates all registrants email address\'s that register through WordPress\'s standard user registration. (<a href="/wp-admin/options-general.php" target="_blank" target="_blank">Settings -> General</a>)', 'leav' );
-                                    _e( '<br/><strong>Default: Yes</strong>', 'leav') 
+                                    _e( '<br/><strong>Default: Yes</strong>', 'leav')
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( get_option("users_can_register") == 0 || $this->central::$OPTIONS["validate_wp_standard_user_registration_email_addresses"] == "no" )
                                   {
                                       _e('WordPress\'s built-in user registration is currently deactivated (<a href="/wp-admin/options-general.php" target="_blank" target="_blank">Settings -> General</a>)', 'leav');
@@ -728,9 +799,9 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e('This validates all (not logged in) commentator\'s email address\'s that comment through WordPress\'s standard comment functionality. (<a href="/wp-admin/options-discussion.php" target="_blank">Settings -> Discussion)</a>', 'leav' );
-                                    _e( '<br/><strong>Default: Yes</strong>', 'leav') 
+                                    _e( '<br/><strong>Default: Yes</strong>', 'leav')
                                 ?>
                             </p>
                         </td>
@@ -748,15 +819,15 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <input name="validate_woocommerce_email_fields" type="radio" value="no" <?php if ($this->central::$OPTIONS["validate_woocommerce_email_fields"] == "no") { echo 'checked="checked" '; } ?>/><?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e( 'Validate all WooCommerce email addresses during registration and checkout.', 'leav' ); 
+                                <?php
+                                    _e( 'Validate all WooCommerce email addresses during registration and checkout.', 'leav' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "woocommerce/woocommerce.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> '; 
+                                      echo '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a> ';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -777,14 +848,14 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e( 'Validate all Contact Form 7 email address fields.', 'leav' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'leav') ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "contact-form-7/wp-contact-form-7.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7</a> '; 
+                                      echo '<a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7</a> ';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -805,15 +876,15 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e( 'Validate all WPForms email address fields.', 'leav');
-                                    _e( '<br/><strong>Default: Yes</strong>', 'leav');                               
+                                    _e( '<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "wpforms-lite/wpforms.php" ) && ! is_plugin_active( "wpforms/wpforms.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms </a>'; 
+                                      echo '<a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms </a>';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -833,16 +904,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e( 'Validate all Ninja Forms email address fields.<br/>', 'leav' ); 
+                                <?php
+                                    _e( 'Validate all Ninja Forms email address fields.<br/>', 'leav' );
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'leav');
                                     _e( '<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "ninja-forms/ninja-forms.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/ninja-forms/" target="_blank">Ninja Forms </a>'; 
+                                      echo '<a href="https://wordpress.org/plugins/ninja-forms/" target="_blank">Ninja Forms </a>';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -862,16 +933,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e('Validate all MC4WP email address fields.<br/>', 'leav' );
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'leav');
                                     _e( '<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "mailchimp-for-wp/mailchimp-for-wp.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/mailchimp-for-wp/" target="_blank">Mailchimp for WordPress (MC4WP) </a>'; 
+                                      echo '<a href="https://wordpress.org/plugins/mailchimp-for-wp/" target="_blank">Mailchimp for WordPress (MC4WP) </a>';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -891,15 +962,15 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
+                                <?php
                                     _e('Validate all Formidable Forms email address fields.', 'leav');
-                                    _e( '<br/><strong>Default: Yes</strong>', 'leav') 
+                                    _e( '<br/><strong>Default: Yes</strong>', 'leav')
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "formidable/formidable.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/formidable/" target="_blank">Formidable Forms</a> '; 
+                                      echo '<a href="https://wordpress.org/plugins/formidable/" target="_blank">Formidable Forms</a> ';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -919,16 +990,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php _e('No', 'leav') ?>
                             </label>
                             <p class="description">
-                                <?php 
-                                    _e('Validate all Kali Forms email address fields.<br/>', 'leav' ); 
+                                <?php
+                                    _e('Validate all Kali Forms email address fields.<br/>', 'leav' );
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'leav' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'leav');
                                 ?>
                             </p>
-                            <?php endif; 
+                            <?php endif;
                                   if( ! is_plugin_active( "kali-forms/kali-forms.php" ) )
                                   {
-                                      echo '<a href="https://wordpress.org/plugins/kali-forms/" target="_blank">Kali Forms</a> '; 
+                                      echo '<a href="https://wordpress.org/plugins/kali-forms/" target="_blank">Kali Forms</a> ';
                                       _e( 'not found in list of active plugins', 'leav');
                                   }
                             ?>
@@ -942,7 +1013,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
                 </p>
 
-                <h1><?php _e('Custom Messages', 'leav') ?></h1>
+                <h1><?php _e('Custom Error Messages', 'leav') ?></h1>
                 <?php _e('If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. The placeholder texts are the currently used error messages. Overwrite them to use your custom validation error messages. Delete the field\'s contents for using the defaults again.', 'leav') ?>
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
@@ -1038,6 +1109,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     </tr>
 
                     <tr>
+                        <th scope="row"><?php _e('Catch-all domains not allowed error message', 'leav'); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="cem_email_from_catch_all_domain" type="text" size="80" value="<?php echo ( $this->central::$OPTIONS["cem_email_from_catch_all_domain"]); ?>" placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_from_catch_all_domain'] ); ?>"/>
+                            </label>
+                        </td>
+                    </tr>
+
+
+                    <tr>
                         <th scope="row"><?php _e('General email validation error', 'leav'); ?>:</th>
                         <td>
                             <label>
@@ -1101,84 +1182,221 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                 </p>
 
             </form>
-            <?php 
-                _e( '<h1>FAQ • Frequently Asked Questions</h1>', 'leav' );
-                _e( '<h2>How exactly does LEAV validate email addresses?</h2>', 'leav' );
-                _e( 'LEAV - Last Email Address Validator <i>by ', 'leav' ); 
+            <h1><?php _e( 'FAQ • Frequently Asked Questions', 'leav' ); ?></h1>
+            <h2><?php _e( 'How exactly does LEAV validate email addresses?', 'leav' ); ?></h2>
+            <?php
+                echo( $this->central::$PLUGIN_DISPLAY_NAME_FULL . '<i>by <a href="'.  $this->central::$PLUGIN_WEBSITE . '" target="_blank">smings</a></i> ' );
+                _e('validates email addresses of the supported WordPress functions and plugins in the following multi-step process', 'leav');
             ?>
-                  <a href="<?php echo( $this->central::$PLUGIN_WEBSITE );?>" target="_blank">smings</a></i> <?php _e('validates email addresses of the supported WordPress functions and plugins in the following multi-step process', 'leav'); ?>
 
 
             <ol>
                 <li>
                     <strong>
-                        <?php _e( 'Email Address Syntax Validation (always active)', 'leav'); ?>    
+                        <?php _e( 'Email Address Syntax Validation (always active)', 'leav'); ?>
                     </strong>
                     <br/>
                     <?php _e( 'Checks if the email address is syntactically correct. This acts as a backup check for the plugin\'s checks. Some plugins only have a frontend based email syntax check. This is a regular expression-based server-side check. We wouldn\'t even need it, but use it for performance reasons to filter out wrong emails without further checking', 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Domain Whitelist (optional)', 'leav'); ?>    
+                        <?php
+                            _e( 'Allow recipient name catch-all syntax (optional)', 'leav');
+                        ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] . '"' );
+                            echo( ' • <a href="#allow_recipient_name_catch_all">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
-                    <?php 
-                        _e( 'Filter against user-defined email domain whitelist. <br/>If you need to override false positives, you can use this option. We kindly ask you to ', 'leav' );
+                    <?php
+                        _e( 'If set to "No" this filters out email addresses with a recipient name catch-all syntax. For more information what a recipient name catch-all syntax is, please check our FAQ entry below.', 'leav' );
+                    ?>
+                </li>
+                <li>
+                    <strong>
+                        <?php _e( 'Use Domain Whitelist (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] . '"' );
+                            echo( ' • <a href="#dwl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php
+                        _e( 'Filter against user-defined email domain whitelist. <br/>This is useful for overriding potential false positives from extensive domain blacklist rules. Whenever an email address gets matches by this whitelist, the domain blacklist checks get skipped.<br/>We kindly ask you to ', 'leav' );
                         echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                         _e('inform us</a> about wrongfully blacklisted domains, so that we can correct any errors asap.' , 'leav' ); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Email Whitelist (optional)', 'leav'); ?>    
+                        <?php _e( 'Use Email Address Whitelist (optional)', 'leav'); ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_email_whitelist'] . '"' );
+                            echo( ' • <a href="#ewl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
                     <?php _e( 'Filter against user-defined email whitelist (if activated)<br/>If you need to override specific email addresses that would otherwise get filtered out.' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Domain Blacklist (optional)', 'leav'); ?>    
+                        <?php _e( 'Use Recipient Name Whitelist (optional)', 'leav'); ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] . '"' );
+                            echo( ' • <a href="#rnwl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php _e( 'Filter against user-defined recipient name whitelist (if activated)<br/>If you need to override specific email addresses that would otherwise get filtered out by either the user-defined recipient name blacklist or the role-based recipient name blacklist. If a recipient name gets matched by this whitelist, the recipient name blacklist checks get skipped.' , 'leav'); ?>
+                </li>
+                <li>
+                    <strong>
+                        <?php _e( 'Use Domain Blacklist (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] . '"' );
+                            echo( ' • <a href="#dbl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
                     <?php _e( 'Filter against user-defined email domain blacklist (if activated)' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Email Blacklist (optional)', 'leav'); ?>    
+                        <?php _e( 'Use Built-In Free Email Address Provider Domain Blacklist (optional)', 'leav'); ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] . '"' );
+                            echo( ' • <a href="#feapdbl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php _e( 'Filter against the built-in free email address provider domain blacklist (if activated). This list gets updated with new plugin releases.' , 'leav'); ?>
+                </li>
+                <li>
+                    <strong>
+                        <?php _e( 'Use Email Address Blacklist (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_email_blacklist'] . '"' );
+                            echo( ' • <a href="#ebl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
                     <?php _e( 'Filter against user-defined email blacklist' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'DNS MX Server Lookup (always active)', 'leav'); ?>    
+                        <?php _e( 'Use Recipient Name Blacklist (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] . '"' );
+                            echo( ' • <a href="#rnbl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php _e( 'Filter against user-defined recipient name blacklist.' , 'leav'); ?>
+                </li>
+                <li>
+                    <strong>
+                        <?php _e( 'Use Built-In Role-Based Recipient Name Blacklist (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] . '"' );
+                            echo( ' • <a href="#rbrnbl">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php _e( 'Filter against user-defined recipient name blacklist.' , 'leav'); ?>
+                </li>
+
+                <li>
+                    <strong>
+                        <?php _e( 'DNS MX Server Lookup (always active)', 'leav'); ?>
                     </strong>
                     <br/>
                     <?php _e( 'Check if the email address\'s domain has a DNS entry with MX records (always)', 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Disposable Email Address (DEA) Service Blacklist (optional)', 'leav'); ?>    
+                        <?php _e( 'Use Disposable Email Address (DEA) Service Blacklist (optional)', 'leav'); ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['block_disposable_email_address_services'] . '"' );
+                            echo( ' • <a href="#dea">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
-                    <?php _e('Filter against LEAV\'s built-in extensive blacklist of disposable email services', 'leav'); ?>
+                    <?php _e('Filter against the built-in extensive blacklist of disposable email services. This list gets updated with new plugin releases.', 'leav'); ?>
                 </li>
                 <li>
                     <strong>
-                        <?php _e( 'Simulate Email Sending (optional)', 'leav'); ?>    
+                        <?php _e( 'Simulate Email Sending (optional)', 'leav'); ?>
                     </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['simulate_email_sending'] . '"' );
+                            echo( ' • <a href="#ses">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
                     <br/>
-                    <?php 
-                        _e('Connects to one of the MX servers and simulates the sending of an email from <strong>no-reply@', 'leav'); 
+                    <?php
+                        _e('Connects to one of the MX servers and simulates the sending of an email from <strong>no-reply@', 'leav');
                         if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
                             echo( $this->central::$OPTIONS["wp_email_domain"] );
                         else
-                            echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ) ; 
-                        _e('</strong> to the entered email address', 'leav' ); ?>
-                        <a name="feature_requests"></a>
+                            echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ) ;
+                        _e('</strong> to the entered email address. No actual email will be sent out. This is just LEAV asking the receiving server, if it would accept the email address. Then the dialog with the MX server gets terminated without any email being sent. It\'s essentially like looking at a house\'s mailboxes and checking if there is a mailbox with a specific name on it without dropping in an actual letter.', 'leav' ); ?>
                 </li>
-            </ol>            
+                <li>
+                    <strong>
+                        <?php _e( 'Allow Email Addresses from Catch-All Domains (optional)', 'leav'); ?>
+                    </strong>
+                        <?php
+                            _e( ' • Current setting is "', 'leav' );
+                            echo( $this->central::$OPTIONS['allow_catch_all_domains'] . '"' );
+                            echo( ' • <a href="#cad">' );
+                            _e( 'Change settings</a>', 'leav' );
+                        ?>
+                    <br/>
+                    <?php _e('If set to "No", this filters out all email address that originate from domains that accept emails for ANY recipient name. For more information what a recipient name catch-all syntax is, please check our FAQ entry below.', 'leav'); ?>
+                </li>
 
-            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="', 'leav' ); 
+            </ol>
+            <a name="faq-wildcards"></a>
+            <br/>
+            <h2><?php _e( 'Can I use wildcards for the whitelists/blacklists?', 'leav' ); ?></h2>
+            <?php _e( 'The short answer is yes and here is how it works', 'leav' ); ?>
+            <h3><?php
+                    _e( '<strong>Wildcard syntax for domains:</strong>', 'leav' ); ?></h3>
+                <?php
+                    _e( 'You can use asterixes "<strong>*</strong>" as wildcards in domain names. It stands for zero up to any amount of characters. I.e. "<strong>mail4*.com</strong>" matches all emails from domains starting with <br/>"<strong>mail4</strong>" followed by "<strong>.com</strong>". In this case "<strong>mail4.com</strong>", "<strong>mail4i.com</strong>", "<strong>mail4me.com</strong>", "<strong>mail4myparents.com</strong>" would all be matched.<br/>You can use "*" for entire subdomains and top-level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).<br/>"<strong>*.mail.*</strong>" matches "<strong>a.mail.tk</strong>" or "<strong>this-is-a-subdomain.mail.com</strong>".<br/>If you want to block entire top-level-domains, you\'ll have to use "<strong>**</strong>". I.e. "<strong>**.tk</strong>" will match all domains ending with "<strong>.tk</strong>".<br/>You can see further examples on our list of free email address provider domains in the blacklists section.', 'leav' );
+                    _e( '<br/>Be careful to not over do any kind of matching with wildcards.<br/>We urge you to extensively test whether email addresses would get matched or not with the test option at the very top of the settings page.', 'leav' );
+                ?>
+            <h3><?php
+                    _e( '<strong>Wildcard syntax for recipient names:</strong>', 'leav' ); ?></h3>
+                <?php
+                    _e( 'You can use asterixes "<strong>*</strong>" as wildcards in recipient names as well. It stands for zero up to any amount of characters. I.e. "<strong>*spammer*</strong>" matches all recipient names containing the word "<strong>spammer</strong>". It matches "<strong>all-spammers-go</strong>" or just "<strong>spammer</strong>". <strong>mailfrom*</strong>" matches all recipient names starting with "<strong>mailfrom</strong>". I.e. "<strong>mailfrom</strong>", "<strong>mailfroma</strong>", "<strong>mailfromme</strong>", etc. You can place the asterix anywhere. I.e. "<strong>*spam*from*</strong>" matches "<strong>spamfrom</strong>" as well as "<strong>all-spam-from-me</strong>".<br/>You can see plenty examples on our list of role-based recipient names in the blacklists section. These are mostly trailing "*", so that we don\'t match too many recipient names.', 'leav' );
+                    _e( '<br/>Be careful to not over do any kind of matching with wildcards.<br/>We urge you to extensively test whether email addresses would get matched or not with the test option at the very top of the settings page.', 'leav' );
+                ?>
+
+            <a name="feature_requests"></a>
+            <br/><br/><br/>
+            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="', 'leav' );
                 echo ( $this->central::$PLUGIN_WEBSITE );
                 _e( '" target="_blank">smings</a> (website will be online soon) are always happy to make<br/> LEAV - Last Email Address Validator better than it is to help you to protect your non-renewable lifetime. <br/>Just shoot us an email to ', 'leav' );
                 echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' . $this->central::$PLUGIN_CONTACT_EMAIL . '</a>' );
@@ -1214,7 +1432,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
     {
         $this->update_notice = '';
         $this->error_notice = '';
-        
+
         foreach ($_POST as $key => $value)
         {
 
@@ -1230,15 +1448,16 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
             // we only look at defined keys who's values have changed
             if(   ! array_key_exists( $key, $this->central::$OPTIONS )
-                || $this->central::$OPTIONS[$key] == $value 
+                || $this->central::$OPTIONS[$key] == $value
             )
                 continue;
 
-            write_log("FORM VALUE    '" . $value . "'");
-            write_log("OPTIONS VALUE '" . $this->central::$OPTIONS[$key] . "'");
+            // write_log("FORM VALUE    '" . $value . "'");
+            // write_log("OPTIONS VALUE '" . $this->central::$OPTIONS[$key] . "'");
+
             // First we validate all radio button fields
-            if(    in_array( $key, $this->central::$RADIO_BUTTON_FIELDS ) 
-                && $this->validate_radio_button_form_fields($key, $value) 
+            if(    in_array( $key, $this->central::$RADIO_BUTTON_FIELDS )
+                && $this->validate_radio_button_form_fields($key, $value)
             )
                 continue;
 
@@ -1256,14 +1475,14 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
             elseif( $key == 'wp_email_domain' )
             {
-                if(    empty( $value ) 
+                if(    empty( $value )
                     && $this->central::$OPTIONS['simulate_email_sending'] == 'no'
                 )
                 {
                     $this->central::$OPTIONS[$key] = $value;
                     $this->add_update_notification_for_form_field($key);
                 }
-                elseif(    empty( $value ) 
+                elseif(    empty( $value )
                         && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
                 )
                     $this->add_error_notification_for_form_field($key);
@@ -1283,13 +1502,13 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                 if( preg_match( $this->central::$INTEGER_GEZ_REGEX, $value ) )
                 {
                     $this->central::$OPTIONS[$key] = $value;
-                    $this->add_update_notification_for_form_field($key);   
+                    $this->add_update_notification_for_form_field($key);
                 }
                 else
                     $this->add_error_notification_for_form_field($key);
             }
 
-            elseif(    in_array( $key, $this->central::$DOMAIN_LIST_FIELDS ) 
+            elseif(    in_array( $key, $this->central::$DOMAIN_LIST_FIELDS )
                     || in_array( $key, $this->central::$EMAIL_LIST_FIELDS  )
                     || in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS )
             )
@@ -1303,23 +1522,25 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     $sanitized_internal_values['domains'] = array();
                     $sanitized_internal_values['regexps'] = array();
                 }
-
+                elseif( in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS ) )
+                {
+                    $sanitized_internal_values['recipient_names'] = array();
+                    $sanitized_internal_values['regexps'] = array();
+                }
                 foreach( $lines as $id => $line )
                 {
-                    if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
-                        || preg_match( $this->central::$EMPTY_LINE_REGEX, $line )
-                    )
+                    if( $this->leav->is_comment_line( $line ) )
                     {
-                        $value = $value . $line . "\n";
+                        $value .= $line . "\n";
                         continue;
                     }
 
                     $original_line = $line;
                     if(    in_array( $key, $this->central::$DOMAIN_LIST_FIELDS )
-                        && $this->leav->sanitize_and_validate_domain_from_list( $line ) 
+                        && $this->leav->sanitize_and_validate_domain_internally( $line )
                     )
                     {
-                        $value = $value . $line . "\n";
+                        $value .= $line . "\n";
                         if( preg_match ( $this->central::$DOMAIN_REGEX, $line ) )
                             array_push( $sanitized_internal_values['domains'], $line );
                         else
@@ -1328,27 +1549,32 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             array_push( $sanitized_internal_values['regexps'], $pattern );
                         }
                     }
-                    
+
                     elseif( in_array( $key, $this->central::$EMAIL_LIST_FIELDS )
-                        && $this->leav->sanitize_and_validate_email_address( $line ) 
+                        && $this->leav->sanitize_and_validate_email_address( $line )
                     )
                     {
-                        $value = $value . $line . "\n";
+                        $value .= $line . "\n";
                         array_push( $sanitized_internal_values, $line );
                     }
 
+                    // ----- now we have to check the recipient names
+                    //
                     elseif(    in_array( $key, $this->central::$RECIPIENT_NAME_FIELDS )
-                            && preg_match( "/^[a-z]+$/", $line ) 
+                            && $this->leav->sanitize_and_validate_recipient_name_internally( $line )
                     )
                     {
-                        $value = $value . $line . "\n";
-                        array_push( $sanitized_internal_values, $line );
+                        $value .= $line . "\n";
+                        if( $this->leav->line_contains_wildcard( $line ) )
+                            array_push( $sanitized_internal_values['regexps'], $line );
+                        else
+                            array_push( $sanitized_internal_values['recipient_names'], $line );
                     }
 
                     else
                     {
                         if( ! $has_errors )
-                        {    
+                        {
                             $this->add_error_notification_for_form_field($key);
                             $has_errors = true;
                         }
@@ -1361,17 +1587,17 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 $corrected_line = array_shift( explode( '+', $corrected_line ) );
                             $corrected_line = preg_replace( "/[^a-z]/", '',  $corrected_line );
                             $line = __('# Next line\'s value was automatically corrected/normalized', 'leav') . "\n" . "# " . $original_line . "\n" . $corrected_line;
-                            $value = $value . $line . "\n";
+                            $value .= $line . "\n";
                             array_push( $sanitized_internal_values, $corrected_line );
                         }
                         // ----- here we just comment out the errors for domains and email addresses
                         else
                         {
                             $line = __('# Next line\'s value is invalid', 'leav') . "\n". "# " . $original_line;
-                            $value = $value . $line . "\n";
+                            $value .= $line . "\n";
                         }
                     }
-                    
+
                 }
 
                 // cutting of a trainling whitespaces
@@ -1413,111 +1639,116 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         // ----- Allow recipient name catch-all syntax --------------------------------------------
         //
             if( $field_name == 'allow_recipient_name_catch_all_email_addresses')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'allowing recipient name catch-all syntax.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'allowing recipient name catch-all syntax.<br/>', 'leav');
 
         // ----- Email Domain --------------------------------------------------
         //
         elseif( $field_name == 'wp_email_domain')
-            $this->update_notice = $this->update_notice . __( 'Updated the email domain for simulating the sending of emails.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the email domain for simulating the sending of emails.<br/>', 'leav');
 
         // ----- Whitelists ----------------------------------------------------
-        // 
+        //
         elseif( $field_name == 'use_user_defined_domain_whitelist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined domain whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined domain whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_whitelist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the user-defined domain whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the user-defined domain whitelist.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_email_whitelist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined email address whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined email address whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_whitelist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the user-defined email address whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the user-defined email address whitelist.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_recipient_name_whitelist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_whitelist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the user-defined recipient name whitelist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the user-defined recipient name whitelist.<br/>', 'leav');
         // ----- Blacklists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_blacklist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined domain blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined domain blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_blacklist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the user-defined domain blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the user-defined domain blacklist.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_email_blacklist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined email address blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined email address blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_blacklist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the user-defined email address blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the user-defined email address blacklist.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_recipient_name_blacklist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
-            $this->update_notice = $this->update_notice . __( 'Updated the entries of the user-defined recipient name blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the entries of the user-defined recipient name blacklist.<br/>', 'leav');
 
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
 
         // ----- Disposable Email Address Blocking -----------------------------
         //
         elseif( $field_name == 'block_disposable_email_address_services')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'blocking email addresses from disposable email address services.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'blocking email addresses from disposable email address services.<br/>', 'leav');
 
         // ----- Simulate Email Sending ----------------------------------------
         //
         elseif( $field_name == 'simulate_email_sending')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'simulating email sending.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'simulating email sending.<br/>', 'leav');
+
+        // ----- Catch-all domain ----------------------------------------
+        //
+        elseif( $field_name == 'allow_catch_all_domains')
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'allowing catch-all domains.<br/>', 'leav');
 
         // ----- Pingbacks / Trackbacks ----------------------------------------
         //
         elseif( $field_name == 'accept_pingbacks')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'accepting pingbacks.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'accepting pingbacks.<br/>', 'leav');
         elseif( $field_name == 'accept_trackbacks')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'accepting trackbacks.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'accepting trackbacks.<br/>', 'leav');
 
         // ------ Validation of functions / plugins switches ---
         //
         elseif( $field_name == 'validate_wp_standard_user_registration_email_addresses')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WordPress\'s user registration email addresses.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WordPress\'s user registration email addresses.<br/>', 'leav');
         elseif( $field_name == 'validate_wp_comment_user_email_addresses')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WordPress\'s commentator email addresses.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WordPress\'s commentator email addresses.<br/>', 'leav');
         elseif( $field_name == 'validate_woocommerce_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WooCommerce email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WooCommerce email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_cf7_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Contact Form 7 email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Contact Form 7 email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_wpforms_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WPforms email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating WPforms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_ninja_forms_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Ninja Forms email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Ninja Forms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_mc4wp_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_formidable_forms_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Formidable Forms email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Formidable Forms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_kali_forms_email_fields')
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Kali Forms email fields.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the settings for', 'leav' ) . ' ' .  __( 'validating Kali Forms email fields.<br/>', 'leav');
 
 
         // ------ Custom error message override fields -------------------------
         //
         elseif( $field_name == 'cem_email_address_syntax_error')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'email address syntax errors.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'email address syntax errors.<br/>', 'leav');
         elseif( $field_name == 'cem_email_domain_is_blacklisted')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'blacklisted email domains.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'blacklisted email domains.<br/>', 'leav');
         elseif( $field_name == 'cem_email_address_is_blacklisted')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'leav');
         elseif( $field_name == 'cem_email_domain_has_no_mx_record')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'email domains without MX records.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'email domains without MX records.<br/>', 'leav');
         elseif( $field_name == 'cem_email_domain_on_dea_blacklist')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'DEA email addresses.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'DEA email addresses.<br/>', 'leav');
         elseif( $field_name == 'cem_simulated_sending_of_email_failed')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'leav');
         elseif( $field_name == 'cem_general_email_validation_error')
-            $this->update_notice = $this->update_notice . __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'general email validation errors.<br/>', 'leav');
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'leav' ) . ' ' . __( 'general email validation errors.<br/>', 'leav');
 
         // ------ Main Menu Use & Positions -------------------
         //
         elseif( in_array( $field_name, array( 'use_main_menu', 'main_menu_position', 'settings_menu_position' ) ) )
-            $this->update_notice = $this->update_notice . __( 'Changed the display location of the LEAV menu item. You have to hard-reload  this page before the change takes effect.<br/>', 'leav');
+            $this->update_notice .= __( 'Changed the display location of the LEAV menu item. You have to hard-reload  this page before the change takes effect.<br/>', 'leav');
         else
-            $this->update_notice = $this->update_notice . __( 'Updated the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
+            $this->update_notice .= __( 'Updated the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
 
         return true;
     }
@@ -1529,87 +1760,92 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         // ----- Allow recipient name catch-all syntax --------------------------------------------
         //
            if( $field_name == 'allow_recipient_name_catch_all_email_addresses' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'allowing recipient name catch-all syntac.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'allowing recipient name catch-all syntac.<br/>', 'leav');
 
         // ----- Email Domain --------------------------------------------------
         //
         elseif( $field_name == 'wp_email_domain' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the email domain for simulating the sending of emails. The email domain can\'t be empty while simulated email sending is activate.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the email domain for simulating the sending of emails. The email domain can\'t be empty while simulated email sending is activate.<br/>', 'leav');
 
         // ----- Whitelists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_whitelist' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain whitelist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_whitelist_string' )
-            $this->error_notice = $this->error_notice . __( 'Error! One or more entered domains in the user-defined domain whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! One or more entered domains in the user-defined domain whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_email_whitelist' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address whitelist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_whitelist_string' )
-            $this->error_notice = $this->error_notice . __( 'Error! One or more entered email addresses in the user-defined email address whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! One or more entered email addresses in the user-defined email address whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_recipient_name_whitelist' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined recipient name whitelist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_whitelist_string' )
-            $this->error_notice = $this->error_notice . __( 'Error! One or more entered recipient names in the user-defined recipient name whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! One or more entered recipient names in the user-defined recipient name whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         // ----- Blacklists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_blacklist' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain blacklist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined domain blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_domain_blacklist_string' )
-            $this->error_notice = $this->error_notice . __( 'Error! One or more entered domains in the user-defined domain blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! One or more entered domains in the user-defined domain blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_email_blacklist' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address blacklist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'using the user-defined email address blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_email_blacklist_string' )
-            $this->error_notice = $this->error_notice . __( 'Error! One or more entered email addresses in the user-defined email address blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! One or more entered email addresses in the user-defined email address blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'leav');
 
         elseif( $field_name == 'use_user_defined_recipient_name_blacklist')
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'leav');
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the entries of the user-defined recipient name blacklist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the entries of the user-defined recipient name blacklist.<br/>', 'leav');
 
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'leav');
 
         // ----- Disposable Email Address Blocking -----------------------------
         //
         elseif( $field_name == 'block_disposable_email_address_services' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'blocking email addresses from disposable email address services.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'blocking email addresses from disposable email address services.<br/>', 'leav');
 
         // ----- Simulate Email Sending ----------------------------------------
         //
         elseif( $field_name == 'simulate_email_sending' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'simulating email sending.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'simulating email sending.<br/>', 'leav');
+
+        // ----- Catch-all domain ----------------------------------------
+        //
+        elseif( $field_name == 'allow_catch_all_domains' )
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'allowing catch-all domains.<br/>', 'leav');
 
         // ----- Pingbacks / Trackbacks ----------------------------------------
         //
         elseif( $field_name == 'accept_pingbacks' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'accepting pingbacks.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'accepting pingbacks.<br/>', 'leav');
         elseif( $field_name == 'accept_trackbacks' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'accepting trackbacks.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'accepting trackbacks.<br/>', 'leav');
 
         // ------ Validation of functions / plugins switches ---
         //
         elseif( $field_name == 'validate_wp_standard_user_registration_email_addresses' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WordPress\'s user registration email addresses.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WordPress\'s user registration email addresses.<br/>', 'leav');
         elseif( $field_name == 'validate_wp_comment_user_email_addresses' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WordPress\'s commentator email addresses.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WordPress\'s commentator email addresses.<br/>', 'leav');
         elseif( $field_name == 'validate_woocommerce_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WooCommerce email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WooCommerce email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_cf7_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Contact Form 7 email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Contact Form 7 email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_wpforms_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WPforms email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating WPforms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_ninja_forms_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Ninja Forms email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Ninja Forms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_mc4wp_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_formidable_forms_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Formidable Forms email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Formidable Forms email fields.<br/>', 'leav');
         elseif( $field_name == 'validate_kali_forms_email_fields' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Kali Forms email fields.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'validating Kali Forms email fields.<br/>', 'leav');
 
         // ------ Custom error message override fields -------------------------
         //
@@ -1619,13 +1855,13 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         // ------ Main Menu Use & Positions -------------------
         //
         elseif( $field_name == 'use_main_menu' )
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'the display location of the LEAV menu item (main menu or settings menu.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'the display location of the LEAV menu item (main menu or settings menu.<br/>', 'leav');
 
         elseif( in_array( $field_name, array( 'main_menu_position', 'settings_menu_position' ) ) )
-            $this->error_notice = $this->error_notice . __( 'Error! The values for the LEAV menu position within the main menu or the settings menu have to be numbers in between 0-999.<br/>', 'leav');
+            $this->error_notice .= __( 'Error! The values for the LEAV menu position within the main menu or the settings menu have to be numbers in between 0-999.<br/>', 'leav');
 
         else
-            $this->error_notice = $this->error_notice . __( 'Error while trying to update the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
+            $this->error_notice .= __( 'Error while trying to update the settings for field <strong>', 'leav') . $field_name . '</strong><br/>';
     }
 
 }

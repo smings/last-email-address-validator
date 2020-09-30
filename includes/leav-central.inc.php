@@ -8,8 +8,9 @@ class LeavCentral
   public static $DEBUG = false;
   public static $DOMAIN_LIST_FIELDS = array( 'user_defined_domain_whitelist_string', 'user_defined_domain_blacklist_string' );
   public static $DOMAIN_REGEX = "/^[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\.[a-z]{2,18}$/i";
-  public static $DOMAIN_WILDCARD_REGEX = "/^[0-9a-z\*]([-\._]*[0-9a-z\*])*[0-9a-z\*]\.([a-z]{1,18}|\*)$/i";
-  public static $EMAIL_ADDRESS_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\._]*[0-9a-z])*[0-9a-z]\.[a-z]{2,18}$/i";
+  public static $DOMAIN_INTERNAL_REGEX = "/^[0-9a-z\*]([-\._]*[0-9a-z\*])*[0-9a-z\*]\.([a-z]{1,18}|\*)$/i";
+  public static $EMAIL_ADDRESS_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*@[0-9a-z]([-\.]*[0-9a-z])*[0-9a-z]\.[a-z]{2,18}$/i";
+  public static $EMAIL_ADDRESS_WILDCARD_REGEX = "/^[0-9a-z_\?\*]([-_\.]*[0-9a-z\?\*])*\+?[0-9a-z\?\*]*([-_\.]*[0-9a-z\?\*])*@[0-9a-z\*]([-\._]*[0-9a-z\*])*[0-9a-z\*]\.([a-z]{1,18}|\*)$/i";
   public static $EMAIL_FIELD_NAME_REGEX = "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i";
   public static $EMAIL_LIST_FIELDS = array( 'user_defined_email_whitelist_string', 'user_defined_email_blacklist_string' );
   public static $EMPTY_LINE_REGEX = "/^\s*[\r\n]+$/";
@@ -36,6 +37,7 @@ class LeavCentral
   public static $PLUGIN_VERSION = '1.4.99';
   public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
+    'allow_catch_all_domains',
     'accept_pingbacks', 
     'accept_trackbacks',
     'allow_recipient_name_catch_all_email_addresses', 
@@ -62,11 +64,16 @@ class LeavCentral
   public static $RADIO_BUTTON_VALUES = array( 'yes', 'no' );
   public static $RECIPIENT_NAME_CATCH_ALL_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+[^@]+@/";
   public static $RECIPIENT_NAME_FIELDS = array( 'user_defined_recipient_name_whitelist_string', 'user_defined_recipient_name_blacklist_string' );
-  public static $RECIPIENT_NAME_REGEX = "/^[0-9a-z_]([-_\.]*[0-9a-z])*\+?[0-9a-z]*([-_\.]*[0-9a-z])*$/i";
+  public static $RECIPIENT_NAME_REGEX = "/^[0-9a-z_\*]([-_\.]*[0-9a-z\*])*\+?[0-9a-z\*]*([-_\.]*[0-9a-z\*])*$/i";
+  public static $RECIPIENT_NAME_INTERNAL_REGEX = "/^[a-z\*]*$/i";
+  public static $RECIPIENT_NAME_BLACKLIST_WILDCARD_REPLACEMENT = "[a-z]*";
+  public static $RECIPIENT_NAME_WHITELIST_WILDCARD_REPLACEMENT = ".*";
   public static $ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH = 'data/role_based_recipient_names.txt';
-  public static $SANITIZE_DOMAIN_LIST_REGEX = "/[^0-9a-zA-Z-\.\*]/";
+  public static $SANITIZE_DOMAIN_INTERNAL_REGEX = "/[^0-9a-zA-Z-\.\*]/";
   public static $SANITIZE_DOMAIN_REGEX = "/[^0-9a-zA-Z-\.]/";
   public static $SANITIZE_IP_REGEX = "/[^0-9\.]/";
+  public static $SANITIZE_RECIPIENT_NAME_INTERNAL_REGEX = "/[^a-z\*]/";
+  public static $SANITIZE_RECIPIENT_NAME_REGEX = "/[^a-z]/";
   public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
   public static $TEXT_FIELDS = array(
     'cem_email_address_is_blacklisted',
@@ -74,12 +81,13 @@ class LeavCentral
     'cem_email_domain_has_no_mx_record',
     'cem_email_domain_is_blacklisted',
     'cem_email_domain_on_dea_blacklist',
+    'cem_email_from_catch_all_domain',
     'cem_general_email_validation_error',
     'cem_simulated_sending_of_email_failed',
   );
   public static $VALIDATION_ERROR_LIST = array();
   public static $VALIDATION_ERROR_LIST_DEFAULTS = array();
-
+  public static $WILDCARD_REGEX = "/[\*]/";
 
 
   // ---------------------------------------------------------------------------
@@ -105,9 +113,9 @@ class LeavCentral
           'recipient_name_is_role_based'      => __( 'We don\'t allow role-based / generic recipient names in email addresses. Please use a personalized email address.'),
           'email_domain_has_no_mx_record'     => __( 'The entered email address\'s domain doesn\'t have any mail servers.', 'leav'),
           'email_domain_on_dea_blacklist'     => __( 'We don\'t accept email addresses from disposable email address services (DEA). Please use a regular email address.', 'leav'),
+          'email_from_catch_all_domain'       => __( 'We don\'t accept email addresses from catch-all domains. Your email address\'s domain accepts any recipient name. Please use an email address from another domain', 'leav' ),
           'simulated_sending_of_email_failed' => __( 'The entered email address got rejected while trying to send an email to it.', 'leav'),
           'general_email_validation_error'    => __( 'The entered email address is invalid.', 'leav'),
-
     );    
     $this::$VALIDATION_ERROR_LIST = $this::$VALIDATION_ERROR_LIST_DEFAULTS;
   }

@@ -7,12 +7,12 @@ require_once("leav-central.inc.php");
 class LastEmailAddressValidator
 {
 	private $central;
+	private $collapsed_recipient_name = '';
 	private $detected_wp_email_domain = '';
 	private $email_address = '';
 	private $email_domain = '';
 	private $email_domain_ip_address = '';
 	private $normalized_email_address = '';
-	private $collapsed_recipient_name = '';
 	private $smtp_connection;
 	private $smtp_connection_is_open = false;
 	private $wp_email_domain = '';
@@ -29,6 +29,7 @@ class LastEmailAddressValidator
 	public  $mx_server_domains = array();
 	public  $mx_server_ips = array();
 	public  $mx_server_preferences = array();
+	public  $recipient_name = '';
 	public  $simulated_sending_succeeded = false;
 
 	// timeout in s
@@ -37,7 +38,6 @@ class LastEmailAddressValidator
 	// timeouts in ms
 	private static $SMTP_CONNECTION_TIMEOUT_LONG  = 3000;
 	private static $SMTP_CONNECTION_TIMEOUT_SHORT = 1000;
-
 
 
 // --------------- Public functions --------------------------------------------
@@ -73,9 +73,8 @@ class LastEmailAddressValidator
 		$this->normalize_email_address();
 		$this->validate_current_email_address_syntax();
 		if( ! $this->is_email_address_syntax_valid )
-			return false;			
-		$this->extract_recipient_name_and_domain_from_email_address();
-		return true;
+			return false;
+		return $this->extract_recipient_name_and_domain_from_email_address();
 	}
 
 
@@ -87,8 +86,7 @@ class LastEmailAddressValidator
 
 	public function validate_email_address_syntax( string &$email_address ) : bool
 	{
-		$this->reuse( $email_address );
-		return $this->is_email_address_syntax_valid;
+		return $this->reuse( $email_address );
 	}
 
 
@@ -118,6 +116,7 @@ class LastEmailAddressValidator
 		return true;
 	}
 
+
 	public function is_email_domain_on_free_email_address_provider_domain_list( array &$list ) : bool
 	{
 		if( ! $this->is_email_domain_in_list( $list ) )
@@ -126,6 +125,7 @@ class LastEmailAddressValidator
 		$this->error_type = 'email_domain_is_on_free_email_address_provider_list';
 		return true;
 	}
+
 
 	public function check_if_email_address_is_on_user_defined_blacklist( array &$list ) : bool
 	{
@@ -143,7 +143,7 @@ class LastEmailAddressValidator
 		if( ! $this->do_basic_email_checks() )
 			return false;
 
-		if(    in_array( $this->email_domain, $domain_list ) 
+		if(    in_array( $this->email_domain, $domain_list )
 			  || ! empty( array_intersect( $this->mx_server_domains, $mx_domain_list ) )
 			  || ! empty( array_intersect( $this->mx_server_ips, $mx_ip_list ) )
 		)
@@ -158,7 +158,7 @@ class LastEmailAddressValidator
 
 	public function simulate_sending_an_email( string $email_address = '', string $wp_email_domain = '' )
 	{
-		$this->error_type = 'simulated_sending_of_email_failed';
+		$this->error_type = 'z';
 
 		if( ! empty($wp_email_domain) )
 			$sender_email_domain = $wp_email_domain;
@@ -214,6 +214,19 @@ class LastEmailAddressValidator
 		return $this->detected_wp_email_domain;
 	}
 
+	public function is_comment_line( string &$line ) : bool
+	{
+		if(		 preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
+				|| preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
+		)
+			return true;
+		return false;
+	}
+
+	public function line_contains_wildcard( string &$line ) : bool
+	{
+		return ( preg_match( $this->central::$WILDCARD_REGEX, $line ) );
+	}
 
 	public function sanitize_and_validate_domain( string &$domain ) : bool
 	{
@@ -223,11 +236,28 @@ class LastEmailAddressValidator
 	}
 
 
-	public function sanitize_and_validate_domain_from_list( string &$domain ) : bool
+	// ---- the difference to `sanitize_and_validate_domain` is that we allow `*` for wildcards
+	public function sanitize_and_validate_domain_internally( string &$domain ) : bool
 	{
 	    $domain = strtolower( $domain );
-	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_LIST_REGEX, '', $domain );
-	    return preg_match( $this->central::$DOMAIN_WILDCARD_REGEX, $domain );
+	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_INTERNAL_REGEX, '', $domain );
+	    return preg_match( $this->central::$DOMAIN_INTERNAL_REGEX, $domain );
+	}
+
+
+	public function sanitize_and_validate_recipient_name( string &$recipient_name ) : bool
+	{
+	    $recipient_name = strtolower( $recipient_name );
+	    $recipient_name = preg_replace( $this->central::$SANITIZE_RECIPIENT_NAME_REGEX, '', $recipient_name );
+	    return preg_match( $this->central::$RECIPIENT_NAME_REGEX, $recipient_name );
+	}
+
+	// ---- the difference to `sanitize_and_validate_recipient_name` is that we allow `*` for wildcards
+	public function sanitize_and_validate_recipient_name_internally( string &$recipient_name ) : bool
+	{
+	    $recipient_name = strtolower( $recipient_name );
+	    $recipient_name = preg_replace( $this->central::$SANITIZE_RECIPIENT_NAME_INTERNAL_REGEX, '', $recipient_name );
+	    return preg_match( $this->central::$RECIPIENT_NAME_INTERNAL_REGEX, $recipient_name );
 	}
 
 
@@ -265,14 +295,56 @@ class LastEmailAddressValidator
 	}
 
 
-	public function is_recipient_name_role_based( array &$role_name_list, string $error_type = '' ) : bool
+	public function is_recipient_name_on_list( array &$recipient_name_list, string $error_type = '', bool $use_collapsed_recipient_name = true ) : bool
 	{
-		if( in_array( $this->collapsed_recipient_name, $role_name_list ) )
+		// if we look at the whitelists, we don't use the collapsed recipient name
+		// we only do this, when we compare against blacklists
+		if ( $use_collapsed_recipient_name )
+			$recipient_name = $this->collapsed_recipient_name;
+		else
+			$recipient_name = $this->recipient_name;
+
+		// First we look for the "cheap" way of figuring out if the recipient name is in
+		// the array of known names
+		if( in_array( $recipient_name, $recipient_name_list['recipient_names'] ) )
 		{
 			$this->error_type = $error_type;
 			return true;
 		}
+
+		// if the "cheap" way failed, we go through the regexps. This is much more expensive
+		else
+		{
+			foreach( $recipient_name_list['regexps'] as $id => $pattern )
+			{
+				if ( $use_collapsed_recipient_name )
+					$pattern = '/^' . preg_replace($this->central::$WILDCARD_REGEX, $this->central::$RECIPIENT_NAME_BLACKLIST_WILDCARD_REPLACEMENT, $pattern ) . '$/';
+				else
+					$pattern = '/^' . preg_replace($this->central::$WILDCARD_REGEX, $this->central::$RECIPIENT_NAME_WHITELIST_WILDCARD_REPLACEMENT, $pattern ) . '$/';
+
+				if( preg_match( $pattern, $recipient_name ) )
+				{
+					$this->error_type = $error_type;
+					return true;
+				}
+			}
+		}
 		return false;
+	}
+
+
+	public function is_catch_all_domain() : bool
+	{
+		// creating a random
+		$email_address = 'hfugyiohkjbhgymxcbiewkbe' . microtime(true) . '@' . $this->email_domain;
+		if(! $this->simulate_sending_an_email( $email_address, $this->wp_email_domain ) )
+		{
+			$this->error_type = '';
+			return false;
+		}
+		$this->error_type = 'email_from_catch_all_domain';
+		return true;
+
 	}
 
 
@@ -291,39 +363,30 @@ class LastEmailAddressValidator
 		$this->is_email_address_inline_catch_all          = false;
 		$this->is_email_address_on_user_defined_blacklist = false;
 		$this->is_email_address_on_user_defined_whitelist = false;
-		$this->is_email_address_syntax_valid 							= false;
+		$this->is_email_address_on_free_email_address_provider_list = false;
 		$this->is_email_address_syntax_valid 							= false;
 		$this->is_email_domain_on_user_defined_blacklist 	= false;
 		$this->is_email_domain_on_user_defined_whitelist 	= false;
 		$this->mx_server_domains 													= array();
-		$this->mx_server_domains             							= array();
 		$this->mx_server_ips 															= array();
-		$this->mx_server_ips                 							= array();
 		$this->mx_server_preferences 											= array();
 		$this->normalized_email_address 									= '';
-		$this->normalized_email_address      							= '';
+	  $this->recipient_name                             = '';
 		$this->simulated_sending_succeeded 								= false;
-		$this->simulated_sending_succeeded   							= false;
-		$this->smtp_connection 														= '';
 		$this->smtp_connection               							= '';
-		$this->smtp_connection_is_open 										= false;
 		$this->smtp_connection_is_open       							= false;
 	}
 
 
 	private function validate_current_email_address_syntax()
 	{
-		if( empty($this->normalized_email_address) )
-		{
-			$this->error_type = 'email_address_syntax_error';
-			return false;
-		}
-		elseif( preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
+		if(    ! empty($this->normalized_email_address)
+				&& preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
 		{
 			$this->is_email_address_syntax_valid = true;
-			$this->extract_recipient_name_and_domain_from_email_address();
-			return true;
+			return $this->extract_recipient_name_and_domain_from_email_address();
 		}
+
 		$this->error_type = 'email_address_syntax_error';
 		return false;
 	}
@@ -340,11 +403,23 @@ class LastEmailAddressValidator
 		if( empty( $this->normalized_email_address ) )
 			return false;
 		$arr = explode( '@', $this->normalized_email_address );
-		if( sizeof($arr) < 2 )
+
+		if( sizeof($arr) != 2 )
 			return false;
-	  $this->collapsed_recipient_name = preg_replace( "/[^a-z]/", '', $arr[0] );
-		$this->email_domain = $arr[1];
-		return true;
+
+		$this->recipient_name = $arr[0];
+		if( $this->sanitize_and_validate_recipient_name( $arr[0] ) )
+			$this->collapsed_recipient_name = $arr[0];
+		if( $this->sanitize_and_validate_domain( $arr[1] ) )
+			$this->email_domain = $arr[1];
+
+		if(    ! empty( $this->collapsed_recipient_name )
+			  && ! empty( $this->email_domain )
+		)
+			return true;
+
+		$this->is_email_address_syntax_valid = false;
+		return false;
 	}
 
 
@@ -376,7 +451,7 @@ class LastEmailAddressValidator
 			$hostname = @gethostbyaddr ( $strEmailDomain );
 		$host_ip = @gethostbyname ( $hostname );
 
-		if (   preg_match( $this->central::$IP_ADDRESS_REGEX, $host_ip ) 
+		if (   preg_match( $this->central::$IP_ADDRESS_REGEX, $host_ip )
 			  && $host_ip != $original_hostname )
 			return $host_ip;
 		return '';
@@ -397,7 +472,7 @@ class LastEmailAddressValidator
 			return false;
 		for( $i = 0; $i < sizeof( $this->mx_server_ips ); $i++ )
 		{
-			if( $this->get_smtp_connection_to_host( $this->mx_server_ips[$i] ) ) 
+			if( $this->get_smtp_connection_to_host( $this->mx_server_ips[$i] ) )
 				return true;
 		}
 		return false;
@@ -473,7 +548,7 @@ class LastEmailAddressValidator
 			{
 				if( preg_match( $pattern, $this->email_domain ) )
 					return true;
-			}	
+			}
 		}
 		return false;
 	}

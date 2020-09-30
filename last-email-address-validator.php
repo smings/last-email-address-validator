@@ -123,7 +123,7 @@ class LeavPlugin
 
         if(    $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] == 'yes'
             && ! empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] )
-            && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] )
+            && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'], '', false )
           )
             $recipient_name_whitelisted = true;
 
@@ -155,14 +155,14 @@ class LeavPlugin
         if(    $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] == 'yes'
                 && ! $recipient_name_whitelisted
                 && ! $is_email_whitelisted
-                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'], 'recipient_name_is_blacklisted' )
+                && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'], 'recipient_name_is_blacklisted' )
         )
             return $this->increment_count_of_blocked_email_addresses();
 
         if(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
                 && ! $recipient_name_whitelisted
                 && ! $is_email_whitelisted
-                && $this->leav->is_recipient_name_role_based( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
+                && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
         )
             return $this->increment_count_of_blocked_email_addresses();
 
@@ -178,8 +178,13 @@ class LeavPlugin
         )
             return $this->increment_count_of_blocked_email_addresses();
 
-        if(    $this->central::$OPTIONS['simulate_email_sending'] = 'yes'
+        if(    $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
                 && ! $this->leav->simulate_sending_an_email() )
+            return $this->increment_count_of_blocked_email_addresses();
+
+        if(    $this->central::$OPTIONS['allow_catch_all_domains'] == 'no'
+            && $this->leav->is_catch_all_domain()
+        )
             return $this->increment_count_of_blocked_email_addresses();
 
         // when we are done with all validations, we return true
@@ -381,17 +386,18 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['test_email_address'] ) )
             $this->central::$OPTIONS['test_email_address'] = '';
 
-        // ----- Allow recipient name catch-all syntax --------------------------------------------
-        //
-        if ( empty( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] ) )
-            $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] = 'yes';
-
         // ----- Email Domain --------------------------------------------------
         //
         if ( empty( $this->central::$OPTIONS['wp_email_domain'] ) )
             $this->central::$OPTIONS['wp_email_domain'] = $this->leav->get_detected_wp_email_domain();
 
         $this->leav->set_wordpress_email_domain( $this->central::$OPTIONS['wp_email_domain'] );
+
+
+        // ----- Allow recipient name catch-all syntax --------------------------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] ) )
+            $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] = 'yes';
 
 
         // ----- Whitelists ----------------------------------------------------
@@ -506,7 +512,13 @@ class LeavPlugin
              || empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] )
              || empty( $this->central::$OPTIONS['role_based_recipient_name_list_version'] )
         )
+        {
+            write_log($this->central::$OPTIONS['role_based_recipient_name_blacklist']);
+            write_log($this->central::$OPTIONS['role_based_recipient_name_blacklist_string']);
+            write_log($this->central::$OPTIONS['role_based_recipient_name_list_version']);
             die('Something went wrong with the role-based recipient names file. We are cautious and abort the execution here!');
+        }
+
 
 
         // ----- Disposable Email Address Blocking -----------------------------
@@ -533,6 +545,11 @@ class LeavPlugin
         //
         if ( empty( $this->central::$OPTIONS['simulate_email_sending'] ) )
             $this->central::$OPTIONS['simulate_email_sending'] = 'yes';
+
+        // ----- Allow catch-all domains ---------------------------------------
+        //
+        if ( empty( $this->central::$OPTIONS['allow_catch_all_domains'] ) )
+            $this->central::$OPTIONS['allow_catch_all_domains'] = 'yes';
 
         // ----- Pingbacks / Trackbacks ----------------------------------------
         //
@@ -604,6 +621,9 @@ class LeavPlugin
 
         if ( empty( $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] ) )
             $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] = '';
+
+        if ( empty( $this->central::$OPTIONS['cem_email_from_catch_all_domain'] ) )
+            $this->central::$OPTIONS['cem_email_from_catch_all_domain'] = '';
 
         if ( empty( $this->central::$OPTIONS['cem_general_email_validation_error'] ) )
             $this->central::$OPTIONS['cem_general_email_validation_error'] = '';
@@ -725,6 +745,9 @@ class LeavPlugin
         if( ! empty ( $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] ) )
             $this->central::$VALIDATION_ERROR_LIST['simulated_sending_of_email_failed'] = $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'];
 
+        if( ! empty ( $this->central::$OPTIONS['cem_email_from_catch_all_domain'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_from_catch_all_domain'] = $this->central::$OPTIONS['cem_email_from_catch_all_domain'];
+
         if( ! empty ( $this->central::$OPTIONS['cem_general_email_validation_error'] ) )
             $this->central::$VALIDATION_ERROR_LIST['general_email_validation_error'] = $this->central::$OPTIONS['cem_general_email_validation_error'];
     }
@@ -738,23 +761,27 @@ class LeavPlugin
 
         $this->central::$OPTIONS['role_based_recipient_name_list_version'] = array_shift($lines);
         $this->central::$OPTIONS['role_based_recipient_name_blacklist'] = array();
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist']['recipient_names'] = array();
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist']['regexps'] = array();
         $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] = '';
 
         foreach( $lines as $id => $line )
         {
-            if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
-                || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
-            )
+            if( $this->leav->is_comment_line( $line ) )
                 continue;
-            elseif( preg_match( $this->central::$RECIPIENT_NAME_REGEX, $line ) )
+            elseif( $this->leav->sanitize_and_validate_recipient_name_internally( $line ) )
             {
-                array_push( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], $line );
+                $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] .= $line . "\n";
+                if( $this->leav->line_contains_wildcard( $line ) )
+                    array_push( $this->central::$OPTIONS['role_based_recipient_name_blacklist']['regexps'], $line );
+                else
+                    array_push( $this->central::$OPTIONS['role_based_recipient_name_blacklist']['recipient_names'], $line );
             }
         }
         if( empty( $this->central::$OPTIONS['role_based_recipient_name_blacklist'] ) )
             return false;
 
-        $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] = implode( "\n", $this->central::$OPTIONS['role_based_recipient_name_blacklist'] );
+        $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] = rtrim($this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] );
         return true;
     }
 
@@ -772,19 +799,21 @@ class LeavPlugin
 
         foreach( $lines as $id => $line )
         {
-            if(    preg_match( $this->central::$COMMENT_LINE_REGEX, $line )
-                || preg_match( $this->central::$EMPTY_LINE_REGEX,   $line )
-            )
+            if(    $this->leav->is_comment_line( $line ) )
                 // we continue, since we don't want to display comments from out internal files
                 continue;
-            elseif( preg_match( $this->central::$DOMAIN_REGEX, $line ) )
+            // elseif( preg_match( $this->central::$DOMAIN_REGEX, $line ) )
+            elseif( $this->leav->line_contains_wildcard( $line )
+
+            )
+
             {
                 array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['domains'], $line );
-                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] . $line . "\n";
+                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] .= $line . "\n";
             }
-            elseif( preg_match( $this->central::$DOMAIN_WILDCARD_REGEX, $line ) )
+            elseif( preg_match( $this->central::$DOMAIN_INTERNAL_REGEX, $line ) )
             {
-                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] = $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] . $line . "\n";
+                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist_string'] .= $line . "\n";
                 $pattern = '/' . preg_replace( "/\*/", '[a-z0-9-]*', $line ) . '/';
                 array_push( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['regexps'], $pattern );
             }

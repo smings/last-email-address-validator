@@ -11,9 +11,18 @@
 # AND THEN GOT EXTENDED AND QUALIFIED BY US                     #
 #---------------------------------------------------------------#
 
+# ".cf", ".ga", ".gq", ".ml", ".tk" are freely obtainable TLDs. 
+# therefore, we have to classify these TLDs as free email domain
+# providers
+
+**.cf
+**.ga
+**.gq
+**.ml
+**.tk
 *.ddns.org
-*.freeservers.com
 *.findhere.com
+*.freeservers.com
 *.net.mx
 *.zzn.com
 126.com
@@ -28,13 +37,13 @@ aliyun.com
 altavista.com
 altavista.net
 altavista.se
-aussiemail.com.au
-australiamail.com
 aol.com
 aol.it
 arcor.de
 arnet.com.ar
 att.net
+aussiemail.com.au
+australiamail.com
 bell.net
 bellsouth.net
 bigpond.*
@@ -57,16 +66,17 @@ cox.net
 craz*.*
 cyber*.*
 daum.net
-earthlink.net
-email.*
-email*.*
 e-mail.*
+earthlink.net
+email*.*
+email.*
 emailsrvr.org
 epost.de
 facebook.com
 fastemail*.*
 fastmail.*
 fibertel.com.ar
+foxmail.com
 foxmail.com
 free.fr
 freemail.*
@@ -75,7 +85,6 @@ freenet.de
 freeserve.co.uk
 from*.*
 frontiernet.net
-foxmail.com
 games.com
 gaza.net
 globo.com
@@ -116,8 +125,8 @@ love.com
 lycos.*
 lycos.*.*
 mac.com
-mail.*
 mail-*.*
+mail.*
 mail2*.com
 me.com
 mein.gmx
@@ -147,6 +156,7 @@ r7.com
 rambler.ru
 rediffmail.com
 rocketmail.com
+rogers.*
 rogers.com
 safe-mail.net
 sbcglobal.net
@@ -185,8 +195,8 @@ wanadoo.fr
 web.de
 webmail.*
 webmail.*.*
-webmails.com
 webmail.wiki
+webmails.com
 windstream.net
 wow.com
 xyz.am
