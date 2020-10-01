@@ -150,6 +150,8 @@ class LeavSettingsPage
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
+                </div>
+                <div>
                     <span>
                         <a href="#allow_recipient_name_catch_all">
                             <?php _e('Recipient Name Catch All', 'leav'); ?>
@@ -186,18 +188,22 @@ class LeavSettingsPage
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
-                    <span>
-                        <a href="#ping_track_backs">
-                            <?php _e('Pingbacks / Trackbacks', 'leav'); ?>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;
-                    </span>
+                </div>
+                <div>
                     <span>
                         <a href="#functions_plugins">
                             <?php _e('LEAV-validated Functions / Plugins', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
+                    <span>
+                        <a href="#ping_track_backs">
+                            <?php _e('Pingbacks / Trackbacks', 'leav'); ?>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+                </div>
+                <div>
                     <span>
                         <a href="#custom_messages">
                             <?php _e('Custom Error Messages', 'leav'); ?>
@@ -210,6 +216,8 @@ class LeavSettingsPage
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
+                </div>
+                <div>
                     <span>
                         <a href="#faq">
                             <?php _e( 'FAQ', 'leav' ); ?>
@@ -282,7 +290,7 @@ class LeavSettingsPage
                                 }
                                 ?>
                             <p class="description">
-                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs.', 'leav'); ?>
+                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do extensive testing', 'leav'); ?>
                             </p>
                         </td>
                     </tr>
@@ -356,6 +364,7 @@ class LeavSettingsPage
                 <p class="submit">
                     <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
                 </p>
+
                 <h2></a><?php _e('Whitelists', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -386,7 +395,21 @@ class LeavSettingsPage
                         <td>
                             <label>
                                 <textarea id="user_defined_domain_whitelist_string" name="user_defined_domain_whitelist_string" rows="7" cols="40" placeholder="your-whitelisted-domain-1.com
-your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_defined_domain_whitelist_string"]); ?></textarea>
+your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS['user_defined_domain_whitelist_string']); ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_domain_whitelist']['domains'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_domain_whitelist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -406,7 +429,7 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_define
                             <p class="description">
                                 <?php
                                     _e('Email addresses on this list will be accepted without further email address blacklist checks (if active).', 'leav' );
-                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/>Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'leav' );
                                     _e( '<br/><strong>Use one email address per line</strong>.', 'leav');
                                     _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
@@ -419,7 +442,17 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS["user_define
                         <td>
                             <label>
                                 <textarea id="user_defined_email_whitelist_string" name="user_defined_email_whitelist_string" rows="7" cols="40" placeholder="your.whitelisted@email-1.com
-your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_email_whitelist_string"] ?></textarea>
+your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_email_whitelist_string"] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_email_whitelist']
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -452,7 +485,21 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                         <td>
                             <label>
                                 <textarea id="user_defined_recipient_name_whitelist_string" name="user_defined_recipient_name_whitelist_string" rows="7" cols="40" placeholder="yourrecipientname1
-yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea>
+yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_recipient_name_whitelist']['recipient_names'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_recipient_name_whitelist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -461,11 +508,11 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                 </table>
 
 
-
                 <a name="blacklists">
                 <p class="submit">
                     <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
                 </p>
+
                 <h2></a><?php _e('Blacklists', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
@@ -496,7 +543,21 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                         <td>
                             <label>
                                 <textarea id="user_defined_domain_blacklist_string" name="user_defined_domain_blacklist_string" rows="7" cols="40" placeholder="your-blacklisted-domain-1.com
-your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined_domain_blacklist_string"] ?></textarea>
+your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined_domain_blacklist_string"] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_domain_blacklist']['domains'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_domain_blacklist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -529,7 +590,21 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <th scope="row">&nbsp;</th>
                         <td>
                             <label>
-                                <textarea id="free_email_address_provider_domain_blacklist_string_display_only" name="free_email_address_provider_domain_blacklist_string_display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS["free_email_address_provider_domain_blacklist_string"] ?></textarea>
+                                <textarea id="free_email_address_provider_domain_blacklist_string_display_only" name="free_email_address_provider_domain_blacklist_string_display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS["free_email_address_provider_domain_blacklist_string"] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['domains'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['free_email_address_provider_domain_blacklist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -550,7 +625,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             <p class="description">
                                 <?php
                                     _e( 'Email addresses from this list will be rejected (if active).', 'leav' );
-                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
+                                    _e( '<br/>Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'leav' );
                                     _e( '<br/><strong>Use one email address per line</strong>.', 'leav' );
                                     _e( '<br/><strong>Default: No</strong>', 'leav');
                                 ?>
@@ -590,7 +665,21 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                             </p>
                             <label>
-                                <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea>
+                                <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_recipient_name_blacklist']['recipient_names'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['user_defined_recipient_name_blacklist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -614,7 +703,21 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 ?>
                             </p>
                             <label>
-                                <textarea id="display_only" name="display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ?></textarea>
+                                <textarea id="display_only" name="display_only" rows="7" cols="40" readonly><?php echo $this->central::$OPTIONS['role_based_recipient_name_blacklist_string'] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'leav' );
+                                    echo( 
+                                        strval( 
+                                            sizeof( 
+                                                $this->central::$OPTIONS['role_based_recipient_name_blacklist']['recipient_names'] 
+                                            ) 
+                                            +  
+                                            sizeof( 
+                                                $this->central::$OPTIONS['role_based_recipient_name_blacklist']['regexps'] 
+                                            )
+                                        ) 
+                                    );
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -715,47 +818,6 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                 </table>
 
 
-                <a name="ping_track_backs"></a>
-                <p class="submit">
-                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
-                </p>
-
-                <h2><a name="pingbacks"></a><?php _e('Pingbacks / Trackbacks', 'leav') ?></h2>
-                <?php _e('Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validation process.</br>Therefore <strong>pingbacks and trackbacks pose a certain spam risk</strong>. They could also be free marketing.<br/>By default we therefore accept them.', 'leav') ?>
-                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
-                    <tr>
-                        <th scope="row"><?php _e( 'Accept pingbacks', 'leav') ?>:</th>
-                        <td>
-                            <label>
-                                <input name="accept_pingbacks" type="radio" value="yes" <?php if ($this->central::$OPTIONS["accept_pingbacks"] == "yes") { echo 'checked="checked" '; } ?>/>
-                                <?php _e('Yes', 'leav') ?>
-                            </label>
-                            <label>
-                                <input name="accept_pingbacks" type="radio" value="no" <?php if ($this->central::$OPTIONS["accept_pingbacks"] == "no") { echo 'checked="checked" '; } ?>/>
-                                <?php _e('No', 'leav') ?>
-                            </label>
-                            <p class="description">
-                                <strong><?php _e( 'Default:', 'leav') ?> <?php _e('Yes', 'leav') ?></strong>
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php _e( 'Accept trackbacks', 'leav') ?>:</th>
-                        <td>
-                            <label>
-                                <input name="accept_trackbacks" type="radio" value="yes" <?php if ($this->central::$OPTIONS["accept_trackbacks"] == "yes") { echo 'checked="checked" '; } ?>/>
-                                <?php _e('Yes', 'leav') ?>
-                            </label>
-                            <label>
-                                <input name="accept_trackbacks" type="radio" value="no" <?php if ($this->central::$OPTIONS["accept_trackbacks"] == "no") { echo 'checked="checked" '; } ?>/>
-                                <?php _e('No', 'leav') ?>
-                            </label>
-                            <p class="description">
-                                <strong><?php _e( 'Default:', 'leav') ?> <?php _e('Yes', 'leav') ?></strong>
-                            </p>
-                        </td>
-                    </tr>
-                </table>
 
                 <a name="functions_plugins"></a>
                 <p class="submit">
@@ -1008,11 +1070,54 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                 </table>
 
-                <a name="custom_messages"></a>
+
+                <a name="ping_track_backs"></a>
                 <p class="submit">
                     <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
                 </p>
 
+                <h2><a name="pingbacks"></a><?php _e('Pingbacks / Trackbacks', 'leav') ?></h2>
+                <?php _e('Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validation process.</br>Therefore <strong>pingbacks and trackbacks pose a certain spam risk</strong>. They could also be free marketing.<br/>By default we therefore accept them.', 'leav') ?>
+                <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e( 'Accept pingbacks', 'leav') ?>:</th>
+                        <td>
+                            <label>
+                                <input name="accept_pingbacks" type="radio" value="yes" <?php if ($this->central::$OPTIONS["accept_pingbacks"] == "yes") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="accept_pingbacks" type="radio" value="no" <?php if ($this->central::$OPTIONS["accept_pingbacks"] == "no") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'leav') ?>
+                            </label>
+                            <p class="description">
+                                <strong><?php _e( 'Default:', 'leav') ?> <?php _e('Yes', 'leav') ?></strong>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e( 'Accept trackbacks', 'leav') ?>:</th>
+                        <td>
+                            <label>
+                                <input name="accept_trackbacks" type="radio" value="yes" <?php if ($this->central::$OPTIONS["accept_trackbacks"] == "yes") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('Yes', 'leav') ?>
+                            </label>
+                            <label>
+                                <input name="accept_trackbacks" type="radio" value="no" <?php if ($this->central::$OPTIONS["accept_trackbacks"] == "no") { echo 'checked="checked" '; } ?>/>
+                                <?php _e('No', 'leav') ?>
+                            </label>
+                            <p class="description">
+                                <strong><?php _e( 'Default:', 'leav') ?> <?php _e('Yes', 'leav') ?></strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
+                </p>
+
+                <a name="custom_messages"></a>
                 <h1><?php _e('Custom Error Messages', 'leav') ?></h1>
                 <?php _e('If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. The placeholder texts are the currently used error messages. Overwrite them to use your custom validation error messages. Delete the field\'s contents for using the defaults again.', 'leav') ?>
 
@@ -1205,8 +1310,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] . '</strong>"' );
                             echo( ' • <a href="#allow_recipient_name_catch_all">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1220,8 +1325,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Domain Whitelist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] . '</strong>"' );
                             echo( ' • <a href="#dwl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1236,8 +1341,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Email Address Whitelist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_email_whitelist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_email_whitelist'] . '</strong>"' );
                             echo( ' • <a href="#ewl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1249,8 +1354,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Recipient Name Whitelist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] . '</strong>"' );
                             echo( ' • <a href="#rnwl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1262,8 +1367,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Domain Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] . '</strong>"' );
                             echo( ' • <a href="#dbl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1275,8 +1380,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Built-In Free Email Address Provider Domain Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] . '</strong>"' );
                             echo( ' • <a href="#feapdbl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1288,8 +1393,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Email Address Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_email_blacklist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_email_blacklist'] . '</strong>"' );
                             echo( ' • <a href="#ebl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1301,8 +1406,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Recipient Name Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] . '</strong>"' );
                             echo( ' • <a href="#rnbl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1314,8 +1419,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Built-In Role-Based Recipient Name Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] . '</strong>"' );
                             echo( ' • <a href="#rbrnbl">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1335,8 +1440,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Use Disposable Email Address (DEA) Service Blacklist (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['block_disposable_email_address_services'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['block_disposable_email_address_services'] . '</strong>"' );
                             echo( ' • <a href="#dea">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1348,8 +1453,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Simulate Email Sending (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['simulate_email_sending'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['simulate_email_sending'] . '</strong>"' );
                             echo( ' • <a href="#ses">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1367,8 +1472,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <?php _e( 'Allow Email Addresses from Catch-All Domains (optional)', 'leav'); ?>
                     </strong>
                         <?php
-                            _e( ' • Current setting is "', 'leav' );
-                            echo( $this->central::$OPTIONS['allow_catch_all_domains'] . '"' );
+                            _e( ' • Current setting is "<strong>', 'leav' );
+                            echo( $this->central::$OPTIONS['allow_catch_all_domains'] . '</strong>"' );
                             echo( ' • <a href="#cad">' );
                             _e( 'Change settings</a>', 'leav' );
                         ?>
@@ -1393,18 +1498,58 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     _e( 'You can use asterixes "<strong>*</strong>" as wildcards in recipient names as well. It stands for zero up to any amount of characters. I.e. "<strong>*spammer*</strong>" matches all recipient names containing the word "<strong>spammer</strong>". It matches "<strong>all-spammers-go</strong>" or just "<strong>spammer</strong>". <strong>mailfrom*</strong>" matches all recipient names starting with "<strong>mailfrom</strong>". I.e. "<strong>mailfrom</strong>", "<strong>mailfroma</strong>", "<strong>mailfromme</strong>", etc. You can place the asterix anywhere. I.e. "<strong>*spam*from*</strong>" matches "<strong>spamfrom</strong>" as well as "<strong>all-spam-from-me</strong>".<br/>You can see plenty examples on our list of role-based recipient names in the blacklists section. These are mostly trailing "*", so that we don\'t match too many recipient names.', 'leav' );
                     _e( '<br/>Be careful to not over do any kind of matching with wildcards.<br/>We urge you to extensively test whether email addresses would get matched or not with the test option at the very top of the settings page.', 'leav' );
                 ?>
+            <h3><?php
+                    _e( '<strong>Wildcard syntax for email address:</strong>', 'leav' ); ?></h3>
+                <?php
+                    _e( 'Wildcards are NOT available for email addresses as of now. If there is a real usecase for this, feel free to send us a <a href="#feature_requests">feature request</a>.', 'leav' );
+                ?>
+
+            <h3><?php
+                    _e( '<strong>What are the different parts of an email address:</strong>', 'leav' ); ?></h3>
+                <?php
+                    _e( 'An email address consists of 3 parts with delimiters in between them.', 'leav' );
+                ?>
+                <ol>
+                    <li>
+                        <?php _e( 'Recipient name', 'leav' ); ?>
+                    </li>
+                    <li>
+                        <?php _e( 'Domain', 'leav' ); ?>
+                    </li>
+                    <li>
+                        <?php _e( 'Top-level domain (tld)', 'leav' ); ?>
+                    </li>
+                </ol>
+                <?php
+                    _e( 'And of course you know what an email generally looks like.<br/><strong>recipient-name</strong>@<strong>domain</strong>.<strong>tld</strong><br/>Let\'s use a physical world analogy for these elements of an email address:<br/>The top-level domain would represent a country. And in the beginning of the internet there were (aside from some top-level domains like .com, .net, .org, .mil, .edu ...) indeed mostly country domains. Today there are more than 1,500 top-level domains, which gets more and more confusing. There are top-level domains that are ≥18 charactes long. The current valid list of top-level domains is available at <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" target="_blank">iana.org</a>.<br/>The domain is the equivalent of a house somewhere in the country. It can be a single family house or a high-rise condo building. The house has one or multiple mailboxes.<br/>A recipient name is a name on one of the mailboxes of the house. And there can be multiple names on one mailbox.<br/>In this analogy a mailbox is an email account. An email account can have multiple recipient names. There is usually one "main" or "real" recipient name and additionally there can be "aliases". Companies tend to have a generic main recipient name syntax like this: first.last@company.com<br/>beyond this they usually also have aliases like f.last@company.com, firstlast@company.com, fl@company.com, first@company, last@company.com etc. You get the picture.', 'leav' );
+                ?>
+
+            <h3><?php
+                    _e( '<strong>What is a "recipient name":</strong>', 'leav' ); ?></h3>
+                <?php
+                    _e( 'Recipient names are the part of an email that is in front of the "@" sign. They are also called "local part". This part defines the concrete mailbox, that the email goes into. The mailbox might also be reachable under aliases for the "main" recipient name.', 'leav' );
+                ?>
+
 
             <a name="feature_requests"></a>
             <br/><br/><br/>
-            <?php _e('<h1>Feature Requests</h1>If you look for more plugins, we at <a href="', 'leav' );
+            <h1><?php _e('Feature Requests', 'leav' ); ?></h1>
+            <?php
+                _e( 'If you look for more supported plugins or an extension of the base functionality of how we validate and filter email addresses, we at <a href="', 'leav' );
                 echo ( $this->central::$PLUGIN_WEBSITE );
-                _e( '" target="_blank">smings</a> (website will be online soon) are always happy to make<br/> LEAV - Last Email Address Validator better than it is to help you to protect your non-renewable lifetime. <br/>Just shoot us an email to ', 'leav' );
-                echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' . $this->central::$PLUGIN_CONTACT_EMAIL . '</a>' );
-                _e( '.<a name="help"></a><br/><br/><h1>Help us help you!</h1>Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime by filtering out tons of <br/>spam attempts, please show us your appreciation and consider a <strong>', '' );
+                _e( '" target="_blank">smings</a> (website will be online soon) are always happy to optimize <br/> LEAV - Last Email Address Validator to help you to protect your non-renewable lifetime even better. <br/>Just shoot us an email to ', 'leav' );
+                echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' . $this->central::$PLUGIN_CONTACT_EMAIL . '</a>.' );
+            ?>
+            <a name="help"></a>
+            <br/><br/>
+            <h1><?php _e( 'Help us help you!', 'leav' ); ?></h1>
+            <?php
+                _e( 'Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving<br/> lots of your precious non-renewable lifetime by filtering out tons of <br/>spam attempts, please show us your appreciation and consider a <strong>', '' );
                 echo( '<a href="' . $this->central::$PLUGIN_ONETIME_DONATION_LINK .'" target="_blank">' );
                 _e( 'one-time donation</a></strong><br/>or become a patreon on our patreon page at <strong>', 'leav' );
                 echo( '<a href="' . $this->central::$PLUGIN_PATREON_LINK . '" target="_blank">' );
-                _e( 'patreon.com/smings</a></strong><br/>We appreciate your support and send you virtual hugs and good karma points.<br/>Thank you and enjoy LEAV', 'leav') ?>
+                _e( 'patreon.com/smings</a></strong><br/>We appreciate your support and send you virtual hugs and good karma points.<br/>Thank you and enjoy LEAV', 'leav') 
+            ?>
         </div>
         <div class="wrap">
             <a name="stats"></a>
