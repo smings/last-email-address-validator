@@ -125,6 +125,7 @@ class LeavSettingsPage
         }
 ?>
         <div class="wrap">
+            <a name="top"></a>
             <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;"><?php
                 _e('<img width="75px" src="' . plugin_dir_url(__FILE__) . '../' . $this->central::$SETTINGS_PAGE_LOGO_URL . '" /> &nbsp;&nbsp;&nbsp;<strong>');
                 _e( $this->central::$PLUGIN_DISPLAY_NAME_LONG ); ?></strong></h1>
@@ -140,7 +141,7 @@ class LeavSettingsPage
                 <div>
                     <span>
                         <a href="#test_email_address">
-                            <?php _e('Test Email Address', 'leav'); ?>
+                            <?php _e('Test Email Address Vaildation', 'leav'); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -248,10 +249,10 @@ class LeavSettingsPage
             <form name="leav_options" method="post">
                 <input type="hidden" name="leav_options_update_type" value="update" />
 
-                <h2><?php _e('Test Email Address', 'leav') ?></h2>
+                <h2><?php _e('Test Email Address Validation', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e('Enter a email address for testing validation results', 'leav'); ?>:</th>
+                        <th scope="row"><?php _e('Enter an email address for testing validation results', 'leav'); ?>:</th>
                         <td>
                             <label>
                                 <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php
@@ -263,7 +264,7 @@ class LeavSettingsPage
 
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
-                                    if( ! $this->leav_plugin->validate_email_address( $_POST[ 'test_email_address' ] ) )
+                                    if( ! $this->leav_plugin->validate_email_address( $_POST[ 'test_email_address' ], false ) )
                                     {
                                         echo('<p><span style="color:#a00"><strong>');
                                         _e( 'Validation result for email address ', 'leav' );
@@ -321,6 +322,11 @@ class LeavSettingsPage
                         </td>
                     </tr>
                 </table>
+                <a name="allow_recipient_name_catch_all"></a>
+                <p class="submit">
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
+                </p>
+
 
                 <h1>
                     <?php
@@ -330,12 +336,6 @@ class LeavSettingsPage
                 <?php
                     _e( 'From here onwards you can configure the filter steps. You can find an overview and description of the filter steps in <a href="#faq">our FAQ</a>.', 'leav' );
                 ?>
-
-                <a name="allow_recipient_name_catch_all"></a>
-                <p class="submit">
-                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Save Changes', 'leav') ?>" />
-                </p>
-
                 <h2><?php _e('Allow Recipient Name Catch-All Syntax', 'leav') ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -366,6 +366,7 @@ class LeavSettingsPage
                 </p>
 
                 <h2></a><?php _e('Whitelists', 'leav') ?></h2>
+                <?php _e('Any email address that gets whitelisted will skip the corresponding blacklist filters. It doesn\'t mean it doesn\'t get filtered out at all. If a domain is whitelisted, but it is a catch-all domain and you disallow catch-all domains, all email addresses from this domain will still get rejected by our validation process. Look at our <a href="#faq">FAQ</a> for detailed information on the validation process.', 'leav') ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
                         <a name="dwl"/>
@@ -1332,7 +1333,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         ?>
                     <br/>
                     <?php
-                        _e( 'Filter against user-defined email domain whitelist. <br/>This is useful for overriding potential false positives from extensive domain blacklist rules. Whenever an email address gets matches by this whitelist, the domain blacklist checks get skipped.<br/>We kindly ask you to ', 'leav' );
+                        _e( 'Filter against user-defined email domain whitelist. <br/>This is useful for overriding potential false positives from extensive domain blacklist rules. Whenever an email address gets matches by this whitelist, the domain blacklist check gets skipped.<br/>We kindly ask you to ', 'leav' );
                         echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                         _e('inform us</a> about wrongfully blacklisted domains, so that we can correct any errors asap.' , 'leav' ); ?>
                 </li>
@@ -1347,7 +1348,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             _e( 'Change settings</a>', 'leav' );
                         ?>
                     <br/>
-                    <?php _e( 'Filter against user-defined email whitelist (if activated)<br/>If you need to override specific email addresses that would otherwise get filtered out.' , 'leav'); ?>
+                    <?php _e( 'Filter against user-defined email whitelist (if activated)<br/>If you need to override specific email addresses that would otherwise get filtered out by the blacklist filters.' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
@@ -1360,7 +1361,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             _e( 'Change settings</a>', 'leav' );
                         ?>
                     <br/>
-                    <?php _e( 'Filter against user-defined recipient name whitelist (if activated)<br/>If you need to override specific email addresses that would otherwise get filtered out by either the user-defined recipient name blacklist or the role-based recipient name blacklist. If a recipient name gets matched by this whitelist, the recipient name blacklist checks get skipped.' , 'leav'); ?>
+                    <?php _e( 'Filter against user-defined recipient name whitelist (if activated)<br/>If you need to override specific recipient names that would otherwise get filtered out by either the user-defined recipient name blacklist or the role-based recipient name blacklist. If a recipient name gets matched by this whitelist, both recipient name blacklist checks get skipped.' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
@@ -1373,7 +1374,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             _e( 'Change settings</a>', 'leav' );
                         ?>
                     <br/>
-                    <?php _e( 'Filter against user-defined email domain blacklist (if activated)' , 'leav'); ?>
+                    <?php _e( 'Filter against user-defined email domain blacklist (if activated).' , 'leav'); ?>
                 </li>
                 <li>
                     <strong>
@@ -1507,7 +1508,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             <h3><?php
                     _e( '<strong>What are the different parts of an email address:</strong>', 'leav' ); ?></h3>
                 <?php
-                    _e( 'An email address consists of 3 parts with delimiters in between them.', 'leav' );
+                    _e( 'Of course you know what an email generally looks like.<br/>&nbsp;&nbsp;&nbsp;<strong>recipient-name</strong>@<strong>domain</strong>.<strong>tld</strong><br/>But do you really understand its different parts?<br/>An email address consists of 3 parts with delimiters in between them.', 'leav' );
                 ?>
                 <ol>
                     <li>
@@ -1521,13 +1522,21 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                     </li>
                 </ol>
                 <?php
-                    _e( 'And of course you know what an email generally looks like.<br/><strong>recipient-name</strong>@<strong>domain</strong>.<strong>tld</strong><br/>Let\'s use a physical world analogy for these elements of an email address:<br/>The top-level domain would represent a country. And in the beginning of the internet there were (aside from some top-level domains like .com, .net, .org, .mil, .edu ...) indeed mostly country domains. Today there are more than 1,500 top-level domains, which gets more and more confusing. There are top-level domains that are ≥18 charactes long. The current valid list of top-level domains is available at <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" target="_blank">iana.org</a>.<br/>The domain is the equivalent of a house somewhere in the country. It can be a single family house or a high-rise condo building. The house has one or multiple mailboxes.<br/>A recipient name is a name on one of the mailboxes of the house. And there can be multiple names on one mailbox.<br/>In this analogy a mailbox is an email account. An email account can have multiple recipient names. There is usually one "main" or "real" recipient name and additionally there can be "aliases". Companies tend to have a generic main recipient name syntax like this: first.last@company.com<br/>beyond this they usually also have aliases like f.last@company.com, firstlast@company.com, fl@company.com, first@company, last@company.com etc. You get the picture.', 'leav' );
+                    _e( 'Let\'s use a physical world analogy for these elements of an email address. For this, we have to start at the 3rd part of an email address.<br/><br/>The <strong>top-level domain</strong> part usually represents a country or an organizational type. And in the beginning of the internet there were (aside from some top-level domains like .com, .net, .org, .mil, .edu ...) indeed mostly country domains. Today there are more than 1,500 top-level domains, which gets more and more confusing. But essentially top-level domains are still more or less describing geography, organizational types and more and more lifestyle. There are new top-level domains that are up to 18 charactes long and if you include non-aasci TLDs, they are up to 24 characters long. The current valid list of top-level domains is available at <a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" target="_blank">iana.org</a>.<br/>A somewhat current list of how many domains are registered with each top-level domain is available at <a href="https://research.domaintools.com/statistics/tld-counts/" target="_blank">domaintools.com</a>.<br/>For the sake of our analogy, let\'s pretend top-level domains are describing a type of building i.e. simple houses, company buildings, private mansions, public buildings, condo buildings, appartment buildings etc.<br/><br/>The <strong>domain</strong> part is the equivalent of a specific building or house of the general type defined by the top-level domain. The house or building has one or multiple mailboxes. Each mailbox represents a real life person, an entire household, a company, a department and so on.<br/><br/>A <strong>recipient name</strong> is a name on one of the mailboxes of the house. And there can be multiple names on one mailbox.<br/>In this analogy a mailbox is an email account. An email account can have multiple recipient names. Just like a real life mailbox labelled "XYZ family" will receive all mail addressed to any of the XYZ family members, email accounts can have so called aliases. There is usually one "main" or "real" recipient name but additionally there can be "alias" recipient names. For instance companies tend to have a generic main recipient name syntax like this: first.last@company.com<br/>beyond this they tend to also have aliases like f.last@company.com, firstlast@company.com, fl@company.com, first@company, last@company.com etc. You get the picture.', 'leav' );
                 ?>
 
+            <a name="faq-recipient-name"></a>
             <h3><?php
                     _e( '<strong>What is a "recipient name":</strong>', 'leav' ); ?></h3>
                 <?php
-                    _e( 'Recipient names are the part of an email that is in front of the "@" sign. They are also called "local part". This part defines the concrete mailbox, that the email goes into. The mailbox might also be reachable under aliases for the "main" recipient name.', 'leav' );
+                    _e( 'A Recipient name is the part of an email that is in front of the "@" sign. It is also called "local part". This part defines the concrete mailbox an email gets received by. The mailbox might also be reachable under aliases for the "main" recipient name.', 'leav' );
+                ?>
+
+            <a name="faq-recipient-name-catch-all-syntax"></a>
+            <h3><?php
+                    _e( '<strong>What does "recipient name catch-all syntax"</strong> mean?', 'leav' ); ?></h3>
+                <?php
+                    _e( 'Email address service providers like <strong>gmail.com</strong> and others allow users to place a "+" sign after their actual recipient name and append whatever string they want as long as the recipient name\'s total length doesn\'t exceed 64 characters.  If your email address is "<strong>tester.testing@gmail.com</strong>" you are allowed to use the following email addresses as well and they will all be delivered into your mailbox: "<strong>tester.testing+domain1@gmail.com</strong>", "<strong>tester.testing+newsletter.xyz@gmail.com</strong>", "<strong>tester.testing+website.signup.for.lottery@gmail.com</strong>" etc.<br/>This is a very easy way for users to differentiate between where and what they signed up for or subscribed to. This allows users to "cloak" their "main" email address. Well - at least a tiny bit. This gives users an infinite amount of email addresses, which sometimes makes it easy for leechers to sign up to free or freemium offers multiple times. You might wan\'t to disallow this, if it interferes with your business model', 'leav' );
                 ?>
 
 

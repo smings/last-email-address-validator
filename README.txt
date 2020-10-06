@@ -191,6 +191,15 @@ Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure 
 
 == Changelog ==
 
+= 1.4.8 =
+* Added wildcard support for domains and recipient names in white/blacklists
+* Updated German translation
+* Excluded internal test validations from global block count
+
+= 1.4.7 =
+* Added catch-all domain filter feature
+* Added user-defined recipient name white/blacklists
+
 = 1.4.6 =
 * Added email test field in the settings
 * Added role-based recipient name blacklist

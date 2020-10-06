@@ -34,7 +34,7 @@ class LeavCentral
   public static $PLUGIN_ONETIME_DONATION_LINK = 'https://paypal.me/DirkTornow';
   public static $PLUGIN_PATREON_LINK = 'https://www.patreon.com/smings';
   public static $PLUGIN_SETTING_PAGE = '/wp-admin/options-general.php?page=leav-settings-page.inc';
-  public static $PLUGIN_VERSION = '1.4.99';
+  public static $PLUGIN_VERSION = '1.4.8';
   public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'allow_catch_all_domains',
@@ -105,7 +105,7 @@ class LeavCentral
     array
     (
           'email_address_syntax_error'        => __( 'The entered email address syntax is invalid.', 'leav'),
-          'recipient_name_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a "+" sign. Please remove the "+" sign and everything after it.', 'leav' ),
+          'recipient_name_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a &quot;&#43;&quot; sign. Please remove the &quot;&#43;&quot; sign and everything after it.', 'leav' ),
           'email_domain_is_blacklisted'       => __( 'The entered email address\'s domain is blacklisted.', 'leav'),
           'email_domain_is_on_free_email_address_provider_list'     => __( 'We don\'t accept email addresses from free email address providers. Please use a business email address.', 'leav'),
           'email_address_is_blacklisted'      => __( 'The entered email address is blacklisted.', 'leav'),

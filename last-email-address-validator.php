@@ -2,7 +2,7 @@
 /*
 Plugin Name: Last Email Address Validator
 Plugin URI: https://smings.com/leav/
-Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms and more plugins to come...
+Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come...
 Version: 1.4.1
 Author: smings
 Author URI: https://smings.com/leav/
@@ -90,22 +90,29 @@ class LeavPlugin
 
     // ----- Main functionality for validating email addresses -----------------
     //
-    public function validate_email_address( string $email_address ) : bool
+    public function validate_email_address( string $email_address, bool $increment_counter = true ) : bool
     {
         $is_domain_whitelisted = false;
         $is_email_whitelisted = false;
-        $recipient_name_whitelisted = false;
+        $is_recipient_name_whitelisted = false;
 
         if( ! $this->leav->validate_email_address_syntax( $email_address ) )
-            return $this->increment_count_of_blocked_email_addresses();
-
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         // ----- allow catch-all recipient name email addresses ----------------
 
         elseif(    $this->central::$OPTIONS['allow_recipient_name_catch_all_email_addresses'] == 'no'
                 && $this->leav->is_email_recipient_name_catch_all()
         )
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
             return false;
+        }
 
         // ----- Whitelists -----------------------------------------------------
 
@@ -125,7 +132,7 @@ class LeavPlugin
             && ! empty( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] )
             && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'], '', false )
           )
-            $recipient_name_whitelisted = true;
+            $is_recipient_name_whitelisted = true;
 
         // ----- Blacklists -----------------------------------------------------
 
@@ -134,58 +141,99 @@ class LeavPlugin
             && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
             && $this->leav->is_email_domain_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_domain_blacklist'] )
-          )
-            return $this->increment_count_of_blocked_email_addresses();
+        )
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         if(    $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] == 'yes'
             && ! $is_domain_whitelisted
             && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
             && $this->leav->is_email_domain_on_free_email_address_provider_domain_list( $this->central::$OPTIONS['free_email_address_provider_domain_blacklist'] )
-          )
-            return $this->increment_count_of_blocked_email_addresses();
+        )
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
+
 
         if(    $this->central::$OPTIONS['use_user_defined_email_blacklist'] == 'yes'
             && ! $is_email_whitelisted
             && ! empty( $this->central::$OPTIONS['user_defined_email_blacklist'] )
             && $this->leav->check_if_email_address_is_on_user_defined_blacklist( $this->central::$OPTIONS['user_defined_email_blacklist'] )
-          )
-            return $this->increment_count_of_blocked_email_addresses();
+        )
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         if(    $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] == 'yes'
-                && ! $recipient_name_whitelisted
+                && ! $is_recipient_name_whitelisted
                 && ! $is_email_whitelisted
                 && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'], 'recipient_name_is_blacklisted' )
         )
-            return $this->increment_count_of_blocked_email_addresses();
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
+
 
         if(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
-                && ! $recipient_name_whitelisted
+                && ! $is_recipient_name_whitelisted
                 && ! $is_email_whitelisted
                 && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
         )
-            return $this->increment_count_of_blocked_email_addresses();
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         if(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
                 && $this->leav->check_if_email_address_is_from_dea_service( $this->central::$OPTIONS['dea_domains'], $this->central::$OPTIONS['dea_mx_domains'], $this->central::$OPTIONS['dea_mx_ips'] )
         )
-            return $this->increment_count_of_blocked_email_addresses();
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
+
 
         // if we already tried to collect the MX data and there is none, we can
         // just return false right away
         if(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
             && empty( $this->leav->mx_server_ips )
         )
-            return $this->increment_count_of_blocked_email_addresses();
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
+
 
         if(    $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
-                && ! $this->leav->simulate_sending_an_email() )
-            return $this->increment_count_of_blocked_email_addresses();
+                && ! $this->leav->simulate_sending_an_email()
+        )
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         if(    $this->central::$OPTIONS['allow_catch_all_domains'] == 'no'
             && $this->leav->is_catch_all_domain()
         )
-            return $this->increment_count_of_blocked_email_addresses();
+        {
+            if( $increment_counter )
+                $this->increment_count_of_blocked_email_addresses();
+            return false;
+        }
 
         // when we are done with all validations, we return true
         return true;
@@ -878,8 +926,6 @@ class LeavPlugin
     {
         $this->central::$OPTIONS['spam_email_addresses_blocked_count'] = ($this->central::$OPTIONS['spam_email_addresses_blocked_count'] + 1);
         update_option( $this->central::$OPTIONS_NAME, $this->central::$OPTIONS );
-        // always returns false for use in failed validation if-statements for less code
-        return false;
     }
 
 }
