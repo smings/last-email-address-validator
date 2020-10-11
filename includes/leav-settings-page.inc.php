@@ -1914,7 +1914,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
         // ----- Allow recipient name catch-all syntax --------------------------------------------
         //
            if( $field_name == 'allow_recipient_name_catch_all_email_addresses' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'allowing recipient name catch-all syntac.<br/>', 'leav');
+            $this->error_notice .= __( 'Error while trying to update the settings for', 'leav' ) . ' ' . __( 'allowing recipient name catch-all syntax.<br/>', 'leav');
 
         // ----- Email Domain --------------------------------------------------
         //

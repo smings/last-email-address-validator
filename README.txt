@@ -4,7 +4,7 @@ Donate link: https://www.patreon.com/smings
 Tags: email address validation, email form, contact form, registration form, form builder, newsletter, user registration, comments, anti spam, spam blocker, MX, DNS
 Requires at least: 4.7
 Tested up to: 5.5
-Stable tag: 1.4.5
+Stable tag: 1.4.8
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

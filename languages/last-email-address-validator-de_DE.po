@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
-"POT-Creation-Date: 2020-10-06 13:26+0200\n"
-"PO-Revision-Date: 2020-10-11 21:37+0200\n"
+"POT-Creation-Date: 2020-10-11 21:48+0200\n"
+"PO-Revision-Date: 2020-10-11 21:52+0200\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -486,7 +486,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:387
 #: includes/leav-settings-page.inc.php:536
-msgid "<br/><strong>Use one domain per line</strong>."
+msgid "<br/><strong>Enter one domain per line</strong>."
 msgstr "<br/><strong>Bitte trage eine Domain pro Zeile ein</strong>."
 
 #: includes/leav-settings-page.inc.php:388
@@ -534,7 +534,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:434
 #: includes/leav-settings-page.inc.php:630
-msgid "<br/><strong>Use one email address per line</strong>."
+msgid "<br/><strong>Enter one email address per line</strong>."
 msgstr "<br/><strong>Bitte trage eine Emailadresse pro Zeile ein</strong>."
 
 #: includes/leav-settings-page.inc.php:463
@@ -553,7 +553,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:477
 #: includes/leav-settings-page.inc.php:663
-msgid "<br/><strong>Use one recipient name per line</strong>."
+msgid "<br/><strong>Enter one recipient name per line</strong>."
 msgstr "<br/><strong>Trage einen Empfängernamen pro Zeile ein</strong>."
 
 #: includes/leav-settings-page.inc.php:522
@@ -719,15 +719,14 @@ msgstr "kontaktiere uns bitte</a>."
 
 #: includes/leav-settings-page.inc.php:783
 msgid ""
-"If activated in the last step of the validation process, LEAV tries to send "
-"out an email. For this we connect to one of the MX servers and test if it "
-"would accept an email from your email domain (see above) to the email "
-"address that gets validated. If the used email domain doesn't point to your "
-"WordPress instance's IP address, this might fail. This is usually only the "
-"case in development or test environments. Test this with a working email "
-"address. If it gets rejected, you might want to deactivate this option.<br/"
-"><strong>This option should always be active in production environments<br/"
-">Default: Yes</strong>"
+"If activated LEAV tries to simulate the sending of an email. For this we "
+"connect to one of the MX servers and test if it would accept an email from "
+"your email domain (see above) to the email address that gets validated. If "
+"the used email domain doesn't point to your WordPress instance's IP address, "
+"this might fail. This is usually only the case in development or test "
+"environments. Test this with a working email address. If it gets rejected, "
+"you might want to deactivate this option.<br/><strong>This option should "
+"always be active in production environments<br/>Default: Yes</strong>"
 msgstr ""
 "Wenn aktiviert versucht LEAV den Versand einer Email zu simulieren. Hierfür "
 "wird eine Verbindung zu einem der für die Emailadresse hinterlegten "
@@ -1310,9 +1309,8 @@ msgstr "Emailadressen von Catch-All-Domains erlauben (optional)"
 
 #: includes/leav-settings-page.inc.php:1482
 msgid ""
-"If set to \"No\", this filters out all email address that originate from "
-"domains that accept emails for ANY recipient name. For more information what "
-"a recipient name catch-all syntax is, please check our FAQ entry below."
+"If set to \"No\", this filters out all email addresses that originate from "
+"domains that accept emails for ANY recipient name."
 msgstr ""
 "Wenn dies auf \"Nein\" gesetzt wird, werden alle Emailadressen von Domains, "
 "die beliebige Empfängernamen akzeptieren abgelehnt."
@@ -1331,11 +1329,11 @@ msgstr "<strong>Wildcard-Syntax für Domains:</strong>"
 
 #: includes/leav-settings-page.inc.php:1493
 msgid ""
-"You can use asterixes \"<strong>*</strong>\" as wildcards in domain names. "
+"You can use asterisks \"<strong>*</strong>\" as wildcards in domain names. "
 "It stands for zero up to any amount of characters. I.e. \"<strong>mail4*."
 "com</strong>\" matches all emails from domains starting with <br/>"
 "\"<strong>mail4</strong>\" followed by \"<strong>.com</strong>\". In this "
-"case \"<strong>mail4.com</strong>\", \"<strong>mail4i.com</strong>\", "
+"example \"<strong>mail4.com</strong>\", \"<strong>mail4i.com</strong>\", "
 "\"<strong>mail4me.com</strong>\", \"<strong>mail4myparents.com</strong>\" "
 "would all be matched.<br/>You can use \"*\" for entire subdomains and top-"
 "level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).<br/>"
@@ -1385,14 +1383,14 @@ msgstr "<strong>Platzhalter-Syntax für Empfängernamen:</strong>"
 
 #: includes/leav-settings-page.inc.php:1499
 msgid ""
-"You can use asterixes \"<strong>*</strong>\" as wildcards in recipient names "
+"You can use asterisks \"<strong>*</strong>\" as wildcards in recipient names "
 "as well. It stands for zero up to any amount of characters. I.e. "
 "\"<strong>*spammer*</strong>\" matches all recipient names containing the "
 "word \"<strong>spammer</strong>\". It matches \"<strong>all-spammers-go</"
 "strong>\" or just \"<strong>spammer</strong>\". <strong>mailfrom*</strong>\" "
 "matches all recipient names starting with \"<strong>mailfrom</strong>\". I."
 "e. \"<strong>mailfrom</strong>\", \"<strong>mailfroma</strong>\", "
-"\"<strong>mailfromme</strong>\", etc. You can place the asterix anywhere. I."
+"\"<strong>mailfromme</strong>\", etc. You can place the asterisk anywhere. I."
 "e. \"<strong>*spam*from*</strong>\" matches \"<strong>spamfrom</strong>\" as "
 "well as \"<strong>all-spam-from-me</strong>\".<br/>You can see plenty "
 "examples on our list of role-based recipient names in the blacklists "
@@ -1537,7 +1535,7 @@ msgstr ""
 "auch die folgenden Aliase: v.nachname@firma.de, nachname@firma.de, vn@firma."
 "de und manchmal bei sehr kleinen Firmen sogar vorname@firma.de. Und "
 "natürlich hat jeder Firmenmitarbeiter nur ein Emailkonto für all diese "
-"Aliase. "
+"Aliase."
 
 #: includes/leav-settings-page.inc.php:1530
 msgid "<strong>What is a \"recipient name\":</strong>"
@@ -1557,7 +1555,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:1537
 msgid "<strong>What does \"recipient name catch-all syntax\"</strong> mean?"
-msgstr "<strong>Was ist eine \"Empfängernamen-Catch-All-Syntax\"?</strong>"
+msgstr "<strong>Was bedeutet \"Empfängernamen-Catch-All-Syntax\"</strong>?"
 
 #: includes/leav-settings-page.inc.php:1539
 msgid ""
@@ -1593,7 +1591,7 @@ msgstr ""
 "macht es Schnorrern sehr einfach sich z.B. für Freemium-Registrierungen "
 "beliebig häufig anzumelden. Eventuell möchtest du dies jedoch wegen deines "
 "Geschäftsmodells oder aus anderen Gründen unterdrücken. Hierfür kannst du "
-"die Empfängernamen-Catch-All-Syntax einfach verbieten."
+"die Empfängernamen-Catch-All-Syntax einfach verbieten"
 
 #: includes/leav-settings-page.inc.php:1547
 msgid ""
@@ -1613,11 +1611,11 @@ msgstr ""
 "\" target=\"_blank\">smings</a> (die Website ist ganz bald online) freuen "
 "uns dir weiterhelfen zu können und<br/> LEAV - Last Email Address Validator "
 "noch besser zu machen. Wir wollen deine nicht erneuerbare Lebenszeit so gut "
-"wie möglich schützen. <br/>Schicke uns einfach eine Email an"
+"wie möglich schützen. <br/>Schicke uns einfach eine Email an "
 
 #: includes/leav-settings-page.inc.php:1554
 msgid "Help us help you!"
-msgstr "Hilf uns Dir zu helfen"
+msgstr "Hilf uns Dir zu helfen!"
 
 #: includes/leav-settings-page.inc.php:1556
 msgid ""
@@ -1626,7 +1624,7 @@ msgid ""
 "filtering out tons of <br/>spam attempts, please show us your appreciation "
 "and consider a <strong>"
 msgstr ""
-"Zu  guter letzt - wenn LEAV - Last Email Address Validator fundamentalen "
+"Zu guter Letzt - wenn LEAV - Last Email Address Validator fundamentalen "
 "Mehrwert für dich schafft in dem es dir<br/>eine Menge deiner wertvollen, "
 "nicht erneuerbaren Lebenszeit bewahrt, in dem es Tonnen von Spamversuchen "
 "verhindert, dann zeige uns bitte deine Wertschätzung und erwäge eine <strong>"
@@ -1707,6 +1705,7 @@ msgid "Updated the settings for"
 msgstr "Aktualisierung der Einstellungen für"
 
 #: includes/leav-settings-page.inc.php:1796
+#: includes/leav-settings-page.inc.php:1917
 msgid "allowing recipient name catch-all syntax.<br/>"
 msgstr "Empfängernamen-Carch-All-Syntax erlauben.<br/>"
 
@@ -1920,10 +1919,6 @@ msgstr "Aktualisierung der Einstellungen für das Feld <strong>"
 msgid "Error while trying to update the settings for"
 msgstr "Fehler beim Versuch der Aktualisierung der Einstellungen für"
 
-#: includes/leav-settings-page.inc.php:1917
-msgid "allowing recipient name catch-all syntac.<br/>"
-msgstr ""
-
 #: includes/leav-settings-page.inc.php:1922
 msgid ""
 "Error while trying to update the email domain for simulating the sending of "
@@ -2011,6 +2006,9 @@ msgstr ""
 #: last-email-address-validator.php:296
 msgid "<strong>Error: </strong>"
 msgstr "<strong>Fehler: </strong>"
+
+#~ msgid "allowing recipient name catch-all syntac.<br/>"
+#~ msgstr "das Zulassen von Empfängername-Catch-All-Syntax.<br/>"
 
 #~ msgid ""
 #~ "Email addresses from this list will be rejected (if active). <br/"
