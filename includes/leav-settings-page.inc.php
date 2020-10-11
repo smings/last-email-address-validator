@@ -384,7 +384,7 @@ class LeavSettingsPage
                                 <?php
                                     _e( 'Email addresses from the listed domains will be accepted without further domain blacklist  checks (if active).', 'leav' );
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
-                                    _e( '<br/><strong>Use one domain per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Enter one domain per line</strong>.', 'leav' );
                                     _e( '<br/><strong>Default: No</strong>', 'leav');
                                  ?>
                             </p>
@@ -431,7 +431,7 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS['user_define
                                 <?php
                                     _e('Email addresses on this list will be accepted without further email address blacklist checks (if active).', 'leav' );
                                     _e( '<br/>Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'leav' );
-                                    _e( '<br/><strong>Use one email address per line</strong>.', 'leav');
+                                    _e( '<br/><strong>Enter one email address per line</strong>.', 'leav');
                                     _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -474,7 +474,7 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                                 <?php
                                     _e('Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).', 'leav' );
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
-                                    _e( '<br/><strong>Use one recipient name per line</strong>.', 'leav');
+                                    _e( '<br/><strong>Enter one recipient name per line</strong>.', 'leav');
                                     _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -533,7 +533,7 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
                                 <?php
                                     _e( 'Email addresses from these domains will be rejected (if active).', 'leav' );
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
-                                    _e( '<br/><strong>Use one domain per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Enter one domain per line</strong>.', 'leav' );
                                     _e( '<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -627,7 +627,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php
                                     _e( 'Email addresses from this list will be rejected (if active).', 'leav' );
                                     _e( '<br/>Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'leav' );
-                                    _e( '<br/><strong>Use one email address per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Enter one email address per line</strong>.', 'leav' );
                                     _e( '<br/><strong>Default: No</strong>', 'leav');
                                 ?>
                             </p>
@@ -660,7 +660,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <?php
                                     _e('If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "<strong>d.e.m.o.123@domain.com</strong>" gets collapsed into "<strong>demo@domain.com</strong>".<br/>This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.<br/>This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.', 'leav');
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'leav' );
-                                    _e( '<br/><strong>Use one recipient name per line</strong>.', 'leav' );
+                                    _e( '<br/><strong>Enter one recipient name per line</strong>.', 'leav' );
                                     _e('<br/><strong>Default: No</strong>', 'leav');
                                 ?>
 
@@ -780,7 +780,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             </label>
                             <p class="description">
                                 <?php
-                                    _e('If activated in the last step of the validation process, LEAV tries to send out an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. Test this with a working email address. If it gets rejected, you might want to deactivate this option.<br/><strong>This option should always be active in production environments<br/>Default: Yes</strong>', 'leav'); ?>
+                                    _e('If activated LEAV tries to simulate the sending of an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. Test this with a working email address. If it gets rejected, you might want to deactivate this option.<br/><strong>This option should always be active in production environments<br/>Default: Yes</strong>', 'leav'); ?>
                             </p>
                         </td>
                     </tr>
@@ -1479,7 +1479,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                             _e( 'Change settings</a>', 'leav' );
                         ?>
                     <br/>
-                    <?php _e('If set to "No", this filters out all email address that originate from domains that accept emails for ANY recipient name. For more information what a recipient name catch-all syntax is, please check our FAQ entry below.', 'leav'); ?>
+                    <?php _e('If set to "No", this filters out all email addresses that originate from domains that accept emails for ANY recipient name.', 'leav'); ?>
                 </li>
 
             </ol>
@@ -1490,13 +1490,13 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
             <h3><?php
                     _e( '<strong>Wildcard syntax for domains:</strong>', 'leav' ); ?></h3>
                 <?php
-                    _e( 'You can use asterixes "<strong>*</strong>" as wildcards in domain names. It stands for zero up to any amount of characters. I.e. "<strong>mail4*.com</strong>" matches all emails from domains starting with <br/>"<strong>mail4</strong>" followed by "<strong>.com</strong>". In this case "<strong>mail4.com</strong>", "<strong>mail4i.com</strong>", "<strong>mail4me.com</strong>", "<strong>mail4myparents.com</strong>" would all be matched.<br/>You can use "*" for entire subdomains and top-level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).<br/>"<strong>*.mail.*</strong>" matches "<strong>a.mail.tk</strong>" or "<strong>this-is-a-subdomain.mail.com</strong>".<br/>If you want to block entire top-level-domains, you\'ll have to use "<strong>**</strong>". I.e. "<strong>**.tk</strong>" will match all domains ending with "<strong>.tk</strong>".<br/>You can see further examples on our list of free email address provider domains in the blacklists section.', 'leav' );
+                    _e( 'You can use asterisks "<strong>*</strong>" as wildcards in domain names. It stands for zero up to any amount of characters. I.e. "<strong>mail4*.com</strong>" matches all emails from domains starting with <br/>"<strong>mail4</strong>" followed by "<strong>.com</strong>". In this example "<strong>mail4.com</strong>", "<strong>mail4i.com</strong>", "<strong>mail4me.com</strong>", "<strong>mail4myparents.com</strong>" would all be matched.<br/>You can use "*" for entire subdomains and top-level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).<br/>"<strong>*.mail.*</strong>" matches "<strong>a.mail.tk</strong>" or "<strong>this-is-a-subdomain.mail.com</strong>".<br/>If you want to block entire top-level-domains, you\'ll have to use "<strong>**</strong>". I.e. "<strong>**.tk</strong>" will match all domains ending with "<strong>.tk</strong>".<br/>You can see further examples on our list of free email address provider domains in the blacklists section.', 'leav' );
                     _e( '<br/>Be careful to not over do any kind of matching with wildcards.<br/>We urge you to extensively test whether email addresses would get matched or not with the test option at the very top of the settings page.', 'leav' );
                 ?>
             <h3><?php
                     _e( '<strong>Wildcard syntax for recipient names:</strong>', 'leav' ); ?></h3>
                 <?php
-                    _e( 'You can use asterixes "<strong>*</strong>" as wildcards in recipient names as well. It stands for zero up to any amount of characters. I.e. "<strong>*spammer*</strong>" matches all recipient names containing the word "<strong>spammer</strong>". It matches "<strong>all-spammers-go</strong>" or just "<strong>spammer</strong>". <strong>mailfrom*</strong>" matches all recipient names starting with "<strong>mailfrom</strong>". I.e. "<strong>mailfrom</strong>", "<strong>mailfroma</strong>", "<strong>mailfromme</strong>", etc. You can place the asterix anywhere. I.e. "<strong>*spam*from*</strong>" matches "<strong>spamfrom</strong>" as well as "<strong>all-spam-from-me</strong>".<br/>You can see plenty examples on our list of role-based recipient names in the blacklists section. These are mostly trailing "*", so that we don\'t match too many recipient names.', 'leav' );
+                    _e( 'You can use asterisks "<strong>*</strong>" as wildcards in recipient names as well. It stands for zero up to any amount of characters. I.e. "<strong>*spammer*</strong>" matches all recipient names containing the word "<strong>spammer</strong>". It matches "<strong>all-spammers-go</strong>" or just "<strong>spammer</strong>". <strong>mailfrom*</strong>" matches all recipient names starting with "<strong>mailfrom</strong>". I.e. "<strong>mailfrom</strong>", "<strong>mailfroma</strong>", "<strong>mailfromme</strong>", etc. You can place the asterisk anywhere. I.e. "<strong>*spam*from*</strong>" matches "<strong>spamfrom</strong>" as well as "<strong>all-spam-from-me</strong>".<br/>You can see plenty examples on our list of role-based recipient names in the blacklists section. These are mostly trailing "*", so that we don\'t match too many recipient names.', 'leav' );
                     _e( '<br/>Be careful to not over do any kind of matching with wildcards.<br/>We urge you to extensively test whether email addresses would get matched or not with the test option at the very top of the settings page.', 'leav' );
                 ?>
             <h3><?php
