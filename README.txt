@@ -44,9 +44,9 @@ Currently "Last Email Address Validator" integrates with:
 * [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.07.01 (300,000+ Installations)
 * [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.1.2 (30,000+ installations)
 
-which gives LEAV a current plugin reach of 15,330,000 potential use-cases for plugins. And this is not even counting every single WordPress installation. 
+which gives LEAV a current plugin reach of 15,330,000+ WordPress installtions. And these numbers only cover the freely available plugin installtions from the plugin marketplace on WordPress.org/plugins. 
 
-Additionally you can control whether you want to allow pingbacks & trackbacks.
+Additionally to the email validation and filter features, LEAV let's you control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
 validated
 * [WordPress Trackbacks](https://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-trackbacks-and-pingbacks-in-wordpress/)
@@ -56,6 +56,7 @@ validated
 
 We are currently working on integrating the following plugins:
 
+* [Elementor Website Builder](https://wordpress.org/plugins/elementor/) (5,000,000+ installations)
 * [OptinMonster API](https://wordpress.org/plugins/optinmonster/) (1,000,000+ installations)
 * [Popup Maker](https://wordpress.org/plugins/popup-maker/) (500,000+ installations)
 * [Newsletter](https://wordpress.org/plugins/newsletter/) (300,000 installations)
@@ -100,6 +101,10 @@ We are currently working on integrating the following plugins:
 * [MC4WP: Mailchimp Top Bar](https://wordpress.org/plugins/mailchimp-top-bar/) (10,000+ installations)
 * [Email Before Download](https://wordpress.org/plugins/email-before-download/) (10,000+ installations)
 
+When we finished this list, we'll be able to serve an additional 9,120,000+ WordPress installations. Brining our total reach up to 24,450,000+ installations, not counting gravity forms (we don't have any reliable data on this plugin's installation count).
+Overall we'll probably be able to serve 25+ million WordPress installations.
+Please help us spread the word and recommend our plugin to others and leave us an
+honest review. It might take some time to set up the validation and filter settings. Please trust us, it is more than worth your while afterwards...
 
 = Features =
 
@@ -109,27 +114,37 @@ LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-ad
 
 * Block recipient name catch-all email addresses like (i.e. first.last+any-text@gmail.com) (optinal)
 
-* User-defined domain whitelist - allows all email addresses from your personal list of whitelisted email domains (optional)
+* User-defined domain whitelist with wildcard support (optional)
 
-* User-defined email address whitelist - allows all email addresses from your personal list of whitelisted email addresses (optional)
+* User-defined email address whitelist (optional)
 
-* User-defined domain blacklist - rejects email addresses from your personal list of blacklisted email domains (optional)
+* User-defined recipient name whitelist with wildcard support (optional)
 
-* User-defined email address blacklist - rejects any email address from your personal list of blacklisted email addresses (optional)
-
-* DNS MX record check - checks if the domain of the email address is DNS resolvable and has at least one MX server (MX = Mail eXchange) record (always on)
+* User-defined domain blacklist with wildcard support (optional)
 
 * Blocking of disposable email address (DEA) services - if activated checks and filters out DEAs . The list gets frequently updated and blocks the main domains, their underlying mail exchange (MX) server domains as well as the MX server IP addresses. This ensures that you don't get duped by a simple domain alias that routes its MX entries to the same DEA MX servers. (optional)
 
-* Simulated sending of an email to one of the MX servers. If this siumulation fails, we know that your WordPress instance could not send an email to the email address. Therefore we reject such email addresses (always on)
+* Blocking of free email address providers from built-in domain list. This is a feature for those who only want to collect business email addresses. (optional)
+
+* User-defined email address blacklist (optional)
+
+* User-defined recipient name blacklistlist with wildcard support (optional)
+
+* Built-in role-based recipient name blacklistlist with wildcard support (optional)
+
+* DNS MX record check - checks if the domain of the email address is DNS resolvable and has at least one MX server (MX = Mail eXchange) record (always on)
+
+* Simulated sending of an email to one of the MX servers. If this siumulation fails, we know that your WordPress instance could not send an email to the email address. Therefore we reject such email addresses (optional)
+
+* Blocking of catch-all domains (optional)
 
 If an email address passes through all of these tests, we know for sure, that it is a real email address that your WordPress instance can deliver emails to. This will reduce spam significantly. No matter how good LEAV works, we still
 encourage you to use additional spam protection by using reCATCHAs (i.e. googles [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) that
-is invisible except for a little banner that has to be added (at least on the form pages) and other means to protect your valuable lifetime.
+is invisible except for a little banner that has to be added (at least on the form pages), honeypots and/or other means to protect your valuable lifetime.
 
 After all - all the above tests just verify the email address's correctness and deliverability, but it doesn't prove that the person in front of the computer entering the email address has access to it. 
 
-This check is part of our LEAV PRO version. LEAV PRO version verifies that the person entering the email address has access to the email address. By connecting the email address with the person interacting with your WordPress website, you can reduce the amount of SPAM even further.
+This check is part of our LEAV PRO version. LEAV's PRO version verifies that the person entering the email address has access to the email address. By connecting the email address with the person interacting with your WordPress website, you can reduce the amount of SPAM even further. We try to automatically integrate a so-called honeypot feature to all supported plugins and additionally we will add RBL (Real Time Black) checks, to make your contact forms / online forms as safe as possible.
 
 But even after all this, you'll probably be bothered every now and then. But you'll save a ton of your precious lifetime with the above checks provided by LEAV.
 
@@ -139,7 +154,7 @@ The inspiration for this plugin stems from the plugin [wp-mail-validator](https:
 Since this plugin only supported the standard WordPress registration, comments and 
 Trackbacks/Pingbacks, we took the code and extended it to work with [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) as well as [WooCommerce](https://wordpress.org/plugins/woocommerce/). The original code was not following best practices and had other shortcomings. So with version 1.3.0 we decided to completely rewrite everything and did a major code refactoring. This allowed us to have a solid foundation for a lot more supported WordPress plugins to come.
 
-If you need "LEAV - Last-Email-Address-Validator" to integrate with a plugin you use, feel free to contact us at [leav@smings.com](mailto:leav@smings.com) for feature requests.
+If you need "LEAV - Last-Email-Address-Validator" to integrate with a plugin you use, feel free to contact us at [leav@smings.com](mailto:leav@smings.com) for feature requests. Before you do so, please check with our road map to see if it is already listed.
 
 = Installation =
 

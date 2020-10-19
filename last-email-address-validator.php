@@ -3,10 +3,10 @@
 Plugin Name: Last Email Address Validator
 Plugin URI: https://smings.com/leav/
 Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come...
-Version: 1.4.1
+Version: 1.4.8
 Author: smings
 Author URI: https://smings.com/leav/
-Text Domain: leav
+Text Domain: last-email-address-validator
 */
 
 defined('ABSPATH') or die('Not today!');
@@ -70,7 +70,7 @@ class LeavPlugin
 
     public function add_plugin_overview_page_links( $links ) : array
     {
-        $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings', 'leav' ) . '</a>';
+        $settings_link = '<a href="options-general.php?page=last-email-address-validator">' . __( 'Settings', 'last-email-address-validator' ) . '</a>';
         array_unshift( $links, $settings_link );
         return $links;
     }
@@ -293,7 +293,7 @@ class LeavPlugin
              && !$user_ID
              && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
-            return new WP_error('leav_email_address_validation_failed', __('<strong>Error: </strong>', 'leav') . $this->get_email_validation_error_message(), 200 );
+            return new WP_error('leav_email_address_validation_failed', __('<strong>Error: </strong>', 'last-email-address-validator') . $this->get_email_validation_error_message(), 200 );
         return $approval_status;
     }
 

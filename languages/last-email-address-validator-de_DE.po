@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
-"POT-Creation-Date: 2020-10-11 21:48+0200\n"
-"PO-Revision-Date: 2020-10-11 21:52+0200\n"
+"POT-Creation-Date: 2020-10-12 09:54+0200\n"
+"PO-Revision-Date: 2020-10-12 09:56+0200\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -1067,8 +1067,8 @@ msgstr ""
 "><strong>Standardwert: 3<strong>"
 
 #: includes/leav-settings-page.inc.php:1291
-msgid "FAQ • Frequently Asked Questions"
-msgstr "FAQ • Häufig gestellte Fragen"
+msgid "FAQ - Frequently Asked Questions"
+msgstr "FAQ - H&auml;ufig gestellte Fragen"
 
 #: includes/leav-settings-page.inc.php:1292
 msgid "How exactly does LEAV validate email addresses?"
@@ -1118,8 +1118,8 @@ msgstr "Catch-All Syntax in Empfängernamen erlauben (optional)"
 #: includes/leav-settings-page.inc.php:1444
 #: includes/leav-settings-page.inc.php:1457
 #: includes/leav-settings-page.inc.php:1476
-msgid " • Current setting is \"<strong>"
-msgstr " • aktuelle Einstellung ist \"<strong>"
+msgid " - Current setting is \"<strong>"
+msgstr " - aktuelle Einstellung ist \"<strong>"
 
 #: includes/leav-settings-page.inc.php:1317
 #: includes/leav-settings-page.inc.php:1332
