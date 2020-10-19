@@ -16,8 +16,8 @@ require_once("includes/leav-class.inc.php");
 require_once("includes/leav-settings-page.inc.php");
 require_once("includes/leav-helper-functions.inc.php");
 
-if (!function_exists('is_plugin_active')) {
-    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+if ( ! function_exists('is_plugin_active') ){
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
 class LeavPlugin
