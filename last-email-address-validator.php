@@ -21,6 +21,8 @@ if ( ! function_exists('is_plugin_active') ){
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
+load_plugin_textdomain('last-email-address-validator');
+
 class LeavPlugin
 {
     private $disposable_email_service_provider_list_file = '';

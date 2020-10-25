@@ -399,16 +399,21 @@ class LeavSettingsPage
 your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS['user_defined_domain_whitelist_string']); ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
-                                    echo( 
-                                        strval( 
-                                            sizeof( 
-                                                $this->central::$OPTIONS['user_defined_domain_whitelist']['domains'] 
-                                            ) 
-                                            +  
-                                            sizeof( 
+
+                                    $size = 0;
+                                    if( is_array( $this->central::$OPTIONS['user_defined_domain_whitelist'] ) )
+                                    {
+                                        if( array_key_exists( 'domains', $this->central::$OPTIONS['user_defined_domain_whitelist'] ) )
+                                            $size += sizeof( 
+                                                    $this->central::$OPTIONS['user_defined_domain_whitelist']['domains'] 
+                                            );
+                                        if( array_key_exists( 'regexps', $this->central::$OPTIONS['user_defined_domain_whitelist'] ) )
+                                            $size += sizeof( 
                                                 $this->central::$OPTIONS['user_defined_domain_whitelist']['regexps'] 
-                                            )
-                                        ) 
+                                            );
+                                    }
+                                    echo( 
+                                        strval( $size )
                                     );
                                 ?>
                             </label>
@@ -489,16 +494,20 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
 yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
-                                    echo( 
-                                        strval( 
-                                            sizeof( 
-                                                $this->central::$OPTIONS['user_defined_recipient_name_whitelist']['recipient_names'] 
-                                            ) 
-                                            +  
-                                            sizeof( 
+                                    $size = 0;
+                                    if( is_array( $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] ) )
+                                    {
+                                        if( array_key_exists( 'recipient_names', $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] ) )
+                                            $size += sizeof( 
+                                                    $this->central::$OPTIONS['user_defined_recipient_name_whitelist']['recipient_names'] 
+                                            );
+                                        if( array_key_exists( 'regexps', $this->central::$OPTIONS['user_defined_recipient_name_whitelist'] ) )
+                                            $size += sizeof( 
                                                 $this->central::$OPTIONS['user_defined_recipient_name_whitelist']['regexps'] 
-                                            )
-                                        ) 
+                                            );
+                                    }
+                                    echo( 
+                                        strval( $size )
                                     );
                                 ?>
                             </label>
@@ -547,16 +556,19 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
 your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined_domain_blacklist_string"] ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
-                                    echo( 
-                                        strval( 
-                                            sizeof( 
-                                                $this->central::$OPTIONS['user_defined_domain_blacklist']['domains'] 
-                                            ) 
-                                            +  
-                                            sizeof( 
+                                    if( is_array( $this->central::$OPTIONS['user_defined_domain_blacklist'] ) )
+                                    {
+                                        if( array_key_exists( 'domains', $this->central::$OPTIONS['user_defined_domain_blacklist'] ) )
+                                            $size += sizeof( 
+                                                    $this->central::$OPTIONS['user_defined_domain_blacklist']['domains'] 
+                                            );
+                                        if( array_key_exists( 'regexps', $this->central::$OPTIONS['user_defined_domain_blacklist'] ) )
+                                            $size += sizeof( 
                                                 $this->central::$OPTIONS['user_defined_domain_blacklist']['regexps'] 
-                                            )
-                                        ) 
+                                            );
+                                    }
+                                    echo( 
+                                        strval( $size )
                                     );
                                 ?>
                             </label>
@@ -669,16 +681,20 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                 <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
-                                    echo( 
-                                        strval( 
-                                            sizeof( 
-                                                $this->central::$OPTIONS['user_defined_recipient_name_blacklist']['recipient_names'] 
-                                            ) 
-                                            +  
-                                            sizeof( 
+                                    $size = 0;
+                                    if( is_array( $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] ) )
+                                    {
+                                        if( array_key_exists( 'recipient_names', $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] ) )
+                                            $size += sizeof( 
+                                                    $this->central::$OPTIONS['user_defined_recipient_name_blacklist']['recipient_names'] 
+                                            );
+                                        if( array_key_exists( 'regexps', $this->central::$OPTIONS['user_defined_recipient_name_blacklist'] ) )
+                                            $size += sizeof( 
                                                 $this->central::$OPTIONS['user_defined_recipient_name_blacklist']['regexps'] 
-                                            )
-                                        ) 
+                                            );
+                                    }
+                                    echo( 
+                                        strval( $size )
                                     );
                                 ?>
                             </label>
