@@ -1,13 +1,14 @@
 <?php
 /*
-Plugin Name: Last Email Address Validator
-Plugin URI: https://smings.com/leav/
-Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come...
-Version: 1.4.8
-Author: smings
-Author URI: https://smings.com/leav/
-Text Domain: last-email-address-validator
-*/
+ * Plugin Name: Last Email Address Validator
+ * Plugin URI: https://smings.com/leav/
+ * Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come...
+ * Version: 1.4.8
+ * Author: smings
+ * Author URI: https://smings.com/leav/
+ * Text Domain: last-email-address-validator
+ * Domain Path: /languages
+ */
 
 defined('ABSPATH') or die('Not today!');
 
