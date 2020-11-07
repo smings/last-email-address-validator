@@ -73,7 +73,7 @@ class LeavPlugin
 
     public function add_plugin_overview_page_links( $links ) : array
     {
-        // before we set the settings link, we need to differentiate where the actual settings page is
+        // before we add the settings link, we need to differentiate where the actual settings page is
         // currently located
         if( $this->central::$OPTIONS['use_main_menu'] == 'no' )
             $settings_link = '<a href="options-general.php?page=leav-settings-page.inc">' . __( 'Settings', 'last-email-address-validator' ) . '</a>';
