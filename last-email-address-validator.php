@@ -689,7 +689,7 @@ class LeavPlugin
         // ------ Main Menu Use & Positions -------------------
         //
         if ( empty( $this->central::$OPTIONS['use_main_menu'] ) )
-            $this->central::$OPTIONS['use_main_menu'] = 'no';
+            $this->central::$OPTIONS['use_main_menu'] = 'yes';
 
         if (    empty( $this->central::$OPTIONS['main_menu_position'] )
              || $this->central::$OPTIONS['main_menu_position'] ==''
