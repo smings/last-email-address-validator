@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
 "POT-Creation-Date: 2020-10-12 09:54+0200\n"
-"PO-Revision-Date: 2020-11-10 16:36+0100\n"
+"PO-Revision-Date: 2020-11-11 00:57+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -1072,7 +1072,7 @@ msgstr "FAQ - H&auml;ufig gestellte Fragen"
 
 #: includes/leav-settings-page.inc.php:1292
 msgid "How exactly does LEAV validate email addresses?"
-msgstr "Wie exakt validiert LEAV Emailadressen?"
+msgstr "Wie validiert LEAV Emailadressen?"
 
 #: includes/leav-settings-page.inc.php:1295
 msgid ""
@@ -1080,7 +1080,7 @@ msgid ""
 "in the following multi-step process"
 msgstr ""
 "validiert & filtert Emailaddressen von WordPress-Funktionen und -Plugins mit "
-"Hilfe eines mehrstufigen Prozesses"
+"Hilfe des nachfolgend beschriebenen, mehrstufigen Prozesses"
 
 #: includes/leav-settings-page.inc.php:1302
 msgid "Email Address Syntax Validation (always active)"

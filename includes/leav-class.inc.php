@@ -149,7 +149,7 @@ class LastEmailAddressValidator
 		)
 		{
 			$this->is_email_address_from_dea_service = true;
-			$this->error_type = 'email_domain_on_dea_blacklist';
+			$this->error_type = 'email_domain_is_on_dea_blacklist';
 		}
 
 		return $this->is_email_address_from_dea_service;
@@ -158,8 +158,6 @@ class LastEmailAddressValidator
 
 	public function simulate_sending_an_email( string $email_address = '', string $wp_email_domain = '' )
 	{
-		$this->error_type = 'z';
-
 		if( ! empty($wp_email_domain) )
 			$sender_email_domain = $wp_email_domain;
 		elseif( ! empty($this->wp_email_domain) )
@@ -204,7 +202,6 @@ class LastEmailAddressValidator
 		}
 		$this->close_smtp_connection();
 		$this->simulated_sending_succeeded = true;
-		$this->error_type = '';
 		return true;
 	}
 
@@ -287,7 +284,7 @@ class LastEmailAddressValidator
 	{
 		if( preg_match( $this->central::$RECIPIENT_NAME_CATCH_ALL_REGEX, $this->normalized_email_address ) )
 		{
-			$this->error_type = 'inline_catch_all_email_address_error';
+			$this->error_type = 'recipient_name_catch_all_email_address_error';
 			$this->is_email_address_inline_catch_all = true;
 			return true;
 		}
@@ -338,10 +335,7 @@ class LastEmailAddressValidator
 		// creating a random
 		$email_address = 'hfugyiohkjbhgymxcbiewkbe' . microtime(true) . '@' . $this->email_domain;
 		if(! $this->simulate_sending_an_email( $email_address, $this->wp_email_domain ) )
-		{
-			$this->error_type = '';
 			return false;
-		}
 		$this->error_type = 'email_from_catch_all_domain';
 		return true;
 

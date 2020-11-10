@@ -302,7 +302,7 @@ class LeavPlugin
              && !$user_ID
              && ! $this->validate_email_address( $comment_data['comment_author_email'] )
         )
-            return new WP_error('leav_email_address_validation_failed', __('<strong>Error: </strong>', 'last-email-address-validator') . $this->get_email_validation_error_message(), 200 );
+            return new WP_error('leav_email_address_validation_failed', __('<strong>Error: </strong>', 'last-email-address-validator' ) . $this->get_email_validation_error_message(), 200 );
         return $approval_status;
     }
 
@@ -646,7 +646,7 @@ class LeavPlugin
             $this->central::$OPTIONS['validate_kali_forms_email_fields'] = 'yes';
 
 
-        // ------ Custom error message override fields -------------------------
+        // ------ CEM = Custom error message override fields -------------------------
         //
         if ( empty( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$OPTIONS['cem_email_address_syntax_error'] = '';
@@ -673,8 +673,8 @@ class LeavPlugin
         if ( empty( $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] ) )
             $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] = '';
 
-        if ( empty( $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] ) )
-            $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] = '';
+        if ( empty( $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'] ) )
+            $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'] = '';
 
         if ( empty( $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] ) )
             $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] = '';
@@ -793,11 +793,11 @@ class LeavPlugin
         if( ! empty ( $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_domain_has_no_mx_record'] = $this->central::$OPTIONS['cem_email_domain_has_no_mx_record'];
 
-        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] ) )
-            $this->central::$VALIDATION_ERROR_LIST['email_domain_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'];
+        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_domain_is_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'];
 
-        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'] ) )
-            $this->central::$VALIDATION_ERROR_LIST['email_domain_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_on_dea_blacklist'];
+        if( ! empty ( $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_domain_is_on_dea_blacklist'] = $this->central::$OPTIONS['cem_email_domain_is_on_dea_blacklist'];
 
         if( ! empty ( $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'] ) )
             $this->central::$VALIDATION_ERROR_LIST['simulated_sending_of_email_failed'] = $this->central::$OPTIONS['cem_simulated_sending_of_email_failed'];
