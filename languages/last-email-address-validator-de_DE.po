@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
 "POT-Creation-Date: 2020-10-12 09:54+0200\n"
-"PO-Revision-Date: 2020-10-12 09:56+0200\n"
+"PO-Revision-Date: 2020-11-10 16:36+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -127,10 +127,10 @@ msgid ""
 "or <a href=\"#ses\">deactivate the simulated email sending</a> to "
 "permanently dismiss this warning message."
 msgstr ""
-"Email Domain für das simulierte Versenden von Emails konnte nicht "
-"automatisch erkannt werden. Bitte gib eine <a href=\"#email_domain\">Email "
-"Domain below</a> ein oder <a href=\"#ses\">deaktiviere das Simulieren von "
-"Emails</a>, um diesen Warnhinweis dauerhaft auszublenden."
+"Die Email Domain für das simulierte Versenden von Emails konnte nicht "
+"automatisch erkannt werden. Bitte gib unten eine <a href=\"#email_domain"
+"\">Email Domain</a> ein oder <a href=\"#ses\">deaktiviere den simulierten "
+"Versand von Emails</a>, um diesen Warnhinweis dauerhaft auszublenden."
 
 #: includes/leav-settings-page.inc.php:111
 msgid ""
@@ -180,7 +180,7 @@ msgstr "Wegwerf-Emailaddress-Blocking"
 #: includes/leav-settings-page.inc.php:766
 #: includes/leav-settings-page.inc.php:771
 msgid "Simulate Email Sending"
-msgstr "Simuliere einen Emailversand"
+msgstr "Simulierter Emailversand"
 
 #: includes/leav-settings-page.inc.php:188
 msgid "Catch-all domains"
@@ -225,7 +225,7 @@ msgstr "Statistik / Version"
 
 #: includes/leav-settings-page.inc.php:252
 msgid "Test Email Address Validation"
-msgstr "Emailadress-Validierungs-Test"
+msgstr "Emailadress-Validierungstest"
 
 #: includes/leav-settings-page.inc.php:255
 msgid "Enter an email address for testing validation results"
