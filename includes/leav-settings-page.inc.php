@@ -649,8 +649,19 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <th scope="row">&nbsp;</th>
                         <td>
                             <label>
-                                <textarea id="user_defined_email_blacklist_string" name="user_defined_email_blacklist_string" rows="7" cols="40" placeholder="your-blacklisted-domain-1.com
-your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined_email_blacklist_string"] ?></textarea>
+                                <textarea id="user_defined_email_blacklist_string" name="user_defined_email_blacklist_string" rows="7" cols="40" placeholder="your-blacklisted-email-1@domain.com
+your-blacklisted-email-2@domain.com"><?php echo $this->central::$OPTIONS["user_defined_email_blacklist_string"] ?></textarea><br/>
+                                <?php
+                                    _e( 'Number of entries: ', 'last-email-address-validator' );
+                                    $size = 0;
+                                    if( is_array( $this->central::$OPTIONS['user_defined_email_blacklist'] ) )
+                                        $size += sizeof( $this->central::$OPTIONS['user_defined_email_blacklist'] );
+                                    echo( 
+                                        strval( $size )
+                                    );
+                                ?>
+
+
                             </label>
                         </td>
                     </tr>
@@ -678,7 +689,8 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                             </p>
                             <label>
-                                <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea><br/>
+                                <textarea id="user_defined_recipient_name_blacklist_string" name="user_defined_recipient_name_blacklist_string" rows="7" cols="40" placeholder="blacklisted recipient name 1
+blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_recipient_name_blacklist_string'] ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
                                     $size = 0;
