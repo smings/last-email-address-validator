@@ -81,9 +81,14 @@ class LeavCentral
     'cem_email_domain_has_no_mx_record',
     'cem_email_domain_is_blacklisted',
     'cem_email_domain_is_on_dea_blacklist',
+    'cem_email_domain_is_on_free_email_address_provider_domain_list',
     'cem_email_from_catch_all_domain',
     'cem_general_email_validation_error',
+    'cem_recipient_name_catch_all_email_address_error',
+    'cem_recipient_name_is_blacklisted',
+    'cem_recipient_name_is_role_based',
     'cem_simulated_sending_of_email_failed',
+    'cem_smtp_connection_failed',
   );
   public static $VALIDATION_ERROR_LIST = array();
   public static $VALIDATION_ERROR_LIST_DEFAULTS = array();
@@ -108,8 +113,8 @@ class LeavCentral
           'email_address_syntax_error'        => __( 'The entered email address syntax is invalid.', 'last-email-address-validator' ),
           'email_domain_has_no_mx_record'     => __( 'The entered email address\'s domain doesn\'t have any mail servers.', 'last-email-address-validator' ),
           'email_domain_is_blacklisted'       => __( 'The entered email address\'s domain is blacklisted.', 'last-email-address-validator' ),
-          'email_domain_is_on_free_email_address_provider_list'     => __( 'We don\'t accept email addresses from free email address providers. Please use a business email address.', 'last-email-address-validator' ),
           'email_domain_is_on_dea_blacklist'     => __( 'We don\'t accept email addresses from disposable email address services (DEA). Please use a regular email address.', 'last-email-address-validator' ),
+          'email_domain_is_on_free_email_address_provider_domain_list'     => __( 'We don\'t accept email addresses from free email address providers. Please use a business email address.', 'last-email-address-validator' ),
           'email_from_catch_all_domain'       => __( 'We don\'t accept email addresses from catch-all domains. Your email address\'s domain accepts any recipient name. Please use an email address from another domain', 'last-email-address-validator' ),
           'general_email_validation_error'    => __( 'The entered email address is invalid.', 'last-email-address-validator' ),
           'recipient_name_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a &quot;&#43;&quot; sign. Please remove the &quot;&#43;&quot; sign and everything after it.', 'last-email-address-validator' ),

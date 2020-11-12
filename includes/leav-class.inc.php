@@ -122,7 +122,7 @@ class LastEmailAddressValidator
 		if( ! $this->is_email_domain_in_list( $list ) )
 			return false;
 		$this->is_email_address_on_free_email_address_provider_list = true;
-		$this->error_type = 'email_domain_is_on_free_email_address_provider_list';
+		$this->error_type = 'email_domain_is_on_free_email_address_provider_domain_list';
 		return true;
 	}
 
@@ -380,7 +380,6 @@ class LastEmailAddressValidator
 			$this->is_email_address_syntax_valid = true;
 			return $this->extract_recipient_name_and_domain_from_email_address();
 		}
-
 		$this->error_type = 'email_address_syntax_error';
 		return false;
 	}

@@ -779,7 +779,7 @@ class LeavPlugin
             $this->central::$VALIDATION_ERROR_LIST['email_domain_is_blacklisted'] = $this->central::$OPTIONS['cem_email_domain_is_blacklisted'];
 
         if( ! empty ( $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'] ) )
-            $this->central::$VALIDATION_ERROR_LIST['email_domain_is_on_free_email_address_provider_list'] = $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'];
+            $this->central::$VALIDATION_ERROR_LIST['email_domain_is_on_free_email_address_provider_domain_list'] = $this->central::$OPTIONS['cem_email_domain_is_on_free_email_address_provider_domain_list'];
 
         if( ! empty ( $this->central::$OPTIONS['cem_email_address_is_blacklisted'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_address_is_blacklisted'] = $this->central::$OPTIONS['cem_email_address_is_blacklisted'];

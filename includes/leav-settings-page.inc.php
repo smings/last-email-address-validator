@@ -1171,7 +1171,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                         <th scope="row"><?php _e('Email domain is on list of free email address provider domains error message', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
-                                <input name="cem_email_domain_is_on_free_email_address_provider_domain_list" type="text" size="80" value="<?php echo ( $this->central::$OPTIONS["cem_email_domain_is_on_free_email_address_provider_domain_list"]); ?>" placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_domain_is_on_free_email_address_provider_list'] ); ?>"/>
+                                <input name="cem_email_domain_is_on_free_email_address_provider_domain_list" type="text" size="80" value="<?php echo ( $this->central::$OPTIONS["cem_email_domain_is_on_free_email_address_provider_domain_list"]); ?>" placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_domain_is_on_free_email_address_provider_domain_list'] ); ?>"/>
                             </label>
                         </td>
                     </tr>
@@ -1902,20 +1902,35 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
         // ------ Custom error message override fields -------------------------
         //
-        elseif( $field_name == 'cem_email_address_syntax_error')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address syntax errors.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_domain_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email domains.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_email_address_is_blacklisted')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_address_syntax_error')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address syntax errors.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_email_domain_has_no_mx_record')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains without MX records.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_is_blacklisted')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email domains.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_email_domain_is_on_dea_blacklist')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'DEA email addresses.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_simulated_sending_of_email_failed')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'disposable email addresses (DEA).<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_is_on_free_email_address_provider_domain_list')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domain is on free email address provider domain list.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_from_catch_all_domain')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email addresses from catch-all domains.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_general_email_validation_error')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'general email validation errors.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_recipient_name_catch_all_email_address_error')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name catch-all errors.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_recipient_name_is_blacklisted')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name is on blacklist error message.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_recipient_name_is_role_based')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'role-based recipient names.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_simulated_sending_of_email_failed')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_smtp_connection_failed')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'failed SMTP connections.<br/>', 'last-email-address-validator' );
+
+
+
 
         // ------ Main Menu Use & Positions -------------------
         //
