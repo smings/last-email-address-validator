@@ -87,7 +87,9 @@ class LeavPlugin
 
     public function get_email_validation_error_message() : string
     {
-        return $this->central::$VALIDATION_ERROR_LIST[ $this->leav->error_type ];
+        if( ! $this->get_email_validation_error_type() )
+            return "";
+        return $this->central::$VALIDATION_ERROR_LIST[ $this->get_email_validation_error_type() ];
     }
 
 
@@ -192,11 +194,12 @@ class LeavPlugin
             return false;
         }
 
-
         if(    $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'yes'
                 && ! $is_recipient_name_whitelisted
                 && ! $is_email_whitelisted
-                && $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
+                && (    $this->leav->is_collapsed_recipient_name_empty()
+                     || $this->leav->is_recipient_name_on_list( $this->central::$OPTIONS['role_based_recipient_name_blacklist'], 'recipient_name_is_role_based' )
+                   )
         )
         {
             if( $increment_counter )
@@ -213,7 +216,6 @@ class LeavPlugin
             return false;
         }
 
-
         // if we already tried to collect the MX data and there is none, we can
         // just return false right away
         if(    $this->central::$OPTIONS['block_disposable_email_address_services'] == 'yes'
@@ -225,11 +227,11 @@ class LeavPlugin
             return false;
         }
 
-
         if(    $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
                 && ! $this->leav->simulate_sending_an_email()
         )
         {
+            $this->leav->set_error_type( 'simulated_sending_of_email_failed' );
             if( $increment_counter )
                 $this->increment_count_of_blocked_email_addresses();
             return false;
@@ -372,7 +374,7 @@ class LeavPlugin
             if(      preg_match( $this->central::$EMAIL_FIELD_NAME_REGEX, $key )
                 && ! $this->validate_email_address( $value )
             )
-                $errors[] = $this->leave->error_type;
+                $errors[] = $this->get_email_validation_error_type();
                 // $errors[] = $this->get_email_validation_error_type();
         }
         return $errors;
@@ -934,7 +936,9 @@ class LeavPlugin
     private function increment_count_of_blocked_email_addresses() : bool
     {
         $this->central::$OPTIONS['spam_email_addresses_blocked_count'] = ($this->central::$OPTIONS['spam_email_addresses_blocked_count'] + 1);
-        update_option( $this->central::$OPTIONS_NAME, $this->central::$OPTIONS );
+        if( update_option( $this->central::$OPTIONS_NAME, $this->central::$OPTIONS ) )
+            return true;
+        return false;
     }
 
 }

@@ -3,6 +3,7 @@
 class LeavCentral
 {
 
+  public static $COLLAPSE_RECIPIENT_NAME_REGEX = "/[^a-z]/";
   public static $COMMENT_LINE_REGEX = "/^\s*(#|\/\/)/";
   public static $DEA_SERVICE_FILE_RELATIVE_PATH = 'data/disposable_email_service_provider_list.txt';
   public static $DEBUG = false;
@@ -13,7 +14,7 @@ class LeavCentral
   public static $EMAIL_ADDRESS_WILDCARD_REGEX = "/^[0-9a-z_\?\*]([-_\.]*[0-9a-z\?\*])*\+?[0-9a-z\?\*]*([-_\.]*[0-9a-z\?\*])*@[0-9a-z\*]([-\._]*[0-9a-z\*])*[0-9a-z\*]\.([a-z]{1,18}|\*)$/i";
   public static $EMAIL_FIELD_NAME_REGEX = "/^.*e[^a-zA-Z0-9]{0,2}mail.*$/i";
   public static $EMAIL_LIST_FIELDS = array( 'user_defined_email_whitelist_string', 'user_defined_email_blacklist_string' );
-  public static $EMPTY_LINE_REGEX = "/^\s*[\r\n]+$/";
+  public static $EMPTY_LINE_REGEX = "/^\s*$/";
   public static $FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE = 'data/free_email_address_provider_domain_list.txt';
   public static $INTEGER_GEZ_FIELDS = array( 'main_menu_position', 'settings_menu_position' );
   public static $INTEGER_GEZ_REGEX = "/^(0|[1-9]\d*)$/";
@@ -73,7 +74,6 @@ class LeavCentral
   public static $SANITIZE_DOMAIN_REGEX = "/[^0-9a-zA-Z-\.]/";
   public static $SANITIZE_IP_REGEX = "/[^0-9\.]/";
   public static $SANITIZE_RECIPIENT_NAME_INTERNAL_REGEX = "/[^a-z\*]/";
-  public static $SANITIZE_RECIPIENT_NAME_REGEX = "/[^a-z]/";
   public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
   public static $TEXT_FIELDS = array(
     'cem_email_address_is_blacklisted',
@@ -88,7 +88,6 @@ class LeavCentral
     'cem_recipient_name_is_blacklisted',
     'cem_recipient_name_is_role_based',
     'cem_simulated_sending_of_email_failed',
-    'cem_smtp_connection_failed',
   );
   public static $VALIDATION_ERROR_LIST = array();
   public static $VALIDATION_ERROR_LIST_DEFAULTS = array();
@@ -120,8 +119,7 @@ class LeavCentral
           'recipient_name_catch_all_email_address_error' => __( 'We don\'t allow recipient names with an inline catch-all syntax using a &quot;&#43;&quot; sign. Please remove the &quot;&#43;&quot; sign and everything after it.', 'last-email-address-validator' ),
           'recipient_name_is_blacklisted'     => __( 'The recipient name (the part before the "@" sign) is blacklisted. Please use another recipient name.', 'last-email-address-validator' ),
           'recipient_name_is_role_based'      => __( 'We don\'t allow role-based / generic recipient names in email addresses. Please use a personalized email address.'),
-          'simulated_sending_of_email_failed' => __( 'The entered email address got rejected while trying to send an email to it.', 'last-email-address-validator' ),
-          'smtp_connection_failed'            => __( 'We couldn\'t establish a connection to any of the mx servers. They seem to be all down.', 'last-email-address-validator' )
+          'simulated_sending_of_email_failed' => __( 'The entered email address got rejected while trying to send an email to it.', 'last-email-address-validator' )
     );    
     $this::$VALIDATION_ERROR_LIST = $this::$VALIDATION_ERROR_LIST_DEFAULTS;
   }

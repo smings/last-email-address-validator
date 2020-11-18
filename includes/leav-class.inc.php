@@ -3,6 +3,7 @@
 defined('ABSPATH') or die('Not today!');
 
 require_once("leav-central.inc.php");
+require_once("leav-helper-functions.inc.php");
 
 class LastEmailAddressValidator
 {
@@ -112,7 +113,7 @@ class LastEmailAddressValidator
 		if( ! $this->is_email_domain_in_list( $list ) )
 			return false;
 		$this->is_email_domain_on_user_defined_blacklist = true;
-		$this->error_type = 'email_domain_is_blacklisted';
+		$this->set_error_type( 'email_domain_is_blacklisted' );
 		return true;
 	}
 
@@ -122,17 +123,26 @@ class LastEmailAddressValidator
 		if( ! $this->is_email_domain_in_list( $list ) )
 			return false;
 		$this->is_email_address_on_free_email_address_provider_list = true;
-		$this->error_type = 'email_domain_is_on_free_email_address_provider_domain_list';
+		$this->set_error_type( 'email_domain_is_on_free_email_address_provider_domain_list' );
 		return true;
 	}
 
+	public function is_collapsed_recipient_name_empty () : bool
+	{
+		if( empty( $this->collapsed_recipient_name ) )
+		{
+			$this->set_error_type( 'recipient_name_is_role_based' );
+			return true;
+		}
+		return false;
+	}
 
 	public function check_if_email_address_is_on_user_defined_blacklist( array &$list ) : bool
 	{
 		if( in_array( $this->normalized_email_address, $list ) )
 		{
 			$this->is_email_address_on_user_defined_blacklist = true;
-			$this->error_type = 'email_address_is_blacklisted';
+			$this->set_error_type( 'email_address_is_blacklisted' );
 		}
 		return $this->is_email_address_on_user_defined_blacklist;
 	}
@@ -140,16 +150,15 @@ class LastEmailAddressValidator
 
 	public function check_if_email_address_is_from_dea_service( array &$domain_list, array &$mx_domain_list, array &$mx_ip_list ) : bool
 	{
-		if( ! $this->do_basic_email_checks() )
+		if( ! $this->has_mx_records() )
 			return false;
-
 		if(    in_array( $this->email_domain, $domain_list )
 			  || ! empty( array_intersect( $this->mx_server_domains, $mx_domain_list ) )
 			  || ! empty( array_intersect( $this->mx_server_ips, $mx_ip_list ) )
 		)
 		{
 			$this->is_email_address_from_dea_service = true;
-			$this->error_type = 'email_domain_is_on_dea_blacklist';
+			$this->set_error_type( 'email_domain_is_on_dea_blacklist' );
 		}
 
 		return $this->is_email_address_from_dea_service;
@@ -165,7 +174,7 @@ class LastEmailAddressValidator
 		else
 			$sender_email_domain = $this->detected_wp_email_domain;
 
-		if( ! $this->do_basic_email_checks() )
+		if( ! $this->has_mx_records() )
 			return false;
 
 		if( ! $this->get_smtp_connection() )
@@ -233,7 +242,7 @@ class LastEmailAddressValidator
 	}
 
 
-	// ---- the difference to `sanitize_and_validate_domain` is that we allow `*` for wildcards
+	// ---- the difference to `sanitize_and_validate_domain` is that we allow `*` for wildcards within 
 	public function sanitize_and_validate_domain_internally( string &$domain ) : bool
 	{
 	    $domain = strtolower( $domain );
@@ -242,11 +251,10 @@ class LastEmailAddressValidator
 	}
 
 
-	public function sanitize_and_validate_recipient_name( string &$recipient_name ) : bool
+	public function collapse_recipient_name( string &$recipient_name ) : void
 	{
-	    $recipient_name = strtolower( $recipient_name );
-	    $recipient_name = preg_replace( $this->central::$SANITIZE_RECIPIENT_NAME_REGEX, '', $recipient_name );
-	    return preg_match( $this->central::$RECIPIENT_NAME_REGEX, $recipient_name );
+	    $this->collapsed_recipient_name = strtolower( $recipient_name );
+	    $this->collapsed_recipient_name = preg_replace( $this->central::$COLLAPSE_RECIPIENT_NAME_REGEX, '', $recipient_name );
 	}
 
 	// ---- the difference to `sanitize_and_validate_recipient_name` is that we allow `*` for wildcards
@@ -284,7 +292,7 @@ class LastEmailAddressValidator
 	{
 		if( preg_match( $this->central::$RECIPIENT_NAME_CATCH_ALL_REGEX, $this->normalized_email_address ) )
 		{
-			$this->error_type = 'recipient_name_catch_all_email_address_error';
+			$this->set_error_type( 'recipient_name_catch_all_email_address_error' );
 			$this->is_email_address_inline_catch_all = true;
 			return true;
 		}
@@ -305,8 +313,9 @@ class LastEmailAddressValidator
 		// the array of known names
 		if( in_array( $recipient_name, $recipient_name_list['recipient_names'] ) )
 		{
-			$this->error_type = $error_type;
+			$this->set_error_type( $error_type );
 			return true;
+
 		}
 
 		// if the "cheap" way failed, we go through the regexps. This is much more expensive
@@ -321,7 +330,7 @@ class LastEmailAddressValidator
 
 				if( preg_match( $pattern, $recipient_name ) )
 				{
-					$this->error_type = $error_type;
+					$this->set_error_type( $error_type );
 					return true;
 				}
 			}
@@ -336,9 +345,15 @@ class LastEmailAddressValidator
 		$email_address = 'hfugyiohkjbhgymxcbiewkbe' . microtime(true) . '@' . $this->email_domain;
 		if(! $this->simulate_sending_an_email( $email_address, $this->wp_email_domain ) )
 			return false;
-		$this->error_type = 'email_from_catch_all_domain';
+		$this->set_error_type( 'email_from_catch_all_domain' );
 		return true;
 
+	}
+
+
+	public function set_error_type( string $error_type ) : void
+	{
+		$this->error_type = $error_type;
 	}
 
 
@@ -380,7 +395,7 @@ class LastEmailAddressValidator
 			$this->is_email_address_syntax_valid = true;
 			return $this->extract_recipient_name_and_domain_from_email_address();
 		}
-		$this->error_type = 'email_address_syntax_error';
+		$this->set_error_type( 'email_address_syntax_error' );
 		return false;
 	}
 
@@ -393,22 +408,14 @@ class LastEmailAddressValidator
 
 	private function extract_recipient_name_and_domain_from_email_address() : bool
 	{
-		if( empty( $this->normalized_email_address ) )
-			return false;
 		$arr = explode( '@', $this->normalized_email_address );
-
-		if( sizeof($arr) != 2 )
-			return false;
-
 		$this->recipient_name = $arr[0];
-		if( $this->sanitize_and_validate_recipient_name( $arr[0] ) )
-			$this->collapsed_recipient_name = $arr[0];
+		$this->collapse_recipient_name( $arr[0] );
+
 		if( $this->sanitize_and_validate_domain( $arr[1] ) )
 			$this->email_domain = $arr[1];
 
-		if(    ! empty( $this->collapsed_recipient_name )
-			  && ! empty( $this->email_domain )
-		)
+		if( ! empty( $this->email_domain ) )
 			return true;
 
 		$this->is_email_address_syntax_valid = false;
@@ -418,7 +425,7 @@ class LastEmailAddressValidator
 
 	private function get_email_domain_mx_servers() : bool
 	{
-		if( empty( $this->email_domain ) && ! $this->extract_recipient_name_and_domain_from_email_address() )
+		if( empty( $this->email_domain ) )
 			return false;
 		if( @getmxrr($this->email_domain, $this->mx_server_domains, $this->mx_server_preferences ) )
 		{
@@ -431,7 +438,7 @@ class LastEmailAddressValidator
 			if( ! empty( $this->mx_server_ips ) )
 				$this->email_domain_has_MX_records = true;
 			else
-				$this->error_type = 'email_domain_has_no_mx_record';
+				$this->set_error_type( 'email_domain_has_no_mx_record' );
 		}
 		return $this->email_domain_has_MX_records;
 	}
@@ -511,21 +518,13 @@ class LastEmailAddressValidator
 	}
 
 
-	private function do_basic_email_checks() : bool
+	private function has_mx_records() : bool
 	{
-
-		if( empty($this->normalized_email_address) )
-			return false;
-
-		if( ! $this->is_email_address_syntax_valid && ! $this->validate_current_email_address_syntax() )
-			return false;
-
-		if( empty($mx_server_ips) && ! $this->get_email_domain_mx_servers() )
+		if( empty( $this->mx_server_ips ) && ! $this->get_email_domain_mx_servers() )
 		{
-			$this->error_type = 'email_domain_has_no_mx_record';
+			$this->set_error_type( 'email_domain_has_no_mx_record' );
 			return false;
 		}
-
 		return true;
 	}
 

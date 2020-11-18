@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
-"POT-Creation-Date: 2020-11-12 11:17+0100\n"
-"PO-Revision-Date: 2020-11-12 11:31+0100\n"
+"POT-Creation-Date: 2020-11-12 14:39+0100\n"
+"PO-Revision-Date: 2020-11-15 07:33+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -473,7 +473,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:373
 msgid "Allow email adresses from user-defined domain whitelist"
-msgstr "Emailadressen auf der benutzerdefinierten Whitelist erlauben"
+msgstr "Domain Whitelist verwenden"
 
 #: includes/leav-settings-page.inc.php:385
 msgid ""
@@ -524,8 +524,7 @@ msgstr "Anzahl Einträge: "
 
 #: includes/leav-settings-page.inc.php:425
 msgid "Allow email adresses from user-defined email whitelist"
-msgstr ""
-"Emailadressen von Domains der benutzerdefinierten Whitelist akzeptieren"
+msgstr "Emailadressen Whitelist verwenden"
 
 #: includes/leav-settings-page.inc.php:437
 msgid ""
@@ -659,8 +658,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:718
 msgid "Reject email adresses from role-based recipient name blacklist"
-msgstr ""
-"Emailadressen auf der benutzerdefinierten Empfängernamen-Blacklist ablehnen"
+msgstr "Emailadressen mit rollenbasierten Empfängernamen ablehnen"
 
 #: includes/leav-settings-page.inc.php:730
 msgid ""
@@ -1715,7 +1713,7 @@ msgid "Updated the settings for"
 msgstr "Aktualisierung der Einstellungen für"
 
 #: includes/leav-settings-page.inc.php:1828
-#: includes/leav-settings-page.inc.php:1964
+#: includes/leav-settings-page.inc.php:1968
 msgid "allowing recipient name catch-all syntax.<br/>"
 msgstr "Empfängernamen-Carch-All-Syntax erlauben.<br/>"
 
@@ -1725,7 +1723,7 @@ msgstr ""
 "Aktualisierung der Email Domain für das simulierte Versenden von Emails.<br/>"
 
 #: includes/leav-settings-page.inc.php:1838
-#: includes/leav-settings-page.inc.php:1974
+#: includes/leav-settings-page.inc.php:1978
 msgid "using the user-defined domain whitelist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Domain-Whitelist.<br/>"
 
@@ -1734,7 +1732,7 @@ msgid "Updated the user-defined domain whitelist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Domain-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1843
-#: includes/leav-settings-page.inc.php:1979
+#: includes/leav-settings-page.inc.php:1983
 msgid "using the user-defined email address whitelist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Emailadress-Whitelist.<br/>"
 
@@ -1743,7 +1741,7 @@ msgid "Updated the user-defined email address whitelist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Emailadress-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1848
-#: includes/leav-settings-page.inc.php:1984
+#: includes/leav-settings-page.inc.php:1988
 msgid "using the user-defined recipient name whitelist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Empfängernamen-Whitelist.<br/>"
 
@@ -1752,7 +1750,7 @@ msgid "Updated the user-defined recipient name whitelist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Empfängernamen-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1854
-#: includes/leav-settings-page.inc.php:1991
+#: includes/leav-settings-page.inc.php:1995
 msgid "using the user-defined domain blacklist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Domain-Blacklist.<br/>"
 
@@ -1761,7 +1759,7 @@ msgid "Updated the user-defined domain blacklist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Domain-Blacklist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1859
-#: includes/leav-settings-page.inc.php:1996
+#: includes/leav-settings-page.inc.php:2000
 msgid "using the user-defined email address blacklist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Emailadress-Blacklist.<br/>"
 
@@ -1770,7 +1768,7 @@ msgid "Updated the user-defined email address blacklist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Emailadress-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1864
-#: includes/leav-settings-page.inc.php:2001
+#: includes/leav-settings-page.inc.php:2005
 msgid "using the user-defined recipient name blacklist.<br/>"
 msgstr "die Nutzung der benutzerdefinierten Empfängernamen-Blacklist.<br/>"
 
@@ -1779,77 +1777,77 @@ msgid "Updated the entries of the user-defined recipient name blacklist.<br/>"
 msgstr "Aktualisierung der benutzerdefinierten Empfängernamen-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1869
-#: includes/leav-settings-page.inc.php:2006
+#: includes/leav-settings-page.inc.php:2010
 msgid "using the role-based recipient name blacklist.<br/>"
 msgstr "die Nutzung der rollenbasierten Empfängernamen-Blacklist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1874
-#: includes/leav-settings-page.inc.php:2011
+#: includes/leav-settings-page.inc.php:2015
 msgid "blocking email addresses from disposable email address services.<br/>"
 msgstr "das Blockieren von Wegwerf-Emailadressen.<br/>"
 
 #: includes/leav-settings-page.inc.php:1879
-#: includes/leav-settings-page.inc.php:2016
+#: includes/leav-settings-page.inc.php:2020
 msgid "simulating email sending.<br/>"
 msgstr "die Nutzung des simulierten Emailversands.<br/>"
 
 #: includes/leav-settings-page.inc.php:1884
-#: includes/leav-settings-page.inc.php:2021
+#: includes/leav-settings-page.inc.php:2025
 msgid "allowing catch-all domains.<br/>"
 msgstr "die Verwendung von Catch-All-Domains.<br/>"
 
 #: includes/leav-settings-page.inc.php:1889
-#: includes/leav-settings-page.inc.php:2026
+#: includes/leav-settings-page.inc.php:2030
 msgid "accepting pingbacks.<br/>"
 msgstr "Pingbacks akzeptieren.<br/>"
 
 #: includes/leav-settings-page.inc.php:1891
-#: includes/leav-settings-page.inc.php:2028
+#: includes/leav-settings-page.inc.php:2032
 msgid "accepting trackbacks.<br/>"
 msgstr "Trackbacks akzeptieren.<br/>"
 
 #: includes/leav-settings-page.inc.php:1896
-#: includes/leav-settings-page.inc.php:2033
+#: includes/leav-settings-page.inc.php:2037
 msgid "validating WordPress's user registration email addresses.<br/>"
 msgstr "die WordPress Benutzerregistrierung Emailadress-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1898
-#: includes/leav-settings-page.inc.php:2035
+#: includes/leav-settings-page.inc.php:2039
 msgid "validating WordPress's commentator email addresses.<br/>"
 msgstr "die WordPress Kommentar Emailadress-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1900
-#: includes/leav-settings-page.inc.php:2037
+#: includes/leav-settings-page.inc.php:2041
 msgid "validating WooCommerce email fields.<br/>"
 msgstr "die WooCommerce Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1902
-#: includes/leav-settings-page.inc.php:2039
+#: includes/leav-settings-page.inc.php:2043
 msgid "validating Contact Form 7 email fields.<br/>"
 msgstr "die Contact Form 7 Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1904
-#: includes/leav-settings-page.inc.php:2041
+#: includes/leav-settings-page.inc.php:2045
 msgid "validating WPforms email fields.<br/>"
 msgstr "die WPForms Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1906
-#: includes/leav-settings-page.inc.php:2043
+#: includes/leav-settings-page.inc.php:2047
 msgid "validating Ninja Forms email fields.<br/>"
 msgstr "die Ninja Forms Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1908
-#: includes/leav-settings-page.inc.php:2045
+#: includes/leav-settings-page.inc.php:2049
 msgid "validating Mailchimp for WordPress (MC4WP) email fields.<br/>"
 msgstr "die Mailchimp for WordPress (MC4WP)-Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1910
-#: includes/leav-settings-page.inc.php:2047
+#: includes/leav-settings-page.inc.php:2051
 msgid "validating Formidable Forms email fields.<br/>"
 msgstr "die Formidable Forms Emailadress-Feld-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1912
-#: includes/leav-settings-page.inc.php:2049
+#: includes/leav-settings-page.inc.php:2053
 msgid "validating Kali Forms email fields.<br/>"
 msgstr "die Kali Forms Emailadress-Feld-Validierung.<br/>"
 
@@ -1862,66 +1860,67 @@ msgstr "die Kali Forms Emailadress-Feld-Validierung.<br/>"
 #: includes/leav-settings-page.inc.php:1930
 #: includes/leav-settings-page.inc.php:1932
 #: includes/leav-settings-page.inc.php:1934
-#: includes/leav-settings-page.inc.php:1936
-#: includes/leav-settings-page.inc.php:1938
+#: includes/leav-settings-page.inc.php:1937
 #: includes/leav-settings-page.inc.php:1940
 #: includes/leav-settings-page.inc.php:1942
+#: includes/leav-settings-page.inc.php:1944
 msgid "Updated the custom validation error message for"
-msgstr "Aktualisierung der benutzerdefinierten Fehlermeldung für.<br/>"
+msgstr "Aktualisierung der benutzerdefinierten Fehlermeldung für"
 
 #: includes/leav-settings-page.inc.php:1918
-msgid "blacklisted email addresses.<br/>"
-msgstr "geblockte Emailadressen.<br/>"
-
-#: includes/leav-settings-page.inc.php:1920
 msgid "email address syntax errors.<br/>"
 msgstr "Emailadress-Syntaxfehler.<br/>"
 
-#: includes/leav-settings-page.inc.php:1922
-msgid "email domains without MX records.<br/>"
-msgstr "Email-Domains ohne MX Einträge.<br/>"
-
-#: includes/leav-settings-page.inc.php:1924
-msgid "blacklisted email domains.<br/>"
-msgstr "geblockte Email-Domains.<br/>"
-
-#: includes/leav-settings-page.inc.php:1926
-msgid "disposable email addresses (DEA).<br/>"
-msgstr "Wegwerf-Emailadressen.<br/>"
-
-#: includes/leav-settings-page.inc.php:1928
-msgid "email domain is on free email address provider domain list.<br/>"
-msgstr "Email Domain ist auf der Liste kostenloser Emailadress-Provider.<br/>"
-
-#: includes/leav-settings-page.inc.php:1930
-msgid "email addresses from catch-all domains.<br/>"
-msgstr "Emailadressen von Catch-All Domains.<br/>"
-
-#: includes/leav-settings-page.inc.php:1932
-msgid "general email validation errors.<br/>"
-msgstr "allgemeine Emailvalidierungsfehler.<br/>"
-
-#: includes/leav-settings-page.inc.php:1934
+#: includes/leav-settings-page.inc.php:1920
 msgid "recipient name catch-all errors.<br/>"
 msgstr "Empfängernamen-Carch-All-Syntax Fehler.<br/>"
 
-#: includes/leav-settings-page.inc.php:1936
+#: includes/leav-settings-page.inc.php:1922
+msgid "blacklisted email domains.<br/>"
+msgstr "geblockte Email-Domains.<br/>"
+
+#: includes/leav-settings-page.inc.php:1924
+#, fuzzy
+msgid "email domains on the free email address provider domain list.<br/>"
+msgstr "Email Domain ist auf der Liste kostenloser Emailadress-Provider.<br/>"
+
+#: includes/leav-settings-page.inc.php:1926
+msgid "blacklisted email addresses.<br/>"
+msgstr "geblockte Emailadressen.<br/>"
+
+#: includes/leav-settings-page.inc.php:1928
 msgid "recipient name is on blacklist error message.<br/>"
 msgstr "Empfängername ist auf der Blacklisted Fehlermeldung.<br/>"
 
-#: includes/leav-settings-page.inc.php:1938
+#: includes/leav-settings-page.inc.php:1930
 msgid "role-based recipient names.<br/>"
 msgstr "rollenbasierte Empfängernamen.<br/>"
+
+#: includes/leav-settings-page.inc.php:1932
+msgid "email domains without MX records.<br/>"
+msgstr "Email-Domains ohne MX Einträge.<br/>"
+
+#: includes/leav-settings-page.inc.php:1934
+msgid "disposable email addresses (DEA).<br/>"
+msgstr "Wegwerf-Emailadressen.<br/>"
+
+#: includes/leav-settings-page.inc.php:1937
+msgid "failed SMTP connections.<br/>"
+msgstr "fehlgeschlagene SMTP Verbindungen.<br/>"
 
 #: includes/leav-settings-page.inc.php:1940
 msgid "errors during simulating sending an email.<br/>"
 msgstr "Fehler während des simulierten Emailversands.<br/>"
 
 #: includes/leav-settings-page.inc.php:1942
-msgid "failed SMTP connections.<br/>"
-msgstr "fehlgeschlagene SMTP Verbindungen.<br/>"
+msgid "email addresses from catch-all domains.<br/>"
+msgstr "Emailadressen von Catch-All Domains.<br/>"
 
-#: includes/leav-settings-page.inc.php:1950
+#: includes/leav-settings-page.inc.php:1944
+msgid "general email validation errors.<br/>"
+msgstr "allgemeine Emailvalidierungsfehler.<br/>"
+
+#: includes/leav-settings-page.inc.php:1954
 msgid ""
 "Changed the display location of the LEAV menu item. You have to hard-reload  "
 "this page before the change takes effect.<br/>"
@@ -1929,25 +1928,23 @@ msgstr ""
 "Die Anzeigeposition des LEAV Menüeintrags wurde aktualisiert. Um diese "
 "Änderung sichtbar zu machen, muss du diese Seite neu laden.<br/>"
 
-#: includes/leav-settings-page.inc.php:1952
+#: includes/leav-settings-page.inc.php:1956
 msgid "Updated the settings for field <strong>"
 msgstr "Aktualisierung der Einstellungen für das Feld <strong>"
 
-#: includes/leav-settings-page.inc.php:1964
-#: includes/leav-settings-page.inc.php:1974
-#: includes/leav-settings-page.inc.php:1979
-#: includes/leav-settings-page.inc.php:1984
-#: includes/leav-settings-page.inc.php:1991
-#: includes/leav-settings-page.inc.php:1996
-#: includes/leav-settings-page.inc.php:2001
-#: includes/leav-settings-page.inc.php:2006
-#: includes/leav-settings-page.inc.php:2011
-#: includes/leav-settings-page.inc.php:2016
-#: includes/leav-settings-page.inc.php:2021
-#: includes/leav-settings-page.inc.php:2026
-#: includes/leav-settings-page.inc.php:2028
-#: includes/leav-settings-page.inc.php:2033
-#: includes/leav-settings-page.inc.php:2035
+#: includes/leav-settings-page.inc.php:1968
+#: includes/leav-settings-page.inc.php:1978
+#: includes/leav-settings-page.inc.php:1983
+#: includes/leav-settings-page.inc.php:1988
+#: includes/leav-settings-page.inc.php:1995
+#: includes/leav-settings-page.inc.php:2000
+#: includes/leav-settings-page.inc.php:2005
+#: includes/leav-settings-page.inc.php:2010
+#: includes/leav-settings-page.inc.php:2015
+#: includes/leav-settings-page.inc.php:2020
+#: includes/leav-settings-page.inc.php:2025
+#: includes/leav-settings-page.inc.php:2030
+#: includes/leav-settings-page.inc.php:2032
 #: includes/leav-settings-page.inc.php:2037
 #: includes/leav-settings-page.inc.php:2039
 #: includes/leav-settings-page.inc.php:2041
@@ -1955,11 +1952,13 @@ msgstr "Aktualisierung der Einstellungen für das Feld <strong>"
 #: includes/leav-settings-page.inc.php:2045
 #: includes/leav-settings-page.inc.php:2047
 #: includes/leav-settings-page.inc.php:2049
-#: includes/leav-settings-page.inc.php:2059
+#: includes/leav-settings-page.inc.php:2051
+#: includes/leav-settings-page.inc.php:2053
+#: includes/leav-settings-page.inc.php:2063
 msgid "Error while trying to update the settings for"
 msgstr "Fehler beim Versuch der Aktualisierung der Einstellungen für"
 
-#: includes/leav-settings-page.inc.php:1969
+#: includes/leav-settings-page.inc.php:1973
 msgid ""
 "Error while trying to update the email domain for simulating the sending of "
 "emails. The email domain can't be empty while simulated email sending is "
@@ -1969,7 +1968,7 @@ msgstr ""
 "simulierte Versenden von Emails. Die Email Domain darf nicht leer sein, "
 "solange das simulierte Versenden von Emails aktiv ist.<br/>"
 
-#: includes/leav-settings-page.inc.php:1976
+#: includes/leav-settings-page.inc.php:1980
 msgid ""
 "Error! One or more entered domains in the user-defined domain whitelist are "
 "invalid. Look at the comments in the field and correct your input.<br/>"
@@ -1978,7 +1977,7 @@ msgstr ""
 "Domain-Whitelist sind ungültig. Schau Dir die Kommentare im Eingabefeld an "
 "und korrigiere Deine Eingaben.<br/>"
 
-#: includes/leav-settings-page.inc.php:1981
+#: includes/leav-settings-page.inc.php:1985
 msgid ""
 "Error! One or more entered email addresses in the user-defined email address "
 "whitelist are invalid. Look at the comments in the field and correct your "
@@ -1988,7 +1987,7 @@ msgstr ""
 "benutzerdefinierten Emailaddress-Whitelist sind ungültig. Schau Dir die "
 "Kommentare im Eingabefeld an und korrigiere Deine Eingaben.<br/>"
 
-#: includes/leav-settings-page.inc.php:1986
+#: includes/leav-settings-page.inc.php:1990
 msgid ""
 "Error! One or more entered recipient names in the user-defined recipient "
 "name whitelist are invalid. Look at the comments in the field and correct "
@@ -1998,7 +1997,7 @@ msgstr ""
 "benutzerdefinierten Empfängernamen-Whitelist sind ungültig. Schau Dir die "
 "Kommentare im Eingabefeld an und korrigiere Deine Eingaben.<br/>"
 
-#: includes/leav-settings-page.inc.php:1993
+#: includes/leav-settings-page.inc.php:1997
 msgid ""
 "Error! One or more entered domains in the user-defined domain blacklist are "
 "invalid. Look at the comments in the field and correct your input.<br/>"
@@ -2007,7 +2006,7 @@ msgstr ""
 "Domain-Blacklist sind ungültig. Schau Dir die Kommentare im Eingabefeld an "
 "und korrigiere Deine Eingaben.<br/>"
 
-#: includes/leav-settings-page.inc.php:1998
+#: includes/leav-settings-page.inc.php:2002
 msgid ""
 "Error! One or more entered email addresses in the user-defined email address "
 "blacklist are invalid. Look at the comments in the field and correct your "
@@ -2017,7 +2016,7 @@ msgstr ""
 "benutzerdefinierten Emailaddress-Blacklist sind ungültig. Schau Dir die "
 "Kommentare im Eingabefeld an und korrigiere Deine Eingaben.<br/>"
 
-#: includes/leav-settings-page.inc.php:2003
+#: includes/leav-settings-page.inc.php:2007
 msgid ""
 "Error while trying to update the entries of the user-defined recipient name "
 "blacklist.<br/>"
@@ -2025,12 +2024,12 @@ msgstr ""
 "Fehler während der Aktualisierung Eingaben für die benutzerdefinierte "
 "Empfängernamen-Blacklist.<br/>"
 
-#: includes/leav-settings-page.inc.php:2059
+#: includes/leav-settings-page.inc.php:2063
 msgid ""
 "the display location of the LEAV menu item (main menu or settings menu.<br/>"
 msgstr "die LEAV Menüposition (Haupt- oder Einstellungsmenü).<br/>"
 
-#: includes/leav-settings-page.inc.php:2062
+#: includes/leav-settings-page.inc.php:2066
 msgid ""
 "Error! The values for the LEAV menu position within the main menu or the "
 "settings menu have to be numbers in between 0-999.<br/>"
@@ -2038,7 +2037,7 @@ msgstr ""
 "Fehler! Die Werte für die Position des LEAV Menüeintrags im Haupt- oder "
 "Einstellungsmenü muss eine Zahl zwischen 0-999 sein.<br/>"
 
-#: includes/leav-settings-page.inc.php:2065
+#: includes/leav-settings-page.inc.php:2069
 msgid "Error while trying to update the settings for field <strong>"
 msgstr ""
 "Fehler während der Aktualisierung der Einstellungen für das Feld <strong>"

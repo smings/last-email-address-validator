@@ -124,6 +124,11 @@ class LeavSettingsPage
 
         }
 ?>
+<script>
+window.onload = function (event) {
+    window.location.hash = '';
+};
+</script>
         <div class="wrap">
             <a name="top"></a>
             <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;"><?php
@@ -249,10 +254,10 @@ class LeavSettingsPage
             <form name="leav_options" method="post">
                 <input type="hidden" name="leav_options_update_type" value="update" />
 
-                <h2><?php _e('Test Email Address Validation', 'last-email-address-validator' ) ?></h2>
+                <h2><?php _e('Test Current Email Address Validation Settings', 'last-email-address-validator' ) ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e('Enter an email address for testing validation results', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e('Email address to test', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php
@@ -291,8 +296,9 @@ class LeavSettingsPage
                                 }
                                 ?>
                             <p class="description">
-                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do extensive testing', 'last-email-address-validator' ); ?>
+                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do extensive testing.', 'last-email-address-validator' ); ?>
                             </p>
+
                         </td>
                     </tr>
                 </table>
@@ -312,7 +318,7 @@ class LeavSettingsPage
                                 <input name="wp_email_domain" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["wp_email_domain"]); ?>" placeholder="<?php echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ); ?>" />
                             </label>
                             <p class="description">
-                                <?php _e('This Email domain is used for simulating the sending of an email from no-reply@<strong>', 'last-email-address-validator' );
+                                <?php _e('The Email domain is used for simulating the sending of an email from no-reply@<strong>', 'last-email-address-validator' );
                                 if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
                                     echo( $this->central::$OPTIONS["wp_email_domain"] );
                                 else
@@ -336,7 +342,7 @@ class LeavSettingsPage
                 <?php
                     _e( 'From here onwards you can configure the filter steps. You can find an overview and description of the filter steps in <a href="#faq">our FAQ</a>.', 'last-email-address-validator' );
                 ?>
-                <h2><?php _e('Allow Recipient Name Catch-All Syntax', 'last-email-address-validator' ) ?></h2>
+                <h2><?php _e('Recipient Name Catch-All Syntax', 'last-email-address-validator' ) ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'Allow recipient name catch-all syntax', 'last-email-address-validator' ); ?>:</th>
@@ -351,7 +357,7 @@ class LeavSettingsPage
                             </label>
                             <p class="description">
                                 <?php
-                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allows to extend the recipient name of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.<br/>You can choose to allow this or block such email addresses.', 'last-email-address-validator' );
+                                _e('Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allow you to extend the recipient name part of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.<br/><strong>"my.name+anything@gmail.com"</strong> is the same as <strong>"my.name@gmail.com"</strong> for google. This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.<br/>You can choose to allow this or block such email addresses.', 'last-email-address-validator' );
                                 _e('<br/><strong>Default: Yes</strong>', 'last-email-address-validator' );
                                 ?>
                             </p>
@@ -366,11 +372,11 @@ class LeavSettingsPage
                 </p>
 
                 <h2></a><?php _e('Whitelists', 'last-email-address-validator' ) ?></h2>
-                <?php _e('Any email address that gets whitelisted will skip the corresponding blacklist filters. It doesn\'t mean it doesn\'t get filtered out at all. If a domain is whitelisted, but it is a catch-all domain and you disallow catch-all domains, all email addresses from this domain will still get rejected by our validation process. Look at our <a href="#faq">FAQ</a> for detailed information on the validation process.', 'last-email-address-validator' ) ?>
+                <?php _e('Any email address that gets whitelisted will skip the corresponding blacklist filter. It doesn\'t mean that it doesn\'t get filtered out by other filters. I.e. if a domain is whitelisted, but it is a catch-all domain and you disallow catch-all domains, all email addresses from this domain will still get rejected with these validation settings. Look at our <a href="#faq">FAQ</a> for detailed information on the validation process.', 'last-email-address-validator' ) ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
                         <a name="dwl"/>
-                        <th scope="row"><?php _e( 'Allow email adresses from user-defined domain whitelist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use Domain Whitelist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_domain_whitelist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_domain_whitelist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -422,7 +428,7 @@ your-whitelisted-domain-2.com"><?php echo ($this->central::$OPTIONS['user_define
 
                     <tr>
                         <a name="ewl"/>
-                        <th scope="row"><?php _e( 'Allow email adresses from user-defined email whitelist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use email adress whitelist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_email_whitelist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_email_whitelist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -465,7 +471,7 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
 
                     <tr>
                         <a name="rnwl"/>
-                        <th scope="row"><?php _e( 'Allow recipient names from user-defined whitelist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use recipient name whitelist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_recipient_name_whitelist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_recipient_name_whitelist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -478,6 +484,7 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                             <p class="description">
                                 <?php
                                     _e('Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).', 'last-email-address-validator' );
+                                    _e('<br/>Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.', 'last-email-address-validator' );
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'last-email-address-validator' );
                                     _e( '<br/><strong>Enter one recipient name per line</strong>.', 'last-email-address-validator' );
                                     _e('<br/><strong>Default: No</strong>', 'last-email-address-validator' );
@@ -490,8 +497,8 @@ your.whitelisted@email-2.com"><?php echo $this->central::$OPTIONS["user_defined_
                         <th scope="row">&nbsp;</th>
                         <td>
                             <label>
-                                <textarea id="user_defined_recipient_name_whitelist_string" name="user_defined_recipient_name_whitelist_string" rows="7" cols="40" placeholder="yourrecipientname1
-yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea><br/>
+                                <textarea id="user_defined_recipient_name_whitelist_string" name="user_defined_recipient_name_whitelist_string" rows="7" cols="40" placeholder="your-recipient-name-1
+your-recipient-name-2"><?php echo $this->central::$OPTIONS["user_defined_recipient_name_whitelist_string"] ?></textarea><br/>
                                 <?php
                                     _e( 'Number of entries: ', 'last-email-address-validator' );
                                     $size = 0;
@@ -528,7 +535,7 @@ yourrecipientname2"><?php echo $this->central::$OPTIONS["user_defined_recipient_
 
                     <tr>
                         <a name="dbl"/>
-                        <th scope="row"><?php _e( 'Reject email adresses from user-defined domain blacklist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use domain blacklist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_domain_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_domain_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -578,7 +585,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                     <tr>
                         <a name="feapdbl"/>
-                        <th scope="row"><?php _e( 'Reject email adresses from free email address provider domain blacklist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use free email address provider domain blacklist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_free_email_address_provider_domain_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_free_email_address_provider_domain_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -593,8 +600,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                     _e('The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.<br/>If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also ', 'last-email-address-validator' );
                                     echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                                     _e( 'inform us</a> about it. This list is not editable.', 'last-email-address-validator' );
-                                    _e( '<br/>If you should wonder why we block the top-level-domains .cf, .ga, .gq, .mk and .tk, these are freely available top-level-domains. Because of this we treat them like other free email address providers. These top-level-domains are almost exclusively used by individuals and not companies.', 'last-email-address-validator' );
-                                    _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'last-email-address-validator' );
+                                    _e( '<br/>If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .mk and .tk, these are freely available top-level-domains. Because of this we treat them like other free email address providers. These top-level-domains are almost exclusively used by individuals and not companies.', 'last-email-address-validator' );
                                     _e('<br/><strong>Default: No</strong>', 'last-email-address-validator' ); ?>
                             </p>
                         </td>
@@ -625,7 +631,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
 
                     <tr>
                         <a name="ebl"/>
-                        <th scope="row"><?php _e( 'Reject email adresses from user-defined email blacklist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use email address blacklist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_email_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_email_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -669,7 +675,7 @@ your-blacklisted-email-2@domain.com"><?php echo $this->central::$OPTIONS["user_d
 
                     <tr>
                         <a name="rnbl"/>
-                        <th scope="row"><?php _e( 'Reject email adresses with recipient names from user-defined recipient name blacklist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use recipient name blacklist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_user_defined_recipient_name_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_user_defined_recipient_name_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -682,6 +688,7 @@ your-blacklisted-email-2@domain.com"><?php echo $this->central::$OPTIONS["user_d
                             <p class="description">
                                 <?php
                                     _e('If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "<strong>d.e.m.o.123@domain.com</strong>" gets collapsed into "<strong>demo@domain.com</strong>".<br/>This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.<br/>This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.', 'last-email-address-validator' );
+                                    _e('<br/>Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.', 'last-email-address-validator' );
                                     _e( '<br/>For information on how to use wildcards, see our <a href="#faq-wildcards">FAQ entry</a>.', 'last-email-address-validator' );
                                     _e( '<br/><strong>Enter one recipient name per line</strong>.', 'last-email-address-validator' );
                                     _e('<br/><strong>Default: No</strong>', 'last-email-address-validator' );
@@ -715,7 +722,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
                     <tr>
                         <a name="rbrnbl"/>
-                        <th scope="row"><?php _e( 'Reject email adresses from role-based recipient name blacklist', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php _e( 'Use role-based recipient name blacklist', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
                                 <input name="use_role_based_recipient_name_blacklist" type="radio" value="yes" <?php if ($this->central::$OPTIONS["use_role_based_recipient_name_blacklist"] == "yes") { echo ('checked="checked" '); } ?>/>
@@ -727,7 +734,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                _e('If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names are listed in "collapsed" form. This means that all punctuation is stripped from the original recipient name. "<strong>i.n.f.o@domain.com</strong>" gets collapsed into "<strong>info@domain.com</strong>" (which is on the list). "<strong>123-all-456-employees@domain.com</strong>" gets collapsed into "<strong>allemployees@domain.com</strong>" and so on. Essentially, we strip away all non-letter characters. This way, we automatically block role-based recipient names, that are altered with punctuation.<br/>This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.<br/>If we block too much for you, you can add recipient names to the whitelist above.<br/>If you think we missed important common role-based recipient names, <a href="mailto:leav@sming.com">please let us know</a>.', 'last-email-address-validator' );
+                                _e('If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names are validated in their "collapsed" form. This means that all punctuation is stripped from the original recipient name. "<strong>i.n.f.o@domain.com</strong>" gets collapsed into "<strong>info@domain.com</strong>" (which is on the list). "<strong>123-all-456-employees@domain.com</strong>" gets collapsed into "<strong>allemployees@domain.com</strong>" and so on. Essentially, we strip away all non-letter characters. This way, we can block role-based recipient names, that are altered with punctuation.<br/>If the collapsed recipient name is empty, it will also be detected as role-based recipient name. In this case it contains only digits and non-letter characters, which we consider a role-based recipient name.<br/>This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.<br/>If we block too much for you, you can add recipient names to the whitelist above.<br/>If you think we missed important common role-based recipient names, <a href="mailto:leav@sming.com">please let us know</a>.', 'last-email-address-validator' );
                                 _e('<br/><strong>Default: No</strong>', 'last-email-address-validator' );
                                 ?>
                             </p>
@@ -763,7 +770,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e( 'Reject email adresses from disposable email address services (DEA)', 'last-email-address-validator' ) ?>:</th>
+                        <th scope="row"><?php _e( 'Use disposable email address service (DEA) blacklist', 'last-email-address-validator' ) ?>:</th>
                         <td>
                             <label>
                                 <input name="block_disposable_email_address_services" type="radio" value="yes" <?php if ($this->central::$OPTIONS["block_disposable_email_address_services"] == "yes") { echo 'checked="checked" '; } ?>/>
@@ -808,7 +815,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                    _e('If activated LEAV tries to simulate the sending of an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. Test this with a working email address. If it gets rejected, you might want to deactivate this option.<br/><strong>This option should always be active in production environments<br/>Default: Yes</strong>', 'last-email-address-validator' ); ?>
+                                    _e('If activated LEAV tries to simulate the sending of an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. Test this with a working email address. If it gets rejected, you might have to deactivate this option.<br/><strong>This option should always be active in production environments<br/>Default: Yes</strong>', 'last-email-address-validator' ); ?>
                             </p>
                         </td>
                     </tr>
@@ -838,7 +845,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                    _e('Here you can control whether to accept email addresses from domains, that allow any recipient name. These are domains that allow random recipient names like <strong>dtras657td8giuy23gtf7e3628@catch-all-domain.com</strong>.<br/>For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. I use catch-all domains myself and there is generally nothing wrong about it. You\'ll have to decide for yourself, whether this is important for you or not. Just so you know: even gmail.com allows any recipient name. If you set this option to "No", you should also reject email addresses from free email address providers above.', 'last-email-address-validator' );
+                                    _e('Here you can control whether to accept email addresses from domains, that allow arbritary recipient names. These are domains that allow arbritary recipient names like <strong>dtras657td8giuy23gtf7e3628@catch-all-domain.com</strong>.<br/>For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. I use catch-all domains myself and there is generally nothing wrong about it. You\'ll have to decide for yourself, whether this is important for you or not. Just so you know: even gmail.com allows any recipient name. If you set this option to "No", you should also reject email addresses from free email address providers above.', 'last-email-address-validator' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'last-email-address-validator' ); ?>
                             </p>
                         </td>
@@ -854,7 +861,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                 </p>
 
                 <h1><?php _e('LEAV-validated Functions / Plugins', 'last-email-address-validator' ) ?></h1>
-                <?php _e('Control which functions and plugins use LEAV\'s validation algorithms.', 'last-email-address-validator' ) ?>
+                <?php _e('Control which functions and plugins will get validated by LEAV\'s validation algorithms.', 'last-email-address-validator' ) ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'WordPress user registration', 'last-email-address-validator' ) ?>:</th>
@@ -1148,7 +1155,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
                 <a name="custom_messages"></a>
                 <h1><?php _e('Custom Error Messages', 'last-email-address-validator' ) ?></h1>
-                <?php _e('If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. The placeholder texts are the currently used error messages. Overwrite them to use your custom validation error messages. Delete the field\'s contents for using the defaults again.', 'last-email-address-validator' ) ?>
+                <?php _e('If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. The placeholder texts are the default error messages. Overwrite them to use your custom validation error messages. Delete the field\'s contents for using the defaults again.<br/>In multi-language sites, you will have to do the translations within the .po files that come with the plugin. Of course you can do this with the help of plugins like WPML and others as well.', 'last-email-address-validator' ) ?>
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
@@ -1269,7 +1276,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                 </p>
 
                 <h1><?php _e('LEAV Menu Item Location', 'last-email-address-validator' ) ?></h1>
-                <?php _e('We believe that LEAV will provide great value for you for as long as you use it. But after setting it up, you don\'t have to worry about it anymore. We understand that after having set up LEAV you might want to move the LEAV menu item to a different location in the main menu or move it into the Settings menu. Here you can control where to place it.<br/>The lower the number for a location, the higher up in the menu the LEAV menu item will be displayed. We allow locations in between 0-999.<br/>After changing the values, you\'ll have to reload the page.', 'last-email-address-validator' ) ?>
+                <?php _e('We believe that LEAV will provide great value for you for as long as you use it. But after setting it up, you don\'t have to worry about it anymore. We understand that after having set up LEAV you might want to move the LEAV menu item to a different location in the main menu or move it away from the main menu into the settings menu. Here you can control where to place it.<br/>The lower the number for a location, the higher up in the menu the LEAV menu item will be displayed. We allow locations in between 0-999.<br/>After changing the values, you\'ll have to reload the page.', 'last-email-address-validator' ) ?>
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -1319,7 +1326,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
             <h1><?php _e( 'FAQ - Frequently Asked Questions', 'last-email-address-validator' ); ?></h1>
             <h2><?php _e( 'How exactly does LEAV validate email addresses?', 'last-email-address-validator' ); ?></h2>
             <?php
-                echo( $this->central::$PLUGIN_DISPLAY_NAME_FULL . '<i>by <a href="'.  $this->central::$PLUGIN_WEBSITE . '" target="_blank">smings</a></i> ' );
+                echo( $this->central::$PLUGIN_DISPLAY_NAME_FULL . ' <i>by <a href="'.  $this->central::$PLUGIN_WEBSITE . '" target="_blank">smings</a></i> ' );
                 _e('validates email addresses of the supported WordPress functions and plugins in the following multi-step process', 'last-email-address-validator' );
             ?>
 
@@ -1359,7 +1366,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_domain_whitelist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#dwl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1375,7 +1386,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_email_whitelist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_email_whitelist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#ewl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1388,7 +1403,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_recipient_name_whitelist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#rnwl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1401,7 +1420,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_domain_blacklist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#dbl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1414,7 +1437,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_free_email_address_provider_domain_blacklist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#feapdbl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1427,7 +1454,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_email_blacklist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_email_blacklist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#ebl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1440,7 +1471,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_user_defined_recipient_name_blacklist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#rnbl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1453,7 +1488,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['use_role_based_recipient_name_blacklist'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#rbrnbl">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1474,7 +1513,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['block_disposable_email_address_services'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['block_disposable_email_address_services'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#dea">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1487,8 +1530,12 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['simulate_email_sending'] . '</strong>"' );
-                            echo( ' - <a href="#ses">' );
+                            if( $this->central::$OPTIONS['simulate_email_sending'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
+                            echo( ' - <a href="#dea">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
                     <br/>
@@ -1506,7 +1553,11 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                     </strong>
                         <?php
                             _e( ' - Current setting is "<strong>', 'last-email-address-validator' );
-                            echo( $this->central::$OPTIONS['allow_catch_all_domains'] . '</strong>"' );
+                            if( $this->central::$OPTIONS['allow_catch_all_domains'] == 'no' )
+                                _e( 'No', 'last-email-address-validator' );
+                            else
+                                _e( 'Yes', 'last-email-address-validator' );
+                            echo( '</strong>"' );
                             echo( ' - <a href="#cad">' );
                             _e( 'Change settings</a>', 'last-email-address-validator' );
                         ?>
@@ -1637,9 +1688,6 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                 || $this->central::$OPTIONS[$key] == $value
             )
                 continue;
-
-            // write_log("FORM VALUE    '" . $value . "'");
-            // write_log("OPTIONS VALUE '" . $this->central::$OPTIONS[$key] . "'");
 
             // First we validate all radio button fields
             if(    in_array( $key, $this->central::$RADIO_BUTTON_FIELDS )
@@ -1914,35 +1962,30 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
         // ------ Custom error message override fields -------------------------
         //
-        elseif( $field_name == 'cem_email_address_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_email_address_syntax_error')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address syntax errors.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_domain_has_no_mx_record')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains without MX records.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_domain_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email domains.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_domain_is_on_dea_blacklist')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'disposable email addresses (DEA).<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_domain_is_on_free_email_address_provider_domain_list')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domain is on free email address provider domain list.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_email_from_catch_all_domain')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email addresses from catch-all domains.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_general_email_validation_error')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'general email validation errors.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_recipient_name_catch_all_email_address_error')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name catch-all errors.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_is_blacklisted')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email domains.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_is_on_free_email_address_provider_domain_list')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains on the free email address provider domain list.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_address_is_blacklisted')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_recipient_name_is_blacklisted')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name is on blacklist error message.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_recipient_name_is_role_based')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'role-based recipient names.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_has_no_mx_record')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains without MX records.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_email_domain_is_on_dea_blacklist')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'disposable email addresses (DEA).<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_simulated_sending_of_email_failed')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'last-email-address-validator' );
-        elseif( $field_name == 'cem_smtp_connection_failed')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'failed SMTP connections.<br/>', 'last-email-address-validator' );
-
-
-
+        elseif( $field_name == 'cem_email_from_catch_all_domain')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email addresses from catch-all domains.<br/>', 'last-email-address-validator' );
+        elseif( $field_name == 'cem_general_email_validation_error')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'general email validation errors.<br/>', 'last-email-address-validator' );
 
         // ------ Main Menu Use & Positions -------------------
         //
