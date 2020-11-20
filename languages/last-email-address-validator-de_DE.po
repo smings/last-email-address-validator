@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
-"POT-Creation-Date: 2020-11-19 09:41+0100\n"
-"PO-Revision-Date: 2020-11-20 22:48+0100\n"
+"POT-Creation-Date: 2020-11-20 22:51+0100\n"
+"PO-Revision-Date: 2020-11-20 22:57+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -151,7 +151,7 @@ msgstr "Schnellnavigation"
 
 #: includes/leav-settings-page.inc.php:149
 msgid "Test Email Address Vaildation"
-msgstr "Emailadress-Validierungstest"
+msgstr "Emailadressen-Validierungstest"
 
 #: includes/leav-settings-page.inc.php:155
 #: includes/leav-settings-page.inc.php:312
@@ -542,7 +542,7 @@ msgid ""
 "Email addresses on this list will be accepted without further email address "
 "blacklist checks (if active)."
 msgstr ""
-"Emailadressen auf dieser Liste überspringen den Emailadress-Blacklist "
+"Emailadressen auf dieser Liste überspringen den Emailadressen-Blacklist "
 "Filterschritt (wenn aktiviert)."
 
 #: includes/leav-settings-page.inc.php:444
@@ -599,7 +599,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:588
 msgid "Use free email address provider domain blacklist"
-msgstr "Liste freier Emailadress-Provider Blacklist verwenden"
+msgstr "Liste freier Emailadressen-Provider Blacklist verwenden"
 
 #: includes/leav-settings-page.inc.php:600
 msgid ""
@@ -609,7 +609,7 @@ msgid ""
 ">If you feel that we missed important domains, you can add them on the user-"
 "defined domain blacklist above. But please also "
 msgstr ""
-"Diese Liste umfasst die üblichen freien Emailadress-Serviceprovider. Wenn du "
+"Diese Liste umfasst die üblichen freien Emailadressen-Provider. Wenn du "
 "beispielsweise die Nutzung geschäftlicher Emailadressen durchsetzen "
 "möchtest, kannst du dieses Blacklist-Feature aktivieren und Emailadressen "
 "von den gelisteten Domains ablehnen.<br/>Wenn Du glaubst, dass wir wichtige "
@@ -625,12 +625,14 @@ msgstr ""
 #: includes/leav-settings-page.inc.php:603
 msgid ""
 "<br/>If you should wonder why we block the entire top-level-domains .cf, ."
-"ga, .gq, .mk and .tk, these are freely available top-level-domains. Because "
-"of this we treat them like other free email address providers. These top-"
-"level-domains are almost exclusively used by individuals and not companies."
+"ga, .gq, .mk and .tk, here is why: these top-level-domains are free of "
+"charge and therefore wildy popular with private individuals, that don't want "
+"to spend anything on a domain. Because of this we treat them like free email "
+"address providers. These top-level-domains are almost exclusively registered "
+"by individuals and not (relevant) companies."
 msgstr ""
 "<br/>Falls du dich wundern solltest, warum wir die Top-Level-Domains .cf, ."
-"ga, .gq, .mk und .tk blockieren, dann kommt hier das warum: Diese Top-Levell-"
+"ga, .gq, .mk und .tk blockieren, dann kommt hier das warum: Diese Top-Level-"
 "Domains sind für jedermann kostenlos registrierbar. Aus diesem Grund "
 "behandeln wir sie genauso wie Domains freier Emailadressen-Provider. Die "
 "Domains dieser Top-Level-Domains werden nahezu ausschließlich von "
@@ -638,7 +640,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:634
 msgid "Use email address blacklist"
-msgstr "Emailadress-Blacklist verwenden"
+msgstr "Emailadressen-Blacklist verwenden"
 
 #: includes/leav-settings-page.inc.php:646
 msgid "Email addresses from this list will be rejected (if active)."
@@ -716,7 +718,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:773
 msgid "Use disposable email address service (DEA) blacklist"
-msgstr "Wegwerf-Emailadress-Service Blacklist verwenden"
+msgstr "Wegwerf-Emailadressen-Service Blacklist verwenden"
 
 #: includes/leav-settings-page.inc.php:785
 msgid ""
@@ -729,7 +731,7 @@ msgid ""
 "DEAs at their core. If you found a DEA service that doesn't get blocked yet, "
 "please "
 msgstr ""
-"Wenn aktiviert werden Emailadressen von Wegwerf- oder Einmal-Emailadress-"
+"Wenn aktiviert werden Emailadressen von Wegwerf- oder Einmal-Emailadressen-"
 "Services wie z.B. mailinator.com, maildrop.cc, guerrillamail.com und viele "
 "mehr abgelehnt. LEAV verwaltet eine regelmäßig aktualisierte, umfassende "
 "Liste dieser Wegwerf-Emailadress-Services. LEAV blockt nicht nur die Domains "
@@ -808,8 +810,7 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:864
 msgid ""
-"Control which functions and plugins will get validated by LEAV's validation "
-"algorithms."
+"Control which functions and plugins will get validated by LEAV's algorithm."
 msgstr ""
 "Kontrolliere welche WordPress-Funktionen und -Plugins durch LEAVs "
 "Algorithmus validiert werden."
@@ -1002,7 +1003,8 @@ msgstr "Emaildomain auf Blacklist Fehlermeldung"
 msgid ""
 "Email domain is on list of free email address provider domains error message"
 msgstr ""
-"Email Domain ist auf der Liste kostenloser Emailadress-Provider Fehlermeldung"
+"Email Domain ist auf der Liste kostenloser Emailadressen-Provider "
+"Fehlermeldung"
 
 #: includes/leav-settings-page.inc.php:1199
 msgid "Email address is blacklisted error message"
@@ -1022,7 +1024,7 @@ msgstr "Keine Mailserver gefunden Fehlermeldung"
 
 #: includes/leav-settings-page.inc.php:1235
 msgid "Email address from disposable email address service error message"
-msgstr "Wegwerf-Emailadress-Service Fehlermeldung"
+msgstr "Wegwerf-Emailadressen-Service Fehlermeldung"
 
 #: includes/leav-settings-page.inc.php:1244
 msgid "Simulating sending an email failed error message"
@@ -1262,11 +1264,12 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:1453
 msgid "Email Address Blacklist (optional)"
-msgstr "Emailadress-Blacklist (optional)"
+msgstr "Emailadressen-Blacklist (optional)"
 
 #: includes/leav-settings-page.inc.php:1466
-msgid "Filters against the user-defined email blacklist (if activated)."
-msgstr "Emailadressen auf der Blacklist ablehnen (wenn aktiveirt)"
+msgid ""
+"Filters against the user-defined email address blacklist (if activated)."
+msgstr "Emailadressen auf der Blacklist ablehnen (wenn aktiviert)"
 
 #: includes/leav-settings-page.inc.php:1470
 msgid "Recipient Name Blacklist (optional)"
@@ -1384,7 +1387,7 @@ msgid ""
 msgstr ""
 "Du kannst Sternchen \"<strong>*</strong>\" als Platzhalter (Wildcards) "
 "verwenden. Das Sternchen steht für 0 bis beliebig viele Zeichen. Zum "
-"Beispiel  \"<strong>mail4*.com</strong>\" erkennt alle Domains die mit<br/>"
+"Beispiel \"<strong>mail4*.com</strong>\" erkennt alle Domains die mit<br/>"
 "\"<strong>mail4</strong>\" beginnen gefolgt von keinem oder beliebig vielen "
 "Zeichen gefolgt von einem abschließenden \"<strong>.com</strong>\". In "
 "diesem Beispiel würden\"<strong>mail4.com</strong>\", \"<strong>mail4i.com</"
@@ -1398,7 +1401,7 @@ msgstr ""
 "doppelte Sternchen \"<strong>**</strong>\" eintragen. Zum Beispiek "
 "\"<strong>**.tk</strong>\" erkennt sämtliche Domains der Top-Level-Domain \"."
 "tk\". <br/>Beispiele hierfür kannst du auch in der Blacklist der kostenlosen "
-"Emailadress-Provider sehen."
+"Emailadressen-Provider sehen."
 
 #: includes/leav-settings-page.inc.php:1577
 #: includes/leav-settings-page.inc.php:1583
@@ -1765,11 +1768,11 @@ msgstr "Aktualisierung der benutzerdefinierten Domain-Whitelist.<br/>"
 #: includes/leav-settings-page.inc.php:1891
 #: includes/leav-settings-page.inc.php:2022
 msgid "using the user-defined email address whitelist.<br/>"
-msgstr "die Nutzung der benutzerdefinierten Emailadress-Whitelist.<br/>"
+msgstr "die Nutzung der benutzerdefinierten Emailadressen-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1893
 msgid "Updated the user-defined email address whitelist.<br/>"
-msgstr "Aktualisierung der benutzerdefinierten Emailadress-Whitelist.<br/>"
+msgstr "Aktualisierung der benutzerdefinierten Emailadressen-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1896
 #: includes/leav-settings-page.inc.php:2027
@@ -1792,11 +1795,11 @@ msgstr "Aktualisierung der benutzerdefinierten Domain-Blacklist.<br/>"
 #: includes/leav-settings-page.inc.php:1907
 #: includes/leav-settings-page.inc.php:2039
 msgid "using the user-defined email address blacklist.<br/>"
-msgstr "die Nutzung der benutzerdefinierten Emailadress-Blacklist.<br/>"
+msgstr "die Nutzung der benutzerdefinierten Emailadressen-Blacklist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1909
 msgid "Updated the user-defined email address blacklist.<br/>"
-msgstr "Aktualisierung der benutzerdefinierten Emailadress-Whitelist.<br/>"
+msgstr "Aktualisierung der benutzerdefinierten Emailadressen-Whitelist.<br/>"
 
 #: includes/leav-settings-page.inc.php:1912
 #: includes/leav-settings-page.inc.php:2044
@@ -1840,12 +1843,12 @@ msgstr "Trackbacks akzeptieren.<br/>"
 #: includes/leav-settings-page.inc.php:1944
 #: includes/leav-settings-page.inc.php:2076
 msgid "validating WordPress's user registration email addresses.<br/>"
-msgstr "die WordPress Benutzerregistrierung Emailadress-Validierung.<br/>"
+msgstr "die WordPress Benutzerregistrierung Emailadressen-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1946
 #: includes/leav-settings-page.inc.php:2078
 msgid "validating WordPress's commentator email addresses.<br/>"
-msgstr "die WordPress Kommentar Emailadress-Validierung.<br/>"
+msgstr "die WordPress Kommentar Emailadressen-Validierung.<br/>"
 
 #: includes/leav-settings-page.inc.php:1948
 #: includes/leav-settings-page.inc.php:2080
