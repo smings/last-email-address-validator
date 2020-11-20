@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: leav 1.0.3\n"
 "Report-Msgid-Bugs-To: leav@smings.com\n"
 "POT-Creation-Date: 2020-11-19 09:41+0100\n"
-"PO-Revision-Date: 2020-11-20 15:48+0100\n"
+"PO-Revision-Date: 2020-11-20 22:48+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -426,7 +426,6 @@ msgid "No"
 msgstr "Nein"
 
 #: includes/leav-settings-page.inc.php:360
-#, fuzzy
 msgid ""
 "Allow recipient name (the part of an email address before the \"@\") catch-"
 "all syntax. google and other email address providers allow you to extend the "
@@ -440,16 +439,16 @@ msgid ""
 msgstr ""
 "Hier kannst du steuern, ob du Empfängernamen (der Teil der Email vor dem \"@"
 "\"-Zeichen) mit einer Catch-All-Syntax erlauben willst. google und andere "
-"Emailadress-Provider erlauben es den Empfängernamen eines Postfachs mit "
+"Emailadressen-Provider erlauben es den Empfängernamen eines Postfachs mit "
 "Hilfe eines angehängten \"+\"-Zeichens um nachfolgend beliebigen Zeichen zu "
 "erweitern. Die einzige Limitierung ist eine maximale Länge von 64 Zeichen "
 "für den Empfängernamen einer Emailadresse.<br/><strong>\"mein.name"
 "+irgendwas@gmail.com\"</strong> ist die gleiche Emailadresse wie <strong>"
 "\"mein.name@gmail.com\"</strong> für google. Dies erlaubt es Benutzern ihre "
-"Haupt-Emailadresse zu \"verbergen\". Dies wird normalerweise für die "
-"Differenzierbarkeit von Newsletter-Anmeldungen oder Registrierungen bei "
-"Webseiten verwendet.<br/>Hier kannst du wählen, ob du dies zulassen möchtest "
-"oder ob du derartige Emailadressen blockieren möchtest."
+"Haupt-Emailadresse zu \"verbergen\". Dies wird normalerweise zum "
+"Differenzieren von Newsletter-Anmeldungen oder Registrierungen bei Webseiten "
+"verwendet.<br/>Hier kannst du wählen, ob du dies zulassen möchtest oder ob "
+"du derartige Emailadressen blockieren möchtest."
 
 #: includes/leav-settings-page.inc.php:361
 #: includes/leav-settings-page.inc.php:788
@@ -624,7 +623,6 @@ msgstr ""
 "Diese Liste ist nicht editierbar."
 
 #: includes/leav-settings-page.inc.php:603
-#, fuzzy
 msgid ""
 "<br/>If you should wonder why we block the entire top-level-domains .cf, ."
 "ga, .gq, .mk and .tk, these are freely available top-level-domains. Because "
@@ -632,10 +630,10 @@ msgid ""
 "level-domains are almost exclusively used by individuals and not companies."
 msgstr ""
 "<br/>Falls du dich wundern solltest, warum wir die Top-Level-Domains .cf, ."
-"ga, .gq, .mk und .tk blockieren, dann kommt hier das warum: Domains für "
-"diese Top-Levell-Domains, sind für jedermann kostenlos registrierbar. Aus "
-"diesem Grund behandeln wir sie analog zu Domains freier Emailadress-"
-"Provider. Diese Top-Level-Domains werden quasi exklusiv nur von "
+"ga, .gq, .mk und .tk blockieren, dann kommt hier das warum: Diese Top-Levell-"
+"Domains sind für jedermann kostenlos registrierbar. Aus diesem Grund "
+"behandeln wir sie genauso wie Domains freier Emailadressen-Provider. Die "
+"Domains dieser Top-Level-Domains werden nahezu ausschließlich von "
 "Privatnutzern registriert, jedoch nicht von (relevanten) Firmen."
 
 #: includes/leav-settings-page.inc.php:634
@@ -679,7 +677,6 @@ msgid "Use role-based recipient name blacklist"
 msgstr "Rollenbasierte Empfängernamen-Blacklist verwenden"
 
 #: includes/leav-settings-page.inc.php:737
-#, fuzzy
 msgid ""
 "If activated, email addresses with generic, role-based recipient names (the "
 "part before the \"@\" sign) from the list below, will be rejected. The "
@@ -747,7 +744,6 @@ msgid "contact us</a>."
 msgstr "kontaktiere uns bitte</a>."
 
 #: includes/leav-settings-page.inc.php:818
-#, fuzzy
 msgid ""
 "If activated LEAV tries to simulate the sending of an email. For this we "
 "connect to one of the MX servers and test if it would accept an email from "
@@ -759,16 +755,17 @@ msgid ""
 "always be active in production environments<br/>Default: Yes</strong>"
 msgstr ""
 "Wenn aktiviert versucht LEAV den Versand einer Email zu simulieren. Hierfür "
-"wird eine Verbindung zu einem der für die Emailadresse hinterlegten "
-"Mailserver aufgenommen und überprüft, ob der Mailserver die Empfänger-"
-"Emailadresse akzeptieren würde. Wenn die hierfür verwendete Email Domain "
-"(siehe oben) nicht auf die IP-Adresse deiner WordPress-Instanz zeigt, kann "
-"dieser Versuch daran scheitern, dass der Mailserver generell keine Emails "
-"von deiner WordPress-Instanz akzeptieren würde. Dies ist üblicherweise nur "
-"in Entwicklungs- und Testumgebungen der Fall. Teste es am besten mit einer "
-"funktionierenden Emailadresse. Wenn sie abgelehnt wird, musst du eventuell "
-"den simulierten Emailversand deaktivieren.<br/><strong>Diese Option sollte "
-"in Produktionsumgebungen IMMER aktiviert sein<br/>Standardwert: Ja</strong>"
+"wird eine Verbindung zu einem der für die Domain der Emailadresse "
+"hinterlegten Mailserver aufgenommen und überprüft, ob der Mailserver die "
+"Empfänger-Emailadresse akzeptieren würde. Wenn die hierfür verwendete Email "
+"Domain (siehe oben) nicht auf die IP-Adresse deiner WordPress-Instanz zeigt, "
+"kann dieser Versuch daran scheitern, dass der Mailserver generell keine "
+"Emails von deiner WordPress-Instanz akzeptieren würde. Dies ist "
+"üblicherweise nur in Entwicklungs- und Testumgebungen der Fall. Teste es am "
+"besten mit einer funktionierenden Emailadresse. Wenn sie abgelehnt wird, "
+"musst du eventuell den simulierten Emailversand deaktivieren.<br/"
+"><strong>Diese Option sollte in Produktionsumgebungen IMMER aktiviert "
+"sein<br/>Standardwert: Ja</strong>"
 
 #: includes/leav-settings-page.inc.php:831
 msgid "Allow catch-all domains"
@@ -779,7 +776,6 @@ msgid "Accept email addresses from catch-all domains"
 msgstr "Emailadressen von Catch-All Domains akzeptieren"
 
 #: includes/leav-settings-page.inc.php:848
-#, fuzzy
 msgid ""
 "Here you can control whether to accept email addresses from domains, that "
 "allow arbritary recipient names. These are domains that allow arbritary "
@@ -808,10 +804,9 @@ msgstr ""
 "es ist generell nichts Schlimmes. Du musst selbst entscheiden, ob dies für "
 "dich wichtig ist oder nicht. Nur zur Info: Auch gmail.com erlaubt beliebige "
 "Empfängernamen. Wenn du diese Option auf \"Nein\" stellst, solltest du auch "
-"alle freien Emailadress-Provider ablehnen. Siehe die Option weiter oben."
+"alle freien Emailadressen-Provider ablehnen. Siehe die Option weiter oben."
 
 #: includes/leav-settings-page.inc.php:864
-#, fuzzy
 msgid ""
 "Control which functions and plugins will get validated by LEAV's validation "
 "algorithms."
@@ -972,7 +967,6 @@ msgid "Accept trackbacks"
 msgstr "Trackbacks akzeptieren"
 
 #: includes/leav-settings-page.inc.php:1158
-#, fuzzy
 msgid ""
 "If you want to override the default validation error messages or if you want "
 "to translate them without having to go through .po files, you can replace "
@@ -987,7 +981,10 @@ msgstr ""
 "übersetzen willst, kannst du deine benutzerdefinierten Texte hier eintragen. "
 "Die als Platzhalter angezeigten Texte sind die Standardwerte. Überschreibe "
 "sie einfach mit deinen eigenen Fehlermeldungen. Lösche deine Werte, um "
-"wieder die Standardwerte zu verwenden."
+"wieder die Standardwerte zu verwenden.<br/>In Mehrsprachigen Installationen "
+"musst du die Übersetzungen auch weiterhin in den zugrunde liegenden .po "
+"Files vornehmen. Dies kannst du natürlich auch mit Plugins wie WPML und "
+"anderen tun."
 
 #: includes/leav-settings-page.inc.php:1163
 msgid "Email address syntax error message"
@@ -1175,22 +1172,20 @@ msgid "Change settings</a>"
 msgstr "Einstellungen ändern</a>"
 
 #: includes/leav-settings-page.inc.php:1360
-#, fuzzy
 msgid ""
 "Control if you want to filter out email addresses with a recipient name "
 "catch-all syntax. For more information what a recipient name catch-all "
 "syntax is, please check our FAQ entry below."
 msgstr ""
-"Wenn auf \"Nein\" gesetzt werden Empfängernamen mit Catch-All-Syntax "
-"ausgefiltert. Für mehr Informationen darüber, was Empfängernamen mit Catch-"
-"All-Syntax sind, schaue dir unseren FAQ-Eintrag weiter unten an."
+"Steuere das Ausfiltern von Emailadressen mit Empfängernamen Carch-All-"
+"Syntax. Für mehr Informationen darüber, was Empfängernamen mit Catch-All-"
+"Syntax sind, schaue dir unseren FAQ-Eintrag weiter unten an."
 
 #: includes/leav-settings-page.inc.php:1365
 msgid "Domain Whitelist (optional)"
 msgstr "Domain Whitelist (optional)"
 
 #: includes/leav-settings-page.inc.php:1379
-#, fuzzy
 msgid ""
 "Filters against the user-defined email domain whitelist (if activated).<br/"
 ">Use this whitelist to override potential false positives from extensive "
@@ -1217,22 +1212,20 @@ msgid "Email Address Whitelist (optional)"
 msgstr "Emailadressen Whitelist (optional)"
 
 #: includes/leav-settings-page.inc.php:1398
-#, fuzzy
 msgid ""
 "Filters against the user-defined email whitelist (if activated)<br/>If you "
 "need to override specific email addresses that would otherwise get filtered "
 "out by the blacklist filters."
 msgstr ""
-"Filtert eingebene Emailadressen gegen eine benutzerdefinierte Emailadressen-"
-"Whitelist (falls aktiviert).<br/>Hier kannst du einzelne Emailadressen "
-"einpflegen, die ansonsten ausgefiltert werden würden."
+"Filtert Emailadressen gegen die Emailadressen-Whitelist (falls aktiviert)."
+"<br/>Hier kannst du einzelne Emailadressen einpflegen, die ansonsten durch "
+"die Blacklists ausgefiltert werden würden."
 
 #: includes/leav-settings-page.inc.php:1402
 msgid "Recipient Name Whitelist (optional)"
 msgstr "Empfängernamen Whitelist (optional)"
 
 #: includes/leav-settings-page.inc.php:1415
-#, fuzzy
 msgid ""
 "Filters against the user-defined recipient name whitelist (if activated)<br/"
 ">If you need to override specific recipient names that would otherwise get "
@@ -1409,7 +1402,6 @@ msgstr ""
 
 #: includes/leav-settings-page.inc.php:1577
 #: includes/leav-settings-page.inc.php:1583
-#, fuzzy
 msgid ""
 "<br/>Be careful to not over do any kind of matching with wildcards.<br/>We "
 "urge you to extensively test whether email addresses would get matched or "

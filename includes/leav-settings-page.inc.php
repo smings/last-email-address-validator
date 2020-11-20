@@ -600,7 +600,7 @@ your-blacklisted-domain-2.com"><?php echo $this->central::$OPTIONS["user_defined
                                     _e('The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.<br/>If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also ', 'last-email-address-validator' );
                                     echo( '<a href="mailto:' . $this->central::$PLUGIN_CONTACT_EMAIL . '">' );
                                     _e( 'inform us</a> about it. This list is not editable.', 'last-email-address-validator' );
-                                    _e( '<br/>If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .mk and .tk, these are freely available top-level-domains. Because of this we treat them like other free email address providers. These top-level-domains are almost exclusively used by individuals and not companies.', 'last-email-address-validator' );
+                                    _e( '<br/>If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .mk and .tk, here is why: these top-level-domains are free of charge and therefore wildy popular with private individuals, that don\'t want to spend anything on a domain. Because of this we treat them like free email address providers. These top-level-domains are almost exclusively registered by individuals and not (relevant) companies.', 'last-email-address-validator' );
                                     _e('<br/><strong>Default: No</strong>', 'last-email-address-validator' ); ?>
                             </p>
                         </td>
@@ -861,7 +861,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                 </p>
 
                 <h1><?php _e('LEAV-validated Functions / Plugins', 'last-email-address-validator' ) ?></h1>
-                <?php _e('Control which functions and plugins will get validated by LEAV\'s validation algorithms.', 'last-email-address-validator' ) ?>
+                <?php _e('Control which functions and plugins will get validated by LEAV\'s algorithm.', 'last-email-address-validator' ) ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'WordPress user registration', 'last-email-address-validator' ) ?>:</th>
