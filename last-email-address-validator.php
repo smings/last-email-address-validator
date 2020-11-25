@@ -7,7 +7,7 @@
  * Author: smings
  * Author URI: https://smings.com/leav/
  * Text Domain: last-email-address-validator
- * Domain Path: /languages
+ * Domain Path: /languages/
  */
 
 defined('ABSPATH') or die('Not today!');
@@ -20,8 +20,6 @@ require_once("includes/leav-helper-functions.inc.php");
 if ( ! function_exists('is_plugin_active') ){
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
-
-load_plugin_textdomain('languages/last-email-validator');
 
 class LeavPlugin
 {
@@ -51,6 +49,11 @@ class LeavPlugin
 
         if ( is_admin() )
             add_action('admin_menu', array( new LeavSettingsPage( $this, $this->central, $this->leav ), 'add_settings_page_to_menu' ) );
+
+        // it doesn't matter if we are the admins or not, we need the 
+        // translated default error messages 
+        add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
+
         $this->init_validation_filters();
         $this->init_custom_error_messages();
     }
@@ -70,6 +73,10 @@ class LeavPlugin
 
     public function deactivate() : void {}
 
+    public function load_text_domain() : void 
+    {
+        load_plugin_textdomain('last-email-address-validator');
+    }
 
     public function add_plugin_overview_page_links( $links ) : array
     {
@@ -942,6 +949,7 @@ class LeavPlugin
     }
 
 }
+
 
 if( class_exists( 'LeavPlugin' ) )
 {

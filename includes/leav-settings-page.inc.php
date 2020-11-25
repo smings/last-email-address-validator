@@ -296,7 +296,7 @@ window.onload = function (event) {
                                 }
                                 ?>
                             <p class="description">
-                                <?php _e('Test any email address against LEAV\'s current settings and its underlying algorithm.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do extensive testing.', 'last-email-address-validator' ); ?>
+                                <?php _e('Test any email address against LEAV\'s current settings.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.', 'last-email-address-validator' ); ?>
                             </p>
 
                         </td>
@@ -531,6 +531,7 @@ your-recipient-name-2"><?php echo $this->central::$OPTIONS["user_defined_recipie
                 </p>
 
                 <h2></a><?php _e('Blacklists', 'last-email-address-validator' ) ?></h2>
+                <?php _e('Any email address that gets matched by a blacklist rule gets rejected, unless it has previously been whitelisted for the blacklist rule. If an email address gets matched by a blacklist rule, all subsequent validations get skipped.', 'last-email-address-validator' ) ?><br/>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
                     <tr>
