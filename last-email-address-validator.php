@@ -40,6 +40,9 @@ class LeavPlugin
         $this->free_email_address_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE;
         $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init') );
+        // it doesn't matter if we are the admins or not, we need the 
+        // translated default error messages 
+        add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
     }
 
 
@@ -49,10 +52,6 @@ class LeavPlugin
 
         if ( is_admin() )
             add_action('admin_menu', array( new LeavSettingsPage( $this, $this->central, $this->leav ), 'add_settings_page_to_menu' ) );
-
-        // it doesn't matter if we are the admins or not, we need the 
-        // translated default error messages 
-        add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
 
         $this->init_validation_filters();
         $this->init_custom_error_messages();
