@@ -30,7 +30,7 @@ mx:mx.20minutemail.com
 ip:62.149.128.160
 
 domain:33mail.com
-mx:smtp1.ec2.33mail.com
+mx:domains.33mail.com
 ip:54.175.71.36
 
 domain:altospam.com
