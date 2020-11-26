@@ -204,6 +204,66 @@ Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure 
 9. settings-9.png
 10. settings-10.png
 
+== Frequently Asked Questions ==
+
+= How exactly does LEAV validate email addresses? =
+
+LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-address-validator) validates email addresses of the supported WordPress functions and plugins in the following multi-step process:
+
+1. Email Address Syntax Validation (always active)
+Checks if the email address is syntactically correct. This acts as a backup check for the plugin's checks. Some plugins only have a frontend based email syntax check. This is a regular expression-based server-side check. We wouldn't even need it, but use it for performance reasons to filter out wrong emails without further checking
+
+2. Recipient Name Catch-All Syntax (optional)
+Controls if you want to filter out email addresses with a recipient name catch-all syntax. For more information what a recipient name catch-all syntax is, please check our FAQ entry below.
+
+3. Domain Whitelist (optional)
+Filters against the user-defined email domain whitelist (if activated).
+Use this whitelist to override potential false positives from extensive (wildcard) domain blacklist rules. Whenever an email address gets matches by this whitelist, the domain blacklist check gets skipped.
+We kindly ask you to inform us at leav@smings.com about wrongfully blacklisted domains, so that we can correct any errors asap.
+
+4. Email Address Whitelist (optional)
+Filters against the user-defined email whitelist (if activated).
+If you need to override specific email addresses that would otherwise get filtered out by the blacklist filters.
+
+5. Recipient Name Whitelist (optional)
+Filters against the user-defined recipient name whitelist (if activated)
+If you need to override specific recipient names that would otherwise get filtered out by either the user-defined recipient name blacklist or the role-based recipient name blacklist. If a recipient name gets matched by this whitelist, both recipient name blacklist checks get skipped.
+
+6. Domain Blacklist (optional)
+Filters against the user-defined email domain blacklist (if activated).
+
+7. Free Email Address Provider Domain Blacklist (optional)
+Filters against the built-in free email address provider domain blacklist (if activated). This list gets updated with new plugin releases. Our list allows the use of wildcards and is fine-tuned to filter out thousands of free email providers.
+
+8. Email Address Blacklist (optional)
+Filters against the user-defined email address blacklist (if activated).
+
+9. Recipient Name Blacklist (optional)
+Filters against the user-defined recipient name blacklist (if activated).
+
+10. Role-Based Recipient Name Blacklist (optional)
+Filters against the built-in role-based recipient name blacklist (if activated).
+
+11. DNS MX Server Lookup (always active)
+Check if the email address's domain has a DNS entry with MX records.
+
+12. Disposable Email Address (DEA) Service Blacklist (optional)
+Filters against the built-in extensive blacklist of disposable email services (if activated). This list gets updated with new plugin releases. If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. 
+
+13. Simulate Email Sending (optional)
+Connects to one of the MX servers and simulates the sending of an email from no-reply@your-domain.com to the entered email address. No actual email will be sent out. This is just LEAV asking the receiving server, if it would accept the email address. Then the dialog with the MX server gets terminated without any email being sent. It's essentially like looking at a house's mailboxes and checking if there is a mailbox with a specific name on it and if we can open it and see if the letter would fit in without dropping it into the mailbox.
+
+14. Reject Email Addresses from Catch-All Domains (optional)
+Optionally filters out all email addresses that originate from domains that accept emails for ANY recipient name. These are domains that allow arbritary recipient names like dtras657td8giuy23gtf7e3628@catch-all-domain.com.
+For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. Disclaimer: There is generally nothing wrong about catch-all domains. You'll have to decide for yourself, whether this is important for you or not. Just so you know: even gmail.com allows any recipient name. If this option is used, you should also reject email addresses from free email address providers. And it might still hamper with what you want to achieve. This is just an option for rare cases.
+
+= Can I use wildcards for the whitelists/blacklists? =
+
+Yes you can. We have a complete documentation on how to use it along with many
+built-in examples in our provided blacklists for role-based recipient names and
+free email address provider domain list.
+
+
 == Changelog ==
 
 = 1.4.8 =
