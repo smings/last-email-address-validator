@@ -101,10 +101,10 @@ We are currently working on integrating the following plugins:
 * [MC4WP: Mailchimp Top Bar](https://wordpress.org/plugins/mailchimp-top-bar/) (10,000+ installations)
 * [Email Before Download](https://wordpress.org/plugins/email-before-download/) (10,000+ installations)
 
-When we finished this list, we'll be able to serve an additional 9,120,000+ WordPress installations. Brining our total reach up to 24,450,000+ installations, not counting gravity forms (we don't have any reliable data on this plugin's installation count).
+When we finished this list, we'll be able to serve an additional 9,120,000+ WordPress installations. Bringing our total reach up to 24,450,000+ installations, not counting gravity forms (we don't have any reliable data on this plugin's installation count).
 Overall we'll probably be able to serve 25+ million WordPress installations.
 Please help us spread the word and recommend our plugin to others and leave us an
-honest review. It might take some time to set up the validation and filter settings. Please trust us, it is more than worth your while afterwards...
+honest review. It might take some time to set up the validation and filter settings. Please trust us, it is more than worth your while doing so ...
 
 = Features =
 
