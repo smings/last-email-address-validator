@@ -41,7 +41,8 @@ class LeavPlugin
         $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init') );
         // it doesn't matter if we are the admins or not, we need the 
-        // translated default error messages 
+        // translated default error messages and therefore always have to load the
+        // plugin translations
         add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
     }
 
