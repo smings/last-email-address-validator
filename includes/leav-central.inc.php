@@ -76,6 +76,7 @@ class LeavCentral
   public static $SANITIZE_RECIPIENT_NAME_INTERNAL_REGEX = "/[^a-z\*]/";
   public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
   public static $TEXT_FIELDS = array(
+    'cem_email_address_contains_invalid_characters',
     'cem_email_address_is_blacklisted',
     'cem_email_address_syntax_error',
     'cem_email_domain_has_no_mx_record',
@@ -108,6 +109,7 @@ class LeavCentral
     $this::$VALIDATION_ERROR_LIST_DEFAULTS = 
     array
     (
+          'email_address_contains_invalid_characters' => __( 'The entered email address contains invalid characters.', 'last-email-address-validator' ),
           'email_address_is_blacklisted'      => __( 'The entered email address is blacklisted.', 'last-email-address-validator' ),
           'email_address_syntax_error'        => __( 'The entered email address syntax is invalid.', 'last-email-address-validator' ),
           'email_domain_has_no_mx_record'     => __( 'The entered email address\'s domain doesn\'t have any mail servers.', 'last-email-address-validator' ),

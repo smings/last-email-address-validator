@@ -389,12 +389,21 @@ class LastEmailAddressValidator
 
 	private function validate_current_email_address_syntax()
 	{
-		if(    ! empty($this->normalized_email_address)
-				&& preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address )  )
+		if( ! empty( $this->normalized_email_address ) && ! empty( $this->email_address ) )
 		{
-			$this->is_email_address_syntax_valid = true;
-			return $this->extract_recipient_name_and_domain_from_email_address();
+			if( $this->normalized_email_address != trim( strtolower( $this->email_address ) ) )
+			{
+				$this->set_error_type( 'email_address_contains_invalid_characters' );
+				return false;
+			}
+
+			if( preg_match( $this->central::$EMAIL_ADDRESS_REGEX, $this->normalized_email_address ) ) 
+			{
+				$this->is_email_address_syntax_valid = true;
+				return $this->extract_recipient_name_and_domain_from_email_address();
+			}
 		}
+
 		$this->set_error_type( 'email_address_syntax_error' );
 		return false;
 	}

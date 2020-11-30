@@ -44,13 +44,13 @@ class LeavSettingsPage
         <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
                  <?php
-                    _e('LEAV - Last Email Address Validator could not automatically detect your email domain .<br/>This usually happens in your local development environment. Please go to the settings and enter an email domain under which your WordPress instance is reachable.<br/>', 'last-email-address-validator' );
+                    echo nl2br( esc_html("LEAV - Last Email Address Validator could not automatically detect your email domain.\nThis usually happens in your local development environment. Please go to the settings and enter an email domain under which your WordPress instance is reachable.\n", 'last-email-address-validator' ) );
                     echo '<a href="' . $this->central::$PLUGIN_SETTING_PAGE . '">';
-                    _e('Settings', 'last-email-address-validator' );
+                    esc_html_e('Settings', 'last-email-address-validator' );
                     echo '</a>' ?>
             </p>
             <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text"><?php _e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
+                <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
             </button>
         </div>
 <?php
@@ -77,7 +77,16 @@ class LeavSettingsPage
                    empty( $this->central::$OPTIONS['wp_email_domain'] )
                 && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
             )
-                $this->warning_notice = __('Could not automatically determine the email domain for simulated sending of emails. Please enter your <a href="#email_domain">email domain below</a> or <a href="#ses">deactivate the simulated email sending</a> to permanently dismiss this warning message.', 'last-email-address-validator' );
+                $this->warning_notice = 
+                    esc_html__( 'Could not automatically determine the email domain for simulated sending of emails.', 'last-email-address-validator' ) . 
+                    ' <a href="#email_domain">' . 
+                    esc_html__( 'Please enter your email domain below', 'last-email-address-validator' ) . 
+                    '</a> ' . 
+                    esc_html__( 'or', 'last-email-address-validator' ) .
+                    ' <a href="#ses">' .
+                    esc_html__( 'deactivate the simulated email sending', 'last-email-address-validator' ) .
+                    '</a> ' .
+                    esc_html__( 'to permanently dismiss this warning message.', 'last-email-address-validator' );
 
             if( ! empty( $this->warning_notice ) )
             {
@@ -87,7 +96,7 @@ class LeavSettingsPage
                 <?php echo $this->warning_notice ?>
             </p>
             <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text"><?php _e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
+                <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
             </button>
         </div>
 <?php
@@ -101,21 +110,21 @@ class LeavSettingsPage
                 <?php echo $this->update_notice ?>
             </p>
             <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text"><?php _e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
+                <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
             </button>
         </div>
 <?php
             }
             elseif( ! empty( $this->error_notice ) )
             {
-                $this->error_notice .= __('Your changes have not been saved! Correct your input and click on "Save Changes" again.', 'last-email-address-validator' );
+                $this->error_notice .= esc_html('Your changes have not been saved! Correct your input and click on "Save Changes" again.', 'last-email-address-validator' );
 ?>
         <div id="setting-error-settings_updated" class="notice notice-error is-dismissible">
             <p>
                 <?php echo $this->error_notice ?>
             </p>
             <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text"><?php _e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
+                <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
             </button>
         </div>
 
@@ -132,27 +141,27 @@ window.onload = function (event) {
         <div class="wrap">
             <a name="top"></a>
             <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;"><?php
-                _e('<img width="75px" src="' . plugin_dir_url(__FILE__) . '../' . $this->central::$SETTINGS_PAGE_LOGO_URL . '" /> &nbsp;&nbsp;&nbsp;<strong>');
-                _e( $this->central::$PLUGIN_DISPLAY_NAME_LONG ); ?></strong></h1>
-                 <h1><?php _e( 'Settings', 'last-email-address-validator' ); ?></h1>
+                echo('<img width="75px" src="' . plugin_dir_url(__FILE__) . '../' . $this->central::$SETTINGS_PAGE_LOGO_URL . '" /> &nbsp;&nbsp;&nbsp;<strong>');
+                echo( $this->central::$PLUGIN_DISPLAY_NAME_LONG ); ?></strong></h1>
+                 <h1><?php esc_html_e( 'Settings', 'last-email-address-validator' ); ?></h1>
                  <br/>
                 <div>
                     <span>
                         <strong>
-                            <?php _e( 'Quick Navigation', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'Quick Navigation', 'last-email-address-validator' ); ?>
                         </strong>
                     </span>
                 </div>
                 <div>
                     <span>
                         <a href="#test_email_address">
-                            <?php _e('Test Email Address Vaildation', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Test Email Address Vaildation', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#email_domain">
-                            <?php _e('Email Domain', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Email Domain', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -160,37 +169,37 @@ window.onload = function (event) {
                 <div>
                     <span>
                         <a href="#allow_recipient_name_catch_all">
-                            <?php _e('Recipient Name Catch All', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Recipient Name Catch All', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#whitelists">
-                            <?php _e('Whitelists', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Whitelists', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#blacklists">
-                            <?php _e('Blacklists', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Blacklists', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#dea">
-                            <?php _e( 'Disposable Email Address Blocking', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'Disposable Email Address Blocking', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#ses">
-                            <?php _e('Simulate Email Sending', 'last-email-address-validator' ) ?>
+                            <?php esc_html_e('Simulate Email Sending', 'last-email-address-validator' ) ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#cad">
-                            <?php _e('Catch-all domains', 'last-email-address-validator' ) ?>
+                            <?php esc_html_e('Catch-all domains', 'last-email-address-validator' ) ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -198,13 +207,13 @@ window.onload = function (event) {
                 <div>
                     <span>
                         <a href="#functions_plugins">
-                            <?php _e('LEAV-validated Functions / Plugins', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('LEAV-validated Functions / Plugins', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#ping_track_backs">
-                            <?php _e('Pingbacks / Trackbacks', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Pingbacks / Trackbacks', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -212,13 +221,13 @@ window.onload = function (event) {
                 <div>
                     <span>
                         <a href="#custom_messages">
-                            <?php _e('Custom Error Messages', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('Custom Error Messages', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#menu_location">
-                            <?php _e('LEAV Menu Item Location', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e('LEAV Menu Item Location', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -226,25 +235,25 @@ window.onload = function (event) {
                 <div>
                     <span>
                         <a href="#faq">
-                            <?php _e( 'FAQ', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'FAQ', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#feature_requests">
-                            <?php _e( 'Feature Requests', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'Feature Requests', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#help">
-                            <?php _e( 'Help Us, Help You', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'Help Us, Help You', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span>
                         <a href="#stats">
-                            <?php _e( 'Statistics / Version', 'last-email-address-validator' ); ?>
+                            <?php esc_html_e( 'Statistics / Version', 'last-email-address-validator' ); ?>
                         </a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
@@ -254,49 +263,53 @@ window.onload = function (event) {
             <form name="leav_options" method="post">
                 <input type="hidden" name="leav_options_update_type" value="update" />
 
-                <h2><?php _e('Test Current Email Address Validation Settings', 'last-email-address-validator' ) ?></h2>
+                <h2><?php esc_html_e('Test Current Email Address Validation Settings', 'last-email-address-validator' ) ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e('Email address to test', 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php esc_html_e('Email address to test', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
-                                <input name="test_email_address" type="email" placeholder="emailaddress@2test.com" value="<?php
+                                <input name="test_email_address" placeholder="emailaddress@2test.com" value="<?php 
                                     if( isset( $_POST[ 'test_email_address' ] ) )
-                                            echo( $_POST[ 'test_email_address' ] )
+                                            esc_attr_e( sanitize_text_field( $_POST[ 'test_email_address' ] ) );
                                 ?>" size="40" />
                             </label>
                             <?php
 
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
-                                    if( ! $this->leav_plugin->validate_email_address( $_POST[ 'test_email_address' ], false ) )
+                                    $test_email_address = esc_attr( sanitize_text_field( $_POST[ 'test_email_address' ] ) );
+                                    if( ! $this->leav_plugin->validate_email_address( $test_email_address, false ) )
                                     {
                                         echo('<p><span style="color:#a00"><strong>');
-                                        _e( 'Validation result for email address ', 'last-email-address-validator' );
-                                        echo( '</strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span style="color:#a00"><strong>');
-                                        _e( 'is negative!', 'last-email-address-validator' );
+                                        esc_html_e( 'Validation result for email address ', 'last-email-address-validator' );
+                                        echo( '</strong></span><span>"' . $test_email_address . '" </span><span style="color:#a00"><strong>');
+                                        esc_html_e( 'is negative!', 'last-email-address-validator' );
                                         echo('</strong></span></p><p><span style="color:#a00"><strong>');
-                                        _e( 'ERROR TYPE:', 'last-email-address-validator' );
+                                        esc_html_e( 'ERROR TYPE:', 'last-email-address-validator' );
                                         echo('</strong></span><span> "' . $this->leav_plugin->get_email_validation_error_type() );
                                         echo('" </span></p><p><span style="color:#a00"><strong>');
-                                        _e( 'ERROR MESSAGE:', 'last-email-address-validator' );
+                                        esc_html_e( 'ERROR MESSAGE:', 'last-email-address-validator' );
                                         echo('</strong></span><span> "' . $this->leav_plugin->get_email_validation_error_message() );
                                         echo('"</span></p><br/>');
                                     }
                                     else
                                     {
                                         echo('<p><span style="color:#89A441"><strong>');
-                                        _e( 'Validation result for email address', 'last-email-address-validator' );
-                                        echo( ' </strong></span><span>"' . $_POST[ 'test_email_address' ] . '" </span><span  style="color:#89A441"><strong>');
-                                        _e( 'is positive!', 'last-email-address-validator' );
+                                        esc_html_e( 'Validation result for email address', 'last-email-address-validator' );
+                                        echo( ' </strong></span><span>"' . $test_email_address . '" </span><span  style="color:#89A441"><strong>');
+                                        esc_html_e( 'is positive!', 'last-email-address-validator' );
                                         echo('</strong></span></p><p><span style="color:#89A441">');
-                                        _e( 'The email address got successfully validated. It is good to go!', 'last-email-address-validator' );
+                                        esc_html_e( 'The email address got successfully validated. It is good to go!', 'last-email-address-validator' );
                                         echo('</span></p><br/>');
                                     }
                                 }
                                 ?>
                             <p class="description">
-                                <?php _e('Test any email address against LEAV\'s current settings.<br/>No emails will be sent out or saved anywhere.<br/>Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.', 'last-email-address-validator' ); ?>
+                                <?php echo ( nl2br( esc_html( 
+                                    "Test any email address against LEAV's current settings.
+                                    No emails will be sent out or saved anywhere.
+                                    Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.", 'last-email-address-validator' ) ) ) ; ?>
                             </p>
 
                         </td>
@@ -1161,6 +1174,15 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
                     <tr>
+                        <th scope="row"><?php _e('Email address contains invalid characters error message', 'last-email-address-validator' ); ?>:</th>
+                        <td>
+                            <label>
+                                <input name="cem_email_address_contains_invalid_characters" type="text" size="80" value="<?php echo ( $this->central::$OPTIONS["cem_email_address_contains_invalid_characters"]); ?>"  placeholder="<?php echo( $this->central::$VALIDATION_ERROR_LIST_DEFAULTS['email_address_contains_invalid_characters'] ); ?>"/>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th scope="row"><?php _e('Email address syntax error message', 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
@@ -1963,6 +1985,8 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
         // ------ Custom error message override fields -------------------------
         //
+        elseif( $field_name == 'cem_email_address_contains_invalid_characters')
+            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address contains invalid characters errors.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_email_address_syntax_error')
             $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address syntax errors.<br/>', 'last-email-address-validator' );
         elseif( $field_name == 'cem_recipient_name_catch_all_email_address_error')

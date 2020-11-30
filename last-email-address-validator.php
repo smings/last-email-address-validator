@@ -657,6 +657,9 @@ class LeavPlugin
 
         // ------ CEM = Custom error message override fields -------------------------
         //
+        if ( empty( $this->central::$OPTIONS['cem_email_address_contains_invalid_characters'] ) )
+            $this->central::$OPTIONS['cem_email_address_contains_invalid_characters'] = '';
+
         if ( empty( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$OPTIONS['cem_email_address_syntax_error'] = '';
 
@@ -778,6 +781,10 @@ class LeavPlugin
 
     private function init_custom_error_messages() : void
     {
+        if( ! empty ( $this->central::$OPTIONS['cem_email_address_contains_invalid_characters'] ) )
+            $this->central::$VALIDATION_ERROR_LIST['email_address_contains_invalid_characters'] = $this->central::$OPTIONS['cem_email_address_contains_invalid_characters'];
+
+
         if( ! empty ( $this->central::$OPTIONS['cem_email_address_syntax_error'] ) )
             $this->central::$VALIDATION_ERROR_LIST['email_address_syntax_error'] = $this->central::$OPTIONS['cem_email_address_syntax_error'];
 
