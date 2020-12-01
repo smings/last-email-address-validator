@@ -234,9 +234,21 @@ class LastEmailAddressValidator
 		return ( preg_match( $this->central::$WILDCARD_REGEX, $line ) );
 	}
 
+	public function sanitize_domain( string $domain ) : string
+	{
+	    $domain = strtolower( trim( sanitize_text_field( $domain ) ) );
+	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_REGEX, '', $domain );
+	    return $domain;
+	}
+
+	public function validate_domain( string $domain ) : bool
+	{
+		return preg_match( $this->central::$DOMAIN_REGEX, $domain );
+	}
+
 	public function sanitize_and_validate_domain( string &$domain ) : bool
 	{
-	    $domain = strtolower( $domain );
+	    $domain = strtolower( trim( sanitize_text_field( $domain ) ) );
 	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_REGEX, '', $domain );
 	    return preg_match( $this->central::$DOMAIN_REGEX, $domain );
 	}
@@ -245,7 +257,7 @@ class LastEmailAddressValidator
 	// ---- the difference to `sanitize_and_validate_domain` is that we allow `*` for wildcards within 
 	public function sanitize_and_validate_domain_internally( string &$domain ) : bool
 	{
-	    $domain = strtolower( $domain );
+	    $domain = strtolower( trim( sanitize_text_field( $domain ) ) );
 	    $domain = preg_replace( $this->central::$SANITIZE_DOMAIN_INTERNAL_REGEX, '', $domain );
 	    return preg_match( $this->central::$DOMAIN_INTERNAL_REGEX, $domain );
 	}
@@ -268,9 +280,7 @@ class LastEmailAddressValidator
 
 	public function sanitize_and_validate_text( string &$text ) : bool
 	{
-		$text = _sanitize_text_fields( $text );
-		$text = preg_replace( '/^\s*/', '',  $text );
-		$text = preg_replace( '/\s*$/', '',  $text );
+		$text = trim( sanitize_text_field( $text ) );
 		return true;
 	}
 

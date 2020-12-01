@@ -50,9 +50,16 @@ class LeavPlugin
     public function init() : void
     {
         $this->init_options();
-
         if ( is_admin() )
+        {
+            // if we couldn't determine the email domain and are not on the
+            // leav's settings page, we show a global admin notification
+            if (    empty( $this->central::$OPTIONS['wp_email_domain'] ) 
+                 && strtok($_SERVER["REQUEST_URI"], '#') != $this->central::$PLUGIN_SETTING_PAGE
+            )
+                add_action( 'admin_notices', array( new LeavSettingsPage( $this, $this->central, $this->leav ), 'add_global_warning_wp_email_domain_not_detected' ) );
             add_action('admin_menu', array( new LeavSettingsPage( $this, $this->central, $this->leav ), 'add_settings_page_to_menu' ) );
+        }
 
         $this->init_validation_filters();
         $this->init_custom_error_messages();
@@ -701,7 +708,14 @@ class LeavPlugin
         // ------ Main Menu Use & Positions -------------------
         //
         if ( empty( $this->central::$OPTIONS['use_main_menu'] ) )
+        {
             $this->central::$OPTIONS['use_main_menu'] = 'yes';
+            $this->central->determine_menu_link( 'main' );
+        }
+        elseif( $this->central::$OPTIONS['use_main_menu'] == 'yes' )
+            $this->central->determine_menu_link( 'main' );
+        else
+            $this->central->determine_menu_link( 'general_options' );   
 
         if (    empty( $this->central::$OPTIONS['main_menu_position'] )
              || $this->central::$OPTIONS['main_menu_position'] ==''

@@ -34,7 +34,7 @@ class LeavCentral
   public static $PLUGIN_MENU_NAME_SHORT = 'LEAV';
   public static $PLUGIN_ONETIME_DONATION_LINK = 'https://paypal.me/DirkTornow';
   public static $PLUGIN_PATREON_LINK = 'https://www.patreon.com/smings';
-  public static $PLUGIN_SETTING_PAGE = '/wp-admin/options-general.php?page=leav-settings-page.inc';
+  public static $PLUGIN_SETTING_PAGE = '';
   public static $PLUGIN_VERSION = '1.4.8';
   public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
@@ -103,6 +103,13 @@ class LeavCentral
     $this->init_error_messages();
   }
 
+  public function determine_menu_link( string $location = 'main' ) : void
+  {
+    if( $location == 'main')
+      $this::$PLUGIN_SETTING_PAGE = '/wp-admin/admin.php?page=leav-settings-page.inc';
+    else
+      $this::$PLUGIN_SETTING_PAGE = '/wp-admin/options-general.php?page=leav-settings-page.inc';
+  }
 
   private function init_error_messages() : void
   {

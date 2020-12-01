@@ -16,6 +16,10 @@ class LeavSettingsPage
         $this->leav_plugin = $leav_plugin;
         $this->central = $central;
         $this->leav = $leav;
+
+        // we have to figure out whether we have to display the global notification about
+        // the not detected email domain or not
+
     }
 
 
@@ -29,7 +33,7 @@ class LeavSettingsPage
         // additionally one should add width and height attributes <svg width="20" height="20" >
         if( $this->central::$OPTIONS['use_main_menu'] == 'yes' )
         {
-            add_menu_page( $this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME_SHORT, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page'), $this->central::$MENU_INLINE_ICON, $this->central::$OPTIONS['main_menu_position'] );
+            add_menu_page( $this->central::$PLUGIN_MENU_NAME, $this->central::$PLUGIN_MENU_NAME_SHORT, 'activate_plugins', basename(__FILE__, ".php"), array( $this, 'display_settings_page'), $this->central::$MENU_INLINE_ICON, intval( $this->central::$OPTIONS['main_menu_position'] ) );
 
         }
         else
@@ -39,15 +43,17 @@ class LeavSettingsPage
 
     public function add_global_warning_wp_email_domain_not_detected() : void
     {
-
 ?>
         <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
                  <?php
-                    echo nl2br( esc_html("LEAV - Last Email Address Validator could not automatically detect your email domain.\nThis usually happens in your local development environment. Please go to the settings and enter an email domain under which your WordPress instance is reachable.\n", 'last-email-address-validator' ) );
+                    echo nl2br( esc_html( 
+                        "LEAV - Last Email Address Validator could not automatically detect your email domain.
+                        This usually only happens in development or staging environments.
+                        " , 'last-email-address-validator' ) );
                     echo '<a href="' . $this->central::$PLUGIN_SETTING_PAGE . '">';
-                    esc_html_e('Settings', 'last-email-address-validator' );
-                    echo '</a>' ?>
+                    esc_html_e( 'Please go to LEAV\'s settings page and enter an email domain under which your WordPress instance is reachable.', 'last-email-address-validator' );
+                    echo '</a>'; ?>
             </p>
             <button type="button" class="notice-dismiss">
                 <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
@@ -319,24 +325,38 @@ window.onload = function (event) {
 
                 <a name="email_domain"></a>
                 <p class="submit">
-                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php _e( 'Test Email Address', 'last-email-address-validator' ) ?>" />
+                    <input class="button button-primary" type="submit" id="options_update" name="submit" value="<?php echo esc_attr( esc_html('Test Email Address', 'last-email-address-validator' ) ); ?>" />
                 </p>
 
-                <h2><?php _e('Email Domain', 'last-email-address-validator' ) ?></h2>
+                <h2><?php esc_html_e('Email Domain', 'last-email-address-validator' ) ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php _e("Email domain for simulating sending of emails to entered email addresses", 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php esc_html_e("Email domain for simulating sending of emails to entered email addresses", 'last-email-address-validator' ); ?>:</th>
                         <td>
                             <label>
-                                <input name="wp_email_domain" type="text" size="40" value="<?php echo ( $this->central::$OPTIONS["wp_email_domain"]); ?>" placeholder="<?php echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ); ?>" />
+                                <input name="wp_email_domain" type="text" size="40" value="<?php 
+                                    echo esc_attr( $this->central::$OPTIONS["wp_email_domain"] ); 
+                                    ?>" placeholder="<?php 
+                                    echo esc_attr( __( 'your-wp-domain.com', 'last-email-address-validator' ) ); 
+                                    ?>" />
                             </label>
                             <p class="description">
-                                <?php _e('The Email domain is used for simulating the sending of an email from no-reply@<strong>', 'last-email-address-validator' );
+                                <?php _e('The Email domain is used for simulating the sending of an email from no-reply@', 'last-email-address-validator' );
+                                echo( '<strong>' );
                                 if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
                                     echo( $this->central::$OPTIONS["wp_email_domain"] );
                                 else
-                                    echo( $this->central::$PLACEHOLDER_EMAIL_DOMAIN ) ;
-                                _e('</strong> to the entered email address, that gets validated.<br/><strong>Please make sure you enter the email domain that you use for sending emails from your WordPress instance. If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail. This is usually only the case in development or test environments. In these cases you might have to disable the <a href="#ses">simulation of sending an email</a>.<br/>Default: Automatically detected WordPress Domain.</strong>', 'last-email-address-validator' ) ?>
+                                    esc_html_e( 'your-wp-domain.com', 'last-email-address-validator' );
+                                echo( '</strong> ' );
+                                esc_html_e( 'to the entered email address, that gets validated. ', 'last-email-address-validator' );
+                                echo( '<br/><strong>');
+                                esc_html_e( 'Please make sure you enter the email domain that you use for sending emails from your WordPress instance. If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail. This is usually only the case in development or test environments. In these cases you might have to disable the ', 'last-email-address-validator' );
+                                echo( '<a href="#ses">' );
+                                esc_html_e( 'simulated email sending', 'last-email-address-validator' );
+                                echo( '</a>.<br/>' );
+                                esc_html_e( 'Default: Automatically detected WordPress Domain.', 'last-email-address-validator' );
+                                echo( '</strong>' );
+                                ?>
                             </p>
                         </td>
                     </tr>
@@ -1017,7 +1037,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                    _e( 'Validate all Ninja Forms email address fields.<br/>', 'last-email-address-validator' );
+                                    _e( 'Validate all Ninja Forms email address fields.', 'last-email-address-validator' ) . '<br/>';
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'last-email-address-validator' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'last-email-address-validator' );
                                 ?>
@@ -1046,7 +1066,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                    _e('Validate all MC4WP email address fields.<br/>', 'last-email-address-validator' );
+                                    _e('Validate all MC4WP email address fields.', 'last-email-address-validator' ) . '<br/>';
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'last-email-address-validator' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'last-email-address-validator' );
                                 ?>
@@ -1103,7 +1123,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             </label>
                             <p class="description">
                                 <?php
-                                    _e('Validate all Kali Forms email address fields.<br/>', 'last-email-address-validator' );
+                                    _e('Validate all Kali Forms email address fields.', 'last-email-address-validator' ) . '<br/>';
                                     _e( 'The names of the fields that will get validated by LEAV must contain "email", "e-mail", "e.mail", "E-Mail"... (case insensitive)', 'last-email-address-validator' );
                                     _e( '<br/><strong>Default: Yes</strong>', 'last-email-address-validator' );
                                 ?>
@@ -1690,27 +1710,43 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
     private function sanitize_submitted_settings_form_data()
     {
+        // we sanitize and validate values in their 
+        // field-type-specific validation methods, which are:
+        // • `validate_radio_button_form_fields`
+        // • `sanitize_and_validate_text`
+
         $this->update_notice = '';
         $this->error_notice = '';
 
         foreach ($_POST as $key => $value)
         {
-
+            // upfront preparation of data
+            // this is not the sanitization
             $value = stripslashes( $value );
             $value = rtrim($value);
             $value = preg_replace( "/\r/", '', $value);
+
+            // if we have to test an entered email address
             if( $key == 'test_email_address' )
             {
-                $this->leav->reuse( $value );
-                $this->central::$OPTIONS['test_email_address'] = $value;
+                $this->leav->reuse( sanitize_text_field( $value ) );
                 continue;
             }
 
             // we only look at defined keys who's values have changed
-            if(   ! array_key_exists( $key, $this->central::$OPTIONS )
-                || $this->central::$OPTIONS[$key] == $value
-            )
+            if( ! array_key_exists( $key, $this->central::$OPTIONS ) )
+            {
+                // if we look at an undefined key, we discard the value and
+                // continue. This way we prevent any field injection
+                $value = '';
                 continue;
+            }
+
+            // we only look at defined keys who's values have changed
+            // anything unchanged gets skipped
+            if( $this->central::$OPTIONS[$key] == $value )
+                continue;
+
 
             // First we validate all radio button fields
             if(    in_array( $key, $this->central::$RADIO_BUTTON_FIELDS )
@@ -1720,13 +1756,9 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
             elseif( in_array( $key, $this->central::$TEXT_FIELDS ) )
             {
-                if( $this->leav->sanitize_and_validate_text( $value ) )
-                {
-                    $this->central::$OPTIONS[$key] = $value;
-                    $this->add_update_notification_for_form_field($key);
-                }
-                else
-                    $this->add_error_notification_for_form_field($key);
+                $value = trim( sanitize_text_field( $text ) );
+                $this->central::$OPTIONS[$key] = $value;
+                $this->add_update_notification_for_form_field($key);
                 continue;
             }
 
@@ -1743,7 +1775,10 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                         && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
                 )
                     $this->add_error_notification_for_form_field($key);
-                elseif( $this->leav->sanitize_and_validate_domain( $value ) )
+
+                $value = $this->leav->sanitize_domain( $value );
+
+                if( $this->leav->validate_domain( $value ) )
                 {
                     $this->central::$OPTIONS[$key] = $value;
                     $this->add_update_notification_for_form_field($key);
@@ -1756,6 +1791,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
             elseif( in_array( $key, $this->central::$INTEGER_GEZ_FIELDS ) )
             {
+                $value = trim( sanitize_text_field( $value ) );
                 if( preg_match( $this->central::$INTEGER_GEZ_REGEX, $value ) )
                 {
                     $this->central::$OPTIONS[$key] = $value;
@@ -1771,7 +1807,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
             )
             {
                 $sanitized_internal_values = array();
-                $lines = preg_split("/[\r\n]+/", $value, -1, PREG_SPLIT_NO_EMPTY);
+                $lines = preg_split("/[\r\n]+/", sanitize_textarea_field( $value ), -1, PREG_SPLIT_NO_EMPTY);
                 $value = '';
                 $has_errors = false;
                 if( in_array( $key, $this->central::$DOMAIN_LIST_FIELDS ) )
@@ -1843,14 +1879,14 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
                             if( preg_match( "/\+/", $corrected_line ) )
                                 $corrected_line = array_shift( explode( '+', $corrected_line ) );
                             $corrected_line = preg_replace( "/[^a-z]/", '',  $corrected_line );
-                            $line = __('# Next line\'s value was automatically corrected/normalized', 'last-email-address-validator' ) . "\n" . "# " . $original_line . "\n" . $corrected_line;
+                            $line = esc_html__('# Next line\'s value was automatically corrected/normalized', 'last-email-address-validator' ) . "\n" . "# " . $original_line . "\n" . $corrected_line;
                             $value .= $line . "\n";
                             array_push( $sanitized_internal_values, $corrected_line );
                         }
                         // ----- here we just comment out the errors for domains and email addresses
                         else
                         {
-                            $line = __('# Next line\'s value is invalid', 'last-email-address-validator' ) . "\n". "# " . $original_line;
+                            $line = esc_html__('# Next line\'s value is invalid', 'last-email-address-validator' ) . "\n". "# " . $original_line;
                             $value .= $line . "\n";
                         }
                     }
@@ -1879,6 +1915,7 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
 
     private function validate_radio_button_form_fields( string &$key, string &$value ) : bool
     {
+        $value = trim( sanitize_text_field( $value ) );
         if( in_array( $value, $this->central::$RADIO_BUTTON_VALUES ) )
         {
             $this->central::$OPTIONS[$key] = $value;
@@ -1896,225 +1933,231 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
         // ----- Allow recipient name catch-all syntax --------------------------------------------
         //
             if( $field_name == 'allow_recipient_name_catch_all_email_addresses')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'allowing recipient name catch-all syntax.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'allowing recipient name catch-all syntax.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Email Domain --------------------------------------------------
         //
         elseif( $field_name == 'wp_email_domain')
-            $this->update_notice .= __( 'Updated the email domain for simulating the sending of emails.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the email domain for simulating the sending of emails.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Whitelists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_whitelist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined domain whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined domain whitelist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_domain_whitelist_string')
-            $this->update_notice .= __( 'Updated the user-defined domain whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the user-defined domain whitelist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_email_whitelist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined email address whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined email address whitelist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_email_whitelist_string')
-            $this->update_notice .= __( 'Updated the user-defined email address whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the user-defined email address whitelist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_recipient_name_whitelist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined recipient name whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined recipient name whitelist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_recipient_name_whitelist_string')
-            $this->update_notice .= __( 'Updated the user-defined recipient name whitelist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the user-defined recipient name whitelist.', 'last-email-address-validator' ) . '<br/>';
         // ----- Blacklists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_blacklist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined domain blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined domain blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_domain_blacklist_string')
-            $this->update_notice .= __( 'Updated the user-defined domain blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the user-defined domain blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_email_blacklist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined email address blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined email address blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_email_blacklist_string')
-            $this->update_notice .= __( 'Updated the user-defined email address blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the user-defined email address blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_recipient_name_blacklist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
-            $this->update_notice .= __( 'Updated the entries of the user-defined recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the entries of the user-defined recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the role-based recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Disposable Email Address Blocking -----------------------------
         //
         elseif( $field_name == 'block_disposable_email_address_services')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'blocking email addresses from disposable email address services.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'blocking email addresses from disposable email address services.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Simulate Email Sending ----------------------------------------
         //
         elseif( $field_name == 'simulate_email_sending')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'simulating email sending.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'simulating email sending.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Catch-all domain ----------------------------------------
         //
         elseif( $field_name == 'allow_catch_all_domains')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'allowing catch-all domains.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'allowing catch-all domains.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Pingbacks / Trackbacks ----------------------------------------
         //
         elseif( $field_name == 'accept_pingbacks')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'accepting pingbacks.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'accepting pingbacks.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'accept_trackbacks')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'accepting trackbacks.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'accepting trackbacks.', 'last-email-address-validator' ) . '<br/>';
 
         // ------ Validation of functions / plugins switches ---
         //
         elseif( $field_name == 'validate_wp_standard_user_registration_email_addresses')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating WordPress\'s user registration email addresses.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating WordPress\'s user registration email addresses.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_wp_comment_user_email_addresses')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating WordPress\'s commentator email addresses.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating WordPress\'s commentator email addresses.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_woocommerce_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating WooCommerce email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating WooCommerce email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_cf7_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating Contact Form 7 email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Contact Form 7 email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_wpforms_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating WPforms email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating WPforms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_ninja_forms_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating Ninja Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Ninja Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_mc4wp_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Mailchimp for WordPress (MC4WP) email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_formidable_forms_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating Formidable Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Formidable Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_kali_forms_email_fields')
-            $this->update_notice .= __( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  __( 'validating Kali Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Kali Forms email fields.', 'last-email-address-validator' ) . '<br/>';
 
 
         // ------ Custom error message override fields -------------------------
         //
         elseif( $field_name == 'cem_email_address_contains_invalid_characters')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address contains invalid characters errors.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'email address contains invalid characters errors.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_address_syntax_error')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email address syntax errors.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'email address syntax errors.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_recipient_name_catch_all_email_address_error')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name catch-all errors.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'recipient name catch-all errors.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_domain_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email domains.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'blacklisted email domains.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_domain_is_on_free_email_address_provider_domain_list')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains on the free email address provider domain list.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'email domains on the free email address provider domain list.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_address_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'blacklisted email addresses.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'blacklisted email addresses.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_recipient_name_is_blacklisted')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'recipient name is on blacklist error message.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'recipient name is on blacklist error message.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_recipient_name_is_role_based')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'role-based recipient names.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'role-based recipient names.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_domain_has_no_mx_record')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email domains without MX records.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'email domains without MX records.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_domain_is_on_dea_blacklist')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'disposable email addresses (DEA).<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'disposable email addresses (DEA).', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_simulated_sending_of_email_failed')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'errors during simulating sending an email.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'errors during simulating sending an email.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_email_from_catch_all_domain')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'email addresses from catch-all domains.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'email addresses from catch-all domains.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'cem_general_email_validation_error')
-            $this->update_notice .= __( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . __( 'general email validation errors.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Updated the custom validation error message for', 'last-email-address-validator' ) . ' ' . esc_html__( 'general email validation errors.', 'last-email-address-validator' ) . '<br/>';
 
         // ------ Main Menu Use & Positions -------------------
         //
         elseif( in_array( $field_name, array( 'use_main_menu', 'main_menu_position', 'settings_menu_position' ) ) )
-            $this->update_notice .= __( 'Changed the display location of the LEAV menu item. You have to hard-reload  this page before the change takes effect.<br/>', 'last-email-address-validator' );
+            $this->update_notice .= esc_html__( 'Changed the display location of the LEAV menu item. You have to hard-reload  this page before the change takes effect.', 'last-email-address-validator' ) . '<br/>';
         else
-            $this->update_notice .= __( 'Updated the settings for field <strong>', 'last-email-address-validator' ) . $field_name . '</strong><br/>';
+            $this->update_notice .= esc_html__( 'Updated the settings for field <strong>', 'last-email-address-validator' ) . $field_name . '</strong><br/>';
 
         return true;
     }
 
 
-    private function add_error_notification_for_form_field( string &$field_name )
+    private function add_error_notification_for_form_field( string &$field_name, string &$value )
     {
 
         // ----- Allow recipient name catch-all syntax --------------------------------------------
         //
            if( $field_name == 'allow_recipient_name_catch_all_email_addresses' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'allowing recipient name catch-all syntax.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'allowing recipient name catch-all syntax.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Email Domain --------------------------------------------------
         //
         elseif( $field_name == 'wp_email_domain' )
-            $this->error_notice .= __( 'Error while trying to update the email domain for simulating the sending of emails. The email domain can\'t be empty while simulated email sending is activate.<br/>', 'last-email-address-validator' );
+        {
+            if( empty( $value ) )
+                $this->error_notice .= esc_html__( 'Error while trying to update the email domain for the simulated sending of emails. The email domain can\'t be empty while simulated email sending is activate.', 'last-email-address-validator' ) . '<br/>';
+            else
+                $this->error_notice .= esc_html__( 'Error while trying to update the email domain for the simulated sending of emails. The email domain ', 'last-email-address-validator' );
+
+        }
 
         // ----- Whitelists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_whitelist' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'using the user-defined domain whitelist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'using the user-defined domain whitelist.', 'last-email-address-validator' )  . '<br/>';
         elseif( $field_name == 'user_defined_domain_whitelist_string' )
-            $this->error_notice .= __( 'Error! One or more entered domains in the user-defined domain whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! One or more entered domains in the user-defined domain whitelist are invalid. Look at the comments in the field and correct your input.', 'last-email-address-validator' )  . '<br/>';
 
         elseif( $field_name == 'use_user_defined_email_whitelist' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'using the user-defined email address whitelist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'using the user-defined email address whitelist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_email_whitelist_string' )
-            $this->error_notice .= __( 'Error! One or more entered email addresses in the user-defined email address whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! One or more entered email addresses in the user-defined email address whitelist are invalid. Look at the comments in the field and correct your input.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_recipient_name_whitelist' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'using the user-defined recipient name whitelist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'using the user-defined recipient name whitelist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_recipient_name_whitelist_string' )
-            $this->error_notice .= __( 'Error! One or more entered recipient names in the user-defined recipient name whitelist are invalid. Look at the comments in the field and correct your input.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! One or more entered recipient names in the user-defined recipient name whitelist are invalid. Look at the comments in the field and correct your input.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Blacklists ----------------------------------------------------
         //
         elseif( $field_name == 'use_user_defined_domain_blacklist' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'using the user-defined domain blacklist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'using the user-defined domain blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_domain_blacklist_string' )
-            $this->error_notice .= __( 'Error! One or more entered domains in the user-defined domain blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! One or more entered domains in the user-defined domain blacklist are invalid. Look at the comments in the field and correct your input.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_email_blacklist' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'using the user-defined email address blacklist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'using the user-defined email address blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_email_blacklist_string' )
-            $this->error_notice .= __( 'Error! One or more entered email addresses in the user-defined email address blacklist are invalid. Look at the comments in the field and correct your input.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! One or more entered email addresses in the user-defined email address blacklist are invalid. Look at the comments in the field and correct your input.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_user_defined_recipient_name_blacklist')
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the user-defined recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the user-defined recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'user_defined_recipient_name_blacklist_string')
-            $this->error_notice .= __( 'Error while trying to update the entries of the user-defined recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the entries of the user-defined recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( $field_name == 'use_role_based_recipient_name_blacklist')
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' .  __( 'using the role-based recipient name blacklist.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'using the role-based recipient name blacklist.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Disposable Email Address Blocking -----------------------------
         //
         elseif( $field_name == 'block_disposable_email_address_services' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'blocking email addresses from disposable email address services.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'blocking email addresses from disposable email address services.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Simulate Email Sending ----------------------------------------
         //
         elseif( $field_name == 'simulate_email_sending' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'simulating email sending.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'simulated email sending.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Catch-all domain ----------------------------------------
         //
         elseif( $field_name == 'allow_catch_all_domains' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'allowing catch-all domains.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'allowing catch-all domains.', 'last-email-address-validator' ) . '<br/>';
 
         // ----- Pingbacks / Trackbacks ----------------------------------------
         //
         elseif( $field_name == 'accept_pingbacks' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'accepting pingbacks.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'accepting pingbacks.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'accept_trackbacks' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'accepting trackbacks.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'accepting trackbacks.', 'last-email-address-validator' ) . '<br/>';
 
         // ------ Validation of functions / plugins switches ---
         //
         elseif( $field_name == 'validate_wp_standard_user_registration_email_addresses' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating WordPress\'s user registration email addresses.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating WordPress\'s user registration email addresses.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_wp_comment_user_email_addresses' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating WordPress\'s commentator email addresses.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating WordPress\'s commentator email addresses.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_woocommerce_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating WooCommerce email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating WooCommerce email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_cf7_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating Contact Form 7 email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Contact Form 7 email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_wpforms_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating WPforms email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating WPforms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_ninja_forms_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating Ninja Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Ninja Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_mc4wp_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating Mailchimp for WordPress (MC4WP) email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Mailchimp for WordPress (MC4WP) email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_formidable_forms_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating Formidable Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Formidable Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_kali_forms_email_fields' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'validating Kali Forms email fields.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Kali Forms email fields.', 'last-email-address-validator' ) . '<br/>';
 
         // ------ Custom error message override fields -------------------------
         //
@@ -2124,13 +2167,13 @@ blacklisted recipient name 1"><?php echo $this->central::$OPTIONS['user_defined_
         // ------ Main Menu Use & Positions -------------------
         //
         elseif( $field_name == 'use_main_menu' )
-            $this->error_notice .= __( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . __( 'the display location of the LEAV menu item (main menu or settings menu.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'the display location of the LEAV menu item (main menu or settings menu.', 'last-email-address-validator' ) . '<br/>';
 
         elseif( in_array( $field_name, array( 'main_menu_position', 'settings_menu_position' ) ) )
-            $this->error_notice .= __( 'Error! The values for the LEAV menu position within the main menu or the settings menu have to be numbers in between 0-999.<br/>', 'last-email-address-validator' );
+            $this->error_notice .= esc_html__( 'Error! The values for the LEAV menu position within the main menu or the settings menu have to be numbers in between 0-999.', 'last-email-address-validator' ) . '<br/>';
 
         else
-            $this->error_notice .= __( 'Error while trying to update the settings for field <strong>', 'last-email-address-validator' ) . $field_name . '</strong><br/>';
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for field', 'last-email-address-validator' ) .'<strong>' . $field_name . '</strong><br/>';
     }
 
 }
