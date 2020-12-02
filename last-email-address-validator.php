@@ -40,9 +40,6 @@ class LeavPlugin
         $this->free_email_address_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE;
         $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init') );
-        // it doesn't matter if we are the admins or not, we need the 
-        // translated default error messages and therefore always have to load the
-        // plugin translations
         add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
     }
 
@@ -80,10 +77,12 @@ class LeavPlugin
 
     public function deactivate() : void {}
 
+
     public function load_text_domain() : void 
     {
         load_plugin_textdomain('last-email-address-validator');
     }
+
 
     public function add_plugin_overview_page_links( $links ) : array
     {
@@ -452,12 +451,6 @@ class LeavPlugin
     {
         if ( get_option( $this->central::$OPTIONS_NAME ) )
             $this->central::$OPTIONS = get_option( $this->central::$OPTIONS_NAME );
-
-
-        // ----- Test Email Address --------------------------------------------
-        //
-        if ( empty( $this->central::$OPTIONS['test_email_address'] ) )
-            $this->central::$OPTIONS['test_email_address'] = '';
 
         // ----- Email Domain --------------------------------------------------
         //
