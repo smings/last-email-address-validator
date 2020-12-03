@@ -46,10 +46,10 @@ class LeavSettingsPage
         <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
                  <?php
-                    echo nl2br( esc_html( 
+                    echo( sprintf( nl2br( esc_html( 
                         "LEAV - Last Email Address Validator could not automatically detect your email domain.
                         This usually only happens in development or staging environments.
-                        " , 'last-email-address-validator' ) );
+                        " , 'last-email-address-validator' ) ) ) );
                 ?>
                 <a href="<?php 
                     echo( esc_url( $this->central::$PLUGIN_SETTING_PAGE ) ); 
@@ -88,7 +88,7 @@ class LeavSettingsPage
                 && $this->central::$OPTIONS['simulate_email_sending'] == 'yes'
             )
                 $this->warning_notice = 
-                    sprintf( esc_html__( 'Could not automatically determine the email domain for simulated sending of emails. %1$sPlease enter your email domain below%3$s or %2$sdeactivate the simulated email sending%3$s to permanently dismiss this warning message.', 'last-email-address-validator' ), '<a href="#email_domain">', '<a href="#ses">', '</a>' ) ;
+                    sprintf( nl2br( esc_html__( 'Could not automatically determine the email domain for simulated sending of emails. %1$sPlease enter your email domain below%3$s or %2$sdeactivate the simulated email sending%3$s to permanently dismiss this warning message.', 'last-email-address-validator' ) ), '<a href="#email_domain">', '<a href="#ses">', '</a>' ) ;
 
             if( ! empty( $this->warning_notice ) )
             {
@@ -145,7 +145,7 @@ window.onload = function (event) {
             <h1 style="display: flex;  align-items: center; color:#89A441; font-size: 30px;">
                 <img width="75px" src="<?php echo( esc_url( plugin_dir_url(__FILE__) . '../' . $this->central::$SETTINGS_PAGE_LOGO_URL ) ); ?>"/>
                 &nbsp;&nbsp;&nbsp;<strong><?php
-                    echo esc_html( $this->central::$PLUGIN_DISPLAY_NAME_LONG ); ?></strong></h1>
+                    echo( esc_html( $this->central::$PLUGIN_DISPLAY_NAME_LONG ) ); ?></strong></h1>
                  <h1><?php esc_html_e( 'Settings', 'last-email-address-validator' ); ?></h1>
                  <br/>
                 <div>
@@ -2166,7 +2166,7 @@ blacklisted recipient name 2"><?php
 
             elseif( in_array( $key, $this->central::$TEXT_FIELDS ) )
             {
-                $value = trim( sanitize_text_field( $text ) );
+                $value = trim( sanitize_text_field( $value ) );
                 $this->central::$OPTIONS[$key] = $value;
                 $this->add_update_notification_for_form_field($key);
                 continue;

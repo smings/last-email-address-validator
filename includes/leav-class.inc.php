@@ -312,6 +312,9 @@ class LastEmailAddressValidator
 
 	public function is_recipient_name_on_list( array &$recipient_name_list, string $error_type = '', bool $use_collapsed_recipient_name = true ) : bool
 	{
+		if( empty( $recipient_name_list['recipient_names'] ) )
+			return false;
+
 		// if we look at the whitelists, we don't use the collapsed recipient name
 		// we only do this, when we compare against blacklists
 		if ( $use_collapsed_recipient_name )
