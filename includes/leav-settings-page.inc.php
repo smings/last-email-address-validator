@@ -355,9 +355,9 @@ window.onload = function (event) {
                                 ?>
                             <p class="description">
                                 <?php echo ( nl2br( esc_html( 
-                                    "Test any email address against LEAV's current settings.
-                                    No emails will be sent out or saved anywhere.
-                                    Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.", 'last-email-address-validator' ) ) ); ?>
+'Test any email address against LEAV\'s current settings.
+No emails will be sent out or saved anywhere.
+Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.', 'last-email-address-validator' ) ) ); ?>
                             </p>
 
                         </td>
@@ -401,9 +401,10 @@ window.onload = function (event) {
                                 ?>
                                 <br/>
                                 <?php 
-                                    echo( nl2br( esc_html__( 'Please make sure you enter the email domain that you use for sending emails from your WordPress instance. 
-                                        If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail.
-                                        This is usually only the case in development or test environments.', 'last-email-address-validator' ) ) );
+                                    echo( nl2br( esc_html__( 
+'Please make sure you enter the email domain that you use for sending emails from your WordPress instance. 
+If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail.
+This is usually only the case in development or test environments.', 'last-email-address-validator' ) ) );
                                 ?>
                                 <br/>
                                 <?php
@@ -433,8 +434,9 @@ window.onload = function (event) {
                     ?>
                 </h1>
                 <?php
-                    echo( nl2br( esc_html__( 'From here onwards you can configure the filter/validation steps. 
-                        You can find an overview and description of the filter/validation steps in ', 'last-email-address-validator' ) ) );
+                    echo( sprintf( nl2br( esc_html__( 
+'From here onwards you can configure the filter/validation steps. 
+You can find an overview and description of the filter/validation steps in ', 'last-email-address-validator' ) ) ) );
                 ?>
                 <a href="#faq"><?php esc_html_e( 'our FAQ', 'last-email-address-validator' ); ?></a>
 
@@ -453,7 +455,8 @@ window.onload = function (event) {
                             </label>
                             <p class="description">
                                 <?php
-                                echo( nl2br( esc_html__( 'Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allow you to extend the recipient name part of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.', 'last-email-address-validator' ) ) );
+                                echo( sprintf( nl2br( esc_html__( 
+'Allow recipient name (the part of an email address before the "@") catch-all syntax. google and other email address providers allow you to extend the recipient name part of an email address with a "+" followed by whatever text. The only limitation is a maximum length of 64 characters for the recipient name.', 'last-email-address-validator' ) ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -470,9 +473,10 @@ window.onload = function (event) {
                                     ?>
                                 </strong> 
                                 <?php
-                                    echo( nl2br( esc_html__( "for google. 
-                                    This allows users to \"cloak\" their \"main\" email address, which is usually used to differentiate where and what the user signed up for.
-                                    You can choose to allow this or block such email addresses.", 'last-email-address-validator' ) ) );
+                                    echo( nl2br( esc_html__( 
+'for google. 
+This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.
+You can choose to allow this or block such email addresses.', 'last-email-address-validator' ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -495,9 +499,10 @@ window.onload = function (event) {
 
                 <h2></a><?php esc_html_e( 'Whitelists', 'last-email-address-validator' ) ?></h2>
                 <?php 
-                    echo( sprintf( nl2br( esc_html__( 'Any email address that gets whitelisted will skip the corresponding blacklist filter. This doesn\'t mean that it doesn\'t get filtered out by other filters. 
-                        I.e. if a domain gets whitelisted, but at the same time it is a catch-all domain and you disallow catch-all domains, all email addresses from this domain will still get rejected.
-                        Look at our %1$sFAQ%2$s for detailed information on how the filter/validation process works.', 'last-email-address-validator' ) ), '<a href="#faq">', '</a>' ) ); 
+                    echo( sprintf( nl2br( esc_html__( 
+'Any email address that gets whitelisted will skip the corresponding blacklist filter. This doesn\'t mean that it doesn\'t get filtered out by other filters. 
+I.e. if a domain gets whitelisted, but at the same time it is a catch-all domain and you disallow catch-all domains, all email addresses from this domain will still get rejected.
+Look at our %1$sFAQ%2$s for detailed information on how the filter/validation process works.', 'last-email-address-validator' ) ), '<a href="#faq">', '</a>' ) ); 
                 ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -517,9 +522,8 @@ window.onload = function (event) {
                                 ?>
                                 <br/>
                                 <?php 
-                                    echo sprintf( 
-                                        esc_html__( 'For information on how to use wildcards, see our %s FAQ entry', 'last-email-address-validator' ), '<a href="#faq-wildcards">' );
-                                ?></a>.
+                                    echo( sprintf( nl2br( esc_html__( 'For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ) ), '<a href="#faq-wildcards">', '</a>' ) );
+                                ?>
                                 <br/>
                                 <strong>
                                 <?php
@@ -579,8 +583,9 @@ your-whitelisted-domain-2.com"><?php
                             </label>
                             <p class="description">
                                 <?php
-                                    echo( nl2br( esc_html__( 'Email addresses on this list will be accepted without further email address blacklist checks (if active).
-                                        Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
+                                    echo( nl2br( esc_html__( 
+'Email addresses on this list will be accepted without further email address blacklist checks (if active).
+Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -635,9 +640,9 @@ your.whitelisted@email-address-2.com"><?php
                             <p class="description">
                                 <?php
                                     echo( nl2br( sprintf( esc_html__(
-                                        'Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).
-                                        Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.
-                                        For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ), '<a href="#faq-wildcards">', '</a>' ) ) );
+'Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).
+Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.
+For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ), '<a href="#faq-wildcards">', '</a>' ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -699,8 +704,8 @@ your-whitelisted-recipient-name-2"><?php
                 <h2></a><?php esc_html_e( 'Blacklists', 'last-email-address-validator' ) ?></h2>
                 <?php 
                     echo( nl2br( esc_html__(
-                        'Any email address that gets matched by a blacklist rule gets rejected, unless it has previously been whitelisted for the blacklist rule. 
-                        If an email address gets matched by a blacklist rule, all subsequent validations get skipped.', 'last-email-address-validator' ) ) ); ?><br/>
+'Any email address that gets matched by a blacklist rule gets rejected, unless it has previously been whitelisted for the blacklist rule. 
+If an email address gets matched by a blacklist rule, all subsequent validations get skipped.', 'last-email-address-validator' ) ) ); ?><br/>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
                     <tr>
@@ -717,8 +722,9 @@ your-whitelisted-recipient-name-2"><?php
                             </label>
                             <p class="description">
                                 <?php
-                                    echo( sprintf( nl2br( esc_html__( 'Email addresses from these domains will be rejected (if active).
-                                        For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ) ), '<a href="#faq-wildcards">', '</a>' ) );
+                                    echo( sprintf( nl2br( esc_html__( 
+'Email addresses from these domains will be rejected (if active).
+For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ) ), '<a href="#faq-wildcards">', '</a>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -780,9 +786,9 @@ your-blacklisted-domain-2.com"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__( 
-                                        'The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.
-                                        If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also %1$1inform us%2$s about it. This list is not editable.
-                                        If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .mk and .tk, here is why: these top-level-domains are free of charge and therefore wildy popular with private individuals, that don\'t want to spend anything on a domain. Because of this we treat them like free email address providers. These top-level-domains are almost exclusively registered by individuals and not (relevant) companies.', 'last-email-address-validator' ) ), '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ) . '">', '</a>' ) );
+'The list comprises the most common free email address services. If for example you want to enforce business email addresses, you can activate this blacklist feature and reject email addresses from domains on this list.
+If you feel that we missed important domains, you can add them on the user-defined domain blacklist above. But please also %1$sinform us%2$s about it. This list is not editable.
+If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .mk and .tk, here is why: these top-level-domains are free of charge and therefore wildy popular with private individuals, that don\'t want to spend anything on a domain. Because of this we treat them like free email address providers. These top-level-domains are almost exclusively registered by individuals and not (relevant) companies.', 'last-email-address-validator' ) ), '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ) . '">', '</a>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -834,8 +840,8 @@ your-blacklisted-domain-2.com"><?php
                             <p class="description">
                                 <?php
                                     echo( nl2br( esc_html__( 
-                                        'Email addresses from this list will be rejected (if active).
-                                        Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
+'Email addresses from this list will be rejected (if active).
+Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -891,11 +897,11 @@ blacklisted-email-address-2@domain.com"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__(
-                                        'If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "%1$sd.e.m.o.123@domain.com%2$s" gets collapsed into "%1$sdemo@domain.com%2$s".
-                                        This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.
-                                        This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.
-                                        Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.
-                                        For information on how to use wildcards, see our %3$sFAQ entry%4$s.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a  href="#faq-wildcards">', '</a>' ) );
+'If activated, email addresses with recipient names (the part before the "@" sign) from the list below, will be rejected. The recipient names will get automatically "collapsed" to only their letters. This means that non-letter characters get stripped from the original recipient name. "%1$sd.e.m.o.123@domain.com%2$s" gets collapsed into "%1$sdemo@domain.com%2$s".
+This way, we automatically block role-based recipient names, that are altered with punctuation and non-letter characters.
+This list is meant for user-defined additional entries that are not (yet) covered by our built-in role-based recipient name blacklist below.
+Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.
+For information on how to use wildcards, see our %3$sFAQ entry%4$s.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a  href="#faq-wildcards">', '</a>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -953,15 +959,15 @@ blacklisted recipient name 2"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__(
-                                      'If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. 
-                                      The recipient names are validated in their "collapsed" form. This means that all punctuation is stripped from the original recipient name.
-                                       "%1$si.n.f.o@domain.com%2$s" gets collapsed into "%1$sinfo@domain.com%2$s" (which is on the list). 
-                                       "%1$s123-all-456-employees@domain.com%2$s" gets collapsed into "%1$sallemployees@domain.com%2$s" and so on. Essentially, we strip away all non-letter characters. 
-                                       This way, we can block role-based recipient names, that are altered with punctuation.
-                                       If the collapsed recipient name is empty, it will also be detected as role-based recipient name. In this case it contains only digits and non-letter characters, which we consider a role-based recipient name.
-                                       This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.
-                                       If we block too much for you, you can add recipient names to the whitelist above.
-                                       If you think we missed important common role-based recipient names, %3$splease let us know%4$s.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="mailto:leav@sming.com">', '</a>' ) );
+'If activated, email addresses with generic, role-based recipient names (the part before the "@" sign) from the list below, will be rejected. 
+The recipient names are validated in their "collapsed" form. This means that all punctuation is stripped from the original recipient name.
+"%1$si.n.f.o@domain.com%2$s" gets collapsed into "%1$sinfo@domain.com%2$s" (which is on the list). 
+"%1$s123-all-456-employees@domain.com%2$s" gets collapsed into "%1$sallemployees@domain.com%2$s" and so on. Essentially, we strip away all non-letter characters. 
+This way, we can block role-based recipient names, that are altered with punctuation.
+If the collapsed recipient name is empty, it will also be detected as role-based recipient name. In this case it contains only digits and non-letter characters, which we consider a role-based recipient name.
+This list is not editable. If you want to block other recipient names than on this list, please use the recipient name blacklist above.
+If we block too much for you, you can add recipient names to the whitelist above.
+If you think we missed important common role-based recipient names, %3$splease let us know%4$s.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="mailto:leav@sming.com">', '</a>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -1019,9 +1025,9 @@ blacklisted recipient name 2"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__( 
-                                        'If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. 
-                                        LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. 
-                                        If you found a DEA service that doesn\'t get blocked yet, please %1$scontact us%2$s.', 'last-email-address-validator' ) ), '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ). '">', '</a>' ) );
+'If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. 
+LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. 
+If you found a DEA service that doesn\'t get blocked yet, please %1$scontact us%2$s.', 'last-email-address-validator' ) ), '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ). '">', '</a>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -1060,10 +1066,10 @@ blacklisted recipient name 2"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__(
-                                        'If activated LEAV tries to simulate the sending of an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. 
-                                        If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. 
-                                        Test this with a working email address. If it gets rejected, you might have to deactivate this option.
-                                        %1$sThis option should always be active in production environments.%2$s', 'last-email-address-validator' ) ), '<strong>', '</strong>') ); 
+'If activated LEAV tries to simulate the sending of an email. For this we connect to one of the MX servers and test if it would accept an email from your email domain (see above) to the email address that gets validated. 
+If the used email domain doesn\'t point to your WordPress instance\'s IP address, this might fail. This is usually only the case in development or test environments. 
+Test this with a working email address. If it gets rejected, you might have to deactivate this option.
+%1$sThis option should always be active in production environments.%2$s', 'last-email-address-validator' ) ), '<strong>', '</strong>') ); 
                                 ?>
                                 <br/>
                                 <strong>
@@ -1103,12 +1109,12 @@ blacklisted recipient name 2"><?php
                             <p class="description">
                                 <?php
                                     echo( sprintf( nl2br( esc_html__(
-                                        'Here you can control whether to accept email addresses from domains, that allow arbritary recipient names. These are domains that allow arbritary recipient names like %1$sdtras657td8giuy23gtf7e3628@catch-all-domain.com%2$s.
-                                        For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. 
-                                        Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. 
-                                        I use catch-all domains myself and there is generally nothing wrong about it. You\'ll have to decide for yourself, whether this is important for you or not. 
-                                        Just so you know: %1$seven gmail.com allows any recipient name%2$s. 
-                                        If you set this option to "No", you should also reject email addresses from free email address providers above.', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
+'Here you can control whether to accept email addresses from domains, that allow arbritary recipient names. These are domains that allow arbritary recipient names like %1$sdtras657td8giuy23gtf7e3628@catch-all-domain.com%2$s.
+For whom might this be important? I.e. if you have a website with a free trial, you might want to make it a bit harder for leechers to get an unlimited amount of free accounts. 
+Of course users with their own domains can create an unlimited amount of email accounts, but by not allowing catch-all domains, it makes it harder for them. 
+I use catch-all domains myself and there is generally nothing wrong about it. You\'ll have to decide for yourself, whether this is important for you or not. 
+Just so you know: %1$seven gmail.com allows any recipient name%2$s. 
+If you set this option to "No", you should also reject email addresses from free email address providers above.', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -1444,9 +1450,9 @@ blacklisted recipient name 2"><?php
 
                 <h2><a name="pingbacks"></a><?php esc_html_e( 'Pingbacks / Trackbacks', 'last-email-address-validator' ) ?></h2>
                 <?php echo( sprintf( nl2br( esc_html__( 
-                    'Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validation process.
-                    Therefore %1$spingbacks and trackbacks pose a certain spam risk%2$s.  But they are also free marketing.
-                    By default we therefore accept them.', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) ); 
+'Pingbacks and trackbacks can\'t be validated because they don\'t come with an email address, that could be run through our validation process.
+Therefore %1$spingbacks and trackbacks pose a certain spam risk%2$s.  But they are also free marketing.
+By default we therefore accept them.', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) ); 
                 ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -1492,11 +1498,11 @@ blacklisted recipient name 2"><?php
                 <a name="custom_messages"></a>
                 <h1><?php esc_html_e( 'Custom Error Messages', 'last-email-address-validator' ) ?></h1>
                 <?php echo( sprintf( nl2br( esc_html__(
-                    'If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. 
-                    The placeholder texts are the default error messages. Overwrite them to use your custom validation error messages. 
-                    Delete the field\'s contents for using the defaults again.
-                    In multi-language sites, you will have to do the translations within the .po files that come with the plugin. 
-                    Of course you can do this with the help of plugins like WPML and others as well.', 'last-email-address-validator' ) ) ) ); ?>
+'If you want to override the default validation error messages or if you want to translate them without having to go through .po files, you can replace the default validation error messages below. 
+The placeholder texts are the default error messages. Overwrite them to use your custom validation error messages. 
+Delete the field\'s contents for using the defaults again.
+In multi-language sites, you will have to do the translations within the .po files that come with the plugin. 
+Of course you can do this with the help of plugins like WPML and others as well.', 'last-email-address-validator' ) ) ) ); ?>
 
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
@@ -1633,12 +1639,12 @@ blacklisted recipient name 2"><?php
 
                 <h1><?php esc_html_e( 'LEAV Menu Item Location', 'last-email-address-validator' ) ?></h1>
                 <?php echo( sprintf( nl2br( esc_html__(
-                    'We believe that LEAV will provide great value for you for as long as you use it. But after setting it up, you don\'t have to worry about it anymore. 
-                    We understand that after having set up LEAV you might want to move the LEAV menu item to a different location in the main menu or move it away from the main menu into the settings menu. 
-                    Here you can control where to place it.
-                    The lower the number for a location, the higher up in the menu the LEAV menu item will be displayed. 
-                    We allow locations in between 0-999.
-                    After changing the values, you\'ll have to reload the page.', 'last-email-address-validator' ) ) ) ); 
+'We believe that LEAV will provide great value for you for as long as you use it. But after setting it up, you don\'t have to worry about it anymore. 
+We understand that after having set up LEAV you might want to move the LEAV menu item to a different location in the main menu or move it away from the main menu into the settings menu. 
+Here you can control where to place it.
+The lower the number for a location, the higher up in the menu the LEAV menu item will be displayed. 
+We allow locations in between 0-999.
+After changing the values, you\'ll have to reload the page.', 'last-email-address-validator' ) ) ) ); 
                 ?>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
@@ -1705,7 +1711,7 @@ blacklisted recipient name 2"><?php
             <h2><?php esc_html_e( 'How exactly does LEAV validate email addresses?', 'last-email-address-validator' ); ?></h2>
             <?php
                 echo( sprintf( nl2br( esc_html__( 
-                    '%1$s %2$sby %3$ssmings%4$s', 'last-email-address-validator' ) ), $this->central::$PLUGIN_DISPLAY_NAME_FULL, '<i>', '<a href="'.  $this->central::$PLUGIN_WEBSITE . '" target="_blank">', '</a></i> validates email addresses of the supported WordPress functions and plugins in the following multi-step filter/validation process:' ) );
+                    '%1$s %2$sby %3$ssmings%4$s validates email addresses of the supported WordPress functions and plugins in the following multi-step filter/validation process:', 'last-email-address-validator' ) ), $this->central::$PLUGIN_DISPLAY_NAME_FULL, '<i>', '<a href="'.  $this->central::$PLUGIN_WEBSITE . '" target="_blank">', '</a></i>' ) );
             ?>
 
 
@@ -1716,9 +1722,9 @@ blacklisted recipient name 2"><?php
                     </strong>
                     <br/>
                     <?php echo( sprintf( nl2br( esc_html__( 
-                        'Checks if the email address is syntactically correct. This acts as a backup check for the plugin\'s checks. 
-                        Some plugins only have a frontend based email syntax check. LEAV\'s implementation is a solid regular expression based server-side check. 
-                        We wouldn\'t even need it, but use it for performance reasons to filter out wrong emails without further checking', 'last-email-address-validator' ) ) ) ); 
+'Checks if the email address is syntactically correct. This acts as a backup check for the plugin\'s checks. 
+Some plugins only have a frontend based email syntax check. LEAV\'s implementation is a solid regular expression based server-side check. 
+We wouldn\'t even need it, but use it for performance reasons to filter out wrong emails without further checking', 'last-email-address-validator' ) ) ) ); 
                     ?>
                 </li>
                 <li>
@@ -1733,8 +1739,8 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php
                         echo( sprintf( nl2br( esc_html__( 
-                            'Control if you want to filter out email addresses with a recipient name catch-all syntax. 
-                            For more information what a recipient name catch-all syntax is, please check our FAQ entry below.', 'last-email-address-validator' ) ) ) );
+'Control if you want to filter out email addresses with a recipient name catch-all syntax. 
+For more information what a recipient name catch-all syntax is, please check our FAQ entry below.', 'last-email-address-validator' ) ) ) );
                     ?>
                 </li>
                 <li>
@@ -1747,10 +1753,10 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php
                         echo( sprintf( nl2br( esc_html( 
-                            'Filters against the user-defined email domain whitelist (if activated).
-                            Use this whitelist to override potential false positives from extensive (wildcard) domain blacklist rules. 
-                            Whenever an email address gets matches by this whitelist, the domain blacklist check gets skipped.
-                            We kindly ask you to %1$sinform us%2$s about wrongfully blacklisted domains, so that we can correct any errors as soon as possible.', 'last-email-address-validator' ) ),  '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ) . '">', '</a>' ) );
+'Filters against the user-defined email domain whitelist (if activated).
+Use this whitelist to override potential false positives from extensive (wildcard) domain blacklist rules. 
+Whenever an email address gets matches by this whitelist, the domain blacklist check gets skipped.
+We kindly ask you to %1$sinform us%2$s about wrongfully blacklisted domains, so that we can correct any errors as soon as possible.', 'last-email-address-validator' ) ),  '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ) . '">', '</a>' ) );
                     ?>
                 </li>
                 <li>
@@ -1763,8 +1769,8 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php 
                         echo( sprintf( nl2br( esc_html__( 
-                            'Filters against the user-defined email whitelist (if activated)
-                            If you need to override specific email addresses that would otherwise get filtered out by the blacklist filters.' , 'last-email-address-validator' ) ) ) ); ?>
+'Filters against the user-defined email whitelist (if activated)
+If you need to override specific email addresses that would otherwise get filtered out by the blacklist filters.' , 'last-email-address-validator' ) ) ) ); ?>
                 </li>
                 <li>
                     <strong>
@@ -1776,10 +1782,10 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php 
                         echo( sprintf( nl2br( esc_html__( 
-                            'Filters against the user-defined recipient name whitelist (if activated)
-                            If you need to override specific recipient names that would otherwise get filtered out 
-                            by either the user-defined recipient name blacklist or the role-based recipient name blacklist. 
-                            If a recipient name gets matched by this whitelist, both recipient name blacklist checks get skipped.' , 'last-email-address-validator' ) ) ) ); 
+'Filters against the user-defined recipient name whitelist (if activated)
+If you need to override specific recipient names that would otherwise get filtered out 
+by either the user-defined recipient name blacklist or the role-based recipient name blacklist. 
+If a recipient name gets matched by this whitelist, both recipient name blacklist checks get skipped.' , 'last-email-address-validator' ) ) ) ); 
                     ?>
                 </li>
                 <li>
@@ -1802,8 +1808,8 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php 
                         echo( sprintf( nl2br( esc_html__( 
-                            'Filters against the built-in free email address provider domain blacklist (if activated).
-                            This list gets updated with new plugin releases.' , 'last-email-address-validator' ) ) ) ); 
+'Filters against the built-in free email address provider domain blacklist (if activated).
+This list gets updated with new plugin releases.' , 'last-email-address-validator' ) ) ) ); 
                     ?>
                 </li>
                 <li>
@@ -1868,12 +1874,12 @@ blacklisted recipient name 2"><?php
                     <br/>
                     <?php
                         echo( sprintf( nl2br( esc_html__( 
-                            'Connects to one of the MX servers and simulates the sending of an email 
-                            from %1$sno-reply@%2$s%3$s to the entered email address. No actual email will be sent out. 
-                            This is just LEAV asking the receiving server, if it would accept the email address. 
-                            Then the dialog with the MX server gets terminated without any email being sent. 
-                            It\'s essentially like looking at a house\'s mailboxes and checking if there is a mailbox 
-                            with a specific name on it and if we can open it and see if the letter would fit in without dropping it into the mailbox.', 'last-email-address-validator' ) ), '<strong>', $this->get_wp_email_domain_as_string(), '</strong>' ) );
+'Connects to one of the MX servers and simulates the sending of an email 
+from %1$sno-reply@%2$s%3$s to the entered email address. No actual email will be sent out. 
+This is just LEAV asking the receiving server, if it would accept the email address. 
+Then the dialog with the MX server gets terminated without any email being sent. 
+It\'s essentially like looking at a house\'s mailboxes and checking if there is a mailbox 
+with a specific name on it and if we can open it and see if the letter would fit in without dropping it into the mailbox.', 'last-email-address-validator' ) ), '<strong>', $this->get_wp_email_domain_as_string(), '</strong>' ) );
                     ?>
                 </li>
                 <li>
@@ -1904,17 +1910,17 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'You can use asterisks "%1$s*%2$s" as wildcards in domain names. It stands for zero up to any amount of characters. 
-                        I.e. "%1$smail4*.com%2$s" matches all emails from domains starting with <br/>"%1$smail4%2$s" followed by "%1$s.com%2$s". 
-                        In this example "%1$smail4.com%2$s", "%1$smail4i.com%2$s", "%1$smail4me.com%2$s", "%1$smail4myparents.com%2$s" would all be matched.
-                        You can use "*" for entire subdomains and top-level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).
-                        "%1$s*.mail.*%2$s" matches "%1$sa.mail.tk%2$s" or "%1$sthis-is-a-subdomain.mail.com%2$s".
-                        If you want to block entire top-level-domains, you\'ll have to use "%1$s**%2$s". I.e. "%1$s**.tk%2$s" will match all domains ending with "%1$s.tk%2$s".
-                        You can see further examples on our list of free email address provider domains in the blacklists section.
-                        ', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
+'You can use asterisks "%1$s*%2$s" as wildcards in domain names. It stands for zero up to any amount of characters. 
+I.e. "%1$smail4*.com%2$s" matches all emails from domains starting with <br/>"%1$smail4%2$s" followed by "%1$s.com%2$s". 
+In this example "%1$smail4.com%2$s", "%1$smail4i.com%2$s", "%1$smail4me.com%2$s", "%1$smail4myparents.com%2$s" would all be matched.
+You can use "*" for entire subdomains and top-level domains (TLDs) (Explanation: subdomain2.subdomain1.domain.tld).
+"%1$s*.mail.*%2$s" matches "%1$sa.mail.tk%2$s" or "%1$sthis-is-a-subdomain.mail.com%2$s".
+If you want to block entire top-level-domains, you\'ll have to use "%1$s**%2$s". I.e. "%1$s**.tk%2$s" will match all domains ending with "%1$s.tk%2$s".
+You can see further examples on our list of free email address provider domains in the blacklists section.
+', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
                     echo( sprintf( nl2br( esc_html__(
-                        'Be careful to not over do any kind of matching with wildcards.
-                        We urge you to extensively test whether email addresses would get matched or not with the test option %1$sat the very top%2$s of the settings page.', 'last-email-address-validator' ) ), '<a href="#test_email_address">', '</a>' ) );
+'Be careful to not over do any kind of matching with wildcards.
+We urge you to extensively test whether email addresses would get matched or not with the test option %1$sat the very top%2$s of the settings page.', 'last-email-address-validator' ) ), '<a href="#test_email_address">', '</a>' ) );
 
                 ?>
             <h3>
@@ -1925,17 +1931,17 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'You can use asterisks "%1$s*%2$s" as wildcards in recipient names as well. It stands for zero up to any amount of characters. 
-                        I.e. "%1$s*spammer*%2$s" matches all recipient names containing the word "%1$sspammer%2$s". 
-                        It matches "%1$sall-spammers-go%2$s" or just "%1$sspammer%2$s". %1$smailfrom*%2$s" matches all recipient names starting with "%1$smailfrom%2$s". 
-                        I.e. "%1$smailfrom%2$s", "%1$smailfroma%2$s", "%1$smailfromme%2$s", etc. 
-                        You can place the asterisk anywhere. I.e. "%1$s*spam*from*%2$s" matches "%1$sspamfrom%2$s" as well as "%1$sall-spam-from-me%2$s".
-                        You can see plenty examples on our list of role-based recipient names in the blacklists section. 
-                        These are mostly trailing "*", so that we don\'t match too many recipient names.
-                        ', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
+'You can use asterisks "%1$s*%2$s" as wildcards in recipient names as well. It stands for zero up to any amount of characters. 
+I.e. "%1$s*spammer*%2$s" matches all recipient names containing the word "%1$sspammer%2$s". 
+It matches "%1$sall-spammers-go%2$s" or just "%1$sspammer%2$s". %1$smailfrom*%2$s" matches all recipient names starting with "%1$smailfrom%2$s". 
+I.e. "%1$smailfrom%2$s", "%1$smailfroma%2$s", "%1$smailfromme%2$s", etc. 
+You can place the asterisk anywhere. I.e. "%1$s*spam*from*%2$s" matches "%1$sspamfrom%2$s" as well as "%1$sall-spam-from-me%2$s".
+You can see plenty examples on our list of role-based recipient names in the blacklists section. 
+These are mostly trailing "*", so that we don\'t match too many recipient names.
+', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
                     echo( sprintf( nl2br( esc_html__(
-                        'Be careful to not over do any kind of matching with wildcards.
-                        We urge you to extensively test whether email addresses would get matched or not with the test option %1$sat the very top%2$s of the settings page.', 'last-email-address-validator' ) ), '<a href="#test_email_address">', '</a>' ) );
+'Be careful to not over do any kind of matching with wildcards.
+We urge you to extensively test whether email addresses would get matched or not with the test option %1$sat the very top%2$s of the settings page.', 'last-email-address-validator' ) ), '<a href="#test_email_address">', '</a>' ) );
 
                 ?>
             <h3>
@@ -1946,8 +1952,8 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'Wildcards are NOT available for email addresses as of now. 
-                        If there is a real usecase for this, feel free to send us a %1$sfeature request%2$s.', 'last-email-address-validator' ) ), '<a href="#feature_requests">', '</a>' ) );
+'Wildcards are NOT available for email addresses as of now. 
+If there is a real usecase for this, feel free to send us a %1$sfeature request%2$s.', 'last-email-address-validator' ) ), '<a href="#feature_requests">', '</a>' ) );
                 ?>
             <h3>
                 <strong>
@@ -1957,10 +1963,10 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'Of course you know what an email generally looks like.
-                        %1$s%1$s%1$s%2$srecipient-name%3$s@%2$sdomain%3$s.%2$stld%3$s
-                        But do you really understand its different parts?
-                        An email address consists of 3 parts with delimiters in between them.', 'last-email-address-validator' ) ), '&nbsp;', '<strong>', '</strong>' ) );
+'Of course you know what an email generally looks like.
+%1$s%1$s%1$s%2$srecipient-name%3$s@%2$sdomain%3$s.%2$stld%3$s
+But do you really understand its different parts?
+An email address consists of 3 parts with delimiters in between them.', 'last-email-address-validator' ) ), '&nbsp;', '<strong>', '</strong>' ) );
                 ?>
                 <ol>
                     <li>
@@ -1975,30 +1981,30 @@ blacklisted recipient name 2"><?php
                 </ol>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'Let\'s use a physical world analogy for these elements of an email address. For this, we have to start at the 3rd part of an email address.
+'Let\'s use a physical world analogy for these elements of an email address. For this, we have to start at the 3rd part of an email address.
 
-                        The %1$stop-level domain%2$s part usually represents a country or an organizational type. And in the beginning of the internet there were
-                        aside from some top-level domains like .com, .net, .org, .mil, .edu ...) indeed mostly country domains. 
-                        Today there are more than 1,500 top-level domains, which gets more and more confusing. But essentially top-level domains are still 
-                        more or less describing geography, organizational types and more and more lifestyle. There are new top-level domains that are 
-                        up to 18 charactes long and if you include non-aasci TLDs, they are up to 24 characters long. The current valid list of 
-                        top-level domains is available at %3$siana.org%4$s.
-                        A somewhat current list of how many domains are registered with each top-level domain is available at %5$sdomaintools.com%4$s.
-                        For the sake of our analogy, let\'s pretend top-level domains are describing a type of building i.e. simple houses, 
-                        company buildings, private mansions, public buildings, condo buildings, appartment buildings etc..
+The %1$stop-level domain%2$s part usually represents a country or an organizational type. And in the beginning of the internet there were
+aside from some top-level domains like .com, .net, .org, .mil, .edu ...) indeed mostly country domains. 
+Today there are more than 1,500 top-level domains, which gets more and more confusing. But essentially top-level domains are still 
+more or less describing geography, organizational types and more and more lifestyle. There are new top-level domains that are 
+up to 18 charactes long and if you include non-aasci TLDs, they are up to 24 characters long. The current valid list of 
+top-level domains is available at %3$siana.org%4$s.
+A somewhat current list of how many domains are registered with each top-level domain is available at %5$sdomaintools.com%4$s.
+For the sake of our analogy, let\'s pretend top-level domains are describing a type of building i.e. simple houses, 
+company buildings, private mansions, public buildings, condo buildings, appartment buildings etc..
 
-                        The %1$sdomain%2$s part is the equivalent of a specific building or house of the general type defined by 
-                        the top-level domain. The house or building has one or multiple mailboxes. Each mailbox represents a real life person, 
-                        an entire household, a company, a department and so on.
+The %1$sdomain%2$s part is the equivalent of a specific building or house of the general type defined by 
+the top-level domain. The house or building has one or multiple mailboxes. Each mailbox represents a real life person, 
+an entire household, a company, a department and so on.
 
-                        A %1$srecipient name%2$s is a name on one of the mailboxes of the house. And there can be multiple names on one mailbox.
-                        In this analogy a mailbox is an email account. An email account can have multiple recipient names. 
-                        Just like a real life mailbox labelled "XYZ family" will receive all mail addressed to any of the XYZ family members, 
-                        email accounts can have so called aliases. There is usually one "main" or "real" recipient name but additionally 
-                        there can be "alias" recipient names. For instance companies tend to have a generic main recipient name syntax 
-                        like this: first.last@company.com
-                        Beyond this they tend to also have aliases like f.last@company.com, firstlast@company.com, fl@company.com, first@company, 
-                        last@company.com etc. You get the picture.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" target="_blank">', '</a>', '<a href="https://research.domaintools.com/statistics/tld-counts/" target="_blank">' ) );
+A %1$srecipient name%2$s is a name on one of the mailboxes of the house. And there can be multiple names on one mailbox.
+In this analogy a mailbox is an email account. An email account can have multiple recipient names. 
+Just like a real life mailbox labelled "XYZ family" will receive all mail addressed to any of the XYZ family members, 
+email accounts can have so called aliases. There is usually one "main" or "real" recipient name but additionally 
+there can be "alias" recipient names. For instance companies tend to have a generic main recipient name syntax 
+like this: first.last@company.com
+Beyond this they tend to also have aliases like f.last@company.com, firstlast@company.com, fl@company.com, first@company, 
+last@company.com etc. You get the picture.', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" target="_blank">', '</a>', '<a href="https://research.domaintools.com/statistics/tld-counts/" target="_blank">' ) );
                 ?>
 
             <a name="faq-recipient-name"></a>
@@ -2011,9 +2017,9 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'A Recipient name is the part of an email that is in front of the "@" sign. It is also called "local part". 
-                        This part defines the concrete mailbox an email gets received by. The mailbox might also be reachable 
-                        under aliases for the "main" recipient name.', 'last-email-address-validator' ) ) ) );
+'A Recipient name is the part of an email that is in front of the "@" sign. It is also called "local part". 
+This part defines the concrete mailbox an email gets received by. The mailbox might also be reachable 
+under aliases for the "main" recipient name.', 'last-email-address-validator' ) ) ) );
                 ?>
 
             <a name="faq-recipient-name-catch-all-syntax"></a>
@@ -2026,16 +2032,16 @@ blacklisted recipient name 2"><?php
             </h3>
                 <?php
                     echo( sprintf( nl2br( esc_html__( 
-                        'Email address service providers like %1$sgmail.com%2$s and others allow users to place a "+" sign after 
-                        their actual recipient name and append whatever string they want as long as the recipient name\'s 
-                        total length doesn\'t exceed 64 characters.  
-                        If your email address is "%1$stester.testing@gmail.com%2$s" you are allowed to use the following 
-                        email addresses as well and they will all be delivered into your mailbox: 
-                        "%1$stester.testing+domain1@gmail.com%2$s", "%1$stester.testing+newsletter.xyz@gmail.com%2$s", "%1$stester.testing+website.signup.for.lottery@gmail.com%2$s" etc.
-                        This is a very easy way for users to differentiate between where and what they signed up for or subscribed to. 
-                        This allows users to "cloak" their "main" email address. Well - at least a tiny bit. This gives users an 
-                        infinite amount of email addresses, which sometimes makes it easy for leechers to sign up to free or 
-                        freemium offers multiple times. You might wan\'t to disallow this, if it interferes with your business model', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
+'Email address service providers like %1$sgmail.com%2$s and others allow users to place a "+" sign after 
+their actual recipient name and append whatever string they want as long as the recipient name\'s 
+total length doesn\'t exceed 64 characters.  
+If your email address is "%1$stester.testing@gmail.com%2$s" you are allowed to use the following 
+email addresses as well and they will all be delivered into your mailbox: 
+"%1$stester.testing+domain1@gmail.com%2$s", "%1$stester.testing+newsletter.xyz@gmail.com%2$s", "%1$stester.testing+website.signup.for.lottery@gmail.com%2$s" etc.
+This is a very easy way for users to differentiate between where and what they signed up for or subscribed to. 
+This allows users to "cloak" their "main" email address. Well - at least a tiny bit. This gives users an 
+infinite amount of email addresses, which sometimes makes it easy for leechers to sign up to free or 
+freemium offers multiple times. You might wan\'t to disallow this, if it interferes with your business model', 'last-email-address-validator' ) ), '<strong>', '</strong>' ) );
                 ?>
 
             <a name="feature_requests"></a>
@@ -2043,22 +2049,22 @@ blacklisted recipient name 2"><?php
             <h1><?php esc_html_e( 'Feature Requests', 'last-email-address-validator' ); ?></h1>
             <?php
                 echo( sprintf( nl2br( esc_html__( 
-                    'If you look for more supported plugins or an extension of the base functionality of how we validate and filter 
-                    email addresses, we at %1$ssmings%2$s (website will be online soon) are always happy to optimize
-                    LEAV - Last Email Address Validator to help you to protect your non-renewable lifetime even better.
-                    Just shoot us an email to %3$s', 'last-email-address-validator' ) ), '<a href="' . esc_url( $this->central::$PLUGIN_WEBSITE ) . '" target="_blank">', '</a>', '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ). '">' . esc_html( $this->central::$PLUGIN_CONTACT_EMAIL ). '</a>' ) );
+'If you look for more supported plugins or an extension of the base functionality of how we validate and filter 
+email addresses, we at %1$ssmings%2$s (website will be online soon) are always happy to optimize
+LEAV - Last Email Address Validator to help you to protect your non-renewable lifetime even better.
+Just shoot us an email to %3$s', 'last-email-address-validator' ) ), '<a href="' . esc_url( $this->central::$PLUGIN_WEBSITE ) . '" target="_blank">', '</a>', '<a href="mailto:' . esc_attr( $this->central::$PLUGIN_CONTACT_EMAIL ). '">' . esc_html( $this->central::$PLUGIN_CONTACT_EMAIL ). '</a>' ) );
             ?>
             <a name="help"></a>
             <br/><br/>
             <h1><?php esc_html_e( 'Help us help you!', 'last-email-address-validator' ); ?></h1>
             <?php
                 echo( sprintf( nl2br( esc_html__( 
-                    'Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving
-                    lots of your precious non-renewable lifetime by filtering out tons of
-                    spam attempts, please show us your appreciation and consider a %1$s%3$sone-time donation%4$s%2$s
-                    or become a patreon on our patreon page at %1$s%5$spatreon.com/smings%4$s%2$s
-                    We appreciate your support and send you virtual hugs and good karma points.
-                    Thank you and enjoy LEAV', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="' . esc_url( $this->central::$PLUGIN_ONETIME_DONATION_LINK ) .'" target="_blank">', '</a>', '<a href="' . esc_url( $this->central::$PLUGIN_PATREON_LINK ) . '" target="_blank">' ) );
+'Lastly - if LEAV - Last Email Address Validator delivers substancial value to you, i.e. saving
+lots of your precious non-renewable lifetime by filtering out tons of
+spam attempts, please show us your appreciation and consider a %1$s%3$sone-time donation%4$s%2$s
+or become a patreon on our patreon page at %1$s%5$spatreon.com/smings%4$s%2$s
+We appreciate your support and send you virtual hugs and good karma points.
+Thank you and enjoy LEAV', 'last-email-address-validator' ) ), '<strong>', '</strong>', '<a href="' . esc_url( $this->central::$PLUGIN_ONETIME_DONATION_LINK ) .'" target="_blank">', '</a>', '<a href="' . esc_url( $this->central::$PLUGIN_PATREON_LINK ) . '" target="_blank">' ) );
             ?>
         </div>
         <div class="wrap">
