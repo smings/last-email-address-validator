@@ -1,10 +1,10 @@
 === LEAV Last Email Address Validator ===
 Contributors: smings
-Donate link: https://www.patreon.com/smings
+Donate link: https://paypal.me/DirkTornow
 Tags: email address validation, email form, contact form, registration form, form builder, newsletter, user registration, comments, anti spam, spam blocker, MX, DNS
 Requires at least: 4.7
-Tested up to: 5.5
-Stable tag: 1.4.8
+Tested up to: 5.5.3
+Stable tag: 1.4.9
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,6 +19,8 @@ We believe that your lifetime is the most precious and protection worthy thing i
 the universe. Protecting it is a critical task. 
 LEAV helps you to effectively protect your lifetime against spammers that use 
 fake or disposable email adresses for the standard WordPress user registration, WordPress's comments, WooCommerce, Contact Form 7, WPForms (lite and pro), Ninja Forms, Formidable Forms, Kali Forms and more plugins to come. 
+
+LEAV works out of the box without a registration or external APIs. All the action takes place within your control on your own WordPress instance.
 
 There are plenty of bad apples out there and we want to protect you against them.
 We built this plugin, because we were frustrated with the lack of true email
@@ -37,12 +39,12 @@ Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.5.2 (5,000,000+ installations)
-* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.2.2 (5,000,000+ installations)
-* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.2.3 (3,000,000+ installations)
-* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 4.5.2 (1,000,000+ installations)
-* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 3.4.27 (1,000,000+ installations)
-* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.07.01 (300,000+ Installations)
-* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.1.2 (30,000+ installations)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.3 (5,000,000+ installations)
+* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.3.1 (3,000,000+ installations)
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 3.4.32 (1,000,000+ installations)
+* [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 4.8.1 (1,000,000+ installations)
+* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.09.01 (300,000+ Installations)
+* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.2.9 (30,000+ installations)
 
 which gives LEAV a current plugin reach of 15,330,000+ WordPress installtions. And these numbers only cover the freely available plugin installtions from the plugin marketplace on WordPress.org/plugins. 
 
@@ -265,6 +267,9 @@ free email address provider domain list.
 
 
 == Changelog ==
+
+= 1.4.9 =
+* Optimized translatability and security of the plugin
 
 = 1.4.8 =
 * Added wildcard support for domains and recipient names in white/blacklists

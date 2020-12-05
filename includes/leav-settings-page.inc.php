@@ -46,18 +46,11 @@ class LeavSettingsPage
         <div id="setting-error-settings_updated" class="notice notice-warning is-dismissible">
             <p>
                  <?php
-                    echo( sprintf( nl2br( esc_html( 
-                        "LEAV - Last Email Address Validator could not automatically detect your email domain.
-                        This usually only happens in development or staging environments.
-                        " , 'last-email-address-validator' ) ) ) );
-                ?>
-                <a href="<?php 
-                    echo( esc_url( $this->central::$PLUGIN_SETTING_PAGE ) ); 
-                ?>">
-                    <?php
-                        esc_html_e( 'Please go to LEAV\'s settings page and enter an email domain under which your WordPress instance is reachable.', 'last-email-address-validator' );
+                    echo( sprintf( nl2br( esc_html__( 
+'LEAV - Last Email Address Validator could not automatically detect your email domain.
+This usually only happens in development or staging environments.
+Please go to %1$sLEAV\'s settings%2$s page and enter an email domain under which your WordPress instance is reachable.' , 'last-email-address-validator' ) ), '<a href="' . esc_url( $this->central::$PLUGIN_SETTING_PAGE ) . '">', '</a>' ) );
                     ?>
-                </a> 
             </p>
             <button type="button" class="notice-dismiss">
                 <span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice', 'last-email-address-validator' ) ?>.</span>
@@ -312,7 +305,7 @@ window.onload = function (event) {
                                     </strong>
                                 </span>
                                 <span>
-                                    "<?php echo( esc_html( $this->leav_plugin->get_email_validation_error_type() ) ); ?>"
+                                    "<?php esc_html_e( $this->leav_plugin->get_email_validation_error_type() ) ; ?>"
                                 </span>
                             </p>
                             <p>
@@ -354,10 +347,10 @@ window.onload = function (event) {
                                     }
                                 ?>
                             <p class="description">
-                                <?php echo ( nl2br( esc_html( 
+                                <?php echo ( sprintf( nl2br( esc_html__( 
 'Test any email address against LEAV\'s current settings.
 No emails will be sent out or saved anywhere.
-Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.', 'last-email-address-validator' ) ) ); ?>
+Feel free to adjust the settings to your individual needs. We encourage you to do thorough testing.', 'last-email-address-validator' ) ) ) ); ?>
                             </p>
 
                         </td>
@@ -375,36 +368,35 @@ Feel free to adjust the settings to your individual needs. We encourage you to d
                 <h2><?php esc_html_e( 'Email Domain', 'last-email-address-validator' ) ?></h2>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
                     <tr>
-                        <th scope="row"><?php esc_html_e("Email domain for simulated email sending to entered email addresses", 'last-email-address-validator' ); ?>:</th>
+                        <th scope="row"><?php 
+                                        esc_html_e( 'Email domain for simulated email sending to entered email addresses', 'last-email-address-validator' ); 
+                                        ?>:
+                        </th>
                         <td>
                             <label>
                                 <input name="wp_email_domain" type="text" size="40" value="<?php 
                                     echo esc_attr( $this->central::$OPTIONS["wp_email_domain"] ); 
                                     ?>" placeholder="<?php 
-                                    esc_attr_e( 'your-wp-domain.com', 'last-email-address-validator' ); 
+                                    esc_attr_e( 'your-wp-email-domain.com', 'last-email-address-validator' ); 
                                     ?>" />
                             </label>
                             <p class="description">
                                 <?php 
-                                esc_html_e( 'The Email domain is used for simulating the sending of an email from no-reply@', 'last-email-address-validator' );
-                                ?>
-                                <strong>
-                                    <?php
+                                esc_html_e( 'The Email domain is used for simulating the sending of an email from "no-reply@', 'last-email-address-validator' );
+                                ?><strong><?php
                                     if( ! empty( $this->central::$OPTIONS["wp_email_domain"] ) )
                                         echo( esc_html( $this->central::$OPTIONS["wp_email_domain"] ) );
                                     else
-                                        esc_html_e( 'your-wp-domain.com', 'last-email-address-validator' );
-                                    ?>
-                                </strong>
-                                <?php 
+                                        esc_html_e( 'your-wp-email-domain.com', 'last-email-address-validator' );
+                                    ?></strong>" <?php 
                                     esc_html_e( 'to the entered email address, that gets validated. ', 'last-email-address-validator' );
                                 ?>
                                 <br/>
                                 <?php 
-                                    echo( nl2br( esc_html__( 
+                                    echo( sprintf( nl2br( esc_html__( 
 'Please make sure you enter the email domain that you use for sending emails from your WordPress instance. 
 If the email domain doesn\'t point to your WordPress instance\'s IP address, simulating the sending of emails might fail.
-This is usually only the case in development or test environments.', 'last-email-address-validator' ) ) );
+This is usually only the case in development or test environments.', 'last-email-address-validator' ) ) ) );
                                 ?>
                                 <br/>
                                 <?php
@@ -473,10 +465,10 @@ You can find an overview and description of the filter/validation steps in ', 'l
                                     ?>
                                 </strong> 
                                 <?php
-                                    echo( nl2br( esc_html__( 
+                                    echo( sprintf( nl2br( esc_html__( 
 'for google. 
 This allows users to "cloak" their "main" email address, which is usually used to differentiate where and what the user signed up for.
-You can choose to allow this or block such email addresses.', 'last-email-address-validator' ) ) );
+You can choose to allow this or block such email addresses.', 'last-email-address-validator' ) ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -583,9 +575,9 @@ your-whitelisted-domain-2.com"><?php
                             </label>
                             <p class="description">
                                 <?php
-                                    echo( nl2br( esc_html__( 
+                                    echo( sprintf( nl2br( esc_html__( 
 'Email addresses on this list will be accepted without further email address blacklist checks (if active).
-Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
+Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -639,10 +631,10 @@ your.whitelisted@email-address-2.com"><?php
                             </label>
                             <p class="description">
                                 <?php
-                                    echo( nl2br( sprintf( esc_html__(
+                                    echo( sprintf( nl2br( sprintf( esc_html__(
 'Recipient names on this list will be accepted without further recipient name blacklist checks, either user-defined and/or role-based (if active).
 Entered recipient names will automatically be stripped of any non-letter (a-z) characters except for wildcards.
-For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ), '<a href="#faq-wildcards">', '</a>' ) ) );
+For information on how to use wildcards, see our %1$sFAQ entry%2$s.', 'last-email-address-validator' ), '<a href="#faq-wildcards">', '</a>' ) ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -703,9 +695,9 @@ your-whitelisted-recipient-name-2"><?php
 
                 <h2></a><?php esc_html_e( 'Blacklists', 'last-email-address-validator' ) ?></h2>
                 <?php 
-                    echo( nl2br( esc_html__(
+                    echo( sprintf( nl2br( esc_html__(
 'Any email address that gets matched by a blacklist rule gets rejected, unless it has previously been whitelisted for the blacklist rule. 
-If an email address gets matched by a blacklist rule, all subsequent validations get skipped.', 'last-email-address-validator' ) ) ); ?><br/>
+If an email address gets matched by a blacklist rule, all subsequent validations get skipped.', 'last-email-address-validator' ) ) ) ); ?><br/>
                 <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
                     <tr>
@@ -839,9 +831,9 @@ If you should wonder why we block the entire top-level-domains .cf, .ga, .gq, .m
                             </label>
                             <p class="description">
                                 <?php
-                                    echo( nl2br( esc_html__( 
+                                    echo( sprintf( nl2br( esc_html__( 
 'Email addresses from this list will be rejected (if active).
-Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) );
+Unlike with domains and recipient names, you can\'t use wildcards for email addresses.', 'last-email-address-validator' ) ) ) );
                                 ?>
                                 <br/>
                                 <strong>
@@ -1752,7 +1744,7 @@ For more information what a recipient name catch-all syntax is, please check our
                         ?>
                     <br/>
                     <?php
-                        echo( sprintf( nl2br( esc_html( 
+                        echo( sprintf( nl2br( esc_html__( 
 'Filters against the user-defined email domain whitelist (if activated).
 Use this whitelist to override potential false positives from extensive (wildcard) domain blacklist rules. 
 Whenever an email address gets matches by this whitelist, the domain blacklist check gets skipped.
