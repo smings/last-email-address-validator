@@ -16,63 +16,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: includes/leav-central.inc.php:119
+#: includes/leav-central.inc.php:118
 msgid   "The entered email address contains invalid characters."
 msgstr  ""
 
-#: includes/leav-central.inc.php:120
+#: includes/leav-central.inc.php:119
 msgid   "The entered email address is blacklisted."
 msgstr  ""
 
-#: includes/leav-central.inc.php:121
+#: includes/leav-central.inc.php:120
 msgid   "The entered email address syntax is invalid."
 msgstr  ""
 
-#: includes/leav-central.inc.php:122
+#: includes/leav-central.inc.php:121
 msgid   "The entered email address's domain doesn't have any mail servers."
 msgstr  ""
 
-#: includes/leav-central.inc.php:123
+#: includes/leav-central.inc.php:122
 msgid   "The entered email address's domain is blacklisted."
 msgstr  ""
 
-#: includes/leav-central.inc.php:124
+#: includes/leav-central.inc.php:123
 msgid   "We don't accept email addresses from disposable email address "
         "services (DEA). Please use a regular email address."
 msgstr  ""
 
-#: includes/leav-central.inc.php:125
+#: includes/leav-central.inc.php:124
 msgid   "We don't accept email addresses from free email address providers. "
         "Please use a business email address."
 msgstr  ""
 
-#: includes/leav-central.inc.php:126
+#: includes/leav-central.inc.php:125
 msgid   "We don't accept email addresses from catch-all domains. Your email "
         "address's domain accepts any recipient name. Please use an email "
         "address from another domain"
 msgstr  ""
 
-#: includes/leav-central.inc.php:127
+#: includes/leav-central.inc.php:126
 msgid   "The entered email address is invalid."
 msgstr  ""
 
-#: includes/leav-central.inc.php:128
+#: includes/leav-central.inc.php:127
 msgid   "We don't allow recipient names with an inline catch-all syntax using "
         "a &quot;&#43;&quot; sign. Please remove the &quot;&#43;&quot; sign "
         "and everything after it."
 msgstr  ""
 
-#: includes/leav-central.inc.php:129
+#: includes/leav-central.inc.php:128
 msgid   "The recipient name (the part before the \"@\" sign) is blacklisted. "
         "Please use another recipient name."
 msgstr  ""
 
-#: includes/leav-central.inc.php:130
+#: includes/leav-central.inc.php:129
 msgid   "We don't allow role-based / generic recipient names in email "
         "addresses. Please use a personalized email address."
 msgstr  ""
 
-#: includes/leav-central.inc.php:131
+#: includes/leav-central.inc.php:130
 msgid   "The entered email address got rejected while trying to send an email "
         "to it."
 msgstr  ""
@@ -129,18 +129,18 @@ msgid   "Whitelists"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:180
-#: includes/leav-settings-page.inc.php:696
+#: includes/leav-settings-page.inc.php:699
 msgid   "Blacklists"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:186
-#: includes/leav-settings-page.inc.php:1002
+#: includes/leav-settings-page.inc.php:1008
 msgid   "Disposable Email Address Blocking"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:192
-#: includes/leav-settings-page.inc.php:1043
-#: includes/leav-settings-page.inc.php:1048
+#: includes/leav-settings-page.inc.php:1049
+#: includes/leav-settings-page.inc.php:1054
 msgid   "Simulate Email Sending"
 msgstr  ""
 
@@ -149,22 +149,22 @@ msgid   "Catch-all domains"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:206
-#: includes/leav-settings-page.inc.php:1132
+#: includes/leav-settings-page.inc.php:1138
 msgid   "LEAV-validated Functions / Plugins"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:212
-#: includes/leav-settings-page.inc.php:1443
+#: includes/leav-settings-page.inc.php:1449
 msgid   "Pingbacks / Trackbacks"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:220
-#: includes/leav-settings-page.inc.php:1491
+#: includes/leav-settings-page.inc.php:1497
 msgid   "Custom Error Messages"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:226
-#: includes/leav-settings-page.inc.php:1632
+#: includes/leav-settings-page.inc.php:1638
 msgid   "LEAV Menu Item Location"
 msgstr  ""
 
@@ -173,7 +173,7 @@ msgid   "FAQ"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:240
-#: includes/leav-settings-page.inc.php:2041
+#: includes/leav-settings-page.inc.php:2047
 msgid   "Feature Requests"
 msgstr  ""
 
@@ -274,15 +274,15 @@ msgstr  ""
 
 #: includes/leav-settings-page.inc.php:418
 #: includes/leav-settings-page.inc.php:488
-#: includes/leav-settings-page.inc.php:692
-#: includes/leav-settings-page.inc.php:998
-#: includes/leav-settings-page.inc.php:1039
-#: includes/leav-settings-page.inc.php:1082
-#: includes/leav-settings-page.inc.php:1128
-#: includes/leav-settings-page.inc.php:1439
-#: includes/leav-settings-page.inc.php:1486
-#: includes/leav-settings-page.inc.php:1628
-#: includes/leav-settings-page.inc.php:1697
+#: includes/leav-settings-page.inc.php:695
+#: includes/leav-settings-page.inc.php:1004
+#: includes/leav-settings-page.inc.php:1045
+#: includes/leav-settings-page.inc.php:1088
+#: includes/leav-settings-page.inc.php:1134
+#: includes/leav-settings-page.inc.php:1445
+#: includes/leav-settings-page.inc.php:1492
+#: includes/leav-settings-page.inc.php:1634
+#: includes/leav-settings-page.inc.php:1703
 msgid   "Save Changes"
 msgstr  ""
 
@@ -310,57 +310,57 @@ msgstr  ""
 
 #: includes/leav-settings-page.inc.php:442
 #: includes/leav-settings-page.inc.php:506
-#: includes/leav-settings-page.inc.php:570
-#: includes/leav-settings-page.inc.php:626
-#: includes/leav-settings-page.inc.php:709
-#: includes/leav-settings-page.inc.php:772
-#: includes/leav-settings-page.inc.php:826
-#: includes/leav-settings-page.inc.php:883
-#: includes/leav-settings-page.inc.php:945
-#: includes/leav-settings-page.inc.php:1011
-#: includes/leav-settings-page.inc.php:1052
-#: includes/leav-settings-page.inc.php:1095
-#: includes/leav-settings-page.inc.php:1140
-#: includes/leav-settings-page.inc.php:1169
-#: includes/leav-settings-page.inc.php:1195
-#: includes/leav-settings-page.inc.php:1228
-#: includes/leav-settings-page.inc.php:1262
-#: includes/leav-settings-page.inc.php:1295
-#: includes/leav-settings-page.inc.php:1332
-#: includes/leav-settings-page.inc.php:1369
-#: includes/leav-settings-page.inc.php:1402
-#: includes/leav-settings-page.inc.php:1455
-#: includes/leav-settings-page.inc.php:1462
-#: includes/leav-settings-page.inc.php:1471
-#: includes/leav-settings-page.inc.php:1478
-#: includes/leav-settings-page.inc.php:2106
+#: includes/leav-settings-page.inc.php:571
+#: includes/leav-settings-page.inc.php:628
+#: includes/leav-settings-page.inc.php:712
+#: includes/leav-settings-page.inc.php:777
+#: includes/leav-settings-page.inc.php:831
+#: includes/leav-settings-page.inc.php:888
+#: includes/leav-settings-page.inc.php:951
+#: includes/leav-settings-page.inc.php:1017
+#: includes/leav-settings-page.inc.php:1058
+#: includes/leav-settings-page.inc.php:1101
+#: includes/leav-settings-page.inc.php:1146
+#: includes/leav-settings-page.inc.php:1175
+#: includes/leav-settings-page.inc.php:1201
+#: includes/leav-settings-page.inc.php:1234
+#: includes/leav-settings-page.inc.php:1268
+#: includes/leav-settings-page.inc.php:1301
+#: includes/leav-settings-page.inc.php:1338
+#: includes/leav-settings-page.inc.php:1375
+#: includes/leav-settings-page.inc.php:1408
+#: includes/leav-settings-page.inc.php:1461
+#: includes/leav-settings-page.inc.php:1468
+#: includes/leav-settings-page.inc.php:1477
+#: includes/leav-settings-page.inc.php:1484
+#: includes/leav-settings-page.inc.php:2112
 msgid   "Yes"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:446
 #: includes/leav-settings-page.inc.php:510
-#: includes/leav-settings-page.inc.php:574
-#: includes/leav-settings-page.inc.php:630
-#: includes/leav-settings-page.inc.php:713
-#: includes/leav-settings-page.inc.php:776
-#: includes/leav-settings-page.inc.php:830
-#: includes/leav-settings-page.inc.php:887
-#: includes/leav-settings-page.inc.php:949
-#: includes/leav-settings-page.inc.php:1015
-#: includes/leav-settings-page.inc.php:1056
-#: includes/leav-settings-page.inc.php:1099
-#: includes/leav-settings-page.inc.php:1142
-#: includes/leav-settings-page.inc.php:1173
-#: includes/leav-settings-page.inc.php:1198
-#: includes/leav-settings-page.inc.php:1232
-#: includes/leav-settings-page.inc.php:1266
-#: includes/leav-settings-page.inc.php:1299
-#: includes/leav-settings-page.inc.php:1336
-#: includes/leav-settings-page.inc.php:1373
-#: includes/leav-settings-page.inc.php:1406
-#: includes/leav-settings-page.inc.php:1459
-#: includes/leav-settings-page.inc.php:1475
-#: includes/leav-settings-page.inc.php:2104
+#: includes/leav-settings-page.inc.php:575
+#: includes/leav-settings-page.inc.php:632
+#: includes/leav-settings-page.inc.php:716
+#: includes/leav-settings-page.inc.php:781
+#: includes/leav-settings-page.inc.php:835
+#: includes/leav-settings-page.inc.php:892
+#: includes/leav-settings-page.inc.php:955
+#: includes/leav-settings-page.inc.php:1021
+#: includes/leav-settings-page.inc.php:1062
+#: includes/leav-settings-page.inc.php:1105
+#: includes/leav-settings-page.inc.php:1148
+#: includes/leav-settings-page.inc.php:1179
+#: includes/leav-settings-page.inc.php:1204
+#: includes/leav-settings-page.inc.php:1238
+#: includes/leav-settings-page.inc.php:1272
+#: includes/leav-settings-page.inc.php:1305
+#: includes/leav-settings-page.inc.php:1342
+#: includes/leav-settings-page.inc.php:1379
+#: includes/leav-settings-page.inc.php:1412
+#: includes/leav-settings-page.inc.php:1465
+#: includes/leav-settings-page.inc.php:1481
+#: includes/leav-settings-page.inc.php:2110
 msgid   "No"
 msgstr  ""
 
@@ -393,18 +393,18 @@ msgid   "for google. \n"
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:476
-#: includes/leav-settings-page.inc.php:1027
-#: includes/leav-settings-page.inc.php:1069
-#: includes/leav-settings-page.inc.php:1114
-#: includes/leav-settings-page.inc.php:1151
-#: includes/leav-settings-page.inc.php:1182
-#: includes/leav-settings-page.inc.php:1207
-#: includes/leav-settings-page.inc.php:1241
-#: includes/leav-settings-page.inc.php:1275
-#: includes/leav-settings-page.inc.php:1312
-#: includes/leav-settings-page.inc.php:1349
-#: includes/leav-settings-page.inc.php:1382
-#: includes/leav-settings-page.inc.php:1419
+#: includes/leav-settings-page.inc.php:1033
+#: includes/leav-settings-page.inc.php:1075
+#: includes/leav-settings-page.inc.php:1120
+#: includes/leav-settings-page.inc.php:1157
+#: includes/leav-settings-page.inc.php:1188
+#: includes/leav-settings-page.inc.php:1213
+#: includes/leav-settings-page.inc.php:1247
+#: includes/leav-settings-page.inc.php:1281
+#: includes/leav-settings-page.inc.php:1318
+#: includes/leav-settings-page.inc.php:1355
+#: includes/leav-settings-page.inc.php:1388
+#: includes/leav-settings-page.inc.php:1425
 msgid   "Default: Yes"
 msgstr  ""
 
@@ -435,53 +435,63 @@ msgid   "For information on how to use wildcards, see our %1$sFAQ entry%2$s."
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:522
-#: includes/leav-settings-page.inc.php:724
+#: includes/leav-settings-page.inc.php:727
 msgid   "Enter one domain per line."
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:526
-#: includes/leav-settings-page.inc.php:591
-#: includes/leav-settings-page.inc.php:648
-#: includes/leav-settings-page.inc.php:730
-#: includes/leav-settings-page.inc.php:788
-#: includes/leav-settings-page.inc.php:847
-#: includes/leav-settings-page.inc.php:908
-#: includes/leav-settings-page.inc.php:967
+#: includes/leav-settings-page.inc.php:592
+#: includes/leav-settings-page.inc.php:650
+#: includes/leav-settings-page.inc.php:733
+#: includes/leav-settings-page.inc.php:793
+#: includes/leav-settings-page.inc.php:852
+#: includes/leav-settings-page.inc.php:913
+#: includes/leav-settings-page.inc.php:973
 msgid   "Default: No"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:542
-#: includes/leav-settings-page.inc.php:607
-#: includes/leav-settings-page.inc.php:664
-#: includes/leav-settings-page.inc.php:745
-#: includes/leav-settings-page.inc.php:802
-#: includes/leav-settings-page.inc.php:862
-#: includes/leav-settings-page.inc.php:918
-#: includes/leav-settings-page.inc.php:976
+#: includes/leav-settings-page.inc.php:537
+msgid   "your-whitelisted-domain-1.com\n"
+        "your-whitelisted-domain-2.com"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:543
+#: includes/leav-settings-page.inc.php:609
+#: includes/leav-settings-page.inc.php:667
+#: includes/leav-settings-page.inc.php:750
+#: includes/leav-settings-page.inc.php:807
+#: includes/leav-settings-page.inc.php:867
+#: includes/leav-settings-page.inc.php:924
+#: includes/leav-settings-page.inc.php:982
 msgid   "Number of entries: "
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:566
+#: includes/leav-settings-page.inc.php:567
 msgid   "Use email address whitelist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:579
+#: includes/leav-settings-page.inc.php:580
 msgid   "Email addresses on this list will be accepted without further email "
         "address blacklist checks (if active).\n"
         "Unlike with domains and recipient names, you can't use wildcards for "
         "email addresses."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:585
-#: includes/leav-settings-page.inc.php:841
+#: includes/leav-settings-page.inc.php:586
+#: includes/leav-settings-page.inc.php:846
 msgid   "Enter one email address per line."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:622
+#: includes/leav-settings-page.inc.php:603
+msgid   "your.whitelisted@email-address-1.com\n"
+        "your.whitelisted@email-address-2.com"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:624
 msgid   "Use recipient name whitelist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:635
+#: includes/leav-settings-page.inc.php:637
 #, php-format
 msgid   "Recipient names on this list will be accepted without further "
         "recipient name blacklist checks, either user-defined and/or role-"
@@ -491,12 +501,17 @@ msgid   "Recipient names on this list will be accepted without further "
         "For information on how to use wildcards, see our %1$sFAQ entry%2$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:642
-#: includes/leav-settings-page.inc.php:901
+#: includes/leav-settings-page.inc.php:644
+#: includes/leav-settings-page.inc.php:906
 msgid   "Enter one recipient name per line."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:699
+#: includes/leav-settings-page.inc.php:661
+msgid   "your-whitelisted-recipient-name-1\n"
+        "your-whitelisted-recipient-name-2"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:702
 msgid   "Any email address that gets matched by a blacklist rule gets "
         "rejected, unless it has previously been whitelisted for the "
         "blacklist rule. \n"
@@ -504,21 +519,26 @@ msgid   "Any email address that gets matched by a blacklist rule gets "
         "validations get skipped."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:705
+#: includes/leav-settings-page.inc.php:708
 msgid   "Use domain blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:718
+#: includes/leav-settings-page.inc.php:721
 #, php-format
 msgid   "Email addresses from these domains will be rejected (if active).\n"
         "For information on how to use wildcards, see our %1$sFAQ entry%2$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:768
+#: includes/leav-settings-page.inc.php:744
+msgid   "your-blacklisted-domain-1.com\n"
+        "your-blacklisted-domain-2.com"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:773
 msgid   "Use free email address provider domain blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:781
+#: includes/leav-settings-page.inc.php:786
 #, php-format
 msgid   "The list comprises the most common free email address services. If "
         "for example you want to enforce business email addresses, you can "
@@ -536,21 +556,26 @@ msgid   "The list comprises the most common free email address services. If "
         "companies."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:822
+#: includes/leav-settings-page.inc.php:827
 msgid   "Use email address blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:835
+#: includes/leav-settings-page.inc.php:840
 msgid   "Email addresses from this list will be rejected (if active).\n"
         "Unlike with domains and recipient names, you can't use wildcards for "
         "email addresses."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:879
+#: includes/leav-settings-page.inc.php:862
+msgid   "blacklisted-email-address-1@domain.com\n"
+        "blacklisted-email-address-2@domain.com"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:884
 msgid   "Use recipient name blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:892
+#: includes/leav-settings-page.inc.php:897
 #, php-format
 msgid   "If activated, email addresses with recipient names (the part before "
         "the \"@\" sign) from the list below, will be rejected. The recipient "
@@ -568,11 +593,16 @@ msgid   "If activated, email addresses with recipient names (the part before "
         "For information on how to use wildcards, see our %3$sFAQ entry%4$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:941
+#: includes/leav-settings-page.inc.php:918
+msgid   "blacklisted recipient name 1\n"
+        "blacklisted recipient name 2"
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:947
 msgid   "Use role-based recipient name blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:954
+#: includes/leav-settings-page.inc.php:960
 #, php-format
 msgid   "If activated, email addresses with generic, role-based recipient "
         "names (the part before the \"@\" sign) from the list below, will be "
@@ -600,11 +630,11 @@ msgid   "If activated, email addresses with generic, role-based recipient "
         "%3$splease let us know%4$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1007
+#: includes/leav-settings-page.inc.php:1013
 msgid   "Use disposable email address service (DEA) blacklist"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1020
+#: includes/leav-settings-page.inc.php:1026
 #, php-format
 msgid   "If activated email adresses from disposable email address services "
         "(DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many "
@@ -618,7 +648,7 @@ msgid   "If activated email adresses from disposable email address services "
         "%1$scontact us%2$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1061
+#: includes/leav-settings-page.inc.php:1067
 #, php-format
 msgid   "If activated LEAV tries to simulate the sending of an email. For "
         "this we connect to one of the MX servers and test if it would accept "
@@ -633,15 +663,15 @@ msgid   "If activated LEAV tries to simulate the sending of an email. For "
         "%2$s"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1086
+#: includes/leav-settings-page.inc.php:1092
 msgid   "Allow catch-all domains"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1091
+#: includes/leav-settings-page.inc.php:1097
 msgid   "Accept email addresses from catch-all domains"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1104
+#: includes/leav-settings-page.inc.php:1110
 #, php-format
 msgid   "Here you can control whether to accept email addresses from domains, "
         "that allow arbritary recipient names. These are domains that allow "
@@ -662,85 +692,85 @@ msgid   "Here you can control whether to accept email addresses from domains, "
         "addresses from free email address providers above."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1133
+#: includes/leav-settings-page.inc.php:1139
 msgid   "Control which functions and plugins will get validated by LEAV's "
         "algorithm."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1136
+#: includes/leav-settings-page.inc.php:1142
 msgid   "WordPress user registration"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1146
+#: includes/leav-settings-page.inc.php:1152
 #, php-format
 msgid   "This validates all registrants email address's that register through "
         "WordPress's standard user registration. (%1$sSettings -> General%2$s)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1159
+#: includes/leav-settings-page.inc.php:1165
 #, php-format
 msgid   "WordPress's built-in user registration is currently deactivated. "
         "(%1$sSettings -> General%2$s)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1165
+#: includes/leav-settings-page.inc.php:1171
 msgid   "WordPress comments"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1177
+#: includes/leav-settings-page.inc.php:1183
 #, php-format
 msgid   "This validates all (not logged in) commentator's email address's "
         "that comment through WordPress's standard comment functionality. "
         "(%1$sSettings -> Discussion%2$s)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1202
+#: includes/leav-settings-page.inc.php:1208
 msgid   "Validate all WooCommerce email addresses during registration and "
         "checkout."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1215
-#: includes/leav-settings-page.inc.php:1249
-#: includes/leav-settings-page.inc.php:1283
-#: includes/leav-settings-page.inc.php:1320
-#: includes/leav-settings-page.inc.php:1357
-#: includes/leav-settings-page.inc.php:1390
-#: includes/leav-settings-page.inc.php:1427
+#: includes/leav-settings-page.inc.php:1221
+#: includes/leav-settings-page.inc.php:1255
+#: includes/leav-settings-page.inc.php:1289
+#: includes/leav-settings-page.inc.php:1326
+#: includes/leav-settings-page.inc.php:1363
+#: includes/leav-settings-page.inc.php:1396
+#: includes/leav-settings-page.inc.php:1433
 msgid   "not found in list of active plugins"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1236
+#: includes/leav-settings-page.inc.php:1242
 msgid   "Validate all Contact Form 7 email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1270
+#: includes/leav-settings-page.inc.php:1276
 msgid   "Validate all WPForms email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1303
+#: includes/leav-settings-page.inc.php:1309
 msgid   "Validate all Ninja Forms email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1307
-#: includes/leav-settings-page.inc.php:1344
-#: includes/leav-settings-page.inc.php:1414
+#: includes/leav-settings-page.inc.php:1313
+#: includes/leav-settings-page.inc.php:1350
+#: includes/leav-settings-page.inc.php:1420
 msgid   "The names of the fields that will get validated by LEAV must contain "
         "\"email\", \"e-mail\", \"e.mail\", \"E-Mail\"... (case insensitive)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1340
+#: includes/leav-settings-page.inc.php:1346
 msgid   "Validate all MC4WP email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1377
+#: includes/leav-settings-page.inc.php:1383
 msgid   "Validate all Formidable Forms email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1410
+#: includes/leav-settings-page.inc.php:1416
 msgid   "Validate all Kali Forms email address fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1445
+#: includes/leav-settings-page.inc.php:1451
 #, php-format
 msgid   "Pingbacks and trackbacks can't be validated because they don't come "
         "with an email address, that could be run through our validation "
@@ -750,20 +780,20 @@ msgid   "Pingbacks and trackbacks can't be validated because they don't come "
         "By default we therefore accept them."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1451
+#: includes/leav-settings-page.inc.php:1457
 msgid   "Accept pingbacks"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1462
-#: includes/leav-settings-page.inc.php:1478
+#: includes/leav-settings-page.inc.php:1468
+#: includes/leav-settings-page.inc.php:1484
 msgid   "Default:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1467
+#: includes/leav-settings-page.inc.php:1473
 msgid   "Accept trackbacks"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1493
+#: includes/leav-settings-page.inc.php:1499
 msgid   "If you want to override the default validation error messages or if "
         "you want to translate them without having to go through .po files, "
         "you can replace the default validation error messages below. \n"
@@ -776,60 +806,60 @@ msgid   "If you want to override the default validation error messages or if "
         "others as well."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1502
+#: includes/leav-settings-page.inc.php:1508
 msgid   "Email address contains invalid characters error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1515
+#: includes/leav-settings-page.inc.php:1521
 msgid   "Email address syntax error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1524
+#: includes/leav-settings-page.inc.php:1530
 msgid   "Email address recipient name catch-all syntax error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1533
+#: includes/leav-settings-page.inc.php:1539
 msgid   "Email domain blacklisted error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1542
+#: includes/leav-settings-page.inc.php:1548
 msgid   "Email domain is on list of free email address provider domains error "
         "message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1551
+#: includes/leav-settings-page.inc.php:1557
 msgid   "Email address is blacklisted error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1560
+#: includes/leav-settings-page.inc.php:1566
 msgid   "Recipient name is blacklisted error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1569
+#: includes/leav-settings-page.inc.php:1575
 msgid   "Recipient name is role-based error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1578
+#: includes/leav-settings-page.inc.php:1584
 msgid   "No MX (Mail eXchange) server found error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1587
+#: includes/leav-settings-page.inc.php:1593
 msgid   "Email address from disposable email address service error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1596
+#: includes/leav-settings-page.inc.php:1602
 msgid   "Simulating sending an email failed error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1605
+#: includes/leav-settings-page.inc.php:1611
 msgid   "Catch-all domains not allowed error message"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1615
+#: includes/leav-settings-page.inc.php:1621
 msgid   "General email validation error"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1634
+#: includes/leav-settings-page.inc.php:1640
 msgid   "We believe that LEAV will provide great value for you for as long as "
         "you use it. But after setting it up, you don't have to worry about "
         "it anymore. \n"
@@ -843,65 +873,65 @@ msgid   "We believe that LEAV will provide great value for you for as long as "
         "After changing the values, you'll have to reload the page."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1643
+#: includes/leav-settings-page.inc.php:1649
 msgid   "Show LEAV menu item in main menu / settings menu"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1646
+#: includes/leav-settings-page.inc.php:1652
 msgid   "Show in "
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1648
+#: includes/leav-settings-page.inc.php:1654
 msgid   "main menu &nbsp;&nbsp;or"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1652
+#: includes/leav-settings-page.inc.php:1658
 msgid   "settings menu"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1657
+#: includes/leav-settings-page.inc.php:1663
 msgid   "LEAV menu item location (main menu)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1664
-#: includes/leav-settings-page.inc.php:1682
+#: includes/leav-settings-page.inc.php:1670
+#: includes/leav-settings-page.inc.php:1688
 msgid   "Values in between 0-999 are allowed."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1666
-#: includes/leav-settings-page.inc.php:1684
+#: includes/leav-settings-page.inc.php:1672
+#: includes/leav-settings-page.inc.php:1690
 msgid   "0 = top menu position"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1668
-#: includes/leav-settings-page.inc.php:1686
+#: includes/leav-settings-page.inc.php:1674
+#: includes/leav-settings-page.inc.php:1692
 msgid   "Default: "
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1675
+#: includes/leav-settings-page.inc.php:1681
 msgid   "LEAV menu item location (settings menu)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1702
+#: includes/leav-settings-page.inc.php:1708
 msgid   "FAQ - Frequently Asked Questions"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1703
+#: includes/leav-settings-page.inc.php:1709
 msgid   "How exactly does LEAV validate email addresses?"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1706
+#: includes/leav-settings-page.inc.php:1712
 #, php-format
 msgid   "%1$s %2$sby %3$ssmings%4$s validates email addresses of the "
         "supported WordPress functions and plugins in the following multi-"
         "step filter/validation process:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1713
+#: includes/leav-settings-page.inc.php:1719
 msgid   "Email Address Syntax Validation (always active)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1717
+#: includes/leav-settings-page.inc.php:1723
 msgid   "Checks if the email address is syntactically correct. This acts as a "
         "backup check for the plugin's checks. \n"
         "Some plugins only have a frontend based email syntax check. LEAV's "
@@ -911,38 +941,38 @@ msgid   "Checks if the email address is syntactically correct. This acts as a "
         "filter out wrong emails without further checking"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1725
+#: includes/leav-settings-page.inc.php:1731
 msgid   "Recipient Name Catch-All Syntax (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1729
-#: includes/leav-settings-page.inc.php:1743
-#: includes/leav-settings-page.inc.php:1759
-#: includes/leav-settings-page.inc.php:1772
-#: includes/leav-settings-page.inc.php:1788
-#: includes/leav-settings-page.inc.php:1798
-#: includes/leav-settings-page.inc.php:1812
-#: includes/leav-settings-page.inc.php:1822
-#: includes/leav-settings-page.inc.php:1832
-#: includes/leav-settings-page.inc.php:1850
-#: includes/leav-settings-page.inc.php:1864
-#: includes/leav-settings-page.inc.php:1882
+#: includes/leav-settings-page.inc.php:1735
+#: includes/leav-settings-page.inc.php:1749
+#: includes/leav-settings-page.inc.php:1765
+#: includes/leav-settings-page.inc.php:1778
+#: includes/leav-settings-page.inc.php:1794
+#: includes/leav-settings-page.inc.php:1804
+#: includes/leav-settings-page.inc.php:1818
+#: includes/leav-settings-page.inc.php:1828
+#: includes/leav-settings-page.inc.php:1838
+#: includes/leav-settings-page.inc.php:1856
+#: includes/leav-settings-page.inc.php:1870
+#: includes/leav-settings-page.inc.php:1888
 #, php-format
 msgid   " - Current setting is %1$s\"%2$s\"%3$s - %4$sChange settings%5$s"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1734
+#: includes/leav-settings-page.inc.php:1740
 msgid   "Control if you want to filter out email addresses with a recipient "
         "name catch-all syntax. \n"
         "For more information what a recipient name catch-all syntax is, "
         "please check our FAQ entry below."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1740
+#: includes/leav-settings-page.inc.php:1746
 msgid   "Domain Whitelist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1748
+#: includes/leav-settings-page.inc.php:1754
 #, php-format
 msgid   "Filters against the user-defined email domain whitelist (if "
         "activated).\n"
@@ -954,21 +984,21 @@ msgid   "Filters against the user-defined email domain whitelist (if "
         "domains, so that we can correct any errors as soon as possible."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1756
+#: includes/leav-settings-page.inc.php:1762
 msgid   "Email Address Whitelist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1764
+#: includes/leav-settings-page.inc.php:1770
 msgid   "Filters against the user-defined email whitelist (if activated)\n"
         "If you need to override specific email addresses that would "
         "otherwise get filtered out by the blacklist filters."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1769
+#: includes/leav-settings-page.inc.php:1775
 msgid   "Recipient Name Whitelist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1777
+#: includes/leav-settings-page.inc.php:1783
 msgid   "Filters against the user-defined recipient name whitelist (if "
         "activated)\n"
         "If you need to override specific recipient names that would "
@@ -979,77 +1009,77 @@ msgid   "Filters against the user-defined recipient name whitelist (if "
         "name blacklist checks get skipped."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1785
+#: includes/leav-settings-page.inc.php:1791
 msgid   "Domain Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1791
+#: includes/leav-settings-page.inc.php:1797
 msgid   "Filters against the user-defined email domain blacklist (if "
         "activated)."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1795
+#: includes/leav-settings-page.inc.php:1801
 msgid   "Free Email Address Provider Domain Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1803
+#: includes/leav-settings-page.inc.php:1809
 msgid   "Filters against the built-in free email address provider domain "
         "blacklist (if activated).\n"
         "This list gets updated with new plugin releases."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1809
+#: includes/leav-settings-page.inc.php:1815
 msgid   "Email Address Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1815
+#: includes/leav-settings-page.inc.php:1821
 msgid   "Filters against the user-defined email address blacklist (if "
         "activated)."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1819
+#: includes/leav-settings-page.inc.php:1825
 msgid   "Recipient Name Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1825
+#: includes/leav-settings-page.inc.php:1831
 msgid   "Filters against the user-defined recipient name blacklist (if "
         "activated)."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1829
+#: includes/leav-settings-page.inc.php:1835
 msgid   "Role-Based Recipient Name Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1835
+#: includes/leav-settings-page.inc.php:1841
 msgid   "Filters against the built-in role-based recipient name blacklist (if "
         "activated)."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1840
+#: includes/leav-settings-page.inc.php:1846
 msgid   "DNS MX Server Lookup (always active)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1843
+#: includes/leav-settings-page.inc.php:1849
 msgid   "Check if the email address's domain has a DNS entry with MX records "
         "(always)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1847
+#: includes/leav-settings-page.inc.php:1853
 msgid   "Disposable Email Address (DEA) Service Blacklist (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1855
+#: includes/leav-settings-page.inc.php:1861
 msgid   "Filters against the built-in extensive blacklist of disposable email "
         "services (if activated).\n"
         "                            This list gets updated with new plugin "
         "releases."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1861
+#: includes/leav-settings-page.inc.php:1867
 msgid   "Simulate Email Sending (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1869
+#: includes/leav-settings-page.inc.php:1875
 #, php-format
 msgid   "Connects to one of the MX servers and simulates the sending of an "
         "email \n"
@@ -1065,28 +1095,28 @@ msgid   "Connects to one of the MX servers and simulates the sending of an "
         "letter would fit in without dropping it into the mailbox."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1879
+#: includes/leav-settings-page.inc.php:1885
 msgid   "Allow Email Addresses from Catch-All Domains (optional)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1887
+#: includes/leav-settings-page.inc.php:1893
 msgid   "If set to \"No\", this filters out all email addresses that "
         "originate from domains that accept emails for ANY recipient name."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1894
+#: includes/leav-settings-page.inc.php:1900
 msgid   "Can I use wildcards for the whitelists/blacklists?"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1895
+#: includes/leav-settings-page.inc.php:1901
 msgid   "The short answer is yes and here is how it works"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1899
+#: includes/leav-settings-page.inc.php:1905
 msgid   "Wildcard syntax for domains:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1905
+#: includes/leav-settings-page.inc.php:1911
 #, php-format
 msgid   "You can use asterisks \"%1$s*%2$s\" as wildcards in domain names. It "
         "stands for zero up to any amount of characters. \n"
@@ -1106,8 +1136,8 @@ msgid   "You can use asterisks \"%1$s*%2$s\" as wildcards in domain names. It "
         "provider domains in the blacklists section.\n"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1914
-#: includes/leav-settings-page.inc.php:1935
+#: includes/leav-settings-page.inc.php:1920
+#: includes/leav-settings-page.inc.php:1941
 #, php-format
 msgid   "Be careful to not over do any kind of matching with wildcards.\n"
         "We urge you to extensively test whether email addresses would get "
@@ -1115,11 +1145,11 @@ msgid   "Be careful to not over do any kind of matching with wildcards.\n"
         "settings page."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1921
+#: includes/leav-settings-page.inc.php:1927
 msgid   "Wildcard syntax for recipient names:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1926
+#: includes/leav-settings-page.inc.php:1932
 #, php-format
 msgid   "You can use asterisks \"%1$s*%2$s\" as wildcards in recipient names "
         "as well. It stands for zero up to any amount of characters. \n"
@@ -1139,22 +1169,22 @@ msgid   "You can use asterisks \"%1$s*%2$s\" as wildcards in recipient names "
         "recipient names.\n"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1942
+#: includes/leav-settings-page.inc.php:1948
 msgid   "Wildcard syntax for email address:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1947
+#: includes/leav-settings-page.inc.php:1953
 #, php-format
 msgid   "Wildcards are NOT available for email addresses as of now. \n"
         "If there is a real usecase for this, feel free to send us a "
         "%1$sfeature request%2$s."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1953
+#: includes/leav-settings-page.inc.php:1959
 msgid   "What are the different parts of an email address:"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1958
+#: includes/leav-settings-page.inc.php:1964
 #, php-format
 msgid   "Of course you know what an email generally looks like.\n"
         "%1$s%1$s%1$s%2$srecipient-name%3$s@%2$sdomain%3$s.%2$stld%3$s\n"
@@ -1162,19 +1192,19 @@ msgid   "Of course you know what an email generally looks like.\n"
         "An email address consists of 3 parts with delimiters in between them."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1965
+#: includes/leav-settings-page.inc.php:1971
 msgid   "Recipient name"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1968
+#: includes/leav-settings-page.inc.php:1974
 msgid   "Domain"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1971
+#: includes/leav-settings-page.inc.php:1977
 msgid   "Top-level domain (tld)"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:1976
+#: includes/leav-settings-page.inc.php:1982
 #, php-format
 msgid   "Let's use a physical world analogy for these elements of an email "
         "address. For this, we have to start at the 3rd part of an email "
@@ -1221,11 +1251,11 @@ msgid   "Let's use a physical world analogy for these elements of an email "
         "last@company.com etc. You get the picture."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2006
+#: includes/leav-settings-page.inc.php:2012
 msgid   "What is a \"recipient name\":"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2012
+#: includes/leav-settings-page.inc.php:2018
 msgid   "A Recipient name is the part of an email that is in front of the \"@"
         "\" sign. It is also called \"local part\". \n"
         "This part defines the concrete mailbox an email gets received by. "
@@ -1233,11 +1263,11 @@ msgid   "A Recipient name is the part of an email that is in front of the \"@"
         "under aliases for the \"main\" recipient name."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2021
+#: includes/leav-settings-page.inc.php:2027
 msgid   "What does \"recipient name catch-all syntax\" mean?"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2027
+#: includes/leav-settings-page.inc.php:2033
 #, php-format
 msgid   "Email address service providers like %1$sgmail.com%2$s and others "
         "allow users to place a \"+\" sign after \n"
@@ -1261,7 +1291,7 @@ msgid   "Email address service providers like %1$sgmail.com%2$s and others "
         "it interferes with your business model"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2044
+#: includes/leav-settings-page.inc.php:2050
 #, php-format
 msgid   "If you look for more supported plugins or an extension of the base "
         "functionality of how we validate and filter \n"
@@ -1272,11 +1302,11 @@ msgid   "If you look for more supported plugins or an extension of the base "
         "Just shoot us an email to %3$s"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2051
+#: includes/leav-settings-page.inc.php:2057
 msgid   "Help us help you!"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2054
+#: includes/leav-settings-page.inc.php:2060
 #, php-format
 msgid   "Lastly - if LEAV - Last Email Address Validator delivers substancial "
         "value to you, i.e. saving\n"
@@ -1291,366 +1321,371 @@ msgid   "Lastly - if LEAV - Last Email Address Validator delivers substancial "
         "Thank you and enjoy LEAV"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2064
+#: includes/leav-settings-page.inc.php:2070
 msgid   "Statistics"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2069
+#: includes/leav-settings-page.inc.php:2075
 #, php-format
 msgid   "Version: %1$s%3$s%2$s"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2074
+#: includes/leav-settings-page.inc.php:2080
 #, php-format
 msgid   "LEAV prevented %1$s%3$s%2$s SPAM email address attempts so far."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2082
+#: includes/leav-settings-page.inc.php:2088
 msgid   "Documentation"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2089
+#: includes/leav-settings-page.inc.php:2095
 msgid   "Bugs"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2092
+#: includes/leav-settings-page.inc.php:2098
 msgid   "Both will be available soon."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2276
+#: includes/leav-settings-page.inc.php:2282
 msgid   "# The value on the next line was automatically corrected/normalized"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2283
+#: includes/leav-settings-page.inc.php:2289
 msgid   "# The value on the next line is invalid"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2330
-#: includes/leav-settings-page.inc.php:2340
-#: includes/leav-settings-page.inc.php:2345
-#: includes/leav-settings-page.inc.php:2350
+#: includes/leav-settings-page.inc.php:2336
+#: includes/leav-settings-page.inc.php:2346
+#: includes/leav-settings-page.inc.php:2351
 #: includes/leav-settings-page.inc.php:2356
-#: includes/leav-settings-page.inc.php:2361
-#: includes/leav-settings-page.inc.php:2366
-#: includes/leav-settings-page.inc.php:2371
-#: includes/leav-settings-page.inc.php:2376
-#: includes/leav-settings-page.inc.php:2381
-#: includes/leav-settings-page.inc.php:2386
-#: includes/leav-settings-page.inc.php:2391
-#: includes/leav-settings-page.inc.php:2393
-#: includes/leav-settings-page.inc.php:2398
+#: includes/leav-settings-page.inc.php:2362
+#: includes/leav-settings-page.inc.php:2367
+#: includes/leav-settings-page.inc.php:2370
+#: includes/leav-settings-page.inc.php:2375
+#: includes/leav-settings-page.inc.php:2380
+#: includes/leav-settings-page.inc.php:2385
+#: includes/leav-settings-page.inc.php:2390
+#: includes/leav-settings-page.inc.php:2395
 #: includes/leav-settings-page.inc.php:2400
 #: includes/leav-settings-page.inc.php:2402
-#: includes/leav-settings-page.inc.php:2404
-#: includes/leav-settings-page.inc.php:2406
-#: includes/leav-settings-page.inc.php:2408
-#: includes/leav-settings-page.inc.php:2410
-#: includes/leav-settings-page.inc.php:2412
-#: includes/leav-settings-page.inc.php:2414
+#: includes/leav-settings-page.inc.php:2407
+#: includes/leav-settings-page.inc.php:2409
+#: includes/leav-settings-page.inc.php:2411
+#: includes/leav-settings-page.inc.php:2413
+#: includes/leav-settings-page.inc.php:2415
+#: includes/leav-settings-page.inc.php:2417
+#: includes/leav-settings-page.inc.php:2419
+#: includes/leav-settings-page.inc.php:2421
+#: includes/leav-settings-page.inc.php:2423
 msgid   "Updated the settings for"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2330
-#: includes/leav-settings-page.inc.php:2463
+#: includes/leav-settings-page.inc.php:2336
+#: includes/leav-settings-page.inc.php:2472
 msgid   "allowing recipient name catch-all syntax."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2335
+#: includes/leav-settings-page.inc.php:2341
 msgid   "Updated the email domain for simulating the sending of emails."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2340
-#: includes/leav-settings-page.inc.php:2479
+#: includes/leav-settings-page.inc.php:2346
+#: includes/leav-settings-page.inc.php:2488
 msgid   "using the user-defined domain whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2342
+#: includes/leav-settings-page.inc.php:2348
 msgid   "Updated the user-defined domain whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2345
-#: includes/leav-settings-page.inc.php:2484
+#: includes/leav-settings-page.inc.php:2351
+#: includes/leav-settings-page.inc.php:2493
 msgid   "using the user-defined email address whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2347
+#: includes/leav-settings-page.inc.php:2353
 msgid   "Updated the user-defined email address whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2350
-#: includes/leav-settings-page.inc.php:2489
+#: includes/leav-settings-page.inc.php:2356
+#: includes/leav-settings-page.inc.php:2498
 msgid   "using the user-defined recipient name whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2352
+#: includes/leav-settings-page.inc.php:2358
 msgid   "Updated the user-defined recipient name whitelist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2356
-#: includes/leav-settings-page.inc.php:2496
+#: includes/leav-settings-page.inc.php:2362
+#: includes/leav-settings-page.inc.php:2505
 msgid   "using the user-defined domain blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2358
+#: includes/leav-settings-page.inc.php:2364
 msgid   "Updated the user-defined domain blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2361
-#: includes/leav-settings-page.inc.php:2501
+#: includes/leav-settings-page.inc.php:2367
+msgid   "using the built-in blacklist of free email address providers."
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:2370
+#: includes/leav-settings-page.inc.php:2510
 msgid   "using the user-defined email address blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2363
+#: includes/leav-settings-page.inc.php:2372
 msgid   "Updated the user-defined email address blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2366
-#: includes/leav-settings-page.inc.php:2506
+#: includes/leav-settings-page.inc.php:2375
+#: includes/leav-settings-page.inc.php:2515
 msgid   "using the user-defined recipient name blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2368
+#: includes/leav-settings-page.inc.php:2377
 msgid   "Updated the entries of the user-defined recipient name blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2371
-#: includes/leav-settings-page.inc.php:2511
+#: includes/leav-settings-page.inc.php:2380
+#: includes/leav-settings-page.inc.php:2520
 msgid   "using the role-based recipient name blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2376
-#: includes/leav-settings-page.inc.php:2516
+#: includes/leav-settings-page.inc.php:2385
+#: includes/leav-settings-page.inc.php:2525
 msgid   "blocking email addresses from disposable email address services."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2381
+#: includes/leav-settings-page.inc.php:2390
 msgid   "simulating email sending."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2386
-#: includes/leav-settings-page.inc.php:2526
+#: includes/leav-settings-page.inc.php:2395
+#: includes/leav-settings-page.inc.php:2535
 msgid   "allowing catch-all domains."
-msgstr  ""
-
-#: includes/leav-settings-page.inc.php:2391
-#: includes/leav-settings-page.inc.php:2531
-msgid   "accepting pingbacks."
-msgstr  ""
-
-#: includes/leav-settings-page.inc.php:2393
-#: includes/leav-settings-page.inc.php:2533
-msgid   "accepting trackbacks."
-msgstr  ""
-
-#: includes/leav-settings-page.inc.php:2398
-#: includes/leav-settings-page.inc.php:2538
-msgid   "validating WordPress's user registration email addresses."
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:2400
 #: includes/leav-settings-page.inc.php:2540
-msgid   "validating WordPress's commentator email addresses."
+msgid   "accepting pingbacks."
 msgstr  ""
 
 #: includes/leav-settings-page.inc.php:2402
 #: includes/leav-settings-page.inc.php:2542
+msgid   "accepting trackbacks."
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:2407
+#: includes/leav-settings-page.inc.php:2547
+msgid   "validating WordPress's user registration email addresses."
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:2409
+#: includes/leav-settings-page.inc.php:2549
+msgid   "validating WordPress's commentator email addresses."
+msgstr  ""
+
+#: includes/leav-settings-page.inc.php:2411
+#: includes/leav-settings-page.inc.php:2551
 msgid   "validating WooCommerce email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2404
-#: includes/leav-settings-page.inc.php:2544
+#: includes/leav-settings-page.inc.php:2413
+#: includes/leav-settings-page.inc.php:2553
 msgid   "validating Contact Form 7 email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2406
-#: includes/leav-settings-page.inc.php:2546
+#: includes/leav-settings-page.inc.php:2415
+#: includes/leav-settings-page.inc.php:2555
 msgid   "validating WPforms email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2408
-#: includes/leav-settings-page.inc.php:2548
+#: includes/leav-settings-page.inc.php:2417
+#: includes/leav-settings-page.inc.php:2557
 msgid   "validating Ninja Forms email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2410
-#: includes/leav-settings-page.inc.php:2550
+#: includes/leav-settings-page.inc.php:2419
+#: includes/leav-settings-page.inc.php:2559
 msgid   "validating Mailchimp for WordPress (MC4WP) email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2412
-#: includes/leav-settings-page.inc.php:2552
+#: includes/leav-settings-page.inc.php:2421
+#: includes/leav-settings-page.inc.php:2561
 msgid   "validating Formidable Forms email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2414
-#: includes/leav-settings-page.inc.php:2554
+#: includes/leav-settings-page.inc.php:2423
+#: includes/leav-settings-page.inc.php:2563
 msgid   "validating Kali Forms email fields."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2420
-#: includes/leav-settings-page.inc.php:2422
-#: includes/leav-settings-page.inc.php:2424
-#: includes/leav-settings-page.inc.php:2426
-#: includes/leav-settings-page.inc.php:2428
-#: includes/leav-settings-page.inc.php:2430
-#: includes/leav-settings-page.inc.php:2432
-#: includes/leav-settings-page.inc.php:2434
-#: includes/leav-settings-page.inc.php:2436
-#: includes/leav-settings-page.inc.php:2438
-#: includes/leav-settings-page.inc.php:2440
-#: includes/leav-settings-page.inc.php:2442
-#: includes/leav-settings-page.inc.php:2444
+#: includes/leav-settings-page.inc.php:2429
+#: includes/leav-settings-page.inc.php:2431
+#: includes/leav-settings-page.inc.php:2433
+#: includes/leav-settings-page.inc.php:2435
+#: includes/leav-settings-page.inc.php:2437
+#: includes/leav-settings-page.inc.php:2439
+#: includes/leav-settings-page.inc.php:2441
+#: includes/leav-settings-page.inc.php:2443
+#: includes/leav-settings-page.inc.php:2445
+#: includes/leav-settings-page.inc.php:2447
+#: includes/leav-settings-page.inc.php:2449
+#: includes/leav-settings-page.inc.php:2451
+#: includes/leav-settings-page.inc.php:2453
 msgid   "Updated the custom validation error message for"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2420
+#: includes/leav-settings-page.inc.php:2429
 msgid   "email address contains invalid characters errors."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2422
+#: includes/leav-settings-page.inc.php:2431
 msgid   "email address syntax errors."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2424
+#: includes/leav-settings-page.inc.php:2433
 msgid   "recipient name catch-all errors."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2426
+#: includes/leav-settings-page.inc.php:2435
 msgid   "blacklisted email domains."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2428
+#: includes/leav-settings-page.inc.php:2437
 msgid   "email domains on the free email address provider domain list."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2430
+#: includes/leav-settings-page.inc.php:2439
 msgid   "blacklisted email addresses."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2432
+#: includes/leav-settings-page.inc.php:2441
 msgid   "recipient name is on blacklist error message."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2434
+#: includes/leav-settings-page.inc.php:2443
 msgid   "role-based recipient names."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2436
+#: includes/leav-settings-page.inc.php:2445
 msgid   "email domains without MX records."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2438
+#: includes/leav-settings-page.inc.php:2447
 msgid   "disposable email addresses (DEA)."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2440
+#: includes/leav-settings-page.inc.php:2449
 msgid   "errors during simulating sending an email."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2442
+#: includes/leav-settings-page.inc.php:2451
 msgid   "email addresses from catch-all domains."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2444
+#: includes/leav-settings-page.inc.php:2453
 msgid   "general email validation errors."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2449
+#: includes/leav-settings-page.inc.php:2458
 msgid   "Changed the display location of the LEAV menu item. You have to hard-"
         "reload  this page before the change takes effect."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2451
-msgid   "Updated the settings for field <strong>"
+#: includes/leav-settings-page.inc.php:2460
+msgid   "Updated the settings for field "
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2463
-#: includes/leav-settings-page.inc.php:2479
-#: includes/leav-settings-page.inc.php:2484
-#: includes/leav-settings-page.inc.php:2489
-#: includes/leav-settings-page.inc.php:2496
-#: includes/leav-settings-page.inc.php:2501
-#: includes/leav-settings-page.inc.php:2506
-#: includes/leav-settings-page.inc.php:2511
-#: includes/leav-settings-page.inc.php:2516
-#: includes/leav-settings-page.inc.php:2521
-#: includes/leav-settings-page.inc.php:2526
-#: includes/leav-settings-page.inc.php:2531
-#: includes/leav-settings-page.inc.php:2533
-#: includes/leav-settings-page.inc.php:2538
+#: includes/leav-settings-page.inc.php:2472
+#: includes/leav-settings-page.inc.php:2488
+#: includes/leav-settings-page.inc.php:2493
+#: includes/leav-settings-page.inc.php:2498
+#: includes/leav-settings-page.inc.php:2505
+#: includes/leav-settings-page.inc.php:2510
+#: includes/leav-settings-page.inc.php:2515
+#: includes/leav-settings-page.inc.php:2520
+#: includes/leav-settings-page.inc.php:2525
+#: includes/leav-settings-page.inc.php:2530
+#: includes/leav-settings-page.inc.php:2535
 #: includes/leav-settings-page.inc.php:2540
 #: includes/leav-settings-page.inc.php:2542
-#: includes/leav-settings-page.inc.php:2544
-#: includes/leav-settings-page.inc.php:2546
-#: includes/leav-settings-page.inc.php:2548
-#: includes/leav-settings-page.inc.php:2550
-#: includes/leav-settings-page.inc.php:2552
-#: includes/leav-settings-page.inc.php:2554
-#: includes/leav-settings-page.inc.php:2564
+#: includes/leav-settings-page.inc.php:2547
+#: includes/leav-settings-page.inc.php:2549
+#: includes/leav-settings-page.inc.php:2551
+#: includes/leav-settings-page.inc.php:2553
+#: includes/leav-settings-page.inc.php:2555
+#: includes/leav-settings-page.inc.php:2557
+#: includes/leav-settings-page.inc.php:2559
+#: includes/leav-settings-page.inc.php:2561
+#: includes/leav-settings-page.inc.php:2563
+#: includes/leav-settings-page.inc.php:2573
 msgid   "Error while trying to update the settings for"
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2470
+#: includes/leav-settings-page.inc.php:2479
 msgid   "Error while trying to update the email domain for the simulated "
         "sending of emails. The email domain can't be empty while simulated "
         "email sending is active."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2472
+#: includes/leav-settings-page.inc.php:2481
 msgid   "Error while trying to update the email domain for the simulated "
         "sending of emails. The entered value \""
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2481
+#: includes/leav-settings-page.inc.php:2490
 msgid   "Error! One or more entered domains in the user-defined domain "
         "whitelist are invalid. Look at the comments in the field and correct "
         "your input."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2486
+#: includes/leav-settings-page.inc.php:2495
 msgid   "Error! One or more entered email addresses in the user-defined email "
         "address whitelist are invalid. Look at the comments in the field and "
         "correct your input."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2491
+#: includes/leav-settings-page.inc.php:2500
 msgid   "Error! One or more entered recipient names in the user-defined "
         "recipient name whitelist are invalid. Look at the comments in the "
         "field and correct your input."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2498
+#: includes/leav-settings-page.inc.php:2507
 msgid   "Error! One or more entered domains in the user-defined domain "
         "blacklist are invalid. Look at the comments in the field and correct "
         "your input."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2503
+#: includes/leav-settings-page.inc.php:2512
 msgid   "Error! One or more entered email addresses in the user-defined email "
         "address blacklist are invalid. Look at the comments in the field and "
         "correct your input."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2508
+#: includes/leav-settings-page.inc.php:2517
 msgid   "Error while trying to update the entries of the user-defined "
         "recipient name blacklist."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2521
+#: includes/leav-settings-page.inc.php:2530
 msgid   "simulated email sending."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2564
+#: includes/leav-settings-page.inc.php:2573
 msgid   "the display location of the LEAV menu item (main menu or settings "
         "menu."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2567
+#: includes/leav-settings-page.inc.php:2576
 msgid   "Error! The values for the LEAV menu position within the main menu or "
         "the settings menu have to be numbers in between 0-999."
 msgstr  ""
 
-#: includes/leav-settings-page.inc.php:2570
+#: includes/leav-settings-page.inc.php:2579
 msgid   "Error while trying to update the settings for field"
 msgstr  ""
 

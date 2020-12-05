@@ -36,9 +36,9 @@ class LeavPlugin
     {
         $this->central = new LeavCentral();
         $this->leav = new LastEmailAddressValidator( $this->central );
-        $this->disposable_email_service_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$DEA_SERVICE_FILE_RELATIVE_PATH;
-        $this->free_email_address_provider_list_file = plugin_dir_path(__FILE__) . $this->central::$FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE;
-        $this->role_based_recipient_name_file = plugin_dir_path(__FILE__) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
+        $this->disposable_email_service_provider_list_file = plugin_dir_path( __FILE__ ) . $this->central::$DEA_SERVICE_FILE_RELATIVE_PATH;
+        $this->free_email_address_provider_list_file = plugin_dir_path( __FILE__ ) . $this->central::$FREE_EMAIL_ADDRESS_PROVIDER_DOMAIN_LIST_FILE;
+        $this->role_based_recipient_name_file = plugin_dir_path( __FILE__ ) . $this->central::$ROLE_BASED_RECIPIENT_NAME_FILE_RELATIVE_PATH;
         add_action( 'init', array( $this, 'init' ) );
         add_action( 'plugins_loaded', [$this, 'load_text_domain' ] );
     }
@@ -63,7 +63,7 @@ class LeavPlugin
     }
 
 
-    public function set_debug(bool $state) : void
+    public function set_debug( bool $state ) : void
     {
         $this->central::$DEBUG = $state;
     }
