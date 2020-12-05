@@ -58,8 +58,7 @@ msgstr  ""
 
 #: includes/leav-central.inc.php:127
 msgid   "We don't allow recipient names with an inline catch-all syntax using "
-        "a &quot;&#43;&quot; sign. Please remove the &quot;&#43;&quot; sign "
-        "and everything after it."
+        "a \"+\" sign. Please remove the \"+\" sign and everything after it."
 msgstr  ""
 
 #: includes/leav-central.inc.php:128
