@@ -270,34 +270,19 @@ window.onload = function (event) {
                                     ?>" 
                                     value="<?php 
                                     if( isset( $_POST[ 'test_email_address' ] ) )
-                                        // we can only sanitize as text field, since we want to allow (and then show) the
-                                        // validation results of wrong email addresses. 
-                                        // if we sanitized with `sanitize_email()`, the displayed test-input would make no sense
-                                        // 
-                                        // this value is only being displayed and never
-                                        // persisted
-                                        // Please keep in mind, that this is a plugin for deep email 
-                                        // validation for other plugins. We have to display the 
-                                        // test email addresses as close as possible to how they were
-                                        // initially entered
-                                        echo esc_attr( sanitize_text_field( $_POST[ 'test_email_address' ] ) );
+                                        echo( esc_attr( $_POST[ 'test_email_address' ] ) );
                                 ?>" size="40" />
                             </label>
                             <?php
 
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
-                                    // we can only sanitize as text field, since we want to allow (and then show) the
-                                    // validation results of wrong email addresses. 
-                                    // if we sanitized with `sanitize_email()`, the displayed test-input would make no sense
-                                    // 
-                                    // this value is only being displayed and never
-                                    // persisted
-                                    // Please keep in mind, that this is a plugin for deep email 
-                                    // validation for other plugins. We have to display the 
-                                    // test email addresses as close as possible to how they were
-                                    // initially entered
-                                    $sanitized_escaped_test_email_address = esc_html( sanitize_text_field( $_POST[ 'test_email_address' ] ) );
+                                    // since this plugin is a deep email address validation plugin, we allow users to test
+                                    // any kind of email address (also wrong syntax) against the validation algorithm
+                                    // therefore we need to display the entered email address as close as possible as it
+                                    // was entered. Because of this, we only use `sanitize_text_field()` instead of 
+                                    // `sanitize_email()`. The value never gets persisted.
+                                    $sanitized_test_email_address = sanitize_text_field( $_POST[ 'test_email_address' ] );
                                     if( ! $this->leav_plugin->validate_email_address( $sanitized_escaped_test_email_address, false ) )
                                     {
                             ?>
@@ -308,7 +293,7 @@ window.onload = function (event) {
                                     </strong>
                                 </span>
                                 <span>
-                                    "<?php echo $sanitized_escaped_test_email_address; ?>"
+                                    "<?php echo( esc_html( $sanitized_test_email_address ) ); ?>"
                                 </span>
                                 <span style="color:#a00">
                                     <strong>
@@ -348,7 +333,7 @@ window.onload = function (event) {
                                     </strong>
                                 </span>
                                 <span>
-                                    "<?php echo $sanitized_escaped_test_email_address ?>"
+                                    "<?php echo( esc_html( $sanitized_test_email_address ) ); ?>"
                                 </span>
                                 <span  style="color:#89A441">
                                     <strong>
