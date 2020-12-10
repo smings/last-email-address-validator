@@ -3,7 +3,7 @@
  * Plugin Name: Last Email Address Validator
  * Plugin URI: https://smings.com/last-email-address-validator/
  * Description: LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come...
- * Version: 1.4.9
+ * Version: 1.4.10
  * Author: smings
  * Author URI: https://smings.com/last-email-address-validator/
  * Text Domain: last-email-address-validator
