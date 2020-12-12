@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Last Email Address Validator plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Last Email Address Validator 1.4.10\n"
+"Project-Id-Version: Last Email Address Validator 1.4.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/last-email-address-validator\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,12 @@ msgstr ""
 
 #. Plugin Name of the plugin
 msgid "Last Email Address Validator"
-msgstr "Last Email Address Validator"
+msgstr ""
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
-msgid "https://smings.com/last-email-address-validator/"
-msgstr "https://smings.com/last-email-address-validator/"
+msgid "https://wordpress.org/plugins/last-email-address-validator/"
+msgstr ""
 
 #. Description of the plugin
 msgid "LEAV provides email address validation and disposable email address blocking for WP registration/comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, MC4WP, Formidable Forms, Kali Forms and many more plugins to come..."
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Author of the plugin
 msgid "smings"
-msgstr "smings"
+msgstr ""
 
 #: includes/leav-central.inc.php:118
 msgid "The entered email address contains invalid characters."

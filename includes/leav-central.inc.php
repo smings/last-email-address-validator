@@ -22,20 +22,20 @@ class LeavCentral
   public static $MENU_INLINE_ICON = 'data:image/svg+xml;base64,PHN2ZyAgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNTEuNDUgMjA3Ljc4Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6bm9uZTtzdHJva2U6IzIzMWYyMDtzdHJva2UtbWl0ZXJsaW1pdDoxMDtzdHJva2Utd2lkdGg6MjZweDt9PC9zdHlsZT48L2RlZnM+PGcgaWQ9IkxheWVyXzIiIGRhdGEtbmFtZT0iTGF5ZXIgMiI+PGcgaWQ9IkxFQVZfTG9nbyIgZGF0YS1uYW1lPSJMRUFWIExvZ28iPjxwYXRoIGZpbGw9ImJsYWNrIiBjbGFzcz0iY2xzLTEiIGQ9Ik0xNi4zNCwyMDUuNDFjLTE2LjA2LTg2LjUsMjQtMTg5LjksMTU5LjM5LTE5Mi4zMiIvPjxwYXRoIGZpbGw9ImJsYWNrIiBjbGFzcz0iY2xzLTEiIGQ9Ik00LjA3LDE5NC42M2MxMzIuNzEsMCwxNzguODYtNTguODQsMTU4LjMyLTE5Mi42NiIvPjxwYXRoIGZpbGw9ImJsYWNrIiBjbGFzcz0iY2xzLTEiIGQ9Ik0zMzUuMTEsMjA1LjQxYzE2LjA3LTg2LjUtMjQtMTg5LjktMTU5LjM4LTE5Mi4zMiIvPjxwYXRoIGZpbGw9ImJsYWNrIiBjbGFzcz0iY2xzLTEiIGQ9Ik0zNDcuMzgsMTk0LjYzQzIxNC42NywxOTQuNjUsMTY4LjUzLDEzNS43OSwxODkuMDYsMiIvPjwvZz48L2c+PC9zdmc+';
   public static $OPTIONS;
   public static $OPTIONS_NAME = 'leav_options';
-  public static $PLUGIN_BUGREPORTS_WEBSITE = 'https://smings.com/last-email-address-validator/';
+  public static $PLUGIN_BUGREPORTS_WEBSITE = 'https://wordpress.org/support/plugin/last-email-address-validator/';
   public static $PLUGIN_CONTACT_EMAIL = 'leav@smings.com';
   public static $PLUGIN_DISPLAY_NAME_FULL = 'LEAV - Last Email Address Validator';
   public static $PLUGIN_DISPLAY_NAME_LONG = 'Last Email Address Validator';
   public static $PLUGIN_DISPLAY_NAME_SHORT = 'LEAV';
-  public static $PLUGIN_DOCUMENTATION_WEBSITE = 'https://smings.com/last-email-address-validator/';
+  public static $PLUGIN_DOCUMENTATION_WEBSITE = 'https://wordpress.org/plugins/last-email-address-validator/';
   public static $PLUGIN_FEATURE_REQUEST_EMAIL = 'leav@smings.com';
   public static $PLUGIN_MENU_NAME = "LEAV - Last Email Address Validator";
   public static $PLUGIN_MENU_NAME_SHORT = 'LEAV';
   public static $PLUGIN_ONETIME_DONATION_LINK = 'https://paypal.me/DirkTornow';
   public static $PLUGIN_PATREON_LINK = 'https://www.patreon.com/smings';
   public static $PLUGIN_SETTING_PAGE = '';
-  public static $PLUGIN_VERSION = '1.4.10';
-  public static $PLUGIN_WEBSITE = 'https://smings.com/last-email-address-validator/';
+  public static $PLUGIN_VERSION = '1.4.11';
+  public static $PLUGIN_WEBSITE = 'https://wordpress.org/plugins/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'allow_catch_all_domains',
     'accept_pingbacks', 

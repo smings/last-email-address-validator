@@ -5,11 +5,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: leav 1.4.9\n"
+"Project-Id-Version: leav 1.4.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/last-email-"
 "address-validator\n"
-"POT-Creation-Date: 2020-12-10T21:56:56+00:00\n"
-"PO-Revision-Date: 2020-12-10 23:04+0100\n"
+"POT-Creation-Date: 2020-12-12T06:08:14+00:00\n"
+"PO-Revision-Date: 2020-12-12 07:11+0100\n"
 "Last-Translator: Dirk Tornow <dirk@smings.com>\n"
 "Language-Team: DE <translastions@smings.com>\n"
 "Language: de_DE\n"
@@ -24,8 +24,8 @@ msgstr "Last Email Address Validator"
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
-msgid "https://smings.com/last-email-address-validator/"
-msgstr "https://smings.com/last-email-address-validator/"
+msgid "https://wordpress.org/plugins/last-email-address-validator/"
+msgstr "https://wordpress.org/plugins/last-email-address-validator/"
 
 #. Description of the plugin
 msgid ""

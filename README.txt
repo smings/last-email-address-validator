@@ -4,28 +4,27 @@ Donate link: https://paypal.me/DirkTornow
 Tags: email address validation, email validator, contact form, form builder, newsletter sign-up form, user registration, comments, anti spam, spam blocker, MX, DNS
 Requires at least: 4.7
 Tested up to: 5.5.3
-Stable tag: 1.4.10
+Stable tag: 1.4.11
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-LEAV provides a comprehensive deep email address validation, disposable email address blocking, blacklists for role-based recipient names as well as user-defined white and blacklists for recipient names, email addresses and email domains for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, Mailchimp for WordPress (MC4WP), Formidable Forms, Kali Forms and many more to come...
+LEAV provides the best and FREE email address validation for almost all big form plugins without sign-up and without any external API. No email leaves your server! It recognizes disposable/temporary and free email addresses, provides white/blacklists, has a built-in blacklist for common role-based recipient names as well as user-defined white and blacklists for recipient names, allows for catch-all email address syntax and blocking of catch-all domains and much more for WP registration, WP comments, WooCommerce, Contact Form 7, WPForms, Ninja Forms, Mailchimp for WordPress (MC4WP), Formidable Forms, Kali Forms and many more to come...
+LEAV has 13 different validation error messages, that can be translated right within the plugin itself. 
+LEAV is 100% made with love in Berlin, Germany.
 
 == Description ==
 
 = LEAV - Last Email Address Validator by smings =
 
 We believe that your lifetime is the most precious and protection worthy thing in the universe. Protecting it is a critical task. 
-LEAV helps you to effectively protect your lifetime against spammers that use 
-fake or disposable email adresses for the standard WordPress user registration, WordPress's comments, WooCommerce, Contact Form 7, WPForms (lite), Ninja Forms, Formidable Forms, Kali Forms and many more plugins to come. 
+LEAV helps you to effectively protect your lifetime against spammers that use fake or disposable email adresses for the standard WordPress user registration, WordPress's comments, WooCommerce, Contact Form 7, WPForms (lite), Ninja Forms, Formidable Forms, Kali Forms and many more plugins to come. 
 
-LEAV works out of the box without a registration or external APIs. All the action takes place fully within your control and on your own WordPress instance.
+LEAV works out of the box without the need to sign up or register and without the use of external APIs. All the action takes place fully within your control and on your own WordPress instance. No email address nor other form data has to be sent to an API outside your control.
 
-We built this plugin, because we were frustrated with the lack of deep email validation beyond just superficial syntax checks in all the WordPress functions and plugins we used
-ourselves. 
+We built this plugin, because we were frustrated with the lack of deep email validation beyond just superficial syntax checks in all the WordPress functions and plugins we used ourselves. 
 
-
-We created LEAV with the same or begtter feature set as paid services like [quickemailverification.com](https://quickemailverification.com/features) and others. But LEAV is for free! If you still miss a plugin, that we do not yet support or another way of extra protection, please contact us at [leav@smings.com](mailto:leav@smings.com). We are always happy to make LEAV better. Please have a look at our roadmap below for future plugin integrations.
+We created LEAV with a better feature set than most paid services like [quickemailverification.com](https://quickemailverification.com/features), [antideo](https://wordpress.org/plugins/antideo-email-validator/) and others. But LEAV is for free! And it will stay free forever. If you still miss a plugin, that we do not yet support or another way of extra protection, please contact us at [leav@smings.com](mailto:leav@smings.com). We are always happy to make LEAV better. Please have a look at our roadmap below for future plugin integrations.
 
 = Integrations =
 
@@ -35,15 +34,15 @@ and reliable disposable email address protection that seamlessly integrates with
 Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.5.2 (5,000,000+ installations)
-* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.3 (5,000,000+ installations)
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.8.0 (5,000,000+ installations)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.3.1 (5,000,000+ installations)
 * [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.3.1 (3,000,000+ installations)
-* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 3.4.32 (1,000,000+ installations)
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 3.4.33 (1,000,000+ installations)
 * [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 4.8.1 (1,000,000+ installations)
-* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.09.01 (300,000+ Installations)
+* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.09.02 (300,000+ Installations)
 * [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.2.9 (30,000+ installations)
 
-which gives LEAV a current plugin reach of 15,330,000+ WordPress installtions. And these numbers only cover the freely available plugin installations from the plugin directory on [WordPress.org/plugins](https://wordpress.org/plugins). 
+which gives LEAV a current plugin reach of 15,330,000+ WordPress installtions. And these numbers only cover the freely available plugin installation numbers from the plugin directory on [WordPress.org/plugins](https://wordpress.org/plugins). 
 
 Additionally to the email validation and filter features, LEAV let's you control whether you want to allow pingbacks & trackbacks.
 Pingbacks and trackbacks unfortunately don't come with email addresses that could be 
@@ -100,7 +99,7 @@ We are currently working on integrating the following plugins:
 * [MC4WP: Mailchimp Top Bar](https://wordpress.org/plugins/mailchimp-top-bar/) (10,000+ installations)
 * [Email Before Download](https://wordpress.org/plugins/email-before-download/) (10,000+ installations)
 
-When we finished this list, we'll be able to serve an additional 9,120,000+ WordPress installations. Bringing our total reach up to 24,450,000+ installations, not counting gravity forms (we don't have any reliable data on this plugin's installation count).
+When we finish this list, we'll be able to serve an additional 9,120,000+ WordPress installations. Bringing our total reach up to 24,450,000+ installations, not counting gravity forms (we don't have any reliable data on this plugin's installation count).
 Overall we'll probably be able to serve 25+ million WordPress installations.
 Please help us spread the word and recommend our plugin to others and leave us an
 honest review. It might take some time to set up the validation and filter settings. Please trust us, it is more than worth your while doing so ...
@@ -111,7 +110,7 @@ LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-ad
 
 * Email address syntax check - checks if the email address is syntactically correct. This syntax check is more thorough than the typical frontend-based (javascript) validation of your forms plugin. It is a solid server-side email syntax check based on regular expressions (always on). By the way - there are top-level domains like ".CANCERRESEARCH" and even longer ones out there. The currently longest top-level domain is 18 characters long and most email syntax checks don't allow this. For a current list of allowed top level domains look at [iana.org](https://data.iana.org/TLD/tlds-alpha-by-domain.txt).
 
-* Block recipient name catch-all email addresses like (i.e. first.last+any-text@gmail.com) (optional)
+* Blocking recipient name catch-all email addresses like (i.e. first.last+any-text@gmail.com) (optional)
 
 * User-defined domain whitelist with wildcard support (optional)
 
@@ -121,7 +120,7 @@ LEAV - Last Email Address Validator by [smings](https://smings.com/last-email-ad
 
 * User-defined domain blacklist with wildcard support (optional)
 
-* Blocking of disposable email address (DEA) services - if activated checks and filters out DEAs . The list gets frequently updated and blocks the main domains, their underlying mail exchange (MX) server domains as well as the MX server IP addresses. This ensures that you don't get duped by a simple domain alias that routes its MX entries to the same DEA MX servers. (optional)
+* Blocking of disposable email address (DEA) or temporary email address services - if activated checks and filters out DEAs . The list gets frequently updated and blocks the main domains, their underlying mail exchange (MX) server domains as well as the MX server IP addresses. This ensures that you don't get duped by a simple domain alias that routes its MX entries to the same DEA MX servers. (optional)
 
 * Blocking of free email address providers from built-in domain list. This is a feature for those who only want to collect business email addresses. (optional)
 
@@ -158,7 +157,7 @@ If you need "LEAV - Last-Email-Address-Validator" to integrate with a plugin you
 = Installation =
 
 == Installation from within your WordPress installation ==
-1. Go to `Plugins` -> Add New`
+1. Go to `Plugins` -> `Add New`
 2. Search for `Last Email Address Validator`
 3. Click on the `Install Now` button
 4. Click on the `Activate Plugin` button
@@ -167,18 +166,15 @@ If you need "LEAV - Last-Email-Address-Validator" to integrate with a plugin you
 1. Go to [wordpress.org/plugins/last-email-address-validator/](https://wordpress.org/plugins/last-email-address-validator/)
 2. Click on `Download` - this downloads a zip file
 3. Extract the zip file. It contains the directory `last-email-address-validator`
-3. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-address-validator` filled with the contents of the plugin code
-4. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
-5. Activate `Last Email Address Validator` plugin in the plugin list
-6. For using translations, you can optionally copy the language files from ~/wp-content/plugins/last-email-address-validator/languages/*.mo to ~/wp-content/languages/plugins/
+4. Upload the extracted plugin directory into the `~/wp-content/plugins` directory of your WordPress installation. Afterwards you should have a directory `~/wp-content/plugins/last-email-address-validator` filled with the contents of the plugin code
+5. Go to `Plugins` in your WordPress installation (menu item in the left sidebar)
+6. Activate `Last Email Address Validator` plugin in the plugin list
+7. For using translations, you can optionally copy the language files from `~/wp-content/plugins/last-email-address-validator/languages/*.mo` and `*.po`  to `~/wp-content/languages/plugins/`
 
 == Configuration ==
-You find `Last Email Address Validator`'s settings in your WordPress installation under
-`Settings -> Last Email Address Validator`
-By default all features are activated and set to the highest level of spam protection. 
-You should not need to adjust anything unless you want to deactivate things.
-Things should always be as simple as possible, therefore you can usually skip even 
-looking at the settings.
+Fresh after installing LEAV, you find `LEAV` as a menu item right in your main menu. Afterwards you can move the LEAV menu item into the WordPress settings menu. In this case you find `Last Email Address Validator`'s settings under `Settings -> Last Email Address Validator`.
+By default all relevant features are activated and set to the highest level of spam protection. 
+You should not need to adjust anything unless you want to deactivate options, want to use white/blacklists or further tweak the settings to your individual needs.
 
 = Help us help you =
 We are sure that you'll appreciate the extra level of spam protection provided by Last Email Address Validator (LEAV) by smings.
@@ -186,7 +182,7 @@ We take great pride in the fact that it is the only plugin to support all major 
 This will help us help you and gives you good karma points! 
 
 = Limitations of the free plugin =
-None - there aren't any. LEAV validates as many email addresses as your WordPress instance can handle. It makes sure that all entered email addresses are deliverable and confirm to the rule you set.
+None - there aren't any. LEAV validates as many email addresses as your WordPress instance can handle. It makes sure that all entered email addresses are deliverable and confirm to the rules you set. No sign-up, no registration, no API keys necessary. No email address will leave your server. LEAV is 100% made with love in Berlin, Germany.
 
 For those who need more protection and more validations, we currently develop the pro version of LEAV. The pro version of LEAV validates, that the person entering the email address has actual access and control over the email account. It does this by sending a verification code to the entered email address and provides the user who entered the email address with a verification step before the form data gets send to the underlying plugin. No matter the plugin. LEAV pro supplies the functionality for all supported plugins.
 Additionally LEAV pro will do Realtime Blackhole List (RBL) checks to make sure the email address entered is not from known spammer domains. And this will be as affordable as 2 starbucks coffees per year.
@@ -247,7 +243,7 @@ Filters against the built-in role-based recipient name blacklist (if activated).
 Check if the email address's domain has a DNS entry with MX records.
 
 12. Disposable Email Address (DEA) Service Blacklist (optional)
-Filters against the built-in extensive blacklist of disposable email services (if activated). This list gets updated with new plugin releases. If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. 
+Filters against the built-in extensive blacklist of disposable email services (if activated). This list gets updated with new plugin releases. If activated email adresses from disposable email address services (DEA) i.e. mailinator.com, maildrop.cc, guerrillamail.com and many more will be rejected. LEAV manages a comprehensive list of DEA services that is frequently updated. We block the underlying MX server domains and IP addresses - not just the website domains. This bulletproofs the validation against domain aliases and makes it extremely reliable, since it attacks DEAs at their core. This is much better and much more stable than other validators, that have to constantly update their lists. Many of which make you pay for their "dynamic" lists (which is nonsense).
 
 13. Simulate Email Sending (optional)
 Connects to one of the MX servers and simulates the sending of an email from no-reply@your-domain.com to the entered email address. No actual email will be sent out. This is just LEAV asking the receiving server, if it would accept the email address. Then the dialog with the MX server gets terminated without any email being sent. It's essentially like looking at a house's mailboxes and checking if there is a mailbox with a specific name on it and if we can open it and see if the letter would fit in without dropping it into the mailbox.
@@ -265,9 +261,12 @@ free email address provider domain list.
 
 == Changelog ==
 
+= 1.4.11 =
+* Completed the German translation
+* Updated DEA blacklist
+
 = 1.4.10 =
 * Updated translations
-* Completed the German translation
 
 = 1.4.9 =
 * Optimized translatability and security of the plugin
