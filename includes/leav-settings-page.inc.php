@@ -274,13 +274,8 @@ window.onload = function (event) {
 
                                 if( ! empty( $_POST[ 'test_email_address' ] ) )
                                 {
-                                    // since this plugin is a deep email address validation plugin, we allow users to test
-                                    // any kind of email address (also wrong syntax) against the validation algorithm
-                                    // therefore we need to display the entered email address as close as possible as it
-                                    // was entered. Because of this, we only use `sanitize_text_field()` instead of 
-                                    // `sanitize_email()`. The value never gets persisted.
                                     $sanitized_test_email_address = sanitize_text_field( $_POST[ 'test_email_address' ] );
-                                    if( ! $this->leav_plugin->validate_email_address( $sanitized_escaped_test_email_address, false ) )
+                                    if( ! $this->leav_plugin->validate_email_address( $sanitized_test_email_address, false ) )
                                     {
                             ?>
                             <p>
