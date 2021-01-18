@@ -16,10 +16,6 @@ class LeavSettingsPage
         $this->leav_plugin = $leav_plugin;
         $this->central = $central;
         $this->leav = $leav;
-
-        // we have to figure out whether we have to display the global notification about
-        // the not detected email domain or not
-
     }
 
 
