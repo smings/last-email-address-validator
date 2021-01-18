@@ -4,7 +4,7 @@ Donate link: https://paypal.me/DirkTornow
 Tags: email address validation, email validator, contact form, form builder, newsletter sign-up form, user registration, comments, anti spam, spam blocker, MX, DNS
 Requires at least: 4.7
 Tested up to: 5.6
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 Requires PHP: 7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -260,6 +260,9 @@ free email address provider domain list.
 
 
 == Changelog ==
+
+= 1.5.3 =
+* added support for more assets
 
 = 1.5.2 =
 * Bugfix release - fixing a bug in the settings page for testing email addresses
