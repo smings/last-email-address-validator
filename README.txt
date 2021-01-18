@@ -261,6 +261,9 @@ free email address provider domain list.
 
 == Changelog ==
 
+= 1.5.4 =
+* Optimized settings page's assets for faster loading
+
 = 1.5.3 =
 * added support for more assets
 
