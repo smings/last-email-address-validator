@@ -34,7 +34,7 @@ class LeavCentral
   public static $PLUGIN_ONETIME_DONATION_LINK = 'https://paypal.me/DirkTornow';
   public static $PLUGIN_PATREON_LINK = 'https://www.patreon.com/smings';
   public static $PLUGIN_SETTING_PAGE = '';
-  public static $PLUGIN_VERSION = '1.5.0';
+  public static $PLUGIN_VERSION = '1.5.1';
   public static $PLUGIN_WEBSITE = 'https://wordpress.org/plugins/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'allow_catch_all_domains',
