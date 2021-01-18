@@ -34,7 +34,7 @@ class LeavCentral
   public static $PLUGIN_ONETIME_DONATION_LINK = 'https://paypal.me/DirkTornow';
   public static $PLUGIN_PATREON_LINK = 'https://www.patreon.com/smings';
   public static $PLUGIN_SETTING_PAGE = '';
-  public static $PLUGIN_VERSION = '1.5.3';
+  public static $PLUGIN_VERSION = '1.5.4';
   public static $PLUGIN_WEBSITE = 'https://wordpress.org/plugins/last-email-address-validator/';
   public static $RADIO_BUTTON_FIELDS = array(
     'allow_catch_all_domains',
@@ -73,7 +73,7 @@ class LeavCentral
   public static $SANITIZE_DOMAIN_REGEX = "/[^0-9a-zA-Z-\.]/";
   public static $SANITIZE_IP_REGEX = "/[^0-9\.]/";
   public static $SANITIZE_RECIPIENT_NAME_INTERNAL_REGEX = "/[^a-z\*]/";
-  public static $SETTINGS_PAGE_LOGO_URL = 'assets/icon-128x128.png';
+  public static $SETTINGS_PAGE_LOGO_URL = 'includes/img/icon-128x128.png';
   public static $TEXT_FIELDS = array(
     'cem_email_address_contains_invalid_characters',
     'cem_email_address_is_blacklisted',
