@@ -445,8 +445,8 @@ class LeavPlugin
 
     public function validate_elementor_pro_email_fields( $field, $record, $ajax_handler )
     {
-        if ( preg_match( '/dirk/', $field['value'] ) !== 1 ) {
-            $ajax_handler->add_error( $field['id'], 'Please make sure the email address contains "dirk"' );
+        if ( ! $this->validate_email_address( $field['value'] ) ) {
+            $ajax_handler->add_error( $field['id'], $this->get_email_validation_error_message() );
         }
     }
 
