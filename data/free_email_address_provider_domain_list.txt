@@ -1,4 +1,4 @@
-1.5.4
+1.5.5
 #---------------------------------------------------------------#
 # DON'T ADD YOUR OWN FREE EMAIL ADDRESS PROVIDER DOMAINS        #
 # MANUALLY • THEY WILL BE OVERWRITTEN WITH THE NEXT PLUGIN      #
