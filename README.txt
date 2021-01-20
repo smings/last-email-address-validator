@@ -34,15 +34,15 @@ and reliable disposable email address protection that seamlessly integrates with
 Currently "Last Email Address Validator" integrates with:
 * WordPress user registration
 * [WordPress comments](https://www.wpbeginner.com/glossary/comment/)
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.9.1 (5,000,000+ installations)
-* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.3.2 (5,000,000+ installations)
-* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.4.1 (3,000,000+ installations)
-* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 3.4.33 (1,000,000+ installations)
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/) tested up to 4.9.* (5,000,000+ installations)
+* [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) tested up to 5.3.* (5,000,000+ installations)
+* [WPForms (lite)](https://wordpress.org/plugins/wpforms-lite/) tested up to 1.6.* (3,000,000+ installations)
+* [Ninja Forms](https://wordpress.org/plugins/ninja-forms/) tested up to 3.4.* (1,000,000+ installations)
 * [MailChimp for WordPress MC4WP](https://wordpress.org/plugins/mailchimp-for-wp/) tested up to 4.8.1 (1,000,000+ installations)
-* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.09.04 (300,000+ Installations)
-* [Elementor Pro](https://wordpress.org/plugins/elementor/) tested up to 3.0.16 (est. 150,000+ Pro Installations)
-* [Gravity Forms](https://www.gravityforms.com/) tested up to 2.5 (est. 100,000+ Installations)
-* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.2.16 (30,000+ installations)
+* [Formidable Forms](https://wordpress.org/plugins/formidable/) tested up to 4.09.* (300,000+ Installations)
+* [Elementor Pro](https://wordpress.org/plugins/elementor/) tested up to 3.0.* (est. 150,000+ Pro Installations)
+* [Gravity Forms](https://www.gravityforms.com/) tested up to 2.5.* (est. 100,000+ Installations)
+* [Kali Forms](https://wordpress.org/plugins/kali-forms/) tested up to 2.2.* (30,000+ installations)
 
 which gives LEAV a current plugin reach of 15mio+ WordPress installations. And these numbers only cover the freely available plugin installation numbers from the plugin directory on [WordPress.org/plugins](https://wordpress.org/plugins) and some reasonable guesses for the commercial plugin installations. 
 
