@@ -1459,6 +1459,39 @@ If you set this option to "No", you should also reject email addresses from free
                         </td>
                     </tr>
 
+                    <tr>
+                        <th scope="row">Gravity Forms:</th>
+                        <td>
+                            <?php if( is_plugin_active( "gravityforms/gravityforms.php" )  ) : ?>
+                            <label>
+                                <input name="validate_gravity_forms_email_fields" type="radio" value="yes" <?php if( $this->central::$OPTIONS[ 'validate_gravity_forms_email_fields' ] == 'yes' ) { echo 'checked="checked" '; } ?>/>
+                                <?php esc_html_e( 'Yes', 'last-email-address-validator' ) ?>
+                            </label>
+                            <label>
+                                <input name="validate_gravity_forms_email_fields" type="radio" value="no" <?php if( $this->central::$OPTIONS[ 'validate_gravity_forms_email_fields' ] == 'no' ) { echo 'checked="checked" '; } ?>/>
+                                <?php esc_html_e( 'No', 'last-email-address-validator' ) ?>
+                            </label>
+                            <p class="description">
+                                <?php
+                                    esc_html_e( 'Validate all Graviy Forms email address fields.', 'last-email-address-validator' )
+                                ?>
+                                <br/>
+                                <strong>
+                                    <?php
+                                        esc_html_e( 'Default: Yes', 'last-email-address-validator' );
+                                    ?>
+                                </strong>
+                            </p>
+                            <?php endif;
+                                  if( ! is_plugin_active( "gravityforms/gravityforms.php" ) )
+                                  {
+                                      echo '<a href="https://www.gravityforms.com/" target="_blank">Gravity Forms</a> ';
+                                      esc_html_e( 'not found in list of active plugins', 'last-email-address-validator' );
+                                  }
+                            ?>
+                        </td>
+                    </tr>
+
                 </table>
 
 
@@ -2449,6 +2482,8 @@ Thank you and enjoy LEAV', 'last-email-address-validator' ) ), '<strong>', '</st
             $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Kali Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_elementor_pro_email_fields' )
             $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Elementor Pro email fields.', 'last-email-address-validator' ) . '<br/>';
+        elseif( $field_name == 'validate_gravity_forms_email_fields' )
+            $this->update_notice .= esc_html__( 'Updated the settings for', 'last-email-address-validator' ) . ' ' .  esc_html__( 'validating Gravity Forms email fields.', 'last-email-address-validator' ) . '<br/>';
 
 
         // ------ Custom error message override fields -------------------------
@@ -2591,6 +2626,8 @@ Thank you and enjoy LEAV', 'last-email-address-validator' ) ), '<strong>', '</st
             $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Kali Forms email fields.', 'last-email-address-validator' ) . '<br/>';
         elseif( $field_name == 'validate_elementor_pro_email_fields' )
             $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Elementor Pro email fields.', 'last-email-address-validator' ) . '<br/>';
+        elseif( $field_name == 'validate_gravity_forms_email_fields' )
+            $this->error_notice .= esc_html__( 'Error while trying to update the settings for', 'last-email-address-validator' ) . ' ' . esc_html__( 'validating Gravity Forms email fields.', 'last-email-address-validator' ) . '<br/>';
 
 
         // ------ Custom error message override fields -------------------------

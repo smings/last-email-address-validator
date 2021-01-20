@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Last Email Address Validator
  * Plugin URI: https://wordpress.org/plugins/last-email-address-validator/
- * Description: LEAV provides free deep email address validation for WP registration/comments, WooCommerce, Elementor Pro, CF7, WPForms, Ninja Forms, MC4WP and more
- * Version: 1.6.0
+ * Description: LEAV provides free deep email validation for WP registration/comments, WooCommerce, Elementor Pro, CF7, WPForms, Gravity Forms, Ninja Forms ...
+ * Version: 1.6.1
  * Author: smings
  * Author URI: https://wordpress.org/plugins/last-email-address-validator/
  * Text Domain: last-email-address-validator
@@ -423,7 +423,7 @@ class LeavPlugin
 
     // ----- Validating Kali Forms Plugin --------------------------------------
 
-    public function validate_kali_forms_email_fields( $data )
+    public function validate_kali_forms_email_addresses( $data )
     {
 
         foreach( $data as $key => $value )
@@ -443,7 +443,7 @@ class LeavPlugin
 
     // ----- Validating Elementor Pro Plugin --------------------------------------
 
-    public function validate_elementor_pro_email_fields( $field, $record, $ajax_handler )
+    public function validate_elementor_pro_email_addresses( $field, $record, $ajax_handler )
     {
         if ( ! $this->validate_email_address( $field['value'] ) ) {
             $ajax_handler->add_error( $field['id'], $this->get_email_validation_error_message() );
@@ -451,6 +451,19 @@ class LeavPlugin
     }
 
 
+    // ----- Validating Gravity Forms Plugin ----------------------------------------
+
+    public function validate_gravity_forms_email_addresses( $result, $value, $form, $field )
+    {
+        if (    $field->get_input_type() === 'email' 
+             && $result['is_valid'] 
+             && ! $this->validate_email_address( $value )
+        ) {  
+            $result['is_valid'] = false;
+            $result['message']  = $this->get_email_validation_error_message();
+        }
+        return $result;
+    }
 
 
 
@@ -670,6 +683,9 @@ class LeavPlugin
         if( empty( $this->central::$OPTIONS[ 'validate_elementor_pro_email_fields' ] ) )
             $this->central::$OPTIONS[ 'validate_elementor_pro_email_fields' ] = 'yes';
 
+        if( empty( $this->central::$OPTIONS[ 'validate_gravity_forms_email_fields' ] ) )
+            $this->central::$OPTIONS[ 'validate_gravity_forms_email_fields' ] = 'yes';
+
         // ------ CEM = Custom error message override fields -------------------------
         //
         if ( empty( $this->central::$OPTIONS[ 'cem_email_address_contains_invalid_characters' ] ) )
@@ -796,14 +812,17 @@ class LeavPlugin
         if (    is_plugin_active( "kali-forms/kali-forms.php" )
              && $this->central::$OPTIONS[ 'validate_kali_forms_email_fields' ] == 'yes'
         )
-            add_filter( "kaliforms_before_form_process", array( $this, 'validate_kali_forms_email_fields' ) );
-
+            add_filter( "kaliforms_before_form_process", array( $this, 'validate_kali_forms_email_addresses' ) );
 
         if (    is_plugin_active( "elementor-pro/elementor-pro.php" )
              && $this->central::$OPTIONS[ 'validate_elementor_pro_email_fields' ] == 'yes'
         )
-            add_action( "elementor_pro/forms/validation/email", array( $this, 'validate_elementor_pro_email_fields' ), 10, 3 );
+            add_action( "elementor_pro/forms/validation/email", array( $this, 'validate_elementor_pro_email_addresses' ), 10, 3 );
 
+        if (    is_plugin_active( "gravityforms/gravityforms.php" )
+             && $this->central::$OPTIONS[ 'validate_gravity_forms_email_fields' ] == 'yes'
+        )
+            add_filter( 'gform_field_validation', array( $this, 'validate_gravity_forms_email_addresses' ), 10, 4 );
 
     }
 
