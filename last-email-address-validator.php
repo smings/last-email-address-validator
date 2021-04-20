@@ -3,7 +3,7 @@
  * Plugin Name: Last Email Address Validator
  * Plugin URI: https://wordpress.org/plugins/last-email-address-validator/
  * Description: LEAV provides free deep email validation for WP registration/comments, WooCommerce, Elementor Pro, CF7, WPForms, Gravity Forms, Ninja Forms ...
- * Version: 1.6.1
+ * Version: 1.7.1
  * Author: smings
  * Author URI: https://wordpress.org/plugins/last-email-address-validator/
  * Text Domain: last-email-address-validator
